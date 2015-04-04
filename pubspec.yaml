@@ -1,0 +1,16 @@
+name: built-collection
+version: 0.0.1
+description: >
+  Collections for Dart designed around the builder pattern: immutable,
+  comparable, and hashable.
+authors:
+- David Morgan <davidmorgan@google.com>
+homepage: https://github.com/google/built-collection-dart
+
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+
+dependencies:
+  quiver: any
+dev_dependencies:
+  unittest: any

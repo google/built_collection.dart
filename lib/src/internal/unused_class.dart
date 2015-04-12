@@ -4,7 +4,6 @@
 
 part of built_collection;
 
-const _unusedInstance = const _UnusedClass();
 class _UnusedClass {
   const _UnusedClass();
 }

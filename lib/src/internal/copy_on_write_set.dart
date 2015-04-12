@@ -2,13 +2,13 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+library built_collection.copy_on_write_set;
 
-class _CopyOnWriteSet<E> implements Set<E> {
+class CopyOnWriteSet<E> implements Set<E> {
   bool _copyBeforeWrite;
   Set<E> _set;
 
-  _CopyOnWriteSet(this._set) : _copyBeforeWrite = true;
+  CopyOnWriteSet(this._set) : _copyBeforeWrite = true;
 
   // Read-only methods: just forward.
 

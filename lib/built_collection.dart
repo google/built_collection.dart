@@ -104,21 +104,6 @@
 /// SDK collections but does not mutate them.
 library built_collection;
 
-import 'dart:math' show Random;
-
-import 'package:quiver/core.dart' show hashObjects, hash2;
-
-part 'src/list/built_list.dart';
-part 'src/list/list_builder.dart';
-
-part 'src/map/built_map.dart';
-part 'src/map/map_builder.dart';
-
-part 'src/set/built_set.dart';
-part 'src/set/set_builder.dart';
-
-part 'src/internal/copy_on_write_list.dart';
-part 'src/internal/copy_on_write_map.dart';
-part 'src/internal/copy_on_write_set.dart';
-part 'src/internal/built_collection_test_helpers.dart';
-part 'src/internal/unused_class.dart';
+export 'src/map.dart' hide OverriddenHashcodeBuiltMap;
+export 'src/list.dart' hide OverriddenHashcodeBuiltList;
+export 'src/set.dart' hide OverriddenHashcodeBuiltSet;

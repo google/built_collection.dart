@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+part of built_collection.list;
 
 /// The Built Collection builder for [BuiltList].
 ///
@@ -241,7 +241,7 @@ class ListBuilder<E> {
   }
 
   void _checkGenericTypeParameter() {
-    if (_UnusedClass is E && E != Object) {
+    if (UnusedClass is E && E != Object) {
       throw new UnsupportedError('explicit element type required,'
           ' for example "new ListBuilder<int>"');
     }

@@ -2,14 +2,13 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+library built_collection.copy_on_write_map;
 
-class _CopyOnWriteMap<K, V> implements Map<K, V> {
+class CopyOnWriteMap<K, V> implements Map<K, V> {
   bool _copyBeforeWrite;
-  bool _growable;
   Map<K, V> _map;
 
-  _CopyOnWriteMap(this._map) : _copyBeforeWrite = true;
+  CopyOnWriteMap(this._map) : _copyBeforeWrite = true;
 
   // Read-only methods: just forward.
 

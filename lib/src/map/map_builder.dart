@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+part of built_collection.map;
 
 /// The Built Collection builder for [BuiltMap].
 ///
@@ -107,11 +107,11 @@ class MapBuilder<K, V> {
   }
 
   void _checkGenericTypeParameter() {
-    if (_UnusedClass is K && K != Object) {
+    if (UnusedClass is K && K != Object) {
       throw new UnsupportedError(
           'explicit key type required, for example "new MapBuilder<int, int>"');
     }
-    if (_UnusedClass is V && V != Object) {
+    if (UnusedClass is V && V != Object) {
       throw new UnsupportedError('explicit value type required,'
           ' for example "new MapBuilder<int, int>"');
     }

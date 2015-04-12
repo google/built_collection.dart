@@ -5,6 +5,7 @@
 library built_collection.test.list.built_list_test;
 
 import 'package:built_collection/built_collection.dart';
+import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:unittest/unittest.dart';
 
 void main() {

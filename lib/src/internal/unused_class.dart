@@ -2,8 +2,8 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+library built_collection.unused_class;
 
-class _UnusedClass {
-  const _UnusedClass();
+class UnusedClass {
+  const UnusedClass();
 }

@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+part of built_collection.list;
 
 /// The Built Collection [List].
 ///
@@ -142,7 +142,7 @@ class BuiltList<E> implements Iterable<E> {
   /// but don't actually mutate it.
   @override
   List<E> toList({bool growable: true}) =>
-      new _CopyOnWriteList<E>(_list, growable);
+      new CopyOnWriteList<E>(_list, growable);
 
   @override
   Set<E> toSet() => _list.toSet();
@@ -207,7 +207,7 @@ class BuiltList<E> implements Iterable<E> {
   }
 
   void _checkGenericTypeParameter() {
-    if (_UnusedClass is E && E != Object) {
+    if (UnusedClass is E && E != Object) {
       throw new UnsupportedError(
           'explicit element type required, for example "new BuiltList<int>"');
     }

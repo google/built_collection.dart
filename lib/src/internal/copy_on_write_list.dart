@@ -2,14 +2,16 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+library built_collection.copy_on_write_list;
 
-class _CopyOnWriteList<E> implements List<E> {
+import 'dart:math';
+
+class CopyOnWriteList<E> implements List<E> {
   bool _copyBeforeWrite;
   bool _growable;
   List<E> _list;
 
-  _CopyOnWriteList(this._list, this._growable) : _copyBeforeWrite = true;
+  CopyOnWriteList(this._list, this._growable) : _copyBeforeWrite = true;
 
   // Read-only methods: just forward.
 

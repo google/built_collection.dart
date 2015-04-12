@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+part of built_collection.set;
 
 /// The Built Collection [Set].
 ///
@@ -135,7 +135,7 @@ class BuiltSet<E> implements Iterable<E> {
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
   @override
-  Set<E> toSet() => new _CopyOnWriteSet<E>(_set);
+  Set<E> toSet() => new CopyOnWriteSet<E>(_set);
 
   @override
   List<E> toList({bool growable: true}) => _set.toList(growable: growable);
@@ -200,7 +200,7 @@ class BuiltSet<E> implements Iterable<E> {
   }
 
   void _checkGenericTypeParameter() {
-    if (_UnusedClass is E && E != Object) {
+    if (UnusedClass is E && E != Object) {
       throw new UnsupportedError(
           'explicit element type required, for example "new BuiltSet<int>"');
     }

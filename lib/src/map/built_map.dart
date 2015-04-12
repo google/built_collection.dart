@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection;
+part of built_collection.map;
 
 /// The Built Collection [Map].
 ///
@@ -49,7 +49,7 @@ class BuiltMap<K, V> {
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
-  Map<K, V> toMap() => new _CopyOnWriteMap<K, V>(_map);
+  Map<K, V> toMap() => new CopyOnWriteMap<K, V>(_map);
 
   /// Deep hashCode.
   ///
@@ -138,11 +138,11 @@ class BuiltMap<K, V> {
   }
 
   void _checkGenericTypeParameter() {
-    if (_UnusedClass is K && K != Object) {
+    if (UnusedClass is K && K != Object) {
       throw new UnsupportedError(
           'explicit key type required, for example "new BuiltMap<int, int>"');
     }
-    if (_UnusedClass is V && V != Object) {
+    if (UnusedClass is V && V != Object) {
       throw new UnsupportedError('explicit value type required,'
           ' for example "new BuiltMap<int, int>"');
     }

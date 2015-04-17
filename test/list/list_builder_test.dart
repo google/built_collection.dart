@@ -119,6 +119,15 @@ void main() {
           throws);
     });
 
+    test('has build constructor', () {
+      expect(new BuiltList<int>.build((b) => b.addAll([0, 1, 2])), [0, 1, 2]);
+    });
+
+    test('has rebuild method', () {
+      expect(new BuiltList<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])),
+          [0, 1, 2, 3, 4, 5]);
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltList following reuse of underlying List', () {

@@ -226,6 +226,17 @@ void main() {
       expect(map.isEmpty, isTrue);
     });
 
+    test('has build constructor', () {
+      expect(
+          new BuiltMap<int, String>.build((b) => b[0] = '0').toMap(), {0: '0'});
+    });
+
+    test('has rebuild method', () {
+      expect(new BuiltMap<int, String>({0: '0'})
+          .rebuild((b) => b[1] = '1')
+          .toMap(), {0: '0', 1: '1'});
+    });
+
     // Map.
 
     test('does not implement Map', () {

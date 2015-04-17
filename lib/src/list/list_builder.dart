@@ -43,6 +43,11 @@ class ListBuilder<E> {
     return new BuiltList<E>._withSafeList(_list);
   }
 
+  /// Applies a function to `this`.
+  void update(updates(ListBuilder<E> builder)) {
+    updates(this);
+  }
+
   // Based on List.
 
   /// As [List].

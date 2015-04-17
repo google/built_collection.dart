@@ -143,6 +143,21 @@ void main() {
       expect(new BuiltSet<int>([3, 2, 1]), [3, 2, 1]);
     });
 
+    test('has build constructor', () {
+      expect(new BuiltSet<int>.build((b) => b.addAll([0, 1, 2])), [0, 1, 2]);
+    });
+
+    test('has rebuild method', () {
+      expect(new BuiltSet<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])), [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]);
+    });
+
     // Lazy copies.
 
     test('reuses BuiltSet instances of the same type', () {

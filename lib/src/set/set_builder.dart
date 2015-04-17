@@ -47,6 +47,11 @@ class SetBuilder<E> {
     return new BuiltSet<E>._withSafeSet(_set);
   }
 
+  /// Applies a function to `this`.
+  void update(updates(SetBuilder<E> builder)) {
+    updates(this);
+  }
+
   // Based on Set.
 
   /// As [Set.add].

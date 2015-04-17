@@ -33,10 +33,18 @@ class BuiltSet<E> implements Iterable<E> {
     }
   }
 
+  /// Creates a [SetBuilder], applies updates to it, and builds.
+  factory BuiltSet.build(updates(SetBuilder<E> builder)) =>
+      (new SetBuilder<E>()..update(updates)).build();
+
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
   SetBuilder toBuilder() => new SetBuilder<E>(this);
+
+  /// Converts to a [SetBuilder}, applies updates to it, and builds.
+  BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
+      (toBuilder()..update(updates)).build();
 
   /// Deep hashCode.
   ///

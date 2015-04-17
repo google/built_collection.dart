@@ -36,10 +36,18 @@ class BuiltMap<K, V> {
     }
   }
 
+  /// Creates a [MapBuilder], applies updates to it, and builds.
+  factory BuiltMap.build(updates(MapBuilder<K, V> builder)) =>
+      (new MapBuilder<K, V>()..update(updates)).build();
+
   /// Converts to a [MapBuilder] for modification.
   ///
   /// The `BuiltMap` remains immutable and can continue to be used.
   MapBuilder toBuilder() => new MapBuilder<K, V>(this);
+
+  /// Converts to a [MapBuilder}, applies updates to it, and builds.
+  BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
+      (toBuilder()..update(updates)).build();
 
   /// Converts to a [Map].
   ///

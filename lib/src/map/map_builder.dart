@@ -45,6 +45,11 @@ class MapBuilder<K, V> {
     return new BuiltMap<K, V>._withSafeMap(_map);
   }
 
+  /// Applies a function to `this`.
+  void update(updates(MapBuilder<K, V> builder)) {
+    updates(this);
+  }
+
   // Based on Map.
 
   /// As [Map].

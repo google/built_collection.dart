@@ -33,10 +33,18 @@ class BuiltList<E> implements Iterable<E> {
     }
   }
 
+  /// Creates a [ListBuilder], applies updates to it, and builds.
+  factory BuiltList.build(updates(ListBuilder<E> builder)) =>
+      (new ListBuilder<E>()..update(updates)).build();
+
   /// Converts to a [ListBuilder] for modification.
   ///
   /// The `BuiltList` remains immutable and can continue to be used.
   ListBuilder toBuilder() => new ListBuilder<E>(this);
+
+  /// Converts to a [ListBuilder}, applies updates to it, and builds.
+  BuiltList<E> rebuild(updates(ListBuilder<E> builder)) =>
+      (toBuilder()..update(updates)).build();
 
   /// Deep hashCode.
   ///

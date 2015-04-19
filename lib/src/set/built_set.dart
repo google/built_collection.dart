@@ -42,7 +42,7 @@ class BuiltSet<E> implements Iterable<E> {
   /// The `BuiltSet` remains immutable and can continue to be used.
   SetBuilder toBuilder() => new SetBuilder<E>(this);
 
-  /// Converts to a [SetBuilder}, applies updates to it, and builds.
+  /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
       (toBuilder()..update(updates)).build();
 

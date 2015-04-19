@@ -45,7 +45,7 @@ class BuiltMap<K, V> {
   /// The `BuiltMap` remains immutable and can continue to be used.
   MapBuilder toBuilder() => new MapBuilder<K, V>(this);
 
-  /// Converts to a [MapBuilder}, applies updates to it, and builds.
+  /// Converts to a [MapBuilder], applies updates to it, and builds.
   BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
       (toBuilder()..update(updates)).build();
 

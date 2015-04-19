@@ -42,7 +42,7 @@ class BuiltList<E> implements Iterable<E> {
   /// The `BuiltList` remains immutable and can continue to be used.
   ListBuilder toBuilder() => new ListBuilder<E>(this);
 
-  /// Converts to a [ListBuilder}, applies updates to it, and builds.
+  /// Converts to a [ListBuilder], applies updates to it, and builds.
   BuiltList<E> rebuild(updates(ListBuilder<E> builder)) =>
       (toBuilder()..update(updates)).build();
 

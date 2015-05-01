@@ -20,9 +20,9 @@ class MapBuilder<K, V> {
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new BuiltMap({1: '1', 2: '2', 3: '3'})`.
+  /// Wrong: `new MapBuilder({1: '1', 2: '2', 3: '3'})`.
   ///
-  /// Right: `new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})`,
+  /// Right: `new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'})`,
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory MapBuilder([map = const {}]) {
@@ -30,8 +30,11 @@ class MapBuilder<K, V> {
       return new MapBuilder<K, V>._fromBuiltMap(map);
     } else if (map is BuiltMap) {
       return new MapBuilder<K, V>._withSafeMap(new Map<K, V>.from(map._map));
-    } else {
+    } else if (map is Map) {
       return new MapBuilder<K, V>._withSafeMap(new Map<K, V>.from(map));
+    } else {
+      throw new ArgumentError(
+          'expected Map or BuiltMap, got ${map.runtimeType}');
     }
   }
 

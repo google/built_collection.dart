@@ -129,12 +129,12 @@ class BuiltMap<K, V> {
 
     for (final key in keys) {
       if (key is! K) {
-        throw new ArgumentError('iterable contained invalid key: ${key}');
+        throw new ArgumentError('map contained invalid key: ${key}');
       }
 
       final value = lookup(key);
       if (value is! V) {
-        throw new ArgumentError('iterable contained invalid value: ${value}');
+        throw new ArgumentError('map contained invalid value: ${value}');
       }
 
       _map[key] = value;

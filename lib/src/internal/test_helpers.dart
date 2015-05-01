@@ -5,17 +5,22 @@
 library built_collection.test_helpers;
 
 import '../list.dart';
+import '../list_multimap.dart';
 import '../map.dart';
 import '../set.dart';
 
 /// Internal only test helpers.
 class BuiltCollectionTestHelpers {
-  static BuiltMap<int, String> overridenHashcodeBuiltMap(map, int hashCode) =>
-      new OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
-
   static BuiltList<int> overridenHashcodeBuiltList(
           Iterable iterable, int hashCode) =>
       new OverriddenHashcodeBuiltList<int>(iterable, hashCode);
+
+  static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
+          map, int hashCode) =>
+      new OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
+
+  static BuiltMap<int, String> overridenHashcodeBuiltMap(map, int hashCode) =>
+      new OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
 
   static BuiltSet<int> overridenHashcodeBuiltSet(
           Iterable iterable, int hashCode) =>

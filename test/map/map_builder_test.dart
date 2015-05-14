@@ -77,6 +77,12 @@ void main() {
       expect(() => new MapBuilder<int, String>().addAll({0: 0}), throws);
     });
 
+    test('has replace method that replaces all data', () {
+      expect((new MapBuilder<int, String>()..replace({1: '1', 2: '2'}))
+          .build()
+          .toMap(), {1: '1', 2: '2'});
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltMap following reuse of underlying Map', () {

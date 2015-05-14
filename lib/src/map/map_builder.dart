@@ -26,16 +26,7 @@ class MapBuilder<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory MapBuilder([map = const {}]) {
-    if (map is BuiltMap<K, V>) {
-      return new MapBuilder<K, V>._fromBuiltMap(map);
-    } else if (map is BuiltMap) {
-      return new MapBuilder<K, V>._withSafeMap(new Map<K, V>.from(map._map));
-    } else if (map is Map) {
-      return new MapBuilder<K, V>._withSafeMap(new Map<K, V>.from(map));
-    } else {
-      throw new ArgumentError(
-          'expected Map or BuiltMap, got ${map.runtimeType}');
-    }
+    return new MapBuilder<K, V>._uninitialized()..replace(map);
   }
 
   /// Converts to a [BuiltMap].
@@ -53,6 +44,20 @@ class MapBuilder<K, V> {
   /// Applies a function to `this`.
   void update(updates(MapBuilder<K, V> builder)) {
     updates(this);
+  }
+
+  /// Replaces all elements with elements from a [Map] or [BuiltMap].
+  void replace(map) {
+    if (map is BuiltMap<K, V>) {
+      _replaceFromBuiltMap(map);
+    } else if (map is BuiltMap) {
+      _replaceFromSafeMap(new Map<K, V>.from(map._map));
+    } else if (map is Map) {
+      _replaceFromSafeMap(new Map<K, V>.from(map));
+    } else {
+      throw new ArgumentError(
+          'expected Map or BuiltMap, got ${map.runtimeType}');
+    }
   }
 
   // Based on Map.
@@ -98,15 +103,20 @@ class MapBuilder<K, V> {
 
   // Internal.
 
-  MapBuilder._fromBuiltMap(BuiltMap<K, V> builtMap)
-      : _copyBeforeWrite = true,
-        _builtMap = builtMap,
-        _map = builtMap._map {
+  MapBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
 
-  MapBuilder._withSafeMap(this._map) : _copyBeforeWrite = false {
-    _checkGenericTypeParameter();
+  void _replaceFromBuiltMap(BuiltMap<K, V> builtMap) {
+    _copyBeforeWrite = true;
+    _builtMap = builtMap;
+    _map = builtMap._map;
+  }
+
+  void _replaceFromSafeMap(Map<K, V> map) {
+    _copyBeforeWrite = false;
+    _builtMap = null;
+    _map = map;
   }
 
   void _maybeCopyBeforeWrite() {

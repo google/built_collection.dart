@@ -51,6 +51,10 @@ void main() {
           () => new SetBuilder<int>([0, 1, 2]).expand((x) => [x, '0']), throws);
     });
 
+    test('has replace method that replaces all data', () {
+      expect((new SetBuilder<int>()..replace([0, 1, 2])).build(), [0, 1, 2]);
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltSet following reuse of underlying Set', () {

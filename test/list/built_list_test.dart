@@ -179,6 +179,15 @@ void main() {
       expect(list, []);
     });
 
+    test('has build constructor', () {
+      expect(new BuiltList<int>.build((b) => b.addAll([0, 1, 2])), [0, 1, 2]);
+    });
+
+    test('has rebuild method', () {
+      expect(new BuiltList<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])),
+          [0, 1, 2, 3, 4, 5]);
+    });
+
     test('returns identical BuiltList on repeated build', () {
       final listBuilder = new ListBuilder<int>([1, 2, 3]);
       expect(listBuilder.build(), same(listBuilder.build()));

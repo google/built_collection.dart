@@ -146,8 +146,8 @@ void main() {
     });
 
     test('compares not equal to different length BuiltMap', () {
-      expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) == '', isFalse);
+      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
+          new BuiltMap<int, String>({1: '1', 2: '2'}), isFalse);
     });
 
     test('compares not equal to different hashcode BuiltMap', () {

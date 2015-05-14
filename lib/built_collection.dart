@@ -98,12 +98,13 @@
 /// Built Collections and their builder and helper types collaborate to avoid
 /// copying unless it's necessary.
 ///
-/// In particular, [BuiltList.toList], [BuiltSet.toSet] and [BuiltMap.toMap]
-/// do not make a copy, but return a copy-on-write wrapper. So, Built
-/// Collections can be efficiently and easily used with code that needs core
-/// SDK collections but does not mutate them.
+/// In particular, [BuiltList.toList], [BuiltSet.toSet], [BuiltMap.toMap] and
+/// [BuiltListMultimap.toMap] do not make a copy, but return a copy-on-write
+/// wrapper. So, Built Collections can be efficiently and easily used with
+/// code that needs core SDK collections but does not mutate them.
 library built_collection;
 
-export 'src/map.dart' hide OverriddenHashcodeBuiltMap;
 export 'src/list.dart' hide OverriddenHashcodeBuiltList;
+export 'src/list_multimap.dart' hide OverriddenHashcodeBuiltListMultimap;
+export 'src/map.dart' hide OverriddenHashcodeBuiltMap;
 export 'src/set.dart' hide OverriddenHashcodeBuiltSet;

@@ -289,6 +289,16 @@ void main() {
         '3'
       ]);
     });
+
+    test('has stable keys', () {
+      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(map.keys, same(map.keys));
+    });
+
+    test('has stable values', () {
+      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(map.values, same(map.values));
+    });
   });
 }
 

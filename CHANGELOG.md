@@ -1,5 +1,9 @@
 # Changelog
 
+## unreleased
+
+- Make keys and values stable for BuiltMap and BuiltMultimap.
+
 ## 0.2.0
 
 - Add BuiltListMultimap.

@@ -357,6 +357,18 @@ void main() {
       expect(new BuiltListMultimap<int, String>(
           {1: ['1'], 2: ['2', '2'], 3: ['3']}).values, ['1', '2', '2', '3']);
     });
+
+    test('has stable keys', () {
+      final multimap =
+          new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']});
+      expect(multimap.keys, same(multimap.keys));
+    });
+
+    test('has stable values', () {
+      final multimap =
+          new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']});
+      expect(multimap.values, same(multimap.values));
+    });
   });
 }
 

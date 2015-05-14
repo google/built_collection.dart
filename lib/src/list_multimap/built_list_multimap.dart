@@ -14,8 +14,14 @@ part of built_collection.list_multimap;
 /// for the general properties of Built Collections.
 class BuiltListMultimap<K, V> {
   final Map<K, BuiltList<V>> _map;
+
+  // Precomputed.
   final BuiltList<V> _emptyList = new BuiltList<V>();
+
+  // Cached.
   int _hashCode = null;
+  Iterable<K> _keys;
+  Iterable<V> _values;
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
@@ -132,14 +138,26 @@ class BuiltListMultimap<K, V> {
   /// As [ListMultimap.isNotEmpty].
   bool get isNotEmpty => _map.isNotEmpty;
 
-  /// As [ListMultimap.keys].
-  Iterable<K> get keys => _map.keys;
+  /// As [ListMultimap.keys], but result is stable; it always returns the same
+  /// instance.
+  Iterable<K> get keys {
+    if (_keys == null) {
+      _keys = _map.keys;
+    }
+    return _keys;
+  }
 
   /// As [ListMultimap.length].
   int get length => _map.length;
 
-  /// As [ListMultimap.values].
-  Iterable<V> get values => _map.values.expand((x) => x);
+  /// As [ListMultimap.values], but result is stable; it always returns the
+  /// same instance.
+  Iterable<V> get values {
+    if (_values == null) {
+      _values = _map.values.expand((x) => x);
+    }
+    return _values;
+  }
 
   // Internal.
 

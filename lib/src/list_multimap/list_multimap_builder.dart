@@ -174,11 +174,11 @@ class ListMultimapBuilder<K, V> {
   }
 
   void _checkGenericTypeParameter() {
-    if (UnusedClass is K && K != Object) {
+    if (null is K && K != Object) {
       throw new UnsupportedError(
           'explicit key type required, for example "new ListMultimapBuilder<int, int>"');
     }
-    if (UnusedClass is V && V != Object) {
+    if (null is V && V != Object) {
       throw new UnsupportedError('explicit value type required,'
           ' for example "new ListMultimapBuilder<int, int>"');
     }

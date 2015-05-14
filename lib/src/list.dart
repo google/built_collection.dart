@@ -9,7 +9,6 @@ import 'dart:math' show Random;
 import 'package:quiver/core.dart' show hashObjects, hash2;
 
 import 'internal/copy_on_write_list.dart';
-import 'internal/unused_class.dart';
 
 part 'list/built_list.dart';
 part 'list/list_builder.dart';

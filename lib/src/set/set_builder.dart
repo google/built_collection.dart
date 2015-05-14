@@ -42,9 +42,11 @@ class SetBuilder<E> {
   /// The `SetBuilder` can be modified again and used to create any number
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
-    if (_builtSet != null) return _builtSet;
-    _copyBeforeWrite = true;
-    return new BuiltSet<E>._withSafeSet(_set);
+    if (_builtSet == null) {
+      _copyBeforeWrite = true;
+      _builtSet = new BuiltSet<E>._withSafeSet(_set);
+    }
+    return _builtSet;
   }
 
   /// Applies a function to `this`.

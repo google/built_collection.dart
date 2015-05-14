@@ -179,6 +179,11 @@ void main() {
       expect(list, []);
     });
 
+    test('returns identical BuiltList on repeated build', () {
+      final listBuilder = new ListBuilder<int>([1, 2, 3]);
+      expect(listBuilder.build(), same(listBuilder.build()));
+    });
+
     // List.
 
     test('does not implement List', () {

@@ -79,6 +79,11 @@ void main() {
       expect(set1, [1, 2]);
     });
 
+    test('returns identical BuiltSet on repeated build', () {
+      final setBuilder = new SetBuilder<int>([1, 2]);
+      expect(setBuilder.build(), same(setBuilder.build()));
+    });
+
     // Set.
 
     test('has a method like Set.add', () {

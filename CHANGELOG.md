@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Fix "part of" statement.
+
 ## 0.3.0
 
 - Bug fix: fix Iterable "update in place" methods of BuiltList and BuiltSet so they discard original list or set.

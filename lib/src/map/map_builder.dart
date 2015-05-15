@@ -12,9 +12,8 @@ part of built_collection.map;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class MapBuilder<K, V> {
-  bool _copyBeforeWrite;
-  BuiltMap<K, V> _builtMap;
   Map<K, V> _map;
+  BuiltMap<K, V> _mapOwner;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -34,11 +33,10 @@ class MapBuilder<K, V> {
   /// The `MapBuilder` can be modified again and used to create any number
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
-    if (_builtMap == null) {
-      _copyBeforeWrite = true;
-      _builtMap = new BuiltMap<K, V>._withSafeMap(_map);
+    if (_mapOwner == null) {
+      _mapOwner = new BuiltMap<K, V>._withSafeMap(_map);
     }
-    return _builtMap;
+    return _mapOwner;
   }
 
   /// Applies a function to `this`.
@@ -49,11 +47,11 @@ class MapBuilder<K, V> {
   /// Replaces all elements with elements from a [Map] or [BuiltMap].
   void replace(map) {
     if (map is BuiltMap<K, V>) {
-      _replaceFromBuiltMap(map);
+      _setOwner(map);
     } else if (map is BuiltMap) {
-      _replaceFromSafeMap(new Map<K, V>.from(map._map));
+      _setSafeMap(new Map<K, V>.from(map._map));
     } else if (map is Map) {
-      _replaceFromSafeMap(new Map<K, V>.from(map));
+      _setSafeMap(new Map<K, V>.from(map));
     } else {
       throw new ArgumentError(
           'expected Map or BuiltMap, got ${map.runtimeType}');
@@ -66,15 +64,13 @@ class MapBuilder<K, V> {
   operator []=(K key, V value) {
     _checkKey(key);
     _checkValue(value);
-    _maybeCopyBeforeWrite();
-    _map[key] = value;
+    _safeMap[key] = value;
   }
 
   /// As [Map.putIfAbsent] but returns nothing.
   void putIfAbsent(K key, V ifAbsent()) {
     _checkKey(key);
-    _maybeCopyBeforeWrite();
-    _map.putIfAbsent(key, () {
+    _safeMap.putIfAbsent(key, () {
       final value = ifAbsent();
       _checkValue(value);
       return value;
@@ -85,20 +81,17 @@ class MapBuilder<K, V> {
   void addAll(Map<K, V> other) {
     _checkKeys(other.keys);
     _checkValues(other.values);
-    _maybeCopyBeforeWrite();
-    _map.addAll(other);
+    _safeMap.addAll(other);
   }
 
   /// As [Map.remove] but returns nothing.
   void remove(Object key) {
-    _maybeCopyBeforeWrite();
-    _map.remove(key);
+    _safeMap.remove(key);
   }
 
   /// As [Map.clear].
   void clear() {
-    _maybeCopyBeforeWrite();
-    _map.clear();
+    _safeMap.clear();
   }
 
   // Internal.
@@ -107,23 +100,22 @@ class MapBuilder<K, V> {
     _checkGenericTypeParameter();
   }
 
-  void _replaceFromBuiltMap(BuiltMap<K, V> builtMap) {
-    _copyBeforeWrite = true;
-    _builtMap = builtMap;
-    _map = builtMap._map;
+  void _setOwner(BuiltMap<K, V> mapOwner) {
+    _mapOwner = mapOwner;
+    _map = mapOwner._map;
   }
 
-  void _replaceFromSafeMap(Map<K, V> map) {
-    _copyBeforeWrite = false;
-    _builtMap = null;
+  void _setSafeMap(Map<K, V> map) {
+    _mapOwner = null;
     _map = map;
   }
 
-  void _maybeCopyBeforeWrite() {
-    if (!_copyBeforeWrite) return;
-    _copyBeforeWrite = false;
-    _builtMap = null;
-    _map = new Map<K, V>.from(_map);
+  Map<K, V> get _safeMap {
+    if (_mapOwner != null) {
+      _map = new Map<K, V>.from(_map);
+      _mapOwner = null;
+    }
+    return _map;
   }
 
   void _checkGenericTypeParameter() {

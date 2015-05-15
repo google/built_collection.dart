@@ -179,10 +179,17 @@ void main() {
       expect((new ListMultimapBuilder<int, String>({1: ['1']})..add(2, '2'))
           .build()
           .toMap(), ({1: ['1'], 2: ['2']}));
+      expect((new BuiltListMultimap<int, String>({1: ['1']}).toBuilder()
+        ..add(2, '2')).build().toMap(), ({1: ['1'], 2: ['2']}));
     });
 
     test('has a method like ListMultimap.addValues', () {
       expect((new ListMultimapBuilder<int, String>({1: ['1']})
+        ..addValues(2, ['2', '3'])).build().toMap(), ({
+        1: ['1'],
+        2: ['2', '3']
+      }));
+      expect((new BuiltListMultimap<int, String>({1: ['1']}).toBuilder()
         ..addValues(2, ['2', '3'])).build().toMap(), ({
         1: ['1'],
         2: ['2', '3']
@@ -196,20 +203,29 @@ void main() {
       expect((new ListMultimapBuilder<int, String>()..addAll(mutableMultimap))
           .build()
           .toMap(), ({1: ['1'], 2: ['2']}));
+      expect((new BuiltListMultimap<int, String>().toBuilder()
+        ..addAll(mutableMultimap)).build().toMap(), ({1: ['1'], 2: ['2']}));
     });
 
     test('has a method like ListMultimap.remove that returns nothing', () {
       expect((new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
         ..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
+      expect((new BuiltListMultimap<int, String>({1: ['1'], 2: ['2', '3']})
+          .toBuilder()..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
     });
 
     test('has a method like ListMultimap.removeAll that returns nothing', () {
       expect((new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
         ..removeAll(2)).build().toMap(), {1: ['1']});
+      expect((new BuiltListMultimap<int, String>({1: ['1'], 2: ['2', '3']})
+          .toBuilder()..removeAll(2)).build().toMap(), {1: ['1']});
     });
 
     test('has a method like ListMultimap.clear', () {
       expect((new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2']})
+        ..clear()).build().toMap(), {});
+      expect(
+          (new BuiltListMultimap<int, String>({1: ['1'], 2: ['2']}).toBuilder()
         ..clear()).build().toMap(), {});
     });
   });

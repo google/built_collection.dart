@@ -14,7 +14,11 @@ part of built_collection.map;
 /// for the general properties of Built Collections.
 class BuiltMap<K, V> {
   final Map<K, V> _map;
+
+  // Cached.
   int _hashCode = null;
+  Iterable<K> _keys = null;
+  Iterable<V> _values = null;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -112,14 +116,25 @@ class BuiltMap<K, V> {
   /// As [Map.isNotEmpty].
   bool get isNotEmpty => _map.isNotEmpty;
 
-  /// As [Map.keys].
-  Iterable<K> get keys => _map.keys;
+  /// As [Map.keys], but result is stable; it always returns the same instance.
+  Iterable<K> get keys {
+    if (_keys == null) {
+      _keys = _map.keys;
+    }
+    return _keys;
+  }
 
   /// As [Map.length].
   int get length => _map.length;
 
-  /// As [Map.values].
-  Iterable<V> get values => _map.values;
+  /// As [Map.values], but result is stable; it always returns the same
+  /// instance.
+  Iterable<V> get values {
+    if (_values == null) {
+      _values = _map.values;
+    }
+    return _values;
+  }
 
   // Internal.
 

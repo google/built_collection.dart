@@ -26,11 +26,7 @@ class ListBuilder<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory ListBuilder([Iterable iterable = const []]) {
-    if (iterable is BuiltList<E>) {
-      return new ListBuilder<E>._fromBuiltList(iterable);
-    } else {
-      return new ListBuilder<E>._withSafeList(new List<E>.from(iterable));
-    }
+    return new ListBuilder<E>._uninitialized()..replace(iterable);
   }
 
   /// Converts to a [BuiltList].
@@ -48,6 +44,15 @@ class ListBuilder<E> {
   /// Applies a function to `this`.
   void update(updates(ListBuilder<E> builder)) {
     updates(this);
+  }
+
+  /// Replaces all elements with elements from an [Iterable].
+  void replace(Iterable iterable) {
+    if (iterable is BuiltList<E>) {
+      _replaceFromBuiltList(iterable);
+    } else {
+      _replaceFromSafeList(new List<E>.from(iterable));
+    }
   }
 
   // Based on List.
@@ -229,15 +234,20 @@ class ListBuilder<E> {
 
   // Internal.
 
-  ListBuilder._fromBuiltList(BuiltList<E> builtList)
-      : _copyBeforeWrite = true,
-        _builtList = builtList,
-        _list = builtList._list {
+  ListBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
 
-  ListBuilder._withSafeList(this._list) : _copyBeforeWrite = false {
-    _checkGenericTypeParameter();
+  void _replaceFromBuiltList(BuiltList<E> builtList) {
+    _copyBeforeWrite = true;
+    _builtList = builtList;
+    _list = builtList._list;
+  }
+
+  void _replaceFromSafeList(List<E> list) {
+    _copyBeforeWrite = false;
+    _builtList = null;
+    _list = list;
   }
 
   void _maybeCopyBeforeWrite() {

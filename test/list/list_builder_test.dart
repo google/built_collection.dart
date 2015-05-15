@@ -119,13 +119,8 @@ void main() {
           throws);
     });
 
-    test('has build constructor', () {
-      expect(new BuiltList<int>.build((b) => b.addAll([0, 1, 2])), [0, 1, 2]);
-    });
-
-    test('has rebuild method', () {
-      expect(new BuiltList<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])),
-          [0, 1, 2, 3, 4, 5]);
+    test('has replace method that replaces all data', () {
+      expect((new ListBuilder<int>()..replace([0, 1, 2])).build(), [0, 1, 2]);
     });
 
     // Lazy copies.

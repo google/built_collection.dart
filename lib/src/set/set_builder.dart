@@ -26,15 +26,7 @@ class SetBuilder<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory SetBuilder([Iterable iterable = const []]) {
-    if (iterable is BuiltSet<E>) {
-      return new SetBuilder<E>._fromBuiltSet(iterable);
-    } else {
-      final Set<E> set = new Set<E>();
-      for (final element in iterable) {
-        set.add(element);
-      }
-      return new SetBuilder<E>._withSafeSet(set);
-    }
+    return new SetBuilder<E>._uninitialized()..replace(iterable);
   }
 
   /// Converts to a [BuiltSet].
@@ -52,6 +44,20 @@ class SetBuilder<E> {
   /// Applies a function to `this`.
   void update(updates(SetBuilder<E> builder)) {
     updates(this);
+  }
+
+  /// Replaces all elements with elements from an [Iterable].
+  void replace(Iterable iterable) {
+    if (iterable is BuiltSet<E>) {
+      _replaceFromBuiltSet(iterable);
+    } else {
+      // Can't use addAll because it requires an Iterable<E>.
+      final Set<E> set = new Set<E>();
+      for (final element in iterable) {
+        set.add(element);
+      }
+      _replaceFromSafeSet(set);
+    }
   }
 
   // Based on Set.
@@ -142,15 +148,20 @@ class SetBuilder<E> {
 
   // Internal.
 
-  SetBuilder._fromBuiltSet(BuiltSet<E> builtSet)
-      : _copyBeforeWrite = true,
-        _builtSet = builtSet,
-        _set = builtSet._set {
+  SetBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
 
-  SetBuilder._withSafeSet(this._set) : _copyBeforeWrite = false {
-    _checkGenericTypeParameter();
+  void _replaceFromBuiltSet(BuiltSet<E> builtSet) {
+    _copyBeforeWrite = true;
+    _builtSet = builtSet;
+    _set = builtSet._set;
+  }
+
+  void _replaceFromSafeSet(Set<E> set) {
+    _copyBeforeWrite = false;
+    _builtSet = null;
+    _set = set;
   }
 
   void _maybeCopyBeforeWrite() {

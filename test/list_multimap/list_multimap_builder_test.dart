@@ -83,6 +83,11 @@ void main() {
           throws);
     });
 
+    test('has replace method that replaces all data', () {
+      expect((new ListMultimapBuilder<int, String>()
+        ..replace({1: ['1'], 2: ['2']})).build().toMap(), {1: ['1'], 2: ['2']});
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltListMultimap following reuse of underlying Map',

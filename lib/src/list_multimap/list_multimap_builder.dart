@@ -12,10 +12,9 @@ part of built_collection.multimap;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class ListMultimapBuilder<K, V> {
-  bool _copyBeforeWrite;
-  BuiltListMultimap<K, V> _builtListMultimap;
   Map<K, BuiltList<V>> _builtMap;
-  Map<K, ListBuilder<V>> _builderMap = new Map<K, ListBuilder<V>>();
+  BuiltListMultimap<K, V> _builtMapOwner;
+  Map<K, ListBuilder<V>> _builderMap;
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
@@ -36,9 +35,7 @@ class ListMultimapBuilder<K, V> {
   /// The `ListMultimapBuilder` can be modified again and used to create any number
   /// of `BuiltListMultimap`s.
   BuiltListMultimap<K, V> build() {
-    if (_builtListMultimap == null) {
-      _copyBeforeWrite = true;
-
+    if (_builtMapOwner == null) {
       for (final key in _builderMap.keys) {
         final builtList = _builderMap[key].build();
         if (builtList.isEmpty) {
@@ -48,9 +45,9 @@ class ListMultimapBuilder<K, V> {
         }
       }
 
-      _builtListMultimap = new BuiltListMultimap<K, V>._withSafeMap(_builtMap);
+      _builtMapOwner = new BuiltListMultimap<K, V>._withSafeMap(_builtMap);
     }
-    return _builtListMultimap;
+    return _builtMapOwner;
   }
 
   /// Applies a function to `this`.
@@ -62,11 +59,11 @@ class ListMultimapBuilder<K, V> {
   /// [BuiltListMultimap].
   void replace(multimap) {
     if (multimap is BuiltListMultimap<K, V>) {
-      _replaceFromBuiltListMultimap(multimap);
+      _setOwner(multimap);
     } else if (multimap is Map ||
         multimap is ListMultimap ||
         multimap is BuiltListMultimap) {
-      _replaceWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
+      _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
       throw new ArgumentError(
           'expected Map, ListMultimap or BuiltListMultimap, got ${multimap.runtimeType}');
@@ -77,7 +74,7 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.add].
   void add(K key, V value) {
-    _maybeCopyBeforeWrite();
+    _makeWriteableCopy();
     _checkKey(key);
     _checkValue(value);
 
@@ -98,6 +95,7 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.addValues].
   void addValues(K key, Iterable<V> values) {
+    // _disown is called in add.
     values.forEach((value) {
       add(key, value);
     });
@@ -105,6 +103,7 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.addAll].
   void addAll(ListMultimap<K, V> other) {
+    // _disown is called in add.
     other.forEach((key, value) {
       add(key, value);
     });
@@ -112,7 +111,8 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.remove] but returns nothing.
   void remove(Object key, V value) {
-    _maybeCopyBeforeWrite();
+    _makeWriteableCopy();
+
     final values = _builderMap[key];
     if (values == null) {
       var newValues = _builtMap[key];
@@ -130,34 +130,43 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.removeAll] but returns nothing.
   void removeAll(Object key) {
-    _maybeCopyBeforeWrite();
+    _makeWriteableCopy();
+
+    _builtMap = _builtMap;
     _builderMap[key] = new ListBuilder<V>();
   }
 
   /// As [ListMultimap.clear].
   void clear() {
-    _maybeCopyBeforeWrite();
+    _makeWriteableCopy();
+
     _builtMap.clear();
     _builderMap.clear();
   }
 
   // Internal.
 
+  void _makeWriteableCopy() {
+    if (_builtMapOwner != null) {
+      _builtMap = new Map<K, BuiltList<V>>.from(_builtMap);
+      _builtMapOwner = null;
+    }
+  }
+
   ListMultimapBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
 
-  void _replaceFromBuiltListMultimap(
-      BuiltListMultimap<K, V> builtListMultimap) {
-    _copyBeforeWrite = true;
-    _builtListMultimap = builtListMultimap;
+  void _setOwner(BuiltListMultimap<K, V> builtListMultimap) {
+    _builtMapOwner = builtListMultimap;
     _builtMap = builtListMultimap._map;
+    _builderMap = new Map<K, ListBuilder<V>>();
   }
 
-  void _replaceWithCopyAndCheck(Iterable keys, Function lookup) {
-    _copyBeforeWrite = false;
-    _builtListMultimap = null;
+  void _setWithCopyAndCheck(Iterable keys, Function lookup) {
+    _builtMapOwner = null;
     _builtMap = new Map<K, BuiltList<V>>();
+    _builderMap = new Map<K, ListBuilder<V>>();
 
     for (final key in keys) {
       if (key is! K) {
@@ -168,13 +177,6 @@ class ListMultimapBuilder<K, V> {
         add(key, value);
       }
     }
-  }
-
-  void _maybeCopyBeforeWrite() {
-    if (!_copyBeforeWrite) return;
-    _copyBeforeWrite = false;
-    _builtListMultimap = null;
-    _builtMap = new Map<K, BuiltList<V>>.from(_builtMap);
   }
 
   void _checkGenericTypeParameter() {

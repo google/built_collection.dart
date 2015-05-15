@@ -12,9 +12,8 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
-  bool _copyBeforeWrite;
-  BuiltSet<E> _builtSet;
   Set<E> _set;
+  BuiltSet<E> _setOwner;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -34,11 +33,10 @@ class SetBuilder<E> {
   /// The `SetBuilder` can be modified again and used to create any number
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
-    if (_builtSet == null) {
-      _copyBeforeWrite = true;
-      _builtSet = new BuiltSet<E>._withSafeSet(_set);
+    if (_setOwner == null) {
+      _setOwner = new BuiltSet<E>._withSafeSet(_set);
     }
-    return _builtSet;
+    return _setOwner;
   }
 
   /// Applies a function to `this`.
@@ -49,14 +47,14 @@ class SetBuilder<E> {
   /// Replaces all elements with elements from an [Iterable].
   void replace(Iterable iterable) {
     if (iterable is BuiltSet<E>) {
-      _replaceFromBuiltSet(iterable);
+      _withOwner(iterable);
     } else {
       // Can't use addAll because it requires an Iterable<E>.
       final Set<E> set = new Set<E>();
       for (final element in iterable) {
         set.add(element);
       }
-      _replaceFromSafeSet(set);
+      _setSafeSet(set);
     }
   }
 
@@ -65,85 +63,72 @@ class SetBuilder<E> {
   /// As [Set.add].
   void add(E value) {
     _checkElement(value);
-    _maybeCopyBeforeWrite();
-    _set.add(value);
+    _safeSet.add(value);
   }
 
   /// As [Set.addAll].
   void addAll(Iterable<E> iterable) {
     _checkElements(iterable);
-    _maybeCopyBeforeWrite();
-    _set.addAll(iterable);
+    _safeSet.addAll(iterable);
   }
 
   /// As [Set.clear].
   void clear() {
-    _maybeCopyBeforeWrite();
-    _set.clear();
+    _safeSet.clear();
   }
 
   /// As [Set.remove] but returns nothing.
   void remove(Object value) {
-    _maybeCopyBeforeWrite();
-    _set.remove(value);
+    _safeSet.remove(value);
   }
 
   /// As [Set.removeWhere].
   void removeWhere(bool test(E element)) {
-    _maybeCopyBeforeWrite();
-    _set.removeWhere(test);
+    _safeSet.removeWhere(test);
   }
 
   /// As [Set.retainWhere].
   void retainWhere(bool test(E element)) {
-    _maybeCopyBeforeWrite();
-    _set.retainWhere(test);
+    _safeSet.retainWhere(test);
   }
 
   // Based on Iterable.
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    _set = _set.map(f).toSet();
+    _setSafeSet(_set.map(f).toSet());
     _checkElements(_set);
-    _copyBeforeWrite = false;
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
   void where(bool test(E element)) {
-    _set = _set.where(test).toSet();
-    _copyBeforeWrite = false;
+    _setSafeSet(_set.where(test).toSet());
   }
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    _set = _set.expand(f).toSet();
+    _setSafeSet(_set.expand(f).toSet());
     _checkElements(_set);
-    _copyBeforeWrite = false;
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.
   void take(int n) {
-    _set = _set.take(n).toSet();
-    _copyBeforeWrite = false;
+    _setSafeSet(_set.take(n).toSet());
   }
 
   /// As [Iterable.takeWhile], but updates the builder in place. Returns nothing.
   void takeWhile(bool test(E value)) {
-    _set = _set.takeWhile(test).toSet();
-    _copyBeforeWrite = false;
+    _setSafeSet(_set.takeWhile(test).toSet());
   }
 
   /// As [Iterable.skip], but updates the builder in place. Returns nothing.
   void skip(int n) {
-    _set = _set.skip(n).toSet();
-    _copyBeforeWrite = false;
+    _setSafeSet(_set.skip(n).toSet());
   }
 
   /// As [Iterable.skipWhile], but updates the builder in place. Returns nothing.
   void skipWhile(bool test(E value)) {
-    _set = _set.skipWhile(test).toSet();
-    _copyBeforeWrite = false;
+    _setSafeSet(_set.skipWhile(test).toSet());
   }
 
   // Internal.
@@ -152,23 +137,22 @@ class SetBuilder<E> {
     _checkGenericTypeParameter();
   }
 
-  void _replaceFromBuiltSet(BuiltSet<E> builtSet) {
-    _copyBeforeWrite = true;
-    _builtSet = builtSet;
-    _set = builtSet._set;
+  void _withOwner(BuiltSet<E> setOwner) {
+    _set = setOwner._set;
+    _setOwner = setOwner;
   }
 
-  void _replaceFromSafeSet(Set<E> set) {
-    _copyBeforeWrite = false;
-    _builtSet = null;
+  void _setSafeSet(Set<E> set) {
+    _setOwner = null;
     _set = set;
   }
 
-  void _maybeCopyBeforeWrite() {
-    if (!_copyBeforeWrite) return;
-    _copyBeforeWrite = false;
-    _builtSet = null;
-    _set = new Set<E>.from(_set);
+  Set<E> get _safeSet {
+    if (_setOwner != null) {
+      _set = new Set<E>.from(_set);
+      _setOwner = null;
+    }
+    return _set;
   }
 
   void _checkGenericTypeParameter() {

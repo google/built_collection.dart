@@ -1,9 +1,11 @@
 # Changelog
 
-## unreleased
+## 0.3.0
 
+- Bug fix: fix Iterable "update in place" methods of BuiltList and BuiltSet so they discard original list or set.
 - Make keys and values stable for BuiltMap and BuiltMultimap.
 - Make repeated builds return identical instances for BuiltList, BuiltMap, BuiltSet.
+- Add 'replace' methods.
 
 ## 0.2.0
 

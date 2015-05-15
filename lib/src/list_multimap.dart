@@ -8,7 +8,6 @@ import 'package:quiver/collection.dart' show ListMultimap;
 import 'package:quiver/core.dart' show hashObjects, hash2;
 
 import 'internal/copy_on_write_map.dart';
-import 'internal/unused_class.dart';
 
 import 'list.dart';
 

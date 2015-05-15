@@ -5,8 +5,8 @@
 library built_collection.set;
 
 import 'package:quiver/core.dart' show hashObjects, hash2;
+
 import 'internal/copy_on_write_set.dart';
-import 'internal/unused_class.dart';
 
 part 'set/built_set.dart';
 part 'set/set_builder.dart';

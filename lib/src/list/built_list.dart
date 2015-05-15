@@ -215,7 +215,7 @@ class BuiltList<E> implements Iterable<E> {
   }
 
   void _checkGenericTypeParameter() {
-    if (UnusedClass is E && E != Object) {
+    if (null is E && E != Object) {
       throw new UnsupportedError(
           'explicit element type required, for example "new BuiltList<int>"');
     }

@@ -237,6 +237,11 @@ void main() {
           .toMap(), {0: '0', 1: '1'});
     });
 
+    test('returns identical BuiltMap on repeated build', () {
+      final mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(mapBuilder.build(), same(mapBuilder.build()));
+    });
+
     // Map.
 
     test('does not implement Map', () {

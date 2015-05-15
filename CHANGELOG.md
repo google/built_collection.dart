@@ -3,6 +3,7 @@
 ## unreleased
 
 - Make keys and values stable for BuiltMap and BuiltMultimap.
+- Make repeated builds return identical instances for BuiltList, BuiltMap, BuiltSet.
 
 ## 0.2.0
 

@@ -38,9 +38,11 @@ class ListBuilder<E> {
   /// The `ListBuilder` can be modified again and used to create any number
   /// of `BuiltList`s.
   BuiltList<E> build() {
-    if (_builtList != null) return _builtList;
-    _copyBeforeWrite = true;
-    return new BuiltList<E>._withSafeList(_list);
+    if (_builtList == null) {
+      _copyBeforeWrite = true;
+      _builtList = new BuiltList<E>._withSafeList(_list);
+    }
+    return _builtList;
   }
 
   /// Applies a function to `this`.

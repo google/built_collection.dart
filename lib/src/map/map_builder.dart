@@ -43,9 +43,11 @@ class MapBuilder<K, V> {
   /// The `MapBuilder` can be modified again and used to create any number
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
-    if (_builtMap != null) return _builtMap;
-    _copyBeforeWrite = true;
-    return new BuiltMap<K, V>._withSafeMap(_map);
+    if (_builtMap == null) {
+      _copyBeforeWrite = true;
+      _builtMap = new BuiltMap<K, V>._withSafeMap(_map);
+    }
+    return _builtMap;
   }
 
   /// Applies a function to `this`.

@@ -212,6 +212,8 @@ void main() {
         ..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
       expect((new BuiltListMultimap<int, String>({1: ['1'], 2: ['2', '3']})
           .toBuilder()..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
+      expect(new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
+          .remove(2, '3'), isNull);
     });
 
     test('has a method like ListMultimap.removeAll that returns nothing', () {
@@ -219,6 +221,8 @@ void main() {
         ..removeAll(2)).build().toMap(), {1: ['1']});
       expect((new BuiltListMultimap<int, String>({1: ['1'], 2: ['2', '3']})
           .toBuilder()..removeAll(2)).build().toMap(), {1: ['1']});
+      expect(new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
+          .removeAll(2), isNull);
     });
 
     test('has a method like ListMultimap.clear', () {

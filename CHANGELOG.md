@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- Add BuiltSetMultimap.
+
 ## 0.3.1
 
 - Fix "part of" statement.

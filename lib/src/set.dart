@@ -11,6 +11,7 @@ import 'internal/copy_on_write_set.dart';
 part 'set/built_set.dart';
 part 'set/set_builder.dart';
 
+// Internal only, for testing.
 class OverriddenHashcodeBuiltSet<T> extends BuiltSet<T> {
   final int _hashCode;
 

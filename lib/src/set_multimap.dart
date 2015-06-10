@@ -2,24 +2,23 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-library built_collection.list_multimap;
+library built_collection.set_multimap;
 
-import 'package:quiver/collection.dart' show ListMultimap;
+import 'package:quiver/collection.dart' show SetMultimap;
 import 'package:quiver/core.dart' show hashObjects, hash2;
 
 import 'internal/copy_on_write_map.dart';
 
-import 'list.dart';
+import 'set.dart';
 
-part 'list_multimap/built_list_multimap.dart';
-part 'list_multimap/list_multimap_builder.dart';
+part 'set_multimap/built_set_multimap.dart';
+part 'set_multimap/set_multimap_builder.dart';
 
 // Internal only, for testing.
-class OverriddenHashcodeBuiltListMultimap<K, V>
-    extends BuiltListMultimap<K, V> {
+class OverriddenHashcodeBuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
   final int _hashCode;
 
-  OverriddenHashcodeBuiltListMultimap(map, this._hashCode)
+  OverriddenHashcodeBuiltSetMultimap(map, this._hashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
   int get hashCode => _hashCode;

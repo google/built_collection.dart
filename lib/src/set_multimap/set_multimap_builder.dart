@@ -2,82 +2,82 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection.list_multimap;
+part of built_collection.set_multimap;
 
-/// The Built Collection builder for [BuiltListMultimap].
+/// The Built Collection builder for [BuiltSetMultimap].
 ///
-/// It implements the mutating part of the [ListMultimap] interface.
+/// It implements the mutating part of the [SetMultimap] interface.
 ///
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class ListMultimapBuilder<K, V> {
-  // BuiltLists copied from another instance so they can be reused directly for
+class SetMultimapBuilder<K, V> {
+  // BuiltSets copied from another instance so they can be reused directly for
   // keys without changes.
-  Map<K, BuiltList<V>> _builtMap;
+  Map<K, BuiltSet<V>> _builtMap;
   // Instance that _builtMap belongs to. If present, _builtMap must not be
   // mutated.
-  BuiltListMultimap<K, V> _builtMapOwner;
-  // ListBuilders for keys that are being changed.
-  Map<K, ListBuilder<V>> _builderMap;
+  BuiltSetMultimap<K, V> _builtMapOwner;
+  // SetBuilders for keys that are being changed.
+  Map<K, SetBuilder<V>> _builderMap;
 
-  /// Instantiates with elements from a [Map], [ListMultimap] or
-  /// [BuiltListMultimap].
+  /// Instantiates with elements from a [Map], [SetMultimap] or
+  /// [BuiltSetMultimap].
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new ListMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
+  /// Wrong: `new SetMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
   ///
-  /// Right: `new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
+  /// Right: `new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
-  factory ListMultimapBuilder([multimap = const {}]) {
-    return new ListMultimapBuilder<K, V>._uninitialized()..replace(multimap);
+  factory SetMultimapBuilder([multimap = const {}]) {
+    return new SetMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
 
-  /// Converts to a [BuiltListMultimap].
+  /// Converts to a [BuiltSetMultimap].
   ///
-  /// The `ListMultimapBuilder` can be modified again and used to create any number
-  /// of `BuiltListMultimap`s.
-  BuiltListMultimap<K, V> build() {
+  /// The `SetMultimapBuilder` can be modified again and used to create any number
+  /// of `BuiltSetMultimap`s.
+  BuiltSetMultimap<K, V> build() {
     if (_builtMapOwner == null) {
       for (final key in _builderMap.keys) {
-        final builtList = _builderMap[key].build();
-        if (builtList.isEmpty) {
+        final builtSet = _builderMap[key].build();
+        if (builtSet.isEmpty) {
           _builtMap.remove(key);
         } else {
-          _builtMap[key] = builtList;
+          _builtMap[key] = builtSet;
         }
       }
 
-      _builtMapOwner = new BuiltListMultimap<K, V>._withSafeMap(_builtMap);
+      _builtMapOwner = new BuiltSetMultimap<K, V>._withSafeMap(_builtMap);
     }
     return _builtMapOwner;
   }
 
   /// Applies a function to `this`.
-  void update(updates(ListMultimapBuilder<K, V> builder)) {
+  void update(updates(SetMultimapBuilder<K, V> builder)) {
     updates(this);
   }
 
-  /// Replaces all elements with elements from a [Map], [ListMultimap] or
-  /// [BuiltListMultimap].
+  /// Replaces all elements with elements from a [Map], [SetMultimap] or
+  /// [BuiltSetMultimap].
   void replace(multimap) {
-    if (multimap is BuiltListMultimap<K, V>) {
+    if (multimap is BuiltSetMultimap<K, V>) {
       _setOwner(multimap);
     } else if (multimap is Map ||
-        multimap is ListMultimap ||
-        multimap is BuiltListMultimap) {
+        multimap is SetMultimap ||
+        multimap is BuiltSetMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
       throw new ArgumentError(
-          'expected Map, ListMultimap or BuiltListMultimap, got ${multimap.runtimeType}');
+          'expected Map, SetMultimap or BuiltSetMultimap, got ${multimap.runtimeType}');
     }
   }
 
-  // Based on ListMultimap.
+  // Based on SetMultimap.
 
-  /// As [ListMultimap.add].
+  /// As [SetMultimap.add].
   void add(K key, V value) {
     _makeWriteableCopy();
     _checkKey(key);
@@ -85,7 +85,7 @@ class ListMultimapBuilder<K, V> {
     _getValuesBuilder(key).add(value);
   }
 
-  /// As [ListMultimap.addValues].
+  /// As [SetMultimap.addValues].
   void addValues(K key, Iterable<V> values) {
     // _disown is called in add.
     values.forEach((value) {
@@ -93,29 +93,29 @@ class ListMultimapBuilder<K, V> {
     });
   }
 
-  /// As [ListMultimap.addAll].
-  void addAll(ListMultimap<K, V> other) {
+  /// As [SetMultimap.addAll].
+  void addAll(SetMultimap<K, V> other) {
     // _disown is called in add.
     other.forEach((key, value) {
       add(key, value);
     });
   }
 
-  /// As [ListMultimap.remove] but returns nothing.
+  /// As [SetMultimap.remove] but returns nothing.
   void remove(Object key, V value) {
     _makeWriteableCopy();
     _getValuesBuilder(key).remove(value);
   }
 
-  /// As [ListMultimap.removeAll] but returns nothing.
+  /// As [SetMultimap.removeAll] but returns nothing.
   void removeAll(Object key) {
     _makeWriteableCopy();
 
     _builtMap = _builtMap;
-    _builderMap[key] = new ListBuilder<V>();
+    _builderMap[key] = new SetBuilder<V>();
   }
 
-  /// As [ListMultimap.clear].
+  /// As [SetMultimap.clear].
   void clear() {
     _makeWriteableCopy();
 
@@ -125,12 +125,12 @@ class ListMultimapBuilder<K, V> {
 
   // Internal.
 
-  ListBuilder<V> _getValuesBuilder(K key) {
+  SetBuilder<V> _getValuesBuilder(K key) {
     var result = _builderMap[key];
     if (result == null) {
       final builtValues = _builtMap[key];
       if (builtValues == null) {
-        result = new ListBuilder<V>();
+        result = new SetBuilder<V>();
       } else {
         result = builtValues.toBuilder();
       }
@@ -141,25 +141,25 @@ class ListMultimapBuilder<K, V> {
 
   void _makeWriteableCopy() {
     if (_builtMapOwner != null) {
-      _builtMap = new Map<K, BuiltList<V>>.from(_builtMap);
+      _builtMap = new Map<K, BuiltSet<V>>.from(_builtMap);
       _builtMapOwner = null;
     }
   }
 
-  ListMultimapBuilder._uninitialized() {
+  SetMultimapBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
 
-  void _setOwner(BuiltListMultimap<K, V> builtListMultimap) {
-    _builtMapOwner = builtListMultimap;
-    _builtMap = builtListMultimap._map;
-    _builderMap = new Map<K, ListBuilder<V>>();
+  void _setOwner(BuiltSetMultimap<K, V> builtSetMultimap) {
+    _builtMapOwner = builtSetMultimap;
+    _builtMap = builtSetMultimap._map;
+    _builderMap = new Map<K, SetBuilder<V>>();
   }
 
   void _setWithCopyAndCheck(Iterable keys, Function lookup) {
     _builtMapOwner = null;
-    _builtMap = new Map<K, BuiltList<V>>();
-    _builderMap = new Map<K, ListBuilder<V>>();
+    _builtMap = new Map<K, BuiltSet<V>>();
+    _builderMap = new Map<K, SetBuilder<V>>();
 
     for (final key in keys) {
       if (key is! K) {
@@ -175,11 +175,11 @@ class ListMultimapBuilder<K, V> {
   void _checkGenericTypeParameter() {
     if (null is K && K != Object) {
       throw new UnsupportedError(
-          'explicit key type required, for example "new ListMultimapBuilder<int, int>"');
+          'explicit key type required, for example "new SetMultimapBuilder<int, int>"');
     }
     if (null is V && V != Object) {
       throw new UnsupportedError('explicit value type required,'
-          ' for example "new ListMultimapBuilder<int, int>"');
+          ' for example "new SetMultimapBuilder<int, int>"');
     }
   }
 

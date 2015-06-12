@@ -14,6 +14,9 @@ import 'map/built_map_test.dart' as built_map_test;
 import 'map/map_builder_test.dart' as map_builder_test;
 import 'set/built_set_test.dart' as built_set_test;
 import 'set/set_builder_test.dart' as set_builder_test;
+import 'set_multimap/built_set_multimap_test.dart' as built_set_multimap_test;
+import 'set_multimap/set_multimap_builder_test.dart'
+    as set_multimap_builder_test;
 
 void main() {
   built_list_test.main();
@@ -27,4 +30,7 @@ void main() {
 
   built_set_test.main();
   set_builder_test.main();
+
+  built_set_multimap_test.main();
+  set_multimap_builder_test.main();
 }

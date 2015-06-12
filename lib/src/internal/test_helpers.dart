@@ -8,6 +8,7 @@ import '../list.dart';
 import '../list_multimap.dart';
 import '../map.dart';
 import '../set.dart';
+import '../set_multimap.dart';
 
 /// Internal only test helpers.
 class BuiltCollectionTestHelpers {
@@ -25,4 +26,8 @@ class BuiltCollectionTestHelpers {
   static BuiltSet<int> overridenHashcodeBuiltSet(
           Iterable iterable, int hashCode) =>
       new OverriddenHashcodeBuiltSet<int>(iterable, hashCode);
+
+  static BuiltSetMultimap<int, String> overridenHashcodeBuiltSetMultimap(
+          map, int hashCode) =>
+      new OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);
 }

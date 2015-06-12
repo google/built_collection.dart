@@ -13,6 +13,7 @@ import 'internal/copy_on_write_list.dart';
 part 'list/built_list.dart';
 part 'list/list_builder.dart';
 
+// Internal only, for testing.
 class OverriddenHashcodeBuiltList<T> extends BuiltList<T> {
   final int _hashCode;
 

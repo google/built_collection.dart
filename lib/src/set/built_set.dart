@@ -40,7 +40,7 @@ class BuiltSet<E> implements Iterable<E> {
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder toBuilder() => new SetBuilder<E>(this);
+  SetBuilder<E> toBuilder() => new SetBuilder<E>(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
@@ -112,7 +112,7 @@ class BuiltSet<E> implements Iterable<E> {
   Iterable expand(Iterable f(E element)) => _set.expand(f);
 
   @override
-  bool contains(E element) => _set.contains(element);
+  bool contains(Object element) => _set.contains(element);
 
   @override
   void forEach(void f(E element)) => _set.forEach(f);

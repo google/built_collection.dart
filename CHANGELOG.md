@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Fixed missing generics on some return types.
+- Fixed BuiltList and BuiltSet "contains" method, should take Object, not E.
+
 ## 0.4.0
 
 - Add BuiltSetMultimap.

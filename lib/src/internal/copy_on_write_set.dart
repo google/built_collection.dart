@@ -65,7 +65,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   bool get isNotEmpty => _set.isNotEmpty;
 
   @override
-  Iterator get iterator => _set.iterator;
+  Iterator<E> get iterator => _set.iterator;
 
   @override
   String join([String separator = ""]) => _set.join(separator);
@@ -90,16 +90,16 @@ class CopyOnWriteSet<E> implements Set<E> {
   E singleWhere(bool test(E element)) => _set.singleWhere(test);
 
   @override
-  Iterable skip(int count) => _set.skip(count);
+  Iterable<E> skip(int count) => _set.skip(count);
 
   @override
-  Iterable skipWhile(bool test(E value)) => _set.skipWhile(test);
+  Iterable<E> skipWhile(bool test(E value)) => _set.skipWhile(test);
 
   @override
-  Iterable take(int count) => _set.take(count);
+  Iterable<E> take(int count) => _set.take(count);
 
   @override
-  Iterable takeWhile(bool test(E value)) => _set.takeWhile(test);
+  Iterable<E> takeWhile(bool test(E value)) => _set.takeWhile(test);
 
   @override
   List<E> toList({bool growable: true}) => _set.toList(growable: growable);
@@ -108,7 +108,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   Set<E> toSet() => _set.toSet();
 
   @override
-  Iterable where(bool test(E element)) => _set.where(test);
+  Iterable<E> where(bool test(E element)) => _set.where(test);
 
   // Mutating methods: copy first if needed.
 

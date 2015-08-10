@@ -54,7 +54,7 @@ class BuiltSetMultimap<K, V> {
   /// Converts to a [SetMultimapBuilder] for modification.
   ///
   /// The `BuiltSetMultimap` remains immutable and can continue to be used.
-  SetMultimapBuilder toBuilder() => new SetMultimapBuilder<K, V>(this);
+  SetMultimapBuilder<K, V> toBuilder() => new SetMultimapBuilder<K, V>(this);
 
   /// Converts to a [SetMultimapBuilder], applies updates to it, and builds.
   BuiltSetMultimap<K, V> rebuild(updates(SetMultimapBuilder<K, V> builder)) =>

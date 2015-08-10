@@ -24,7 +24,7 @@ class CopyOnWriteList<E> implements List<E> {
   bool any(bool test(E element)) => _list.any(test);
 
   @override
-  Map asMap() => _list.asMap();
+  Map<int, E> asMap() => _list.asMap();
 
   @override
   bool contains(Object element) => _list.contains(element);
@@ -53,7 +53,7 @@ class CopyOnWriteList<E> implements List<E> {
   void forEach(void f(E element)) => _list.forEach(f);
 
   @override
-  Iterable getRange(int start, int end) => _list.getRange(start, end);
+  Iterable<E> getRange(int start, int end) => _list.getRange(start, end);
 
   @override
   int indexOf(E element, [int start = 0]) => _list.indexOf(element, start);
@@ -65,7 +65,7 @@ class CopyOnWriteList<E> implements List<E> {
   bool get isNotEmpty => _list.isNotEmpty;
 
   @override
-  Iterator get iterator => _list.iterator;
+  Iterator<E> get iterator => _list.iterator;
 
   @override
   String join([String separator = ""]) => _list.join(separator);
@@ -87,7 +87,7 @@ class CopyOnWriteList<E> implements List<E> {
   E reduce(E combine(E value, E element)) => _list.reduce(combine);
 
   @override
-  Iterable get reversed => _list.reversed;
+  Iterable<E> get reversed => _list.reversed;
 
   @override
   E get single => _list.single;
@@ -96,19 +96,19 @@ class CopyOnWriteList<E> implements List<E> {
   E singleWhere(bool test(E element)) => _list.singleWhere(test);
 
   @override
-  Iterable skip(int count) => _list.skip(count);
+  Iterable<E> skip(int count) => _list.skip(count);
 
   @override
-  Iterable skipWhile(bool test(E value)) => _list.skipWhile(test);
+  Iterable<E> skipWhile(bool test(E value)) => _list.skipWhile(test);
 
   @override
-  List sublist(int start, [int end]) => _list.sublist(start, end);
+  List<E> sublist(int start, [int end]) => _list.sublist(start, end);
 
   @override
-  Iterable take(int count) => _list.take(count);
+  Iterable<E> take(int count) => _list.take(count);
 
   @override
-  Iterable takeWhile(bool test(E value)) => _list.takeWhile(test);
+  Iterable<E> takeWhile(bool test(E value)) => _list.takeWhile(test);
 
   @override
   List<E> toList({bool growable: true}) => _list.toList(growable: growable);
@@ -117,7 +117,7 @@ class CopyOnWriteList<E> implements List<E> {
   Set<E> toSet() => _list.toSet();
 
   @override
-  Iterable where(bool test(E element)) => _list.where(test);
+  Iterable<E> where(bool test(E element)) => _list.where(test);
 
   // Mutating methods: copy first if needed.
 

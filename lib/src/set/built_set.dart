@@ -46,6 +46,9 @@ class BuiltSet<E> implements Iterable<E> {
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
       (toBuilder()..update(updates)).build();
 
+  /// Converts to a [BuiltList].
+  BuiltList<E> toBuiltList() => new BuiltList<E>(this);
+
   /// Deep hashCode.
   ///
   /// A `BuiltSet` is only equal to another `BuiltSet` with equal elements in

@@ -5,6 +5,7 @@
 - Fix missing generics on some return types.
 - Fix BuiltList and BuiltSet "contains" method, should take Object, not E.
 - Add removeAll and retainAll methods to SetBuilder.
+- Add BuiltList.toBuiltSet() and BuiltSet.toBuiltList().
 
 ## 0.4.0
 

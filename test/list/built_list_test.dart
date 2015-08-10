@@ -132,6 +132,10 @@ void main() {
       expect(new BuiltList<int>([1, 2, 3]).toString(), '[1, 2, 3]');
     });
 
+    test('converts to BuiltSet with toBuiltSet', () {
+      expect(new BuiltList<int>([0, 1, 2]).toBuiltSet(), [0, 1, 2]);
+    });
+
     // Lazy copies.
 
     test('reuses BuiltList instances of the same type', () {

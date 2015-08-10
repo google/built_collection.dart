@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-- Fixed missing generics on some return types.
-- Fixed BuiltList and BuiltSet "contains" method, should take Object, not E.
+- Fix missing generics on some return types.
+- Fix BuiltList and BuiltSet "contains" method, should take Object, not E.
+- Add removeAll and retainAll methods to SetBuilder.
 
 ## 0.4.0
 

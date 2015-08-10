@@ -111,11 +111,23 @@ void main() {
       expect(new SetBuilder<int>([1, 2]).remove(2), isNull);
     });
 
+    test('has a method like Set.removeAll', () {
+      expect((new SetBuilder<int>([1, 2])..removeAll([2])).build(), [1]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..removeAll([2])).build(), [1]);
+    });
+
     test('has a method like Set.removeWhere', () {
       expect((new SetBuilder<int>([1, 2])..removeWhere((x) => x == 1)).build(),
           [2]);
       expect((new BuiltSet<int>([1, 2]).toBuilder()..removeWhere((x) => x == 1))
           .build(), [2]);
+    });
+
+    test('has a method like Set.retainAll', () {
+      expect((new SetBuilder<int>([1, 2])..retainAll([1])).build(), [1]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..retainAll([1])).build(), [1]);
     });
 
     test('has a method like Set.retainWhere', () {

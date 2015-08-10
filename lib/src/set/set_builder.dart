@@ -82,9 +82,19 @@ class SetBuilder<E> {
     _safeSet.remove(value);
   }
 
+  /// As [Set.removeAll].
+  void removeAll(Iterable<Object> elements) {
+    _safeSet.removeAll(elements);
+  }
+
   /// As [Set.removeWhere].
   void removeWhere(bool test(E element)) {
     _safeSet.removeWhere(test);
+  }
+
+  /// As [Set.retainAll].
+  void retainAll(Iterable<Object> elements) {
+    _safeSet.retainAll(elements);
   }
 
   /// As [Set.retainWhere].

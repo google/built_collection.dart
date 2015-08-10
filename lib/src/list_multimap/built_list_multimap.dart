@@ -54,7 +54,7 @@ class BuiltListMultimap<K, V> {
   /// Converts to a [ListMultimapBuilder] for modification.
   ///
   /// The `BuiltListMultimap` remains immutable and can continue to be used.
-  ListMultimapBuilder toBuilder() => new ListMultimapBuilder<K, V>(this);
+  ListMultimapBuilder<K, V> toBuilder() => new ListMultimapBuilder<K, V>(this);
 
   /// Converts to a [ListMultimapBuilder], applies updates to it, and builds.
   BuiltListMultimap<K, V> rebuild(updates(ListMultimapBuilder<K, V> builder)) =>

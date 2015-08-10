@@ -40,7 +40,7 @@ class BuiltList<E> implements Iterable<E> {
   /// Converts to a [ListBuilder] for modification.
   ///
   /// The `BuiltList` remains immutable and can continue to be used.
-  ListBuilder toBuilder() => new ListBuilder<E>(this);
+  ListBuilder<E> toBuilder() => new ListBuilder<E>(this);
 
   /// Converts to a [ListBuilder], applies updates to it, and builds.
   BuiltList<E> rebuild(updates(ListBuilder<E> builder)) =>
@@ -118,7 +118,7 @@ class BuiltList<E> implements Iterable<E> {
   Iterable expand(Iterable f(E element)) => _list.expand(f);
 
   @override
-  bool contains(E element) => _list.contains(element);
+  bool contains(Object element) => _list.contains(element);
 
   @override
   void forEach(void f(E element)) => _list.forEach(f);

@@ -31,13 +31,13 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   bool get isNotEmpty => _map.isNotEmpty;
 
   @override
-  Iterable get keys => _map.keys;
+  Iterable<K> get keys => _map.keys;
 
   @override
   int get length => _map.length;
 
   @override
-  Iterable get values => _map.values;
+  Iterable<V> get values => _map.values;
 
   // Mutating methods: copy first if needed.
 

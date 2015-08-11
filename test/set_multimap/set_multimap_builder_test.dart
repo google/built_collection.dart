@@ -37,12 +37,18 @@ void main() {
     });
 
     test('throws on null key addAll', () {
-      expect(() => new SetMultimapBuilder<int, String>().addAll({null: ['0']}),
+      expect(
+          () => new SetMultimapBuilder<int, String>().addAll({
+                null: ['0']
+              }),
           throws);
     });
 
     test('throws on null value addAll', () {
-      expect(() => new SetMultimapBuilder<int, String>().addAll({0: [null]}),
+      expect(
+          () => new SetMultimapBuilder<int, String>().addAll({
+                0: [null]
+              }),
           throws);
     });
 
@@ -81,18 +87,34 @@ void main() {
     });
 
     test('has replace method that replaces all data', () {
-      expect((new SetMultimapBuilder<int, String>()
-        ..replace({1: ['1'], 2: ['2']})).build().toMap(), {1: ['1'], 2: ['2']});
+      expect(
+          (new SetMultimapBuilder<int, String>()
+            ..replace({
+              1: ['1'],
+              2: ['2']
+            })).build().toMap(),
+          {
+        1: ['1'],
+        2: ['2']
+      });
     });
 
     // Lazy copies.
 
     test('does not mutate BuiltSetMultimap following reuse of underlying Map',
         () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1'],
+        2: ['2']
+      });
       final multimapBuilder = multimap.toBuilder();
       multimapBuilder.add(3, '3');
-      expect(multimap.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          multimap.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
     });
 
     test('converts to BuiltSetMultimap without copying', () {
@@ -110,60 +132,101 @@ void main() {
     });
 
     test('does not mutate BuiltSetMultimap following mutates after build', () {
-      final multimapBuilder =
-          new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2']});
+      final multimapBuilder = new SetMultimapBuilder<int, String>({
+        1: ['1'],
+        2: ['2']
+      });
 
       final map1 = multimapBuilder.build();
-      expect(map1.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          map1.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
 
       multimapBuilder.add(3, '3');
-      expect(map1.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          map1.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
 
       multimapBuilder.build();
-      expect(map1.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          map1.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
 
       multimapBuilder.add(4, '4');
-      expect(map1.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          map1.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
 
       multimapBuilder.build();
-      expect(map1.toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          map1.toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
     });
 
     test('returns identical BuiltSetMultimap on repeated build', () {
-      final multimapBuilder =
-          new SetMultimapBuilder<int, String>({1: ['1', '2', '3']});
+      final multimapBuilder = new SetMultimapBuilder<int, String>({
+        1: ['1', '2', '3']
+      });
       expect(multimapBuilder.build(), same(multimapBuilder.build()));
     });
 
     // Modification of existing data.
 
     test('adds to copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1']
+      });
       final multimapBuilder = multimap.toBuilder();
-      expect((multimapBuilder..add(1, '2')).build().toMap(), {1: ['1', '2']});
+      expect((multimapBuilder..add(1, '2')).build().toMap(), {
+        1: ['1', '2']
+      });
     });
 
     test('removes from copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1', '2', '3']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1', '2', '3']
+      });
       final multimapBuilder = multimap.toBuilder();
-      expect(
-          (multimapBuilder..remove(1, '2')).build().toMap(), {1: ['1', '3']});
+      expect((multimapBuilder..remove(1, '2')).build().toMap(), {
+        1: ['1', '3']
+      });
     });
 
     test('removes from copied sets to empty', () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1']
+      });
       final multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..remove(1, '1')).build().toMap(), {});
     });
 
     test('removes all from copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1', '2', '3']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1', '2', '3']
+      });
       final multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..removeAll(1)).build().toMap(), {});
     });
 
     test('clears copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({1: ['1', '2', '3']});
+      final multimap = new BuiltSetMultimap<int, String>({
+        1: ['1', '2', '3']
+      });
       final multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..clear()).build().toMap(), {});
     });
@@ -171,61 +234,129 @@ void main() {
     // Map.
 
     test('has a method like SetMultimap.add', () {
-      expect((new SetMultimapBuilder<int, String>({1: ['1']})..add(2, '2'))
-          .build()
-          .toMap(), ({1: ['1'], 2: ['2']}));
-      expect((new BuiltSetMultimap<int, String>({1: ['1']}).toBuilder()
-        ..add(2, '2')).build().toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          (new SetMultimapBuilder<int, String>({
+            1: ['1']
+          })..add(2, '2')).build().toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
+      expect(
+          (new BuiltSetMultimap<int, String>({
+            1: ['1']
+          }).toBuilder()..add(2, '2')).build().toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
     });
 
     test('has a method like SetMultimap.addValues', () {
-      expect((new SetMultimapBuilder<int, String>({1: ['1']})
-        ..addValues(2, ['2', '3'])).build().toMap(), ({
-        1: ['1'],
-        2: ['2', '3']
-      }));
-      expect((new BuiltSetMultimap<int, String>({1: ['1']}).toBuilder()
-        ..addValues(2, ['2', '3'])).build().toMap(), ({
-        1: ['1'],
-        2: ['2', '3']
-      }));
+      expect(
+          (new SetMultimapBuilder<int, String>({
+            1: ['1']
+          })..addValues(2, ['2', '3'])).build().toMap(),
+          ({
+            1: ['1'],
+            2: ['2', '3']
+          }));
+      expect(
+          (new BuiltSetMultimap<int, String>({
+            1: ['1']
+          }).toBuilder()..addValues(2, ['2', '3'])).build().toMap(),
+          ({
+            1: ['1'],
+            2: ['2', '3']
+          }));
     });
 
     test('has a method like SetMultimap.addAll', () {
       final mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       mutableMultimap.add(2, '2');
-      expect((new SetMultimapBuilder<int, String>()..addAll(mutableMultimap))
-          .build()
-          .toMap(), ({1: ['1'], 2: ['2']}));
-      expect((new BuiltSetMultimap<int, String>().toBuilder()
-        ..addAll(mutableMultimap)).build().toMap(), ({1: ['1'], 2: ['2']}));
+      expect(
+          (new SetMultimapBuilder<int, String>()..addAll(mutableMultimap))
+              .build()
+              .toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
+      expect(
+          (new BuiltSetMultimap<int, String>().toBuilder()
+            ..addAll(mutableMultimap)).build().toMap(),
+          ({
+            1: ['1'],
+            2: ['2']
+          }));
     });
 
     test('has a method like SetMultimap.remove that returns nothing', () {
-      expect((new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
-        ..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
-      expect((new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2', '3']})
-          .toBuilder()..remove(2, '3')).build().toMap(), {1: ['1'], 2: ['2']});
-      expect(new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
-          .remove(2, '3'), isNull);
+      expect(
+          (new SetMultimapBuilder<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          })..remove(2, '3')).build().toMap(),
+          {
+        1: ['1'],
+        2: ['2']
+      });
+      expect(
+          (new BuiltSetMultimap<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          }).toBuilder()..remove(2, '3')).build().toMap(),
+          {
+        1: ['1'],
+        2: ['2']
+      });
+      expect(
+          new SetMultimapBuilder<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          }).remove(2, '3'),
+          isNull);
     });
 
     test('has a method like SetMultimap.removeAll that returns nothing', () {
-      expect((new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
-        ..removeAll(2)).build().toMap(), {1: ['1']});
-      expect((new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2', '3']})
-          .toBuilder()..removeAll(2)).build().toMap(), {1: ['1']});
-      expect(new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2', '3']})
-          .removeAll(2), isNull);
+      expect(
+          (new SetMultimapBuilder<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          })..removeAll(2)).build().toMap(),
+          {
+        1: ['1']
+      });
+      expect(
+          (new BuiltSetMultimap<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          }).toBuilder()..removeAll(2)).build().toMap(),
+          {
+        1: ['1']
+      });
+      expect(
+          new SetMultimapBuilder<int, String>({
+            1: ['1'],
+            2: ['2', '3']
+          }).removeAll(2),
+          isNull);
     });
 
     test('has a method like SetMultimap.clear', () {
-      expect((new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2']})
-        ..clear()).build().toMap(), {});
       expect(
-          (new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2']}).toBuilder()
-        ..clear()).build().toMap(), {});
+          (new SetMultimapBuilder<int, String>({
+            1: ['1'],
+            2: ['2']
+          })..clear()).build().toMap(),
+          {});
+      expect(
+          (new BuiltSetMultimap<int, String>({
+            1: ['1'],
+            2: ['2']
+          }).toBuilder()..clear()).build().toMap(),
+          {});
     });
   });
 }

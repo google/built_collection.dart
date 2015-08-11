@@ -87,15 +87,17 @@ void main() {
     });
 
     test('can be converted to MapBuilder<K, V> and back to Map<K, V>', () {
-      expect(new BuiltMap<int, String>()
-          .toBuilder()
-          .build() is BuiltMap<int, String>, isTrue);
+      expect(
+          new BuiltMap<int, String>().toBuilder().build()
+          is BuiltMap<int, String>,
+          isTrue);
       expect(
           new BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, int>,
           isFalse);
-      expect(new BuiltMap<int, String>()
-          .toBuilder()
-          .build() is BuiltMap<String, String>, isFalse);
+      expect(
+          new BuiltMap<int, String>().toBuilder().build()
+          is BuiltMap<String, String>,
+          isFalse);
     });
 
     test('throws on null keys', () {
@@ -146,22 +148,28 @@ void main() {
     });
 
     test('compares not equal to different length BuiltMap', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
-          new BuiltMap<int, String>({1: '1', 2: '2'}), isFalse);
+      expect(
+          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
+              new BuiltMap<int, String>({1: '1', 2: '2'}),
+          isFalse);
     });
 
     test('compares not equal to different hashcode BuiltMap', () {
-      expect(BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
-              {1: '1', 2: '2', 3: '3'}, 0) ==
+      expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
-              {1: '1', 2: '2', 3: '3'}, 1), isFalse);
+                  {1: '1', 2: '2', 3: '3'}, 0) ==
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 3: '3'}, 1),
+          isFalse);
     });
 
     test('compares not equal to different content BuiltMap', () {
-      expect(BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
-              {1: '1', 2: '2', 3: '3'}, 0) ==
+      expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
-              {1: '1', 2: '2', 4: '4'}, 0), isFalse);
+                  {1: '1', 2: '2', 3: '3'}, 0) ==
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 4: '4'}, 0),
+          isFalse);
     });
 
     test('provides toString() for debugging', () {
@@ -232,9 +240,11 @@ void main() {
     });
 
     test('has rebuild method', () {
-      expect(new BuiltMap<int, String>({0: '0'})
-          .rebuild((b) => b[1] = '1')
-          .toMap(), {0: '0', 1: '1'});
+      expect(
+          new BuiltMap<int, String>({0: '0'})
+              .rebuild((b) => b[1] = '1')
+              .toMap(),
+          {0: '0', 1: '1'});
     });
 
     test('returns identical BuiltMap on repeated build', () {
@@ -264,10 +274,14 @@ void main() {
     });
 
     test('has a method like Map.containsValue', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
-          .containsValue('3'), isTrue);
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
-          .containsValue('4'), isFalse);
+      expect(
+          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
+              .containsValue('3'),
+          isTrue);
+      expect(
+          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
+              .containsValue('4'),
+          isFalse);
     });
 
     test('has a method like Map.forEach', () {
@@ -288,11 +302,8 @@ void main() {
     });
 
     test('has a method like Map.values', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).values, [
-        '1',
-        '2',
-        '3'
-      ]);
+      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).values,
+          ['1', '2', '3']);
     });
 
     test('has stable keys', () {

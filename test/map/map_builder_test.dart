@@ -78,9 +78,28 @@ void main() {
     });
 
     test('has replace method that replaces all data', () {
-      expect((new MapBuilder<int, String>()..replace({1: '1', 2: '2'}))
-          .build()
-          .toMap(), {1: '1', 2: '2'});
+      expect(
+          (new MapBuilder<int, String>()..replace({1: '1', 2: '2'}))
+              .build()
+              .toMap(),
+          {1: '1', 2: '2'});
+    });
+
+    test('has a method addIterable like Map.fromIterable', () {
+      expect(
+          (new MapBuilder<int, int>()..addIterable([1, 2, 3])).build().toMap(),
+          {1: 1, 2: 2, 3: 3});
+      expect(
+          (new MapBuilder<int, String>()
+            ..addIterable([1, 2, 3],
+                value: (element) => element.toString())).build().toMap(),
+          {1: '1', 2: '2', 3: '3'});
+      expect(
+          (new MapBuilder<int, int>()
+                ..addIterable([1, 2, 3], key: (element) => element + 1))
+              .build()
+              .toMap(),
+          {2: 1, 3: 2, 4: 3});
     });
 
     // Lazy copies.
@@ -117,47 +136,66 @@ void main() {
     test('has a method like Map[]=', () {
       expect((new MapBuilder<int, String>({1: '1'})..[2] = '2').build().toMap(),
           {1: '1', 2: '2'});
-      expect((new BuiltMap<int, String>({1: '1'}).toBuilder()..[2] = '2')
-          .build()
-          .toMap(), {1: '1', 2: '2'});
+      expect(
+          (new BuiltMap<int, String>({1: '1'}).toBuilder()..[2] = '2')
+              .build()
+              .toMap(),
+          {1: '1', 2: '2'});
     });
 
     test('has a method like Map.putIfAbsent that returns nothing', () {
-      expect((new MapBuilder<int, String>({1: '1'})
-        ..putIfAbsent(2, () => '2')
-        ..putIfAbsent(1, () => '3')).build().toMap(), {1: '1', 2: '2'});
-      expect((new BuiltMap<int, String>({1: '1'}).toBuilder()
-        ..putIfAbsent(2, () => '2')
-        ..putIfAbsent(1, () => '3')).build().toMap(), {1: '1', 2: '2'});
+      expect(
+          (new MapBuilder<int, String>({1: '1'})
+            ..putIfAbsent(2, () => '2')
+            ..putIfAbsent(1, () => '3')).build().toMap(),
+          {1: '1', 2: '2'});
+      expect(
+          (new BuiltMap<int, String>({1: '1'}).toBuilder()
+            ..putIfAbsent(2, () => '2')
+            ..putIfAbsent(1, () => '3')).build().toMap(),
+          {1: '1', 2: '2'});
       expect(new MapBuilder<int, String>({1: '1'}).putIfAbsent(1, () => '3'),
           isNull);
     });
 
     test('has a method like Map.addAll', () {
-      expect((new MapBuilder<int, String>()..addAll({1: '1', 2: '2'}))
-          .build()
-          .toMap(), {1: '1', 2: '2'});
-      expect((new BuiltMap<int, String>().toBuilder()..addAll({1: '1', 2: '2'}))
-          .build()
-          .toMap(), {1: '1', 2: '2'});
+      expect(
+          (new MapBuilder<int, String>()..addAll({1: '1', 2: '2'}))
+              .build()
+              .toMap(),
+          {1: '1', 2: '2'});
+      expect(
+          (new BuiltMap<int, String>().toBuilder()..addAll({1: '1', 2: '2'}))
+              .build()
+              .toMap(),
+          {1: '1', 2: '2'});
     });
 
     test('has a method like Map.remove that returns nothing', () {
-      expect((new MapBuilder<int, String>({1: '1', 2: '2'})..remove(2))
-          .build()
-          .toMap(), {1: '1'});
-      expect((new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder()
-        ..remove(2)).build().toMap(), {1: '1'});
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})..remove(2))
+              .build()
+              .toMap(),
+          {1: '1'});
+      expect(
+          (new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder()..remove(2))
+              .build()
+              .toMap(),
+          {1: '1'});
       expect(new MapBuilder<int, String>({1: '1'}).remove(1), isNull);
     });
 
     test('has a method like Map.clear', () {
-      expect((new MapBuilder<int, String>({1: '1', 2: '2'})..clear())
-          .build()
-          .toMap(), {});
-      expect((new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder()..clear())
-          .build()
-          .toMap(), {});
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})..clear())
+              .build()
+              .toMap(),
+          {});
+      expect(
+          (new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder()..clear())
+              .build()
+              .toMap(),
+          {});
     });
   });
 }

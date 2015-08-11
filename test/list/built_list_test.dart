@@ -118,14 +118,16 @@ void main() {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltList([1, 2, 3], 0) ==
               BuiltCollectionTestHelpers.overridenHashcodeBuiltList(
-                  [1, 2, 3], 1), isFalse);
+                  [1, 2, 3], 1),
+          isFalse);
     });
 
     test('compares not equal to different content BuiltList', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltList([1, 2, 3], 0) ==
               BuiltCollectionTestHelpers.overridenHashcodeBuiltList(
-                  [1, 2, 4], 0), isFalse);
+                  [1, 2, 4], 0),
+          isFalse);
     });
 
     test('provides toString() for debugging', () {
@@ -151,8 +153,8 @@ void main() {
     });
 
     test('converts to ListBuilder from correct type without copying', () {
-      final makeLongList =
-          () => new BuiltList<int>(new List<int>.filled(1000000, 0));
+      final makeLongList = () =>
+          new BuiltList<int>(new List<int>.filled(1000000, 0));
       final longList = makeLongList();
       final longListToListBuilder = longList.toBuilder;
 
@@ -160,8 +162,8 @@ void main() {
     });
 
     test('converts to ListBuilder from wrong type by copying', () {
-      final makeLongList =
-          () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
+      final makeLongList = () =>
+          new BuiltList<Object>(new List<int>.filled(1000000, 0));
       final longList = makeLongList();
       final longListToListBuilder = () => new ListBuilder<int>(longList);
 
@@ -169,8 +171,8 @@ void main() {
     });
 
     test('has fast toList', () {
-      final makeLongList =
-          () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
+      final makeLongList = () =>
+          new BuiltList<Object>(new List<int>.filled(1000000, 0));
       final longList = makeLongList();
       final longListToList = () => longList.toList();
 
@@ -278,8 +280,10 @@ void main() {
     });
 
     test('implements Iterable.fold', () {
-      expect(new BuiltList<int>([1, 2]).fold(
-          '', (x, y) => x.toString() + y.toString()), '12');
+      expect(
+          new BuiltList<int>([1, 2])
+              .fold('', (x, y) => x.toString() + y.toString()),
+          '12');
     });
 
     test('implements Iterable.every', () {

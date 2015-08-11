@@ -75,6 +75,30 @@ class ListMultimapBuilder<K, V> {
     }
   }
 
+  /// As [Map.fromIterable] but adds.
+  ///
+  /// Additionally, instead of specifying a [value] function that returns an
+  /// element, you may specify a [values] function that returns an [Iterable]
+  /// of elements.
+  void addIterable(Iterable iterable,
+      {K key(element), V value(element), Iterable<V> values(element)}) {
+    if (value != null && values != null) {
+      throw new ArgumentError(
+          'only one of value and values may be specified, got both');
+    }
+
+    if (values != null) {
+      for (final element in iterable) {
+        addValues(key == null ? element : key(element), values(element));
+      }
+    } else {
+      for (final element in iterable) {
+        add(key == null ? element : key(element),
+            value == null ? element : value(element));
+      }
+    }
+  }
+
   // Based on ListMultimap.
 
   /// As [ListMultimap.add].

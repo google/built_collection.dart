@@ -58,6 +58,14 @@ class MapBuilder<K, V> {
     }
   }
 
+  /// As [Map.fromIterable] but adds.
+  void addIterable(Iterable iterable, {K key(element), V value(element)}) {
+    for (final element in iterable) {
+      this[key == null ? element : key(element)] =
+          value == null ? element : value(element);
+    }
+  }
+
   // Based on Map.
 
   /// As [Map].

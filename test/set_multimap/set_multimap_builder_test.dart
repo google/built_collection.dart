@@ -99,6 +99,49 @@ void main() {
       });
     });
 
+    test('has a method addIterable like Map.fromIterable', () {
+      expect(
+          (new ListMultimapBuilder<int, int>()..addIterable([1, 2, 3]))
+              .build()
+              .toMap(),
+          {
+        1: [1],
+        2: [2],
+        3: [3]
+      });
+      expect(
+          (new ListMultimapBuilder<int, String>()
+            ..addIterable([1, 2, 3],
+                value: (element) => element.toString())).build().toMap(),
+          {
+        1: ['1'],
+        2: ['2'],
+        3: ['3']
+      });
+      expect(
+          (new ListMultimapBuilder<int, String>()
+            ..addIterable([1, 2, 3],
+                values: (element) => [
+                      element.toString(),
+                      (element + 1).toString()
+                    ])).build().toMap(),
+          {
+        1: ['1', '2'],
+        2: ['2', '3'],
+        3: ['3', '4']
+      });
+      expect(
+          (new ListMultimapBuilder<int, int>()
+                ..addIterable([1, 2, 3], key: (element) => element + 1))
+              .build()
+              .toMap(),
+          {
+        2: [1],
+        3: [2],
+        4: [3]
+      });
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltSetMultimap following reuse of underlying Map',

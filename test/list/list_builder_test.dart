@@ -55,7 +55,8 @@ void main() {
     });
 
     test('throws on null replaceRange', () {
-      expect(() =>
+      expect(
+          () =>
               new ListBuilder<int>([0, 1, 2]).replaceRange(0, 2, [0, 1, null]),
           throws);
     });
@@ -133,8 +134,8 @@ void main() {
     });
 
     test('converts to BuiltList without copying', () {
-      final makeLongListBuilder =
-          () => new ListBuilder<int>(new List<int>.filled(1000000, 0));
+      final makeLongListBuilder = () =>
+          new ListBuilder<int>(new List<int>.filled(1000000, 0));
       final longListBuilder = makeLongListBuilder();
       final buildLongListBuilder = () => longListBuilder.build();
 
@@ -177,19 +178,27 @@ void main() {
 
     test('has a method like List.sort', () {
       expect((new ListBuilder<int>([2, 1])..sort()).build(), [1, 2]);
-      expect((new ListBuilder<int>([1, 2])
-        ..sort((int x, int y) => x < y ? 1 : -1)).build(), [2, 1]);
+      expect(
+          (new ListBuilder<int>([1, 2])..sort((int x, int y) => x < y ? 1 : -1))
+              .build(),
+          [2, 1]);
 
       expect((new BuiltList<int>([2, 1]).toBuilder()..sort()).build(), [1, 2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()
-        ..sort((int x, int y) => x < y ? 1 : -1)).build(), [2, 1]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()
+            ..sort((int x, int y) => x < y ? 1 : -1)).build(),
+          [2, 1]);
     });
 
     test('has a method like List.shuffle', () {
-      expect((new ListBuilder<int>([1, 2])..shuffle(new _AlwaysZeroRandom()))
-          .build(), [2, 1]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()
-        ..shuffle(new _AlwaysZeroRandom())).build(), [2, 1]);
+      expect(
+          (new ListBuilder<int>([1, 2])..shuffle(new _AlwaysZeroRandom()))
+              .build(),
+          [2, 1]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()
+            ..shuffle(new _AlwaysZeroRandom())).build(),
+          [2, 1]);
     });
 
     test('has a method like List.clear', () {
@@ -199,31 +208,24 @@ void main() {
 
     test('has a method like List.insert', () {
       expect((new ListBuilder<int>([1, 2])..insert(1, 3)).build(), [1, 3, 2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..insert(1, 3)).build(), [
-        1,
-        3,
-        2
-      ]);
+      expect((new BuiltList<int>([1, 2]).toBuilder()..insert(1, 3)).build(),
+          [1, 3, 2]);
     });
 
     test('has a method like List.insertAll', () {
-      expect((new ListBuilder<int>([1, 2])..insertAll(1, [3, 4])).build(), [
-        1,
-        3,
-        4,
-        2
-      ]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..insertAll(1, [3, 4]))
-          .build(), [1, 3, 4, 2]);
+      expect((new ListBuilder<int>([1, 2])..insertAll(1, [3, 4])).build(),
+          [1, 3, 4, 2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..insertAll(1, [3, 4]))
+              .build(),
+          [1, 3, 4, 2]);
     });
 
     test('has a method like List.setAll', () {
       expect((new ListBuilder<int>([1, 2])..setAll(0, [3, 4])).build(), [3, 4]);
       expect(
-          (new BuiltList<int>([1, 2]).toBuilder()..setAll(0, [3, 4])).build(), [
-        3,
-        4
-      ]);
+          (new BuiltList<int>([1, 2]).toBuilder()..setAll(0, [3, 4])).build(),
+          [3, 4]);
     });
 
     test('has a method like List.remove that returns nothing', () {
@@ -249,15 +251,19 @@ void main() {
     test('has a method like List.removeWhere', () {
       expect((new ListBuilder<int>([1, 2])..removeWhere((x) => x == 1)).build(),
           [2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()
-        ..removeWhere((x) => x == 1)).build(), [2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..removeWhere((x) => x == 1))
+              .build(),
+          [2]);
     });
 
     test('has a method like List.retainWhere', () {
       expect((new ListBuilder<int>([1, 2])..retainWhere((x) => x == 1)).build(),
           [1]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()
-        ..retainWhere((x) => x == 1)).build(), [1]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..retainWhere((x) => x == 1))
+              .build(),
+          [1]);
     });
 
     test('has a method like List.sublist that updates in place', () {
@@ -278,8 +284,10 @@ void main() {
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()..setRange(0, 1, [3])).build(),
           [3, 2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..setRange(0, 1, [3, 4], 1))
-          .build(), [4, 2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..setRange(0, 1, [3, 4], 1))
+              .build(),
+          [4, 2]);
     });
 
     test('has a method like List.removeRange', () {
@@ -300,8 +308,10 @@ void main() {
     test('has a method like List.replaceRange', () {
       expect((new ListBuilder<int>([1, 2])..replaceRange(0, 1, [2, 3])).build(),
           [2, 3, 2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()
-        ..replaceRange(0, 1, [2, 3])).build(), [2, 3, 2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..replaceRange(0, 1, [2, 3]))
+              .build(),
+          [2, 3, 2]);
     });
 
     // Iterable.
@@ -309,23 +319,25 @@ void main() {
     test('has a method like Iterable.map that updates in place', () {
       expect((new ListBuilder<int>([1, 2])..map((x) => x + 1)).build(), [2, 3]);
       expect(
-          (new BuiltList<int>([1, 2]).toBuilder()..map((x) => x + 1)).build(), [
-        2,
-        3
-      ]);
+          (new BuiltList<int>([1, 2]).toBuilder()..map((x) => x + 1)).build(),
+          [2, 3]);
     });
 
     test('has a method like Iterable.where that updates in place', () {
       expect((new ListBuilder<int>([1, 2])..where((x) => x == 2)).build(), [2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..where((x) => x == 2))
-          .build(), [2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..where((x) => x == 2))
+              .build(),
+          [2]);
     });
 
     test('has a method like Iterable.expand that updates in place', () {
       expect((new ListBuilder<int>([1, 2])..expand((x) => [x, x + 1])).build(),
           [1, 2, 2, 3]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..expand((x) => [x, x + 1]))
-          .build(), [1, 2, 2, 3]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..expand((x) => [x, x + 1]))
+              .build(),
+          [1, 2, 2, 3]);
     });
 
     test('has a method like Iterable.take that updates in place', () {
@@ -336,8 +348,10 @@ void main() {
     test('has a method like Iterable.takeWhile that updates in place', () {
       expect((new ListBuilder<int>([1, 2])..takeWhile((x) => x == 1)).build(),
           [1]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..takeWhile((x) => x == 1))
-          .build(), [1]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..takeWhile((x) => x == 1))
+              .build(),
+          [1]);
     });
 
     test('has a method like Iterable.skip that updates in place', () {
@@ -348,8 +362,10 @@ void main() {
     test('has a method like Iterable.skipWhile that updates in place', () {
       expect((new ListBuilder<int>([1, 2])..skipWhile((x) => x == 1)).build(),
           [2]);
-      expect((new BuiltList<int>([1, 2]).toBuilder()..skipWhile((x) => x == 1))
-          .build(), [2]);
+      expect(
+          (new BuiltList<int>([1, 2]).toBuilder()..skipWhile((x) => x == 1))
+              .build(),
+          [2]);
     });
   });
 }

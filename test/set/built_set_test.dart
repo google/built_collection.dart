@@ -124,14 +124,16 @@ void main() {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltSet([1, 2, 3], 0) ==
               BuiltCollectionTestHelpers.overridenHashcodeBuiltSet(
-                  [1, 2, 3], 1), isFalse);
+                  [1, 2, 3], 1),
+          isFalse);
     });
 
     test('compares not equal to different content BuiltSet', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltSet([1, 2, 3], 0) ==
               BuiltCollectionTestHelpers.overridenHashcodeBuiltSet(
-                  [1, 2, 4], 0), isFalse);
+                  [1, 2, 4], 0),
+          isFalse);
     });
 
     test('provides toString() for debugging', () {
@@ -148,14 +150,8 @@ void main() {
     });
 
     test('has rebuild method', () {
-      expect(new BuiltSet<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])), [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ]);
+      expect(new BuiltSet<int>([0, 1, 2]).rebuild((b) => b.addAll([3, 4, 5])),
+          [0, 1, 2, 3, 4, 5]);
     });
 
     test('converts to BuiltList with toBuiltList', () {
@@ -225,10 +221,8 @@ void main() {
     });
 
     test('has a method like Set.difference', () {
-      expect(new BuiltSet<int>([1, 2, 3]).difference(new BuiltSet<int>([1])), [
-        2,
-        3
-      ]);
+      expect(new BuiltSet<int>([1, 2, 3]).difference(new BuiltSet<int>([1])),
+          [2, 3]);
     });
 
     test('has a method like Set.intersection', () {
@@ -242,12 +236,8 @@ void main() {
     });
 
     test('has a method like Set.union', () {
-      expect(new BuiltSet<int>([1, 2, 3]).union(new BuiltSet<int>([4])), [
-        1,
-        2,
-        3,
-        4
-      ]);
+      expect(new BuiltSet<int>([1, 2, 3]).union(new BuiltSet<int>([4])),
+          [1, 2, 3, 4]);
     });
 
     // Iterable.
@@ -289,8 +279,10 @@ void main() {
     });
 
     test('implements Iterable.fold', () {
-      expect(new BuiltSet<int>([1, 2]).fold(
-          '', (x, y) => x.toString() + y.toString()), '12');
+      expect(
+          new BuiltSet<int>([1, 2])
+              .fold('', (x, y) => x.toString() + y.toString()),
+          '12');
     });
 
     test('implements Iterable.every', () {

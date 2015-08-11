@@ -120,8 +120,10 @@ void main() {
     test('has a method like Set.removeWhere', () {
       expect((new SetBuilder<int>([1, 2])..removeWhere((x) => x == 1)).build(),
           [2]);
-      expect((new BuiltSet<int>([1, 2]).toBuilder()..removeWhere((x) => x == 1))
-          .build(), [2]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..removeWhere((x) => x == 1))
+              .build(),
+          [2]);
     });
 
     test('has a method like Set.retainAll', () {
@@ -133,8 +135,10 @@ void main() {
     test('has a method like Set.retainWhere', () {
       expect((new SetBuilder<int>([1, 2])..retainWhere((x) => x == 1)).build(),
           [1]);
-      expect((new BuiltSet<int>([1, 2]).toBuilder()..retainWhere((x) => x == 1))
-          .build(), [1]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..retainWhere((x) => x == 1))
+              .build(),
+          [1]);
     });
 
     // Iterable.
@@ -153,14 +157,12 @@ void main() {
     });
 
     test('has a method like Iterable.expand that updates in place', () {
-      expect((new SetBuilder<int>([1, 2])..expand((x) => [x, x + 2])).build(), [
-        1,
-        3,
-        2,
-        4
-      ]);
-      expect((new BuiltSet<int>([1, 2]).toBuilder()..expand((x) => [x, x + 2]))
-          .build(), [1, 3, 2, 4]);
+      expect((new SetBuilder<int>([1, 2])..expand((x) => [x, x + 2])).build(),
+          [1, 3, 2, 4]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..expand((x) => [x, x + 2]))
+              .build(),
+          [1, 3, 2, 4]);
     });
 
     test('has a method like Iterable.take that updates in place', () {
@@ -171,8 +173,10 @@ void main() {
     test('has a method like Iterable.takeWhile that updates in place', () {
       expect(
           (new SetBuilder<int>([1, 2])..takeWhile((x) => x == 1)).build(), [1]);
-      expect((new BuiltSet<int>([1, 2]).toBuilder()..takeWhile((x) => x == 1))
-          .build(), [1]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..takeWhile((x) => x == 1))
+              .build(),
+          [1]);
     });
 
     test('has a method like Iterable.skip that updates in place', () {
@@ -183,8 +187,10 @@ void main() {
     test('has a method like Iterable.skipWhile that updates in place', () {
       expect(
           (new SetBuilder<int>([1, 2])..skipWhile((x) => x == 1)).build(), [2]);
-      expect((new BuiltSet<int>([1, 2]).toBuilder()..skipWhile((x) => x == 1))
-          .build(), [2]);
+      expect(
+          (new BuiltSet<int>([1, 2]).toBuilder()..skipWhile((x) => x == 1))
+              .build(),
+          [2]);
     });
   });
 }

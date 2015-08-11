@@ -75,6 +75,34 @@ class SetMultimapBuilder<K, V> {
     }
   }
 
+  /// As [Map.fromIterable] but adds.
+  ///
+  /// Additionally, you may specify [values] instead of [value]. This new
+  /// parameter allows you to supply a function that returns an [Iterable]
+  /// of values.
+  ///
+  /// [key] and [value] default to the identity function. [values] is ignored
+  /// if not specified.
+  void addIterable(Iterable iterable,
+      {K key(element), V value(element), Iterable<V> values(element)}) {
+    if (value != null && values != null) {
+      throw new ArgumentError('expected value or values to be set, got both');
+    }
+
+    if (key == null) key = (x) => x;
+
+    if (values != null) {
+      for (final element in iterable) {
+        this.addValues(key(element), values(element));
+      }
+    } else {
+      if (value == null) value = (x) => x;
+      for (final element in iterable) {
+        this.add(key(element), value(element));
+      }
+    }
+  }
+
   // Based on SetMultimap.
 
   /// As [SetMultimap.add].

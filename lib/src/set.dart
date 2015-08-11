@@ -4,6 +4,7 @@
 
 library built_collection.set;
 
+import 'package:built_collection/src/list.dart' show BuiltList;
 import 'package:quiver/core.dart' show hashObjects, hash2;
 
 import 'internal/copy_on_write_set.dart';

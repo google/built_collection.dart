@@ -158,6 +158,10 @@ void main() {
       ]);
     });
 
+    test('converts to BuiltList with toBuiltList', () {
+      expect(new BuiltSet<int>([0, 1, 2]).toBuiltList(), [0, 1, 2]);
+    });
+
     // Lazy copies.
 
     test('reuses BuiltSet instances of the same type', () {

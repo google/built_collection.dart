@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0
 
 - Fix missing generics on some return types.
 - Fix BuiltList and BuiltSet "contains" method, should take Object, not E.

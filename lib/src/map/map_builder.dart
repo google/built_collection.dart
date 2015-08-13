@@ -58,6 +58,17 @@ class MapBuilder<K, V> {
     }
   }
 
+  /// As [Map.fromIterable] but adds.
+  ///
+  /// [key] and [value] default to the identity function.
+  void addIterable(Iterable iterable, {K key(element), V value(element)}) {
+    if (key == null) key = (x) => x;
+    if (value == null) value = (x) => x;
+    for (final element in iterable) {
+      this[key(element)] = value(element);
+    }
+  }
+
   // Based on Map.
 
   /// As [Map].

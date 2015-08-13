@@ -6,7 +6,7 @@
 - Fix BuiltList and BuiltSet "contains" method, should take Object, not E.
 - Add removeAll and retainAll methods to SetBuilder.
 - Add BuiltList.toBuiltSet() and BuiltSet.toBuiltList().
-- Add addIterable methods to map builders.
+- Add addIterable methods to Map and Multimap builders.
 
 ## 0.4.0
 

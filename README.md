@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Built Collections bring the benefits of immutability to your Dart code via the
+Built Collections are immutable collections using the
 [builder pattern](http://en.wikipedia.org/wiki/Builder_pattern) and are part of
 [Libraries for Object Oriented Dart](https://github.com/google/built_value.dart/blob/master/libraries_for_object_oriented_dart.md#libraries-for-object-oriented-dart).
 

@@ -25,7 +25,7 @@ Built Collections:
 See below for details on each of these points.
 
 
-## Recommend Style
+## Recommended Style
 
 A project can benefit greatly from using Built Collections throughout.
 Methods that will not mutate a collection can accept the "built" version,

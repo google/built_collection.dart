@@ -20,9 +20,9 @@ class BuiltSet<E> implements Iterable<E> {
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new BuiltList([1, 2, 3])`.
+  /// Wrong: `new BuiltSet([1, 2, 3])`.
   ///
-  /// Right: `new BuiltList<int>([1, 2, 3])`,
+  /// Right: `new BuiltSet<int>([1, 2, 3])`,
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet([Iterable iterable = const []]) {

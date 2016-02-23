@@ -172,6 +172,14 @@ void main() {
           isFalse);
     });
 
+    test('compares without throwing for same hashcode different key type', () {
+      expect(
+          BuiltCollectionTestHelpers.overridenHashcodeBuiltMap({1: '1'}, 0) ==
+              BuiltCollectionTestHelpers
+                  .overridenHashcodeBuiltMapWithStringKeys({'1': '1'}, 0),
+          false);
+    });
+
     test('provides toString() for debugging', () {
       expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).toString(),
           '{1: 1, 2: 2, 3: 3}');

@@ -179,11 +179,11 @@ class BuiltSetMultimap<K, V> {
   }
 
   void _checkGenericTypeParameter() {
-    if (null is K && K != Object) {
+    if (K == dynamic) {
       throw new UnsupportedError(
           'explicit key type required, for example "new BuiltSetMultimap<int, int>"');
     }
-    if (null is V && V != Object) {
+    if (V == dynamic) {
       throw new UnsupportedError('explicit value type required,'
           ' for example "new BuiltSetMultimap<int, int>"');
     }

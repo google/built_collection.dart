@@ -228,7 +228,7 @@ class ListBuilder<E> {
   }
 
   void _checkGenericTypeParameter() {
-    if (null is E && E != Object) {
+    if (E == dynamic) {
       throw new UnsupportedError('explicit element type required,'
           ' for example "new ListBuilder<int>"');
     }

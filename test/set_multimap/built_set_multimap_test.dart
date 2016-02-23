@@ -281,6 +281,18 @@ void main() {
           isFalse);
     });
 
+    test('compares without throwing for same hashcode different key type', () {
+      expect(
+          BuiltCollectionTestHelpers.overridenHashcodeBuiltSetMultimap({
+            1: ['1']
+          }, 0) ==
+              BuiltCollectionTestHelpers
+                  .overridenHashcodeBuiltSetMultimapWithStringKeys({
+                '1': ['1']
+              }, 0),
+          false);
+    });
+
     test('provides toString() for debugging', () {
       expect(
           new BuiltSetMultimap<int, String>({

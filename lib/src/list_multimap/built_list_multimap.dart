@@ -105,7 +105,7 @@ class BuiltListMultimap<K, V> {
   // ListMultimap.
 
   /// As [ListMultimap], but results are [BuiltList]s and not mutable.
-  BuiltList<V> operator [](K key) {
+  BuiltList<V> operator [](Object key) {
     final result = _map[key];
     return identical(result, null) ? _emptyList : result;
   }

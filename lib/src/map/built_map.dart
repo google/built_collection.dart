@@ -97,7 +97,7 @@ class BuiltMap<K, V> {
   // Map.
 
   /// As [Map].
-  V operator [](K key) => _map[key];
+  V operator [](Object key) => _map[key];
 
   /// As [Map.containsKey].
   bool containsKey(Object key) => _map.containsKey(key);

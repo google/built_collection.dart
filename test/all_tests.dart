@@ -4,6 +4,9 @@
 
 library built_collection.test.all_tests;
 
+import 'internal/copy_on_write_list_test.dart' as copy_on_write_list_test;
+import 'internal/copy_on_write_map_test.dart' as copy_on_write_map_test;
+import 'internal/copy_on_write_set_test.dart' as copy_on_write_set_test;
 import 'list/built_list_test.dart' as built_list_test;
 import 'list/list_builder_test.dart' as list_builder_test;
 import 'list_multimap/built_list_multimap_test.dart'
@@ -19,6 +22,10 @@ import 'set_multimap/set_multimap_builder_test.dart'
     as set_multimap_builder_test;
 
 void main() {
+  copy_on_write_list_test.main();
+  copy_on_write_map_test.main();
+  copy_on_write_set_test.main();
+
   built_list_test.main();
   list_builder_test.main();
 

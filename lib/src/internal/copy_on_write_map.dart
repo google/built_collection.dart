@@ -71,6 +71,9 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
     return _map.remove(key);
   }
 
+  @override
+  String toString() => _map.toString();
+
   // Internal.
 
   void _maybeCopyBeforeWrite() {

@@ -160,6 +160,9 @@ class CopyOnWriteSet<E> implements Set<E> {
     _set.retainAll(elements);
   }
 
+  @override
+  String toString() => _set.toString();
+
   // Internal.
 
   void _maybeCopyBeforeWrite() {

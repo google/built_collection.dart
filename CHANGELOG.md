@@ -3,6 +3,7 @@
 ## 1.0.1
 
 - Make map operator[] take Object instead of K, as SDK collections do.
+- Fix toString for result of toList, toSet, toMap.
 
 ## 1.0.0
 

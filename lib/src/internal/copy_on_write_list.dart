@@ -234,6 +234,9 @@ class CopyOnWriteList<E> implements List<E> {
     _list.replaceRange(start, end, iterable);
   }
 
+  @override
+  String toString() => _list.toString();
+
   // Internal.
 
   void _maybeCopyBeforeWrite() {

@@ -106,13 +106,13 @@ class BuiltSet<E> implements Iterable<E> {
   Iterator<E> get iterator => _set.iterator;
 
   @override
-  Iterable map(f(E element)) => _set.map(f);
+  Iterable/*<T>*/ map/*<T>*/(/*=T*/ f(E e)) => _set.map(f);
 
   @override
   Iterable<E> where(bool test(E element)) => _set.where(test);
 
   @override
-  Iterable expand(Iterable f(E element)) => _set.expand(f);
+  Iterable/*<T>*/ expand/*<T>*/(Iterable/*<T>*/ f(E e)) => _set.expand(f);
 
   @override
   bool contains(Object element) => _set.contains(element);
@@ -124,8 +124,8 @@ class BuiltSet<E> implements Iterable<E> {
   E reduce(E combine(E value, E element)) => _set.reduce(combine);
 
   @override
-  dynamic fold(
-          var initialValue, dynamic combine(var previousValue, E element)) =>
+  dynamic/*=T*/ fold/*<T>*/(var/*=T*/ initialValue,
+          dynamic/*=T*/ combine(var/*=T*/ previousValue, E element)) =>
       _set.fold(initialValue, combine);
 
   @override

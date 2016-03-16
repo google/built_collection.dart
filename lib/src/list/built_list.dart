@@ -112,13 +112,13 @@ class BuiltList<E> implements Iterable<E> {
   Iterator<E> get iterator => _list.iterator;
 
   @override
-  Iterable map(f(E element)) => _list.map(f);
+  Iterable/*<T>*/ map/*<T>*/(/*=T*/ f(E e)) => _list.map(f);
 
   @override
   Iterable<E> where(bool test(E element)) => _list.where(test);
 
   @override
-  Iterable expand(Iterable f(E element)) => _list.expand(f);
+  Iterable/*<T>*/ expand/*<T>*/(Iterable/*<T>*/ f(E e)) => _list.expand(f);
 
   @override
   bool contains(Object element) => _list.contains(element);
@@ -130,8 +130,8 @@ class BuiltList<E> implements Iterable<E> {
   E reduce(E combine(E value, E element)) => _list.reduce(combine);
 
   @override
-  dynamic fold(
-          var initialValue, dynamic combine(var previousValue, E element)) =>
+  dynamic/*=T*/ fold/*<T>*/(var/*=T*/ initialValue,
+          dynamic/*=T*/ combine(var/*=T*/ previousValue, E element)) =>
       _list.fold(initialValue, combine);
 
   @override

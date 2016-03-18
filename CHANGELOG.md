@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Add generic type information to map, fold and expand methods.
+
 ## 1.0.1
 
 - Make map operator[] take Object instead of K, as SDK collections do.

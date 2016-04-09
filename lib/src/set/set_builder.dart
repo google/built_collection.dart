@@ -52,7 +52,11 @@ class SetBuilder<E> {
       // Can't use addAll because it requires an Iterable<E>.
       final Set<E> set = new Set<E>();
       for (final element in iterable) {
-        set.add(element);
+        if (element is E) {
+          set.add(element);
+        } else {
+          throw new ArgumentError('iterable contained invalid element: ${key}');
+        }
       }
       _setSafeSet(set);
     }

@@ -143,16 +143,16 @@ class BuiltMap<K, V> {
     _checkGenericTypeParameter();
 
     for (final key in keys) {
-      if (key is! K) {
+      if (key is K) {
+        final value = lookup(key);
+        if (value is V) {
+          _map[key] = value;
+        } else {
+          throw new ArgumentError('map contained invalid value: ${value}');
+        }
+      } else {
         throw new ArgumentError('map contained invalid key: ${key}');
       }
-
-      final value = lookup(key);
-      if (value is! V) {
-        throw new ArgumentError('map contained invalid value: ${value}');
-      }
-
-      _map[key] = value;
     }
   }
 

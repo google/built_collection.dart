@@ -7,7 +7,7 @@ library built_collection.list;
 import 'dart:math' show Random;
 
 import 'package:built_collection/src/set.dart' show BuiltSet;
-import 'package:quiver/core.dart' show hashObjects, hash2;
+import 'package:quiver/core.dart' show hashObjects;
 
 import 'internal/copy_on_write_list.dart';
 

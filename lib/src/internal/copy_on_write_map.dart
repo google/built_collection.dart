@@ -48,7 +48,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   }
 
   @override
-  void addAll(Map other) {
+  void addAll(Map<K, V> other) {
     _maybeCopyBeforeWrite();
     _map.addAll(other);
   }

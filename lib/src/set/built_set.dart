@@ -198,11 +198,12 @@ class BuiltSet<E> implements Iterable<E> {
     _checkGenericTypeParameter();
 
     for (final element in iterable) {
-      if (element is! E) {
+      if (element is E) {
+        _set.add(element);
+      } else {
         throw new ArgumentError(
             'iterable contained invalid element: ${element}');
       }
-      _set.add(element);
     }
   }
 

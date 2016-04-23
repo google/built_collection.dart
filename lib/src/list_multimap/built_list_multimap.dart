@@ -166,11 +166,12 @@ class BuiltListMultimap<K, V> {
     _checkGenericTypeParameter();
 
     for (final key in keys) {
-      if (key is! K) {
+      if (key is K) {
+        _map[key] = new BuiltList<V>(lookup(key));
+      } else {
         throw new ArgumentError('map contained invalid key: ${key}');
       }
 
-      _map[key] = new BuiltList<V>(lookup(key));
     }
   }
 

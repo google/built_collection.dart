@@ -89,14 +89,14 @@ class SetMultimapBuilder<K, V> {
       throw new ArgumentError('expected value or values to be set, got both');
     }
 
-    if (key == null) key = (x) => x;
+    if (key == null) key = (K x) => x;
 
     if (values != null) {
       for (final element in iterable) {
         this.addValues(key(element), values(element));
       }
     } else {
-      if (value == null) value = (x) => x;
+      if (value == null) value = (V x) => x;
       for (final element in iterable) {
         this.add(key(element), value(element));
       }
@@ -190,13 +190,14 @@ class SetMultimapBuilder<K, V> {
     _builderMap = new Map<K, SetBuilder<V>>();
 
     for (final key in keys) {
-      if (key is! K) {
+      if (key is K) {
+        for (final value in lookup(key)) {
+          add(key, value);
+        }
+      } else {
         throw new ArgumentError('map contained invalid key: ${key}');
       }
 
-      for (final value in lookup(key)) {
-        add(key, value);
-      }
     }
   }
 

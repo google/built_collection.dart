@@ -34,7 +34,8 @@ class BuiltListMultimap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltListMultimap([multimap = const {}]) {
-    if (multimap is BuiltListMultimap<K, V>) {
+    if (multimap is BuiltListMultimap &&
+        multimap._hasExactKeyAndValueTypes(K, V)) {
       return multimap;
     } else if (multimap is Map ||
         multimap is ListMultimap ||
@@ -178,6 +179,9 @@ class BuiltListMultimap<K, V> {
   BuiltListMultimap._withSafeMap(this._map) {
     _checkGenericTypeParameter();
   }
+
+  bool _hasExactKeyAndValueTypes(Type key, Type value) =>
+      K == key && V == value;
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {

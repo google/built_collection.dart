@@ -200,6 +200,18 @@ void main() {
       expect(map1, same(map2));
     });
 
+    test('does not reuse BuiltMap instances with subtype key type', () {
+      final map1 = new BuiltMap<_ExtendsA, String>();
+      final map2 = new BuiltMap<_A, String>(map1);
+      expect(map1, isNot(same(map2)));
+    });
+
+    test('does not reuse BuiltMap instances with subtype value type', () {
+      final map1 = new BuiltMap<String, _ExtendsA>();
+      final map2 = new BuiltMap<String, _A>(map1);
+      expect(map1, isNot(same(map2)));
+    });
+
     test('can be reused via MapBuilder if there are no changes', () {
       final map1 = new BuiltMap<Object, Object>();
       final map2 = map1.toBuilder().build();
@@ -358,6 +370,12 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
         ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
         ' second=${slowStopWatch.elapsedMicroseconds}';
   }
+}
+
+class _A {
+}
+
+class _ExtendsA extends _A {
 }
 
 class _HashcodeOnlyOnce {

@@ -26,7 +26,7 @@ class BuiltSet<E> implements Iterable<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet([Iterable iterable = const []]) {
-    if (iterable is BuiltSet<E>) {
+    if (iterable is BuiltSet  && iterable._hasExactElementType(E)) {
       return iterable;
     } else {
       return new BuiltSet<E>._copyAndCheck(iterable);
@@ -210,6 +210,8 @@ class BuiltSet<E> implements Iterable<E> {
   BuiltSet._withSafeSet(this._set) {
     _checkGenericTypeParameter();
   }
+
+  bool _hasExactElementType(Type type) => E == type;
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

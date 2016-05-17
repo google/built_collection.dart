@@ -6,7 +6,7 @@ library built_collection.test.set.built_set_test;
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('BuiltSet', () {

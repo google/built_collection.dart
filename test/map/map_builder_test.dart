@@ -5,7 +5,7 @@
 library built_collection.test.map.map_builder_test;
 
 import 'package:built_collection/built_collection.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('MapBuilder', () {

@@ -7,7 +7,7 @@ library built_collection.test.list.list_builder_test;
 import 'dart:math' show Random;
 
 import 'package:built_collection/built_collection.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('ListBuilder', () {

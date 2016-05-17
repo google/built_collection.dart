@@ -6,7 +6,7 @@ library built_collection.test.set_multimap.set_multimap_builder_test;
 
 import 'package:built_collection/built_collection.dart';
 import 'package:quiver/collection.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('SetMultimapBuilder', () {

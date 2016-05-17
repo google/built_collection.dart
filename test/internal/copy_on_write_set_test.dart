@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:built_collection/src/internal/copy_on_write_set.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('CopyOnWriteSet', () {

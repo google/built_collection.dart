@@ -7,7 +7,7 @@ library built_collection.test.list_multimap.built_list_multimap_test;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:quiver/collection.dart';
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('BuiltListMultimap', () {

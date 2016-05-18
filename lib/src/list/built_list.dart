@@ -26,7 +26,7 @@ class BuiltList<E> implements Iterable<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList([Iterable iterable = const []]) {
-    if (iterable is BuiltList<E>) {
+    if (iterable is BuiltList && iterable._hasExactElementType(E)) {
       return iterable;
     } else {
       return new BuiltList<E>._copyAndCheck(iterable);
@@ -216,6 +216,8 @@ class BuiltList<E> implements Iterable<E> {
   BuiltList._withSafeList(this._list) {
     _checkGenericTypeParameter();
   }
+
+  bool _hasExactElementType(Type type) => E == type;
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

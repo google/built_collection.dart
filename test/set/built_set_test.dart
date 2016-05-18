@@ -166,6 +166,12 @@ void main() {
       expect(set1, same(set2));
     });
 
+    test('does not reuse BuiltSet instances with subtype element type', () {
+      final set1 = new BuiltSet<_ExtendsA>();
+      final set2 = new BuiltSet<_A>(set1);
+      expect(set1, isNot(same(set2)));
+    });
+
     test('can be reused via SetBuilder if there are no changes', () {
       final set1 = new BuiltSet<Object>();
       final set2 = set1.toBuilder().build();
@@ -399,6 +405,12 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
         ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
         ' second=${slowStopWatch.elapsedMicroseconds}';
   }
+}
+
+class _A {
+}
+
+class _ExtendsA extends _A {
 }
 
 class _HashcodeOnlyTwice {

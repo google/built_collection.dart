@@ -30,7 +30,7 @@ class BuiltMap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap([map = const {}]) {
-    if (map is BuiltMap<K, V>) {
+    if (map is BuiltMap && map._hasExactKeyAndValueTypes(K, V)) {
       return map;
     } else if (map is Map || map is BuiltMap) {
       return new BuiltMap<K, V>._copyAndCheck(map.keys, (k) => map[k]);
@@ -159,6 +159,9 @@ class BuiltMap<K, V> {
   BuiltMap._withSafeMap(this._map) {
     _checkGenericTypeParameter();
   }
+
+  bool _hasExactKeyAndValueTypes(Type key, Type value) =>
+      K == key && V == value;
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {

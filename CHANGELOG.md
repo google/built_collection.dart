@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Fix factories when iterable generic type is subtype of requested type.
+
 ## 1.0.2
 
 - Add generic type information to map, fold and expand methods.

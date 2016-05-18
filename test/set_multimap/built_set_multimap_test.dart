@@ -328,6 +328,18 @@ void main() {
       expect(multimap1, same(multimap2));
     });
 
+    test('does not reuse BuiltSetMultimap instances with subtype key type', () {
+      final multimap1 = new BuiltSetMultimap<_ExtendsA, String>();
+      final multimap2 = new BuiltSetMultimap<_A, String>(multimap1);
+      expect(multimap1, isNot(same(multimap2)));
+    });
+
+    test('does not reuse BuiltSetMultimultimap instances with subtype value type', () {
+      final multimap1 = new BuiltSetMultimap<String, _ExtendsA>();
+      final multimap2 = new BuiltSetMultimap<String, _A>(multimap1);
+      expect(multimap1, isNot(same(multimap2)));
+    });
+
     test('can be reused via SetMultimapBuilder if there are no changes', () {
       final multimap1 = new BuiltSetMultimap<Object, Object>();
       final multimap2 = multimap1.toBuilder().build();
@@ -582,6 +594,12 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
         ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
         ' second=${slowStopWatch.elapsedMicroseconds}';
   }
+}
+
+class _A {
+}
+
+class _ExtendsA extends _A {
 }
 
 class _HashcodeOnlyTwice {

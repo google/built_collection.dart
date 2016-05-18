@@ -146,6 +146,12 @@ void main() {
       expect(list1, same(list2));
     });
 
+    test('does not reuse BuiltList instances with subtype element type', () {
+      final list1 = new BuiltList<_ExtendsA>();
+      final list2 = new BuiltList<_A>(list1);
+      expect(list1, isNot(same(list2)));
+    });
+
     test('can be reused via ListBuilder if there are no changes', () {
       final list1 = new BuiltList<Object>();
       final list2 = list1.toBuilder().build();
@@ -396,6 +402,12 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
         ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
         ' second=${slowStopWatch.elapsedMicroseconds}';
   }
+}
+
+class _A {
+}
+
+class _ExtendsA extends _A {
 }
 
 class _HashcodeOnlyOnce {

@@ -55,7 +55,7 @@ class SetBuilder<E> {
         if (element is E) {
           set.add(element);
         } else {
-          throw new ArgumentError('iterable contained invalid element: ${key}');
+          throw new ArgumentError('iterable contained invalid element: ${element}');
         }
       }
       _setSafeSet(set);

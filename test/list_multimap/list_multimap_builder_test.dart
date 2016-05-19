@@ -39,18 +39,15 @@ void main() {
     });
 
     test('throws on null key addAll', () {
+      final multimap = new ListMultimap<int, String>()..add(null, '0');
       expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                null: ['0']
-              }),
-          throws);
+          () => new ListMultimapBuilder<int, String>().addAll(multimap), throws);
     });
 
     test('throws on null value addAll', () {
+      final multimap = new ListMultimap<int, String>()..add(0, null);
       expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                0: [null]
-              }),
+          () => new ListMultimapBuilder<int, String>().addAll(multimap),
           throws);
     });
 

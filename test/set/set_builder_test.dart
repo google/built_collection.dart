@@ -35,20 +35,24 @@ void main() {
     });
 
     test('throws on wrong type add', () {
-      expect(() => new SetBuilder<int>().add('0'), throws);
+      expect(() => new SetBuilder<int>().add('0' as dynamic), throws);
     });
 
     test('throws on wrong type addAll', () {
-      expect(() => new SetBuilder<int>().addAll([0, 1, '0']), throws);
+      expect(
+          () => new SetBuilder<int>().addAll([0, 1, '0' as dynamic]), throws);
     });
 
     test('throws on wrong type map', () {
-      expect(() => new SetBuilder<int>([0, 1, 2]).map((x) => '0'), throws);
+      expect(() => new SetBuilder<int>([0, 1, 2]).map((x) => '0' as dynamic),
+          throws);
     });
 
     test('throws on wrong type expand', () {
       expect(
-          () => new SetBuilder<int>([0, 1, 2]).expand((x) => [x, '0']), throws);
+          () =>
+              new SetBuilder<int>([0, 1, 2]).expand((x) => [x, '0' as dynamic]),
+          throws);
     });
 
     test('has replace method that replaces all data', () {

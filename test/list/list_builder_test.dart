@@ -71,52 +71,63 @@ void main() {
     });
 
     test('throws on wrong type assign', () {
-      expect(() => new ListBuilder<int>([0])[0] = '0', throws);
+      expect(() => new ListBuilder<int>([0])[0] = '0' as dynamic, throws);
     });
 
     test('throws on wrong type add', () {
-      expect(() => new ListBuilder<int>().add('0'), throws);
+      expect(() => new ListBuilder<int>().add('0' as dynamic), throws);
     });
 
     test('throws on wrong type addAll', () {
-      expect(() => new ListBuilder<int>().addAll([0, 1, '0']), throws);
+      expect(
+          () => new ListBuilder<int>().addAll([0, 1, '0' as dynamic]), throws);
     });
 
     test('throws on wrong type insert', () {
-      expect(() => new ListBuilder<int>().insert(0, '0'), throws);
+      expect(() => new ListBuilder<int>().insert(0, '0' as dynamic), throws);
     });
 
     test('throws on wrong type insertAll', () {
-      expect(() => new ListBuilder<int>().insertAll(0, [0, 1, '0']), throws);
+      expect(() => new ListBuilder<int>().insertAll(0, [0, 1, '0' as dynamic]),
+          throws);
     });
 
     test('throws on wrong type setAll', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).setAll(0, [0, 1, '0']), throws);
+          () =>
+              new ListBuilder<int>([0, 1, 2]).setAll(0, [0, 1, '0' as dynamic]),
+          throws);
     });
 
     test('throws on wrong type setRange', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).setRange(0, 2, [0, 1, '0']),
+      expect(
+          () => new ListBuilder<int>([0, 1, 2])
+              .setRange(0, 2, [0, 1, '0' as dynamic]),
           throws);
     });
 
     test('throws on wrong type fillRange', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).fillRange(0, 2, '0'), throws);
+          () => new ListBuilder<int>([0, 1, 2]).fillRange(0, 2, '0' as dynamic),
+          throws);
     });
 
     test('throws on wrong type replaceRange', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).replaceRange(0, 2, [0, 1, '0']),
+          () => new ListBuilder<int>([0, 1, 2])
+              .replaceRange(0, 2, [0, 1, '0' as dynamic]),
           throws);
     });
 
     test('throws on wrong type map', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).map((x) => '0'), throws);
+      expect(() => new ListBuilder<int>([0, 1, 2]).map((x) => '0' as dynamic),
+          throws);
     });
 
     test('throws on wrong type expand', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).expand((x) => [x, '0']),
+      expect(
+          () => new ListBuilder<int>([0, 1, 2])
+              .expand((x) => [x, '0' as dynamic]),
           throws);
     });
 
@@ -134,8 +145,8 @@ void main() {
     });
 
     test('converts to BuiltList without copying', () {
-      final makeLongListBuilder = () =>
-          new ListBuilder<int>(new List<int>.filled(1000000, 0));
+      final makeLongListBuilder =
+          () => new ListBuilder<int>(new List<int>.filled(1000000, 0));
       final longListBuilder = makeLongListBuilder();
       final buildLongListBuilder = () => longListBuilder.build();
 
@@ -186,7 +197,8 @@ void main() {
       expect((new BuiltList<int>([2, 1]).toBuilder()..sort()).build(), [1, 2]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()
-            ..sort((int x, int y) => x < y ? 1 : -1)).build(),
+                ..sort((int x, int y) => x < y ? 1 : -1))
+              .build(),
           [2, 1]);
     });
 
@@ -197,7 +209,8 @@ void main() {
           [2, 1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()
-            ..shuffle(new _AlwaysZeroRandom())).build(),
+                ..shuffle(new _AlwaysZeroRandom()))
+              .build(),
           [2, 1]);
     });
 

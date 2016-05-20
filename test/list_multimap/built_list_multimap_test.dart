@@ -51,7 +51,7 @@ void main() {
       final mutableMultimap = new ListMultimap<int, String>();
       mutableMultimap.add(1, '1');
       final multimap = new BuiltListMultimap<int, String>(mutableMultimap);
-      expect(multimap.toMap(), mutableMultimap.toMap());
+      expect(multimap.toMap(), mutableMultimap.asMap());
     });
 
     test('throws on wrong type key', () {
@@ -328,13 +328,16 @@ void main() {
       expect(multimap1, same(multimap2));
     });
 
-    test('does not reuse BuiltListMultimap instances with subtype key type', () {
+    test('does not reuse BuiltListMultimap instances with subtype key type',
+        () {
       final multimap1 = new BuiltListMultimap<_ExtendsA, String>();
       final multimap2 = new BuiltListMultimap<_A, String>(multimap1);
       expect(multimap1, isNot(same(multimap2)));
     });
 
-    test('does not reuse BuiltListMultimultimap instances with subtype value type', () {
+    test(
+        'does not reuse BuiltListMultimultimap instances with subtype value type',
+        () {
       final multimap1 = new BuiltListMultimap<String, _ExtendsA>();
       final multimap2 = new BuiltListMultimap<String, _A>(multimap1);
       expect(multimap1, isNot(same(multimap2)));
@@ -371,8 +374,8 @@ void main() {
         return result.build();
       };
       final longListMultimap = makeLongListMultimap();
-      final longListMultimapToListMultimapBuilder = () =>
-          new ListMultimapBuilder<int, int>(longListMultimap);
+      final longListMultimapToListMultimapBuilder =
+          () => new ListMultimapBuilder<int, int>(longListMultimap);
 
       expectNotMuchFaster(
           longListMultimapToListMultimapBuilder, makeLongListMultimap);
@@ -403,8 +406,8 @@ void main() {
           new BuiltListMultimap<int, String>.build((b) => b.add(0, '0'))
               .toMap(),
           {
-        0: ['0']
-      });
+            0: ['0']
+          });
     });
 
     test('has rebuild method', () {
@@ -413,9 +416,9 @@ void main() {
             0: ['0']
           }).rebuild((b) => b.add(1, '1')).toMap(),
           {
-        0: ['0'],
-        1: ['1']
-      });
+            0: ['0'],
+            1: ['1']
+          });
     });
 
     // ListMultimap.
@@ -597,11 +600,9 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
   }
 }
 
-class _A {
-}
+class _A {}
 
-class _ExtendsA extends _A {
-}
+class _ExtendsA extends _A {}
 
 class _HashcodeOnlyOnce {
   bool hashCodeAllowed = true;

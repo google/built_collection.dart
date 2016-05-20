@@ -172,7 +172,6 @@ class BuiltListMultimap<K, V> {
       } else {
         throw new ArgumentError('map contained invalid key: ${key}');
       }
-
     }
   }
 

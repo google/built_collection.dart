@@ -52,29 +52,35 @@ void main() {
     });
 
     test('throws on wrong type key put', () {
-      expect(() => new MapBuilder<int, String>()['0'] = '0', throws);
+      expect(() => new MapBuilder<int, String>()['0' as dynamic] = '0', throws);
     });
 
     test('throws on wrong type value put', () {
-      expect(() => new MapBuilder<int, String>()[0] = 0, throws);
+      expect(() => new MapBuilder<int, String>()[0] = 0 as dynamic, throws);
     });
 
     test('throws on wrong type key putIfAbsent', () {
-      expect(() => new MapBuilder<int, String>().putIfAbsent('0', () => '0'),
+      expect(
+          () => new MapBuilder<int, String>()
+              .putIfAbsent('0' as dynamic, () => '0'),
           throws);
     });
 
     test('throws on wrong type value putIfAbsent', () {
       expect(
-          () => new MapBuilder<int, String>().putIfAbsent(0, () => 0), throws);
+          () =>
+              new MapBuilder<int, String>().putIfAbsent(0, () => 0 as dynamic),
+          throws);
     });
 
     test('throws on wrong type key addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({'0': '0'}), throws);
+      expect(() => new MapBuilder<int, String>().addAll({'0' as dynamic: '0'}),
+          throws);
     });
 
     test('throws on wrong type value addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({0: 0}), throws);
+      expect(() => new MapBuilder<int, String>().addAll({0: 0 as dynamic}),
+          throws);
     });
 
     test('has replace method that replaces all data', () {
@@ -147,13 +153,17 @@ void main() {
     test('has a method like Map.putIfAbsent that returns nothing', () {
       expect(
           (new MapBuilder<int, String>({1: '1'})
-            ..putIfAbsent(2, () => '2')
-            ..putIfAbsent(1, () => '3')).build().toMap(),
+                ..putIfAbsent(2, () => '2')
+                ..putIfAbsent(1, () => '3'))
+              .build()
+              .toMap(),
           {1: '1', 2: '2'});
       expect(
           (new BuiltMap<int, String>({1: '1'}).toBuilder()
-            ..putIfAbsent(2, () => '2')
-            ..putIfAbsent(1, () => '3')).build().toMap(),
+                ..putIfAbsent(2, () => '2')
+                ..putIfAbsent(1, () => '3'))
+              .build()
+              .toMap(),
           {1: '1', 2: '2'});
       expect(new MapBuilder<int, String>({1: '1'}).putIfAbsent(1, () => '3'),
           isNull);

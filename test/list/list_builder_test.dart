@@ -134,8 +134,8 @@ void main() {
     });
 
     test('converts to BuiltList without copying', () {
-      final makeLongListBuilder = () =>
-          new ListBuilder<int>(new List<int>.filled(1000000, 0));
+      final makeLongListBuilder =
+          () => new ListBuilder<int>(new List<int>.filled(1000000, 0));
       final longListBuilder = makeLongListBuilder();
       final buildLongListBuilder = () => longListBuilder.build();
 
@@ -186,7 +186,8 @@ void main() {
       expect((new BuiltList<int>([2, 1]).toBuilder()..sort()).build(), [1, 2]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()
-            ..sort((int x, int y) => x < y ? 1 : -1)).build(),
+                ..sort((int x, int y) => x < y ? 1 : -1))
+              .build(),
           [2, 1]);
     });
 
@@ -197,7 +198,8 @@ void main() {
           [2, 1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()
-            ..shuffle(new _AlwaysZeroRandom())).build(),
+                ..shuffle(new _AlwaysZeroRandom()))
+              .build(),
           [2, 1]);
     });
 

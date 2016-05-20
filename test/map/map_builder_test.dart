@@ -147,13 +147,17 @@ void main() {
     test('has a method like Map.putIfAbsent that returns nothing', () {
       expect(
           (new MapBuilder<int, String>({1: '1'})
-            ..putIfAbsent(2, () => '2')
-            ..putIfAbsent(1, () => '3')).build().toMap(),
+                ..putIfAbsent(2, () => '2')
+                ..putIfAbsent(1, () => '3'))
+              .build()
+              .toMap(),
           {1: '1', 2: '2'});
       expect(
           (new BuiltMap<int, String>({1: '1'}).toBuilder()
-            ..putIfAbsent(2, () => '2')
-            ..putIfAbsent(1, () => '3')).build().toMap(),
+                ..putIfAbsent(2, () => '2')
+                ..putIfAbsent(1, () => '3'))
+              .build()
+              .toMap(),
           {1: '1', 2: '2'});
       expect(new MapBuilder<int, String>({1: '1'}).putIfAbsent(1, () => '3'),
           isNull);

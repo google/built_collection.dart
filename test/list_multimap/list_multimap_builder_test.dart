@@ -92,14 +92,16 @@ void main() {
     test('has replace method that replaces all data', () {
       expect(
           (new ListMultimapBuilder<int, String>()
-            ..replace({
-              1: ['1'],
-              2: ['2']
-            })).build().toMap(),
+                ..replace({
+                  1: ['1'],
+                  2: ['2']
+                }))
+              .build()
+              .toMap(),
           {
-        1: ['1'],
-        2: ['2']
-      });
+            1: ['1'],
+            2: ['2']
+          });
     });
 
     test('has addIterable method like Map.fromIterable', () {
@@ -108,39 +110,41 @@ void main() {
               .build()
               .toMap(),
           {
-        1: [1],
-        2: [2],
-        3: [3]
-      });
+            1: [1],
+            2: [2],
+            3: [3]
+          });
       expect(
           (new ListMultimapBuilder<int, int>()
                 ..addIterable([1, 2, 3], key: (element) => element + 1))
               .build()
               .toMap(),
           {
-        2: [1],
-        3: [2],
-        4: [3]
-      });
+            2: [1],
+            3: [2],
+            4: [3]
+          });
       expect(
           (new ListMultimapBuilder<int, int>()
                 ..addIterable([1, 2, 3], value: (element) => element + 1))
               .build()
               .toMap(),
           {
-        1: [2],
-        2: [3],
-        3: [4]
-      });
+            1: [2],
+            2: [3],
+            3: [4]
+          });
       expect(
           (new ListMultimapBuilder<int, int>()
-            ..addIterable([1, 2, 3],
-                values: (element) => [element, element + 1])).build().toMap(),
+                ..addIterable([1, 2, 3],
+                    values: (element) => [element, element + 1]))
+              .build()
+              .toMap(),
           {
-        1: [1, 2],
-        2: [2, 3],
-        3: [3, 4]
-      });
+            1: [1, 2],
+            2: [2, 3],
+            3: [3, 4]
+          });
     });
 
     // Lazy copies.
@@ -170,8 +174,8 @@ void main() {
         return result;
       };
       final longListMultimapBuilder = makeLongListMultimapBuilder();
-      final buildLongListMultimapBuilder = () =>
-          longListMultimapBuilder.build();
+      final buildLongListMultimapBuilder =
+          () => longListMultimapBuilder.build();
 
       expectMuchFaster(
           buildLongListMultimapBuilder, makeLongListMultimapBuilder);
@@ -283,7 +287,9 @@ void main() {
       expect(
           (new ListMultimapBuilder<int, String>({
             1: ['1']
-          })..add(2, '2')).build().toMap(),
+          })..add(2, '2'))
+              .build()
+              .toMap(),
           ({
             1: ['1'],
             2: ['2']
@@ -291,7 +297,9 @@ void main() {
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1']
-          }).toBuilder()..add(2, '2')).build().toMap(),
+          }).toBuilder()..add(2, '2'))
+              .build()
+              .toMap(),
           ({
             1: ['1'],
             2: ['2']
@@ -302,7 +310,9 @@ void main() {
       expect(
           (new ListMultimapBuilder<int, String>({
             1: ['1']
-          })..addValues(2, ['2', '3'])).build().toMap(),
+          })..addValues(2, ['2', '3']))
+              .build()
+              .toMap(),
           ({
             1: ['1'],
             2: ['2', '3']
@@ -310,7 +320,9 @@ void main() {
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1']
-          }).toBuilder()..addValues(2, ['2', '3'])).build().toMap(),
+          }).toBuilder()..addValues(2, ['2', '3']))
+              .build()
+              .toMap(),
           ({
             1: ['1'],
             2: ['2', '3']
@@ -331,7 +343,9 @@ void main() {
           }));
       expect(
           (new BuiltListMultimap<int, String>().toBuilder()
-            ..addAll(mutableMultimap)).build().toMap(),
+                ..addAll(mutableMultimap))
+              .build()
+              .toMap(),
           ({
             1: ['1'],
             2: ['2']
@@ -343,20 +357,24 @@ void main() {
           (new ListMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2', '3']
-          })..remove(2, '3')).build().toMap(),
+          })..remove(2, '3'))
+              .build()
+              .toMap(),
           {
-        1: ['1'],
-        2: ['2']
-      });
+            1: ['1'],
+            2: ['2']
+          });
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1'],
             2: ['2', '3']
-          }).toBuilder()..remove(2, '3')).build().toMap(),
+          }).toBuilder()..remove(2, '3'))
+              .build()
+              .toMap(),
           {
-        1: ['1'],
-        2: ['2']
-      });
+            1: ['1'],
+            2: ['2']
+          });
       expect(
           new ListMultimapBuilder<int, String>({
             1: ['1'],
@@ -370,18 +388,22 @@ void main() {
           (new ListMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2', '3']
-          })..removeAll(2)).build().toMap(),
+          })..removeAll(2))
+              .build()
+              .toMap(),
           {
-        1: ['1']
-      });
+            1: ['1']
+          });
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1'],
             2: ['2', '3']
-          }).toBuilder()..removeAll(2)).build().toMap(),
+          }).toBuilder()..removeAll(2))
+              .build()
+              .toMap(),
           {
-        1: ['1']
-      });
+            1: ['1']
+          });
       expect(
           new ListMultimapBuilder<int, String>({
             1: ['1'],
@@ -395,13 +417,17 @@ void main() {
           (new ListMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2']
-          })..clear()).build().toMap(),
+          })..clear())
+              .build()
+              .toMap(),
           {});
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1'],
             2: ['2']
-          }).toBuilder()..clear()).build().toMap(),
+          }).toBuilder()..clear())
+              .build()
+              .toMap(),
           {});
     });
   });

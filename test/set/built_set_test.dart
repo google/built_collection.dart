@@ -123,16 +123,16 @@ void main() {
     test('compares not equal to different hashcode BuiltSet', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltSet([1, 2, 3], 0) ==
-              BuiltCollectionTestHelpers.overridenHashcodeBuiltSet(
-                  [1, 2, 3], 1),
+              BuiltCollectionTestHelpers
+                  .overridenHashcodeBuiltSet([1, 2, 3], 1),
           isFalse);
     });
 
     test('compares not equal to different content BuiltSet', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltSet([1, 2, 3], 0) ==
-              BuiltCollectionTestHelpers.overridenHashcodeBuiltSet(
-                  [1, 2, 4], 0),
+              BuiltCollectionTestHelpers
+                  .overridenHashcodeBuiltSet([1, 2, 4], 0),
           isFalse);
     });
 
@@ -407,11 +407,9 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
   }
 }
 
-class _A {
-}
+class _A {}
 
-class _ExtendsA extends _A {
-}
+class _ExtendsA extends _A {}
 
 class _HashcodeOnlyTwice {
   int hashCodeAllowed = 2;

@@ -51,7 +51,7 @@ void main() {
       final mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       final multimap = new BuiltSetMultimap<int, String>(mutableMultimap);
-      expect(multimap.toMap(), mutableMultimap.toMap());
+      expect(multimap.toMap(), mutableMultimap.asMap());
     });
 
     test('throws on wrong type key', () {

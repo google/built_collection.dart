@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4
+
+- Fix invalid reference when throwing type error from SetBuilder.
+- Fix analyzer errors in tests.
+
 ## 1.0.3
 
 - Fix factories when iterable generic type is subtype of requested type.

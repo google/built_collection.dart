@@ -39,51 +39,54 @@ void main() {
     });
 
     test('throws on null key addAll', () {
-      expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                null: ['0']
-              }),
+      final multimap = new ListMultimap<int, String>()..add(null, '0');
+      expect(() => new ListMultimapBuilder<int, String>().addAll(multimap),
           throws);
     });
 
     test('throws on null value addAll', () {
-      expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                0: [null]
-              }),
+      final multimap = new ListMultimap<int, String>()..add(0, null);
+      expect(() => new ListMultimapBuilder<int, String>().addAll(multimap),
           throws);
     });
 
     test('throws on wrong type key add', () {
       expect(
-          () => new ListMultimapBuilder<int, String>().add('0', '0'), throws);
+          () => new ListMultimapBuilder<int, String>().add('0' as dynamic, '0'),
+          throws);
     });
 
     test('throws on wrong type value add', () {
-      expect(() => new ListMultimapBuilder<int, String>().add(0, [0]), throws);
+      expect(
+          () => new ListMultimapBuilder<int, String>().add(0, [0] as dynamic),
+          throws);
     });
 
     test('throws on wrong type key addValues', () {
-      expect(() => new ListMultimapBuilder<int, String>().addValues('0', ['0']),
+      expect(
+          () => new ListMultimapBuilder<int, String>()
+              .addValues('0' as dynamic, ['0']),
           throws);
     });
 
     test('throws on wrong type value addValues', () {
-      expect(() => new ListMultimapBuilder<int, String>().addValues(0, [0]),
+      expect(
+          () => new ListMultimapBuilder<int, String>()
+              .addValues(0, [0 as dynamic]),
           throws);
     });
 
     test('throws on wrong type key addAll', () {
-      final mutableMultimap = new ListMultimap();
-      mutableMultimap.add('0', '0');
+      final mutableMultimap = new ListMultimap<int, String>();
+      mutableMultimap.add('0' as dynamic, '0');
       expect(
           () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
           throws);
     });
 
     test('throws on wrong type value addAll', () {
-      final mutableMultimap = new ListMultimap();
-      mutableMultimap.add(0, 0);
+      final mutableMultimap = new ListMultimap<int, String>();
+      mutableMultimap.add(0, 0 as dynamic);
       expect(
           () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
           throws);

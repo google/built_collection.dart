@@ -1,0 +1,3 @@
+language: dart
+dart: stable
+script: pub run test:test

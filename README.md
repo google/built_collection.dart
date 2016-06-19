@@ -1,5 +1,5 @@
 # Built Collections for Dart
-
+[![Build Status](https://travis-ci.org/google/built_collection.dart.svg?branch=master)](https://travis-ci.org/dart-lang/build)
 ## Introduction
 
 Built Collections are immutable collections using the

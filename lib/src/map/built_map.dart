@@ -6,8 +6,9 @@ part of built_collection.map;
 
 /// The Built Collection [Map].
 ///
-/// It implements the non-mutating part of the [Map] interface. It preserves
-/// key order. Modifications are made via [MapBuilder].
+/// It implements the non-mutating part of the [Map] interface. Iteration over
+/// keys is in the same order in which they were inserted. Modifications are
+/// made via [MapBuilder].
 ///
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)

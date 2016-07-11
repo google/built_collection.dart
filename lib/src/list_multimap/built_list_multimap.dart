@@ -6,8 +6,9 @@ part of built_collection.list_multimap;
 
 /// The Built Collection [ListMultimap].
 ///
-/// It implements the non-mutating part of the [ListMultimap] interface. It
-/// preserves key order. Modifications are made via [ListMultimapBuilder].
+/// It implements the non-mutating part of the [ListMultimap] interface.
+/// Iteration over keys is in the same order in which they were inserted.
+/// Modifications are made via [ListMultimapBuilder].
 ///
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)

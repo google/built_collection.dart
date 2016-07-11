@@ -7,7 +7,8 @@ part of built_collection.set;
 /// The Built Collection [Set].
 ///
 /// It implements [Iterable] and the non-mutating part of the [Set] interface.
-/// It preserves iteration order. Modifications are made via [SetBuilder].
+/// Iteration is in the same order in which the elements were inserted.
+/// Modifications are made via [SetBuilder].
 ///
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)

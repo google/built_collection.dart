@@ -6,8 +6,9 @@ part of built_collection.set_multimap;
 
 /// The Built Collection [SetMultimap].
 ///
-/// It implements the non-mutating part of the [SetMultimap] interface. It
-/// preserves key order. Modifications are made via [SetMultimapBuilder].
+/// It implements the non-mutating part of the [SetMultimap] interface.
+/// Iteration over keys is in the same order in which they were inserted.
+/// Modifications are made via [SetMultimapBuilder].
 ///
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)

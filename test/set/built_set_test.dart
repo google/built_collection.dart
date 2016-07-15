@@ -105,6 +105,11 @@ void main() {
       set.hashCode;
     });
 
+    test('compares equal to same instance', () {
+      final set1 = new BuiltSet<int>([1, 2, 3]);
+      expect(set1 == set1, isTrue);
+    });
+
     test('compares equal to same contents', () {
       final set1 = new BuiltSet<int>([1, 2, 3]);
       final set2 = new BuiltSet<int>([1, 2, 3]);
@@ -203,6 +208,15 @@ void main() {
       final longSetToSet = () => longSet.toSet();
 
       expectMuchFaster(longSetToSet, makeLongSet);
+    });
+
+    test('checks for reference identity', () {
+      final makeLongSet = () => new BuiltSet<Object>(
+          new Set<int>.from(new List<int>.generate(100000, (x) => x)));
+      final longSet = makeLongSet();
+      final otherLongSet = makeLongSet();
+
+      expectMuchFaster(() => longSet == longSet, () => longSet == otherLongSet);
     });
 
     test('is not mutated when Set from toSet is mutated', () {

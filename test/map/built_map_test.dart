@@ -136,6 +136,11 @@ void main() {
       map.hashCode;
     });
 
+    test('compares equal to same instance', () {
+      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(map == map, isTrue);
+    });
+
     test('compares equal to same contents', () {
       final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       final map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
@@ -246,6 +251,16 @@ void main() {
       final longMapToMap = () => longMap.toMap();
 
       expectMuchFaster(longMapToMap, makeLongMap);
+    });
+
+    test('checks for reference identity', () {
+      final makeLongMap = () => new BuiltMap<Object, Object>(
+          new Map<int, int>.fromIterable(
+              new List<int>.generate(100000, (x) => x)));
+      final longMap = makeLongMap();
+      final otherLongMap = makeLongMap();
+
+      expectMuchFaster(() => longMap == longMap, () => longMap == otherLongMap);
     });
 
     test('is not mutated when Map from toMap is mutated', () {

@@ -93,6 +93,7 @@ class BuiltSetMultimap<K, V> {
   /// equal key/values pairs in any order.
   @override
   bool operator ==(other) {
+    if (identical(other, this)) return true;
     if (other is! BuiltSetMultimap) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;

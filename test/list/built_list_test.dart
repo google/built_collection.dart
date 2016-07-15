@@ -99,6 +99,11 @@ void main() {
       list.hashCode;
     });
 
+    test('compares equal to same instance', () {
+      final list = new BuiltList<int>([1, 2, 3]);
+      expect(list == list, isTrue);
+    });
+
     test('compares equal to same contents', () {
       final list1 = new BuiltList<int>([1, 2, 3]);
       final list2 = new BuiltList<int>([1, 2, 3]);
@@ -183,6 +188,16 @@ void main() {
       final longListToList = () => longList.toList();
 
       expectMuchFaster(longListToList, makeLongList);
+    });
+
+    test('checks for reference identity', () {
+      final makeLongList =
+          () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
+      final longList = makeLongList();
+      final otherLongList = makeLongList();
+
+      expectMuchFaster(
+          () => longList == longList, () => longList == otherLongList);
     });
 
     test('is not mutated when List from toList is mutated', () {

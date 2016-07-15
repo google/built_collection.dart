@@ -211,6 +211,16 @@ void main() {
       multimap.hashCode;
     });
 
+    test('compares equal to same instance', () {
+      final multimap = new BuiltListMultimap<int, String>({
+        1: ['1'],
+        2: ['2', '2'],
+        3: ['3']
+      });
+
+      expect(multimap == multimap, isTrue);
+    });
+
     test('compares equal to same contents', () {
       final multimap1 = new BuiltListMultimap<int, String>({
         1: ['1'],
@@ -393,6 +403,21 @@ void main() {
       final longListMultimapToListMultimap = () => longListMultimap.toMap();
 
       expectMuchFaster(longListMultimapToListMultimap, makeLongListMultimap);
+    });
+
+    test('checks for reference identity', () {
+      final makeLongListMultimap = () {
+        final result = new ListMultimapBuilder<int, int>();
+        for (int i = 0; i != 100000; ++i) {
+          result.add(i, i);
+        }
+        return result.build();
+      };
+      final longListMultimap = makeLongListMultimap();
+      final otherLongListMultimap = makeLongListMultimap();
+
+      expectMuchFaster(() => longListMultimap == longListMultimap,
+          () => longListMultimap == otherLongListMultimap);
     });
 
     test('is not mutated when Map from toMap is mutated', () {

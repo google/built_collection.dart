@@ -67,6 +67,7 @@ class BuiltList<E> implements Iterable<E> {
   /// the same order.
   @override
   bool operator ==(other) {
+    if (identical(other, this)) return true;
     if (other is! BuiltList) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;

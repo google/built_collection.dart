@@ -98,6 +98,11 @@ void main() {
       list.hashCode;
       list.hashCode;
     });
+    
+    test('compares equal to same list', () {
+      final list = new BuiltList<int>([1, 2, 3]);
+      expect(list == list, isTrue);
+    });
 
     test('compares equal to same contents', () {
       final list1 = new BuiltList<int>([1, 2, 3]);

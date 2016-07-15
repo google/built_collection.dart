@@ -190,6 +190,16 @@ void main() {
       expectMuchFaster(longListToList, makeLongList);
     });
 
+    test('checks for reference identity', () {
+      final makeLongList =
+          () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
+      final longList = makeLongList();
+      final otherLongList = makeLongList();
+
+      expectMuchFaster(
+          () => longList == longList, () => longList == otherLongList);
+    });
+
     test('is not mutated when List from toList is mutated', () {
       final list = new BuiltList<int>();
       list.toList().add(1);

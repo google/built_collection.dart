@@ -405,6 +405,21 @@ void main() {
       expectMuchFaster(longListMultimapToListMultimap, makeLongListMultimap);
     });
 
+    test('checks for reference identity', () {
+      final makeLongListMultimap = () {
+        final result = new ListMultimapBuilder<int, int>();
+        for (int i = 0; i != 100000; ++i) {
+          result.add(i, i);
+        }
+        return result.build();
+      };
+      final longListMultimap = makeLongListMultimap();
+      final otherLongListMultimap = makeLongListMultimap();
+
+      expectMuchFaster(() => longListMultimap == longListMultimap,
+          () => longListMultimap == otherLongListMultimap);
+    });
+
     test('is not mutated when Map from toMap is mutated', () {
       final multimap = new BuiltListMultimap<int, String>();
       multimap.toMap()[1] = new BuiltList<String>(['1']);

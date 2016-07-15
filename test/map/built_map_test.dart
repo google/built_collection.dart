@@ -253,6 +253,16 @@ void main() {
       expectMuchFaster(longMapToMap, makeLongMap);
     });
 
+    test('checks for reference identity', () {
+      final makeLongMap = () => new BuiltMap<Object, Object>(
+          new Map<int, int>.fromIterable(
+              new List<int>.generate(100000, (x) => x)));
+      final longMap = makeLongMap();
+      final otherLongMap = makeLongMap();
+
+      expectMuchFaster(() => longMap == longMap, () => longMap == otherLongMap);
+    });
+
     test('is not mutated when Map from toMap is mutated', () {
       final map = new BuiltMap<int, String>();
       map.toMap()[1] = '1';

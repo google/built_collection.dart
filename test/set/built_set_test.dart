@@ -210,6 +210,15 @@ void main() {
       expectMuchFaster(longSetToSet, makeLongSet);
     });
 
+    test('checks for reference identity', () {
+      final makeLongSet = () => new BuiltSet<Object>(
+          new Set<int>.from(new List<int>.generate(100000, (x) => x)));
+      final longSet = makeLongSet();
+      final otherLongSet = makeLongSet();
+
+      expectMuchFaster(() => longSet == longSet, () => longSet == otherLongSet);
+    });
+
     test('is not mutated when Set from toSet is mutated', () {
       final set = new BuiltSet<int>();
       set.toSet().add(1);

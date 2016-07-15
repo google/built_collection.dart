@@ -404,6 +404,21 @@ void main() {
       expectMuchFaster(longSetMultimapToSetMultimap, makeLongSetMultimap);
     });
 
+    test('checks for reference identity', () {
+      final makeLongSetMultimap = () {
+        final result = new SetMultimapBuilder<int, int>();
+        for (int i = 0; i != 100000; ++i) {
+          result.add(i, i);
+        }
+        return result.build();
+      };
+      final longSetMultimap = makeLongSetMultimap();
+      final otherLongSetMultimap = makeLongSetMultimap();
+
+      expectMuchFaster(() => longSetMultimap == longSetMultimap,
+          () => longSetMultimap == otherLongSetMultimap);
+    });
+
     test('is not mutated when Map from toMap is mutated', () {
       final multimap = new BuiltSetMultimap<int, String>();
       multimap.toMap()[1] = new BuiltSet<String>(['1']);

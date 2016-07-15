@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- Add reference identity check to equals operators.
+
 ## 1.0.3
 
 - Fix factories when iterable generic type is subtype of requested type.

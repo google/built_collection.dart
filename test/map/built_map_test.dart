@@ -135,6 +135,11 @@ void main() {
       map.hashCode;
       map.hashCode;
     });
+    
+    test('compares equal to same instance', () {
+      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(map == map, isTrue);
+    });
 
     test('compares equal to same contents', () {
       final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});

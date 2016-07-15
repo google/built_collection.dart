@@ -98,7 +98,7 @@ void main() {
       list.hashCode;
       list.hashCode;
     });
-    
+
     test('compares equal to same instance', () {
       final list = new BuiltList<int>([1, 2, 3]);
       expect(list == list, isTrue);

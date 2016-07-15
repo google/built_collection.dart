@@ -210,7 +210,7 @@ void main() {
       multimap.hashCode;
       multimap.hashCode;
     });
-    
+
     test('compares equal to same instance', () {
       final multimap = new BuiltSetMultimap<int, String>({
         1: ['1'],

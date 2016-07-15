@@ -210,14 +210,14 @@ void main() {
       multimap.hashCode;
       multimap.hashCode;
     });
-    
+
     test('compares equal to same instance', () {
       final multimap = new BuiltListMultimap<int, String>({
         1: ['1'],
         2: ['2', '2'],
         3: ['3']
       });
-      
+
       expect(multimap == multimap, isTrue);
     });
 

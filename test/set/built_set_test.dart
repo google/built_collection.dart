@@ -104,6 +104,11 @@ void main() {
       set.hashCode;
       set.hashCode;
     });
+    
+    test('compares equal to same instance', () {
+      final set1 = new BuiltSet<int>([1, 2, 3]);
+      expect(set1 == set1, isTrue);
+    });
 
     test('compares equal to same contents', () {
       final set1 = new BuiltSet<int>([1, 2, 3]);

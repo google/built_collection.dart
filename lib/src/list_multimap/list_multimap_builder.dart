@@ -130,13 +130,13 @@ class ListMultimapBuilder<K, V> {
   }
 
   /// As [ListMultimap.remove] but returns nothing.
-  void remove(Object key, V value) {
+  void remove(K key, V value) {
     _makeWriteableCopy();
     _getValuesBuilder(key).remove(value);
   }
 
   /// As [ListMultimap.removeAll] but returns nothing.
-  void removeAll(Object key) {
+  void removeAll(K key) {
     _makeWriteableCopy();
 
     _builtMap = _builtMap;
@@ -192,7 +192,7 @@ class ListMultimapBuilder<K, V> {
     for (final key in keys) {
       if (key is K) {
         for (final value in lookup(key)) {
-          add(key, value);
+          add(key, value as V);
         }
       } else {
         throw new ArgumentError('map contained invalid key: ${key}');

@@ -27,7 +27,7 @@ class BuiltList<E> implements Iterable<E> {
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList([Iterable iterable = const []]) {
     if (iterable is BuiltList && iterable._hasExactElementType(E)) {
-      return iterable;
+      return iterable as BuiltList<E>;
     } else {
       return new BuiltList<E>._copyAndCheck(iterable);
     }

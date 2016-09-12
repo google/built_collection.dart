@@ -14,10 +14,10 @@ part 'set/set_builder.dart';
 
 // Internal only, for testing.
 class OverriddenHashcodeBuiltSet<T> extends BuiltSet<T> {
-  final int _hashCode;
+  final int _overridenHashCode;
 
-  OverriddenHashcodeBuiltSet(Iterable iterable, this._hashCode)
+  OverriddenHashcodeBuiltSet(Iterable iterable, this._overridenHashCode)
       : super._copyAndCheck(iterable);
 
-  int get hashCode => _hashCode;
+  int get hashCode => _overridenHashCode;
 }

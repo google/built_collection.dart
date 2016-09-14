@@ -130,9 +130,9 @@ class SetMultimapBuilder<K, V> {
   }
 
   /// As [SetMultimap.remove] but returns nothing.
-  void remove(K key, V value) {
+  void remove(Object key, V value) {
     _makeWriteableCopy();
-    _getValuesBuilder(key).remove(value);
+    _getValuesBuilder(key as K).remove(value);
   }
 
   /// As [SetMultimap.removeAll] but returns nothing.
@@ -192,7 +192,11 @@ class SetMultimapBuilder<K, V> {
     for (final key in keys) {
       if (key is K) {
         for (final value in lookup(key)) {
-          add(key, value as V);
+          if (value is V) {
+            add(key, value);
+          } else {
+            throw new ArgumentError('map contained invalid value: ${value}, for key ${key}');
+          }
         }
       } else {
         throw new ArgumentError('map contained invalid key: ${key}');

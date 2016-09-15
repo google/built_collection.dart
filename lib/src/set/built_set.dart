@@ -28,7 +28,7 @@ class BuiltSet<E> implements Iterable<E> {
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet([Iterable iterable = const []]) {
     if (iterable is BuiltSet && iterable._hasExactElementType(E)) {
-      return iterable;
+      return iterable as BuiltSet<E>;
     } else {
       return new BuiltSet<E>._copyAndCheck(iterable);
     }

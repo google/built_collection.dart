@@ -17,10 +17,10 @@ part 'list_multimap/list_multimap_builder.dart';
 // Internal only, for testing.
 class OverriddenHashcodeBuiltListMultimap<K, V>
     extends BuiltListMultimap<K, V> {
-  final int _hashCode;
+  final int _overridenHashCode;
 
-  OverriddenHashcodeBuiltListMultimap(map, this._hashCode)
+  OverriddenHashcodeBuiltListMultimap(map, this._overridenHashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
-  int get hashCode => _hashCode;
+  int get hashCode => _overridenHashCode;
 }

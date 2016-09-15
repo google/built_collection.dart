@@ -13,10 +13,10 @@ part 'map/map_builder.dart';
 
 // Internal only, for testing.
 class OverriddenHashcodeBuiltMap<K, V> extends BuiltMap<K, V> {
-  final int _hashCode;
+  final int _overrridenHashCode;
 
-  OverriddenHashcodeBuiltMap(map, this._hashCode)
+  OverriddenHashcodeBuiltMap(map, this._overrridenHashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
-  int get hashCode => _hashCode;
+  int get hashCode => _overrridenHashCode;
 }

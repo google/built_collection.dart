@@ -37,7 +37,7 @@ class BuiltSetMultimap<K, V> {
   factory BuiltSetMultimap([multimap = const {}]) {
     if (multimap is BuiltSetMultimap &&
         multimap._hasExactKeyAndValueTypes(K, V)) {
-      return multimap;
+      return multimap as BuiltSetMultimap<K, V>;
     } else if (multimap is Map ||
         multimap is SetMultimap ||
         multimap is BuiltSetMultimap) {

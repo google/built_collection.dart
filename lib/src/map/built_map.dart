@@ -32,7 +32,7 @@ class BuiltMap<K, V> {
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap([map = const {}]) {
     if (map is BuiltMap && map._hasExactKeyAndValueTypes(K, V)) {
-      return map;
+      return map as BuiltMap<K, V>;
     } else if (map is Map || map is BuiltMap) {
       return new BuiltMap<K, V>._copyAndCheck(map.keys, (k) => map[k]);
     } else {

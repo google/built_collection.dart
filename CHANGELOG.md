@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Strong mode clean.
+
 ## 1.0.4
 
 - Add reference identity check to equals operators.

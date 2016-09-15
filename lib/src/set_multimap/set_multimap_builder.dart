@@ -131,16 +131,20 @@ class SetMultimapBuilder<K, V> {
 
   /// As [SetMultimap.remove] but returns nothing.
   void remove(Object key, V value) {
-    _makeWriteableCopy();
-    _getValuesBuilder(key as K).remove(value);
+    if (key is K) {
+      _makeWriteableCopy();
+      _getValuesBuilder(key).remove(value);
+    }
   }
 
   /// As [SetMultimap.removeAll] but returns nothing.
-  void removeAll(K key) {
-    _makeWriteableCopy();
+  void removeAll(Object key) {
+    if (key is K) {
+      _makeWriteableCopy();
 
-    _builtMap = _builtMap;
-    _builderMap[key] = new SetBuilder<V>();
+      _builtMap = _builtMap;
+      _builderMap[key] = new SetBuilder<V>();
+    }
   }
 
   /// As [SetMultimap.clear].

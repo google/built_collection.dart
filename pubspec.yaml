@@ -1,11 +1,11 @@
 name: built_collection
-version: 1.0.5
+version: 1.0.6
 description: >
   Builder pattern wrappers for core Dart collections.
 authors:
 - David Morgan <davidmorgan@google.com>
 homepage: https://github.com/google/built-collection-dart
 dependencies:
-  quiver: '>=0.21.0 <0.22.0'
+  quiver: '>=0.21.0 <0.24.0'
 dev_dependencies:
   test: any

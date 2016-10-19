@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- Allow quiver 0.23.
+
 ## 1.0.5
 
 - Strong mode clean.

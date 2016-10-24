@@ -219,15 +219,15 @@ class ListMultimapBuilder<K, V> {
     }
   }
 
-  void _checkKey(Object key) {
-    if (key is! K) {
-      throw new ArgumentError('invalid key: ${key}');
+  void _checkKey(K key) {
+    if (identical(key, null)) {
+      throw new ArgumentError('null key');
     }
   }
 
-  void _checkValue(Object value) {
-    if (value is! V) {
-      throw new ArgumentError('invalid value: ${value}');
+  void _checkValue(V value) {
+    if (identical(value, null)) {
+      throw new ArgumentError('null value');
     }
   }
 }

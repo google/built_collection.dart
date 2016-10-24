@@ -51,32 +51,6 @@ void main() {
       expect(() => new MapBuilder<int, String>().addAll({0: null}), throws);
     });
 
-    test('throws on wrong type key put', () {
-      expect(() => new MapBuilder<int, String>()['0'] = '0', throws);
-    });
-
-    test('throws on wrong type value put', () {
-      expect(() => new MapBuilder<int, String>()[0] = 0, throws);
-    });
-
-    test('throws on wrong type key putIfAbsent', () {
-      expect(() => new MapBuilder<int, String>().putIfAbsent('0', () => '0'),
-          throws);
-    });
-
-    test('throws on wrong type value putIfAbsent', () {
-      expect(
-          () => new MapBuilder<int, String>().putIfAbsent(0, () => 0), throws);
-    });
-
-    test('throws on wrong type key addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({'0': '0'}), throws);
-    });
-
-    test('throws on wrong type value addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({0: 0}), throws);
-    });
-
     test('has replace method that replaces all data', () {
       expect(
           (new MapBuilder<int, String>()..replace({1: '1', 2: '2'}))

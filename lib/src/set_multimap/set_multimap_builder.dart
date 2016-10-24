@@ -219,14 +219,14 @@ class SetMultimapBuilder<K, V> {
     }
   }
 
-  void _checkKey(Object key) {
-    if (key is! K) {
+  void _checkKey(K key) {
+    if (identical(key, null)) {
       throw new ArgumentError('invalid key: ${key}');
     }
   }
 
-  void _checkValue(Object value) {
-    if (value is! V) {
+  void _checkValue(V value) {
+    if (identical(value, null)) {
       throw new ArgumentError('invalid value: ${value}');
     }
   }

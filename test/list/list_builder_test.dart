@@ -70,53 +70,37 @@ void main() {
           throws);
     });
 
-    test('throws on wrong type assign', () {
-      expect(() => new ListBuilder<int>([0])[0] = '0', throws);
-    });
-
-    test('throws on wrong type add', () {
-      expect(() => new ListBuilder<int>().add('0'), throws);
-    });
-
     test('throws on wrong type addAll', () {
-      expect(() => new ListBuilder<int>().addAll([0, 1, '0']), throws);
-    });
-
-    test('throws on wrong type insert', () {
-      expect(() => new ListBuilder<int>().insert(0, '0'), throws);
+      expect(
+          () => new ListBuilder<int>().addAll(new List<int>.from([0, 1, '0'])),
+          throws);
     });
 
     test('throws on wrong type insertAll', () {
-      expect(() => new ListBuilder<int>().insertAll(0, [0, 1, '0']), throws);
+      expect(
+          () => new ListBuilder<int>()
+              .insertAll(0, new List<int>.from([0, 1, '0'])),
+          throws);
     });
 
     test('throws on wrong type setAll', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).setAll(0, [0, 1, '0']), throws);
-    });
-
-    test('throws on wrong type setRange', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).setRange(0, 2, [0, 1, '0']),
+          () => new ListBuilder<int>([0, 1, 2])
+              .setAll(0, new List<int>.from([0, 1, '0'])),
           throws);
     });
 
-    test('throws on wrong type fillRange', () {
+    test('throws on wrong type setRange', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).fillRange(0, 2, '0'), throws);
+          () => new ListBuilder<int>([0, 1, 2])
+              .setRange(0, 2, new List<int>.from([0, 1, '0'])),
+          throws);
     });
 
     test('throws on wrong type replaceRange', () {
       expect(
-          () => new ListBuilder<int>([0, 1, 2]).replaceRange(0, 2, [0, 1, '0']),
-          throws);
-    });
-
-    test('throws on wrong type map', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).map((x) => '0'), throws);
-    });
-
-    test('throws on wrong type expand', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).expand((x) => [x, '0']),
+          () => new ListBuilder<int>([0, 1, 2])
+              .replaceRange(0, 2, new List<int>.from([0, 1, '0'])),
           throws);
     });
 

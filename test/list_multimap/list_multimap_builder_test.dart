@@ -39,53 +39,27 @@ void main() {
     });
 
     test('throws on null key addAll', () {
+      final mutableMultimap = new ListMultimap<int, String>();
+      mutableMultimap.add(null, '0');
+
       expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                null: ['0']
-              }),
+          () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
           throws);
     });
 
     test('throws on null value addAll', () {
+      final mutableMultimap = new ListMultimap<int, String>();
+      mutableMultimap.add(0, null);
+
       expect(
-          () => new ListMultimapBuilder<int, String>().addAll({
-                0: [null]
-              }),
-          throws);
-    });
-
-    test('throws on wrong type key add', () {
-      expect(
-          () => new ListMultimapBuilder<int, String>().add('0', '0'), throws);
-    });
-
-    test('throws on wrong type value add', () {
-      expect(() => new ListMultimapBuilder<int, String>().add(0, [0]), throws);
-    });
-
-    test('throws on wrong type key addValues', () {
-      expect(() => new ListMultimapBuilder<int, String>().addValues('0', ['0']),
+          () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
           throws);
     });
 
     test('throws on wrong type value addValues', () {
-      expect(() => new ListMultimapBuilder<int, String>().addValues(0, [0]),
-          throws);
-    });
-
-    test('throws on wrong type key addAll', () {
-      final mutableMultimap = new ListMultimap();
-      mutableMultimap.add('0', '0');
       expect(
-          () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throws);
-    });
-
-    test('throws on wrong type value addAll', () {
-      final mutableMultimap = new ListMultimap();
-      mutableMultimap.add(0, 0);
-      expect(
-          () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
+          () => new ListMultimapBuilder<int, String>()
+              .addValues(0, new List<String>.from([0])),
           throws);
     });
 
@@ -137,7 +111,7 @@ void main() {
       expect(
           (new ListMultimapBuilder<int, int>()
                 ..addIterable([1, 2, 3],
-                    values: (element) => [element, element + 1]))
+                    values: (element) => <int>[element, element + 1]))
               .build()
               .toMap(),
           {

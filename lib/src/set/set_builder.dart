@@ -177,15 +177,17 @@ class SetBuilder<E> {
     }
   }
 
-  void _checkElement(Object element) {
-    if (element is! E) {
-      throw new ArgumentError('invalid element: ${element}');
+  void _checkElement(E element) {
+    if (identical(element, null)) {
+      throw new ArgumentError('null element');
     }
   }
 
   void _checkElements(Iterable elements) {
     for (final element in elements) {
-      _checkElement(element);
+      if (element is! E) {
+        throw new ArgumentError('invalid element: ${element}');
+      }
     }
   }
 }

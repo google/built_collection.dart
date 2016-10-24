@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+- Remove runtime checks that are unnecessary if the project using
+  built_collection is "strong mode clean", that is, if it has no errors with
+  strong mode. See note in `README.md` about strong mode.
+
 ## 1.0.6
 
 - Allow quiver 0.23.

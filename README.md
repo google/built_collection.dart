@@ -25,6 +25,16 @@ Built Collections:
 See below for details on each of these points.
 
 
+## A note about strong mode
+
+Please note that from version `1.1.0` built_collection must be used in
+conjunction with
+[strong mode](https://github.com/dart-lang/dev_compiler/blob/master/STRONG_MODE.md)
+to get all the type guarantees. That is, your project must have no warnings or
+errors when analyzed with the strong mode analyzer. This allows some runtime
+checks to be skipped because the equivalent check can be done statically.
+
+
 ## Recommended Style
 
 A project can benefit greatly from using Built Collections throughout.

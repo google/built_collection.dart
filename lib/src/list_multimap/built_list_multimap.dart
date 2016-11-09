@@ -20,7 +20,7 @@ class BuiltListMultimap<K, V> {
   final BuiltList<V> _emptyList = new BuiltList<V>();
 
   // Cached.
-  int _hashCode = null;
+  int _hashCode;
   Iterable<K> _keys;
   Iterable<V> _values;
 
@@ -104,6 +104,12 @@ class BuiltListMultimap<K, V> {
   }
 
   String toString() => _map.toString();
+
+  /// Returns as an immutable map.
+  ///
+  /// Useful when producing or using APIs that need the [Map] interface. This
+  /// differs from [toMap] where mutations are explicitly disallowed.
+  Map<K, Iterable<V>> asMap() => new Map<K, Iterable<V>>.unmodifiable(_map);
 
   // ListMultimap.
 

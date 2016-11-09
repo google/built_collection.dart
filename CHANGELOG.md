@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- Add `asList`, `asMap`, and `asSet` to the built collection classes.
+
 ## 1.1.0
 
 - Remove runtime checks that are unnecessary if the project using

@@ -118,6 +118,11 @@ a copy, but return a copy-on-write wrapper. So, Built Collections can be
 efficiently and easily used with code that needs core SDK collections but
 does not mutate them.
 
+When you want to provide a collection that explicitly _throws_ when a
+mutation is attempted, use `BuiltList.asList`,
+`BuiltListMultimap.asMap`, `BuiltSet.asSet`, `BuiltSetMultimap.asMap` 
+and `BuiltMap.asMap`.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].

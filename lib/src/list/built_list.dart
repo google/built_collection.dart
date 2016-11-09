@@ -14,7 +14,7 @@ part of built_collection.list;
 /// for the general properties of Built Collections.
 class BuiltList<E> implements Iterable<E> {
   final List<E> _list;
-  int _hashCode = null;
+  int _hashCode;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -79,6 +79,12 @@ class BuiltList<E> implements Iterable<E> {
 
   @override
   String toString() => _list.toString();
+
+  /// Returns as an immutable list.
+  ///
+  /// Useful when producing or using APIs that need the [List] interface. This
+  /// differs from [toList] where mutations are explicitly disallowed.
+  List<E> asList() => new List<E>.unmodifiable(_list);
 
   // List.
 

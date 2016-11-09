@@ -20,7 +20,7 @@ class BuiltSetMultimap<K, V> {
   final BuiltSet<V> _emptySet = new BuiltSet<V>();
 
   // Cached.
-  int _hashCode = null;
+  int _hashCode;
   Iterable<K> _keys;
   Iterable<V> _values;
 
@@ -102,6 +102,12 @@ class BuiltSetMultimap<K, V> {
     }
     return true;
   }
+
+  /// Returns as an immutable map.
+  ///
+  /// Useful when producing or using APIs that need the [Map] interface. This
+  /// differs from [toMap] where mutations are explicitly disallowed.
+  Map<K, Iterable<V>> asMap() => new Map<K, Iterable<V>>.unmodifiable(_map);
 
   String toString() => _map.toString();
 

@@ -62,6 +62,13 @@ void main() {
       expect(new BuiltList<int>().toList() is List<String>, isFalse);
     });
 
+    test('can be converted to an UnmodifiableListView', () {
+      final immutableList = new BuiltList<int>().asList();
+      expect(immutableList is List<int>, isTrue);
+      expect(() => immutableList.add(1), throwsUnsupportedError);
+      expect(immutableList, isEmpty);
+    });
+
     test('can be converted to ListBuilder<E>', () {
       expect(new BuiltList<int>().toBuilder() is ListBuilder<int>, isTrue);
       expect(new BuiltList<int>().toBuilder() is ListBuilder<String>, isFalse);

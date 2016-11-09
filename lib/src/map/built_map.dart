@@ -54,6 +54,12 @@ class BuiltMap<K, V> {
   BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
       (toBuilder()..update(updates)).build();
 
+  /// Returns as an immutable map.
+  ///
+  /// Useful when producing or using APIs that need the [Map] interface. This
+  /// differs from [toMap] where mutations are explicitly disallowed.
+  Map<K, V> asMap() => new Map<K, V>.unmodifiable(_map);
+
   /// Converts to a [Map].
   ///
   /// Note that the implementation is efficient: it returns a copy-on-write

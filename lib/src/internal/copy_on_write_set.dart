@@ -24,7 +24,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   Set<E> union(Set<E> other) => _set.union(other);
 
   @override
-  Set<E> difference(Set<E> other) => _set.difference(other);
+  Set<E> difference(Set<Object> other) => _set.difference(other);
 
   @override
   bool containsAll(Iterable<Object> other) => _set.containsAll(other);

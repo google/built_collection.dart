@@ -7,6 +7,7 @@ authors:
 - Matan Lurey <matanl@google.com>
 homepage: https://github.com/google/built-collection-dart
 dependencies:
+  collection: '^1.7.0'
   quiver: '>=0.21.0 <0.24.0'
 dev_dependencies:
   test: any

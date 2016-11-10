@@ -79,6 +79,12 @@ class BuiltSet<E> implements Iterable<E> {
   @override
   String toString() => _set.toString();
 
+  /// Returns as an immutable set.
+  ///
+  /// Useful when producing or using APIs that need the [Set] interface. This
+  /// differs from [toSet] where mutations are explicitly disallowed.
+  Set<E> asSet() => new UnmodifiableSetView<E>(_set);
+
   // Set.
 
   /// As [Set.length].

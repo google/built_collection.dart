@@ -62,6 +62,13 @@ void main() {
       expect(new BuiltSet<int>().toSet() is Set<String>, isFalse);
     });
 
+    test('can be converted to an UnmodifiableSetView', () {
+      final immutableSet = new BuiltSet<int>().asSet();
+      expect(immutableSet is Set<int>, isTrue);
+      expect(() => immutableSet.add(1), throwsUnsupportedError);
+      expect(immutableSet, isEmpty);
+    });
+
     test('can be converted to SetBuilder<E>', () {
       expect(new BuiltSet<int>().toBuilder() is SetBuilder<int>, isTrue);
       expect(new BuiltSet<int>().toBuilder() is SetBuilder<String>, isFalse);

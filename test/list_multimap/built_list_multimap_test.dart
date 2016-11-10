@@ -105,6 +105,13 @@ void main() {
           isFalse);
     });
 
+    test('can be converted to an UnmodifiableMapView', () {
+      final immutableMap = new BuiltListMultimap<int, String>().asMap();
+      expect(immutableMap is Map<int, Iterable<String>>, isTrue);
+      expect(() => immutableMap[1] = ['Hello'], throwsUnsupportedError);
+      expect(immutableMap, isEmpty);
+    });
+
     test('can be converted to ListMultimapBuilder<K, V>', () {
       expect(
           new BuiltListMultimap<int, String>().toBuilder()

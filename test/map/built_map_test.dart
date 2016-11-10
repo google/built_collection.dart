@@ -76,6 +76,13 @@ void main() {
           new BuiltMap<int, String>().toMap() is Map<String, String>, isFalse);
     });
 
+    test('can be converted to an UnmodifiableMapView', () {
+      final immutableMap = new BuiltMap<int, String>().asMap();
+      expect(immutableMap is Map<int, String>, isTrue);
+      expect(() => immutableMap[1] = 'Hello', throwsUnsupportedError);
+      expect(immutableMap, isEmpty);
+    });
+
     test('can be converted to MapBuilder<K, V>', () {
       expect(new BuiltMap<int, String>().toBuilder() is MapBuilder<int, String>,
           isTrue);

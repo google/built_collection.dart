@@ -5,9 +5,14 @@ description: >
 authors:
 - David Morgan <davidmorgan@google.com>
 - Matan Lurey <matanl@google.com>
-homepage: https://github.com/google/built-collection-dart
+homepage: https://github.com/google/built_collection.dart
+
+environment:
+  sdk: ">=1.21.0-dev.5.0 <2.0.0"
+
 dependencies:
   collection: '^1.7.0'
   quiver: '>=0.21.0 <0.24.0'
+
 dev_dependencies:
   test: any

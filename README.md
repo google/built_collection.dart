@@ -120,7 +120,7 @@ does not mutate them.
 
 When you want to provide a collection that explicitly _throws_ when a
 mutation is attempted, use `BuiltList.asList`,
-`BuiltListMultimap.asMap`, `BuiltSet.asSet`, `BuiltSetMultimap.asMap` 
+`BuiltListMultimap.asMap`, `BuiltSet.asSet`, `BuiltSetMultimap.asMap`
 and `BuiltMap.asMap`.
 
 ## Features and bugs

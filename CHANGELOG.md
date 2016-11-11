@@ -2,6 +2,7 @@
 
 ## 1.2.0
 
+- Update for Set.difference change in SDK 1.21.0.
 - Add `asList`, `asMap`, and `asSet` to the built collection classes.
 
 ## 1.1.0

@@ -2,8 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-library built_collection.set;
-
 import 'package:built_collection/src/list.dart' show BuiltList;
 import 'package:collection/collection.dart' show UnmodifiableSetView;
 import 'package:quiver/core.dart' show hashObjects;

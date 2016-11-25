@@ -3,12 +3,14 @@
 ## Introduction
 
 Built Collections are immutable collections using the
-[builder pattern](http://en.wikipedia.org/wiki/Builder_pattern) and are part of
-[Libraries for Object Oriented Dart](https://github.com/google/built_value.dart/blob/master/libraries_for_object_oriented_dart.md#libraries-for-object-oriented-dart).
+[builder pattern](http://en.wikipedia.org/wiki/Builder_pattern).
 
 Each of the core SDK collections is split in two: a mutable builder class
 and an immutable "built" class. Builders are for computation,
 "built" classes are for safely sharing with no need to copy defensively.
+
+Immutable collections work particularly well with immutable values. See
+[built_value](https://github.com/google/built_value.dart).
 
 ## Design
 

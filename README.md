@@ -10,7 +10,7 @@ and an immutable "built" class. Builders are for computation,
 "built" classes are for safely sharing with no need to copy defensively.
 
 Immutable collections work particularly well with immutable values. See
-[built_value](https://github.com/google/built_value.dart).
+[built_value](https://github.com/google/built_value.dart#built-values-for-dart).
 
 ## Design
 

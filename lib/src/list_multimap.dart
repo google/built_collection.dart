@@ -2,6 +2,8 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+library built_collection.list_multimap;
+
 import 'package:quiver/collection.dart' show ListMultimap;
 import 'package:quiver/core.dart' show hashObjects, hash2;
 

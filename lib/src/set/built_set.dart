@@ -94,11 +94,11 @@ class BuiltSet<E> implements Iterable<E> {
   bool containsAll(Iterable<Object> other) => _set.containsAll(other);
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
-  BuiltSet<E> difference(BuiltSet<E> other) =>
+  BuiltSet<E> difference(BuiltSet<Object> other) =>
       new BuiltSet<E>._withSafeSet(_set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
-  BuiltSet<E> intersection(BuiltSet<E> other) =>
+  BuiltSet<E> intersection(BuiltSet<Object> other) =>
       new BuiltSet<E>._withSafeSet(_set.intersection(other._set));
 
   /// As [Set.lookup].

@@ -21,5 +21,7 @@ class OverriddenHashcodeBuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
   OverriddenHashcodeBuiltSetMultimap(map, this._overridenHashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode => _overridenHashCode;
 }

@@ -17,9 +17,9 @@ class BuiltMap<K, V> {
   final Map<K, V> _map;
 
   // Cached.
-  int _hashCode = null;
-  Iterable<K> _keys = null;
-  Iterable<V> _values = null;
+  int _hashCode;
+  Iterable<K> _keys;
+  Iterable<V> _values;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -89,7 +89,7 @@ class BuiltMap<K, V> {
   /// A `BuiltMap` is only equal to another `BuiltMap` with equal key/value
   /// pairs in any order.
   @override
-  bool operator ==(other) {
+  bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! BuiltMap) return false;
     if (other.length != length) return false;
@@ -100,6 +100,7 @@ class BuiltMap<K, V> {
     return true;
   }
 
+  @override
   String toString() => _map.toString();
 
   // Map.
@@ -156,10 +157,10 @@ class BuiltMap<K, V> {
         if (value is V) {
           _map[key] = value;
         } else {
-          throw new ArgumentError('map contained invalid value: ${value}');
+          throw new ArgumentError('map contained invalid value: $value');
         }
       } else {
-        throw new ArgumentError('map contained invalid key: ${key}');
+        throw new ArgumentError('map contained invalid key: $key');
       }
     }
   }

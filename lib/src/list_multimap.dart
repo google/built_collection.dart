@@ -22,5 +22,7 @@ class OverriddenHashcodeBuiltListMultimap<K, V>
   OverriddenHashcodeBuiltListMultimap(map, this._overridenHashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode => _overridenHashCode;
 }

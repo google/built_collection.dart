@@ -374,7 +374,12 @@ void expectMuchFaster(Function fastFunction, Function slowFunction) {
 }
 
 class _AlwaysZeroRandom implements Random {
+  @override
   bool nextBool() => false;
+
+  @override
   double nextDouble() => 0.0;
+
+  @override
   int nextInt(int max) => 0;
 }

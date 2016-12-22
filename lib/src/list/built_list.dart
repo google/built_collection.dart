@@ -67,7 +67,7 @@ class BuiltList<E> implements Iterable<E> {
   /// A `BuiltList` is only equal to another `BuiltList` with equal elements in
   /// the same order.
   @override
-  bool operator ==(other) {
+  bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! BuiltList) return false;
     if (other.length != length) return false;
@@ -93,6 +93,7 @@ class BuiltList<E> implements Iterable<E> {
   E operator [](int index) => _list[index];
 
   /// As [List.length].
+  @override
   int get length => _list.length;
 
   /// As [List.reversed].
@@ -215,8 +216,7 @@ class BuiltList<E> implements Iterable<E> {
 
     for (final element in _list) {
       if (element is! E) {
-        throw new ArgumentError(
-            'iterable contained invalid element: ${element}');
+        throw new ArgumentError('iterable contained invalid element: $element');
       }
     }
   }

@@ -13,6 +13,7 @@ class CopyOnWriteList<E> implements List<E> {
 
   // Read-only methods: just forward.
 
+  @override
   int get length => _list.length;
 
   @override
@@ -120,13 +121,14 @@ class CopyOnWriteList<E> implements List<E> {
 
   // Mutating methods: copy first if needed.
 
+  @override
   set length(int length) {
     _maybeCopyBeforeWrite();
     _list.length = length;
   }
 
   @override
-  operator []=(int index, E element) {
+  void operator []=(int index, E element) {
     _maybeCopyBeforeWrite();
     _list[index] = element;
   }

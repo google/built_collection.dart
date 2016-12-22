@@ -18,5 +18,7 @@ class OverriddenHashcodeBuiltMap<K, V> extends BuiltMap<K, V> {
   OverriddenHashcodeBuiltMap(map, this._overrridenHashCode)
       : super._copyAndCheck(map.keys, (k) => map[k]);
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode => _overrridenHashCode;
 }

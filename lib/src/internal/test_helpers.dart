@@ -15,19 +15,21 @@ class BuiltCollectionTestHelpers {
       new OverriddenHashcodeBuiltList<int>(iterable, hashCode);
 
   static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
-          map, int hashCode) =>
+          Object map, int hashCode) =>
       new OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
 
   static BuiltListMultimap<String, String>
-      overridenHashcodeBuiltListMultimapWithStringKeys(map, int hashCode) =>
+      overridenHashcodeBuiltListMultimapWithStringKeys(
+              Object map, int hashCode) =>
           new OverriddenHashcodeBuiltListMultimap<String, String>(
               map, hashCode);
 
-  static BuiltMap<int, String> overridenHashcodeBuiltMap(map, int hashCode) =>
+  static BuiltMap<int, String> overridenHashcodeBuiltMap(
+          Object map, int hashCode) =>
       new OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
 
   static BuiltMap<String, String> overridenHashcodeBuiltMapWithStringKeys(
-          map, int hashCode) =>
+          Object map, int hashCode) =>
       new OverriddenHashcodeBuiltMap<String, String>(map, hashCode);
 
   static BuiltSet<int> overridenHashcodeBuiltSet(
@@ -35,10 +37,11 @@ class BuiltCollectionTestHelpers {
       new OverriddenHashcodeBuiltSet<int>(iterable, hashCode);
 
   static BuiltSetMultimap<int, String> overridenHashcodeBuiltSetMultimap(
-          map, int hashCode) =>
+          Object map, int hashCode) =>
       new OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);
 
   static BuiltSetMultimap<String, String>
-      overridenHashcodeBuiltSetMultimapWithStringKeys(map, int hashCode) =>
+      overridenHashcodeBuiltSetMultimapWithStringKeys(
+              Object map, int hashCode) =>
           new OverriddenHashcodeBuiltSetMultimap<String, String>(map, hashCode);
 }

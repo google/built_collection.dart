@@ -20,5 +20,7 @@ class OverriddenHashcodeBuiltSet<T> extends BuiltSet<T> {
   OverriddenHashcodeBuiltSet(Iterable iterable, this._overridenHashCode)
       : super._copyAndCheck(iterable);
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode => _overridenHashCode;
 }

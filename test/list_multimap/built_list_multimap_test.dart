@@ -245,6 +245,7 @@ void main() {
 
     test('compares not equal to different type', () {
       expect(
+          // ignore: unrelated_type_equality_checks
           new BuiltListMultimap<int, String>({
                 1: ['1'],
                 2: ['2'],
@@ -300,6 +301,7 @@ void main() {
 
     test('compares without throwing for same hashcode different key type', () {
       expect(
+          // ignore: unrelated_type_equality_checks
           BuiltCollectionTestHelpers.overridenHashcodeBuiltListMultimap({
                 1: ['1']
               }, 0) ==
@@ -639,6 +641,8 @@ class _ExtendsA extends _A {}
 class _HashcodeOnlyOnce {
   bool hashCodeAllowed = true;
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode {
     expect(hashCodeAllowed, isTrue);
     hashCodeAllowed = false;

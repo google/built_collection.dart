@@ -94,7 +94,7 @@ class BuiltSetMultimap<K, V> {
   /// A `BuiltSetMultimap` is only equal to another `BuiltSetMultimap` with
   /// equal key/values pairs in any order.
   @override
-  bool operator ==(other) {
+  bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! BuiltSetMultimap) return false;
     if (other.length != length) return false;
@@ -111,6 +111,7 @@ class BuiltSetMultimap<K, V> {
   /// differs from [toMap] where mutations are explicitly disallowed.
   Map<K, Iterable<V>> asMap() => new Map<K, Iterable<V>>.unmodifiable(_map);
 
+  @override
   String toString() => _map.toString();
 
   // SetMultimap.
@@ -180,7 +181,7 @@ class BuiltSetMultimap<K, V> {
       if (key is K) {
         _map[key] = new BuiltSet<V>(lookup(key));
       } else {
-        throw new ArgumentError('map contained invalid key: ${key}');
+        throw new ArgumentError('map contained invalid key: $key');
       }
     }
   }

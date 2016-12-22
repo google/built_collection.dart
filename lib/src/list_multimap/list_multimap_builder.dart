@@ -64,7 +64,7 @@ class ListMultimapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
-  void replace(multimap) {
+  void replace(dynamic multimap) {
     if (multimap is BuiltListMultimap<K, V>) {
       _setOwner(multimap);
     } else if (multimap is Map ||
@@ -87,7 +87,9 @@ class ListMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable(Iterable iterable,
-      {K key(element), V value(element), Iterable<V> values(element)}) {
+      {K key(dynamic element),
+      V value(dynamic element),
+      Iterable<V> values(dynamic element)}) {
     if (value != null && values != null) {
       throw new ArgumentError('expected value or values to be set, got both');
     }
@@ -203,11 +205,11 @@ class ListMultimapBuilder<K, V> {
             add(key, value);
           } else {
             throw new ArgumentError(
-                'map contained invalid value: ${value}, for key ${key}');
+                'map contained invalid value: $value, for key $key');
           }
         }
       } else {
-        throw new ArgumentError('map contained invalid key: ${key}');
+        throw new ArgumentError('map contained invalid key: $key');
       }
     }
   }

@@ -124,6 +124,7 @@ void main() {
     });
 
     test('compares not equal to different type', () {
+      // ignore: unrelated_type_equality_checks
       expect(new BuiltSet<int>([1, 2, 3]) == '', isFalse);
     });
 
@@ -435,6 +436,8 @@ class _ExtendsA extends _A {}
 class _HashcodeOnlyTwice {
   int hashCodeAllowed = 2;
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode {
     expect(hashCodeAllowed, isNot(0));
     hashCodeAllowed--;

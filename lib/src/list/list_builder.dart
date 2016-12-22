@@ -56,7 +56,7 @@ class ListBuilder<E> {
   // Based on List.
 
   /// As [List].
-  operator []=(int index, E element) {
+  void operator []=(int index, E element) {
     _checkElement(element);
     _safeList[index] = element;
   }
@@ -245,7 +245,7 @@ class ListBuilder<E> {
   void _checkElements(Iterable elements) {
     for (final element in elements) {
       if (element is! E) {
-        throw new ArgumentError('invalid element: ${element}');
+        throw new ArgumentError('invalid element: $element');
       }
     }
   }

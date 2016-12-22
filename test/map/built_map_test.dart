@@ -156,7 +156,9 @@ void main() {
 
     test('compares not equal to different type', () {
       expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) == '', isFalse);
+          // ignore: unrelated_type_equality_checks
+          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) == '',
+          isFalse);
     });
 
     test('compares not equal to different length BuiltMap', () {
@@ -186,6 +188,7 @@ void main() {
 
     test('compares without throwing for same hashcode different key type', () {
       expect(
+          // ignore: unrelated_type_equality_checks
           BuiltCollectionTestHelpers.overridenHashcodeBuiltMap({1: '1'}, 0) ==
               BuiltCollectionTestHelpers
                   .overridenHashcodeBuiltMapWithStringKeys({'1': '1'}, 0),
@@ -401,6 +404,8 @@ class _ExtendsA extends _A {}
 class _HashcodeOnlyOnce {
   bool hashCodeAllowed = true;
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode {
     expect(hashCodeAllowed, isTrue);
     hashCodeAllowed = false;

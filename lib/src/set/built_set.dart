@@ -15,7 +15,7 @@ part of built_collection.set;
 /// for the general properties of Built Collections.
 class BuiltSet<E> implements Iterable<E> {
   final Set<E> _set;
-  int _hashCode = null;
+  int _hashCode;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -68,7 +68,7 @@ class BuiltSet<E> implements Iterable<E> {
   /// A `BuiltSet` is only equal to another `BuiltSet` with equal elements in
   /// any order.
   @override
-  bool operator ==(other) {
+  bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! BuiltSet) return false;
     if (other.length != length) return false;
@@ -88,6 +88,7 @@ class BuiltSet<E> implements Iterable<E> {
   // Set.
 
   /// As [Set.length].
+  @override
   int get length => _set.length;
 
   /// As [Set.containsAll].
@@ -209,8 +210,7 @@ class BuiltSet<E> implements Iterable<E> {
       if (element is E) {
         _set.add(element);
       } else {
-        throw new ArgumentError(
-            'iterable contained invalid element: ${element}');
+        throw new ArgumentError('iterable contained invalid element: $element');
       }
     }
   }

@@ -64,7 +64,7 @@ class SetMultimapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
-  void replace(multimap) {
+  void replace(dynamic multimap) {
     if (multimap is BuiltSetMultimap<K, V>) {
       _setOwner(multimap);
     } else if (multimap is Map ||
@@ -86,7 +86,9 @@ class SetMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable(Iterable iterable,
-      {K key(element), V value(element), Iterable<V> values(element)}) {
+      {K key(dynamic element),
+      V value(dynamic element),
+      Iterable<V> values(dynamic element)}) {
     if (value != null && values != null) {
       throw new ArgumentError('expected value or values to be set, got both');
     }
@@ -202,11 +204,11 @@ class SetMultimapBuilder<K, V> {
             add(key, value);
           } else {
             throw new ArgumentError(
-                'map contained invalid value: ${value}, for key ${key}');
+                'map contained invalid value: $value, for key $key');
           }
         }
       } else {
-        throw new ArgumentError('map contained invalid key: ${key}');
+        throw new ArgumentError('map contained invalid key: $key');
       }
     }
   }
@@ -224,13 +226,13 @@ class SetMultimapBuilder<K, V> {
 
   void _checkKey(K key) {
     if (identical(key, null)) {
-      throw new ArgumentError('invalid key: ${key}');
+      throw new ArgumentError('invalid key: $key');
     }
   }
 
   void _checkValue(V value) {
     if (identical(value, null)) {
-      throw new ArgumentError('invalid value: ${value}');
+      throw new ArgumentError('invalid value: $value');
     }
   }
 }

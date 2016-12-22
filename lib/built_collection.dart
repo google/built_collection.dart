@@ -36,8 +36,8 @@
 ///
 /// It's okay to accept `List`, `Set` or `Map` if needed. Built Collections
 /// provide efficient conversion to their SDK counterparts via
-/// [BuiltList.toList], [BuiltListMultimap.toMap], [BuiltSet.toSet],
-/// [BuiltMap.toMap] and [BuiltSetMultimap.toMap].
+/// `BuiltList.toList`, `BuiltListMultimap.toMap`, `BuiltSet.toSet`,
+/// `BuiltMap.toMap` and `BuiltSetMultimap.toMap`.
 ///
 ///
 /// # Built Collections are Immutable
@@ -46,9 +46,9 @@
 /// order to make changes, first call `toBuilder` to get a mutable builder.
 ///
 /// In particular, Built Collections do not implement or extend their mutable
-/// counterparts. [BuiltList] implements `Iterable`, but not `List`. [BuiltSet]
-/// implements `Iterable`, but not `Set`. [BuiltMap], [BuiltListMultimap] and
-/// [BuiltSetMultimap] share no interface with the SDK collections.
+/// counterparts. `BuiltList` implements `Iterable`, but not `List`. `BuiltSet`
+/// implements `Iterable`, but not `Set`. `BuiltMap`, `BuiltListMultimap` and
+/// `BuiltSetMultimap` share no interface with the SDK collections.
 ///
 /// Built Collections can contain mutable elements. However, this use is not
 /// recommended, as mutations to the elements will break comparison and
@@ -99,8 +99,8 @@
 /// Built Collections and their builder and helper types collaborate to avoid
 /// copying unless it's necessary.
 ///
-/// In particular, [BuiltList.toList], [BuiltListMultimap.toMap],
-/// [BuiltSet.toSet], [BuiltMap.toMap] and [BuiltSetMultimap.toMap] do not make
+/// In particular, `BuiltList.toList`, `BuiltListMultimap.toMap`,
+/// `BuiltSet.toSet`, `BuiltMap.toMap` and `BuiltSetMultimap.toMap` do not make
 /// a copy, but return a copy-on-write wrapper. So, Built Collections can be
 /// efficiently and easily used with code that needs core SDK collections but
 /// does not mutate them.

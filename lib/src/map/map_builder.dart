@@ -45,7 +45,7 @@ class MapBuilder<K, V> {
   }
 
   /// Replaces all elements with elements from a [Map] or [BuiltMap].
-  void replace(map) {
+  void replace(Object map) {
     if (map is BuiltMap<K, V>) {
       _setOwner(map);
     } else if (map is BuiltMap) {
@@ -61,7 +61,8 @@ class MapBuilder<K, V> {
   /// As [Map.fromIterable] but adds.
   ///
   /// [key] and [value] default to the identity function.
-  void addIterable(Iterable iterable, {K key(element), V value(element)}) {
+  void addIterable(Iterable iterable,
+      {K key(dynamic element), V value(dynamic element)}) {
     if (key == null) key = (x) => x as K;
     if (value == null) value = (x) => x as V;
     for (final element in iterable) {
@@ -72,7 +73,7 @@ class MapBuilder<K, V> {
   // Based on Map.
 
   /// As [Map].
-  operator []=(K key, V value) {
+  void operator []=(K key, V value) {
     _checkKey(key);
     _checkValue(value);
     _safeMap[key] = value;
@@ -149,7 +150,7 @@ class MapBuilder<K, V> {
   void _checkKeys(Iterable keys) {
     for (final key in keys) {
       if (key is! K) {
-        throw new ArgumentError('invalid key: ${key}');
+        throw new ArgumentError('invalid key: $key');
       }
     }
   }
@@ -163,7 +164,7 @@ class MapBuilder<K, V> {
   void _checkValues(Iterable values) {
     for (final value in values) {
       if (value is! V) {
-        throw new ArgumentError('invalid value: ${value}');
+        throw new ArgumentError('invalid value: $value');
       }
     }
   }

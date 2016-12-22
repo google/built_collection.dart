@@ -21,5 +21,7 @@ class OverriddenHashcodeBuiltList<T> extends BuiltList<T> {
   OverriddenHashcodeBuiltList(Iterable iterable, this._overridenHashCode)
       : super._copyAndCheck(iterable);
 
+  @override
+  // ignore: hash_and_equals
   int get hashCode => _overridenHashCode;
 }

@@ -3,7 +3,7 @@
 ## 1.3.0
 
 - Widen parameter of BuiltSet.difference and BuiltSet.intersection to
-  BuiltSet<Object> to match Set.
+  `BuiltSet<Object>` to match Set.
 
 ## 1.2.0
 

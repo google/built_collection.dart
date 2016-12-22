@@ -131,7 +131,8 @@ class SetBuilder<E> {
     _setSafeSet(_set.take(n).toSet());
   }
 
-  /// As [Iterable.takeWhile], but updates the builder in place. Returns nothing.
+  /// As [Iterable.takeWhile], but updates the builder in place. Returns
+  /// nothing.
   void takeWhile(bool test(E value)) {
     _setSafeSet(_set.takeWhile(test).toSet());
   }
@@ -141,7 +142,8 @@ class SetBuilder<E> {
     _setSafeSet(_set.skip(n).toSet());
   }
 
-  /// As [Iterable.skipWhile], but updates the builder in place. Returns nothing.
+  /// As [Iterable.skipWhile], but updates the builder in place. Returns
+  /// nothing.
   void skipWhile(bool test(E value)) {
     _setSafeSet(_set.skipWhile(test).toSet());
   }
@@ -172,8 +174,8 @@ class SetBuilder<E> {
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {
-      throw new UnsupportedError('explicit element type required,'
-          ' for example "new SetBuilder<int>"');
+      throw new UnsupportedError('explicit element type required, '
+          'for example "new SetBuilder<int>"');
     }
   }
 

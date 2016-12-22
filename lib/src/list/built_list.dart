@@ -10,7 +10,8 @@ part of built_collection.list;
 /// Modifications are made via [ListBuilder].
 ///
 /// See the
-/// [Built Collection library documentation](#built_collection/built_collection)
+/// [Built Collection library documentation]
+/// (#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class BuiltList<E> implements Iterable<E> {
   final List<E> _list;

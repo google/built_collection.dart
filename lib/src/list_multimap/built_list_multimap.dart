@@ -11,7 +11,8 @@ part of built_collection.list_multimap;
 /// Modifications are made via [ListMultimapBuilder].
 ///
 /// See the
-/// [Built Collection library documentation](#built_collection/built_collection)
+/// [Built Collection library documentation]
+/// (#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class BuiltListMultimap<K, V> {
   final Map<K, BuiltList<V>> _map;
@@ -29,9 +30,11 @@ class BuiltListMultimap<K, V> {
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new BuiltListMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
+  /// Wrong:
+  ///   `new BuiltListMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
   ///
-  /// Right: `new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
+  /// Right:
+  ///   `new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltListMultimap([multimap = const {}]) {
@@ -45,7 +48,8 @@ class BuiltListMultimap<K, V> {
           multimap.keys, (k) => multimap[k]);
     } else {
       throw new ArgumentError(
-          'expected Map, ListMultimap or BuiltListMultimap, got ${multimap.runtimeType}');
+          'expected Map, ListMultimap or BuiltListMultimap, '
+          'got ${multimap.runtimeType}');
     }
   }
 
@@ -65,8 +69,8 @@ class BuiltListMultimap<K, V> {
   /// Converts to a [Map].
   ///
   /// Note that the implementation is efficient: it returns a copy-on-write
-  /// wrapper around the data from this `BuiltListMultimap`. So, if no mutations are
-  /// made to the result, no copy is made.
+  /// wrapper around the data from this `BuiltListMultimap`. So, if no
+  /// mutations are made to the result, no copy is made.
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
@@ -192,8 +196,8 @@ class BuiltListMultimap<K, V> {
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError(
-          'explicit key type required, for example "new BuiltListMultimap<int, int>"');
+      throw new UnsupportedError('explicit key type required, '
+          'for example "new BuiltListMultimap<int, int>"');
     }
     if (V == dynamic) {
       throw new UnsupportedError('explicit value type required,'

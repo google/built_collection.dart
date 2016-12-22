@@ -96,14 +96,14 @@ void main() {
     test('can be converted to MapBuilder<K, V> and back to Map<K, V>', () {
       expect(
           new BuiltMap<int, String>().toBuilder().build()
-          is BuiltMap<int, String>,
+              is BuiltMap<int, String>,
           isTrue);
       expect(
           new BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, int>,
           isFalse);
       expect(
           new BuiltMap<int, String>().toBuilder().build()
-          is BuiltMap<String, String>,
+              is BuiltMap<String, String>,
           isFalse);
     });
 

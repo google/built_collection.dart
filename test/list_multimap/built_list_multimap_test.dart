@@ -46,8 +46,8 @@ void main() {
     });
 
     test(
-        'can be instantiated from ListMultimap then converted back to equal ListMultimap',
-        () {
+        'can be instantiated from ListMultimap '
+        'then converted back to equal ListMultimap', () {
       final mutableMultimap = new ListMultimap<int, String>();
       mutableMultimap.add(1, '1');
       final multimap = new BuiltListMultimap<int, String>(mutableMultimap);
@@ -93,15 +93,15 @@ void main() {
     test('can be converted to Map<K, BuiltList<V>>', () {
       expect(
           new BuiltListMultimap<int, String>().toMap()
-          is Map<int, BuiltList<String>>,
+              is Map<int, BuiltList<String>>,
           isTrue);
       expect(
           new BuiltListMultimap<int, String>().toMap()
-          is Map<int, BuiltList<int>>,
+              is Map<int, BuiltList<int>>,
           isFalse);
       expect(
           new BuiltListMultimap<int, String>().toMap()
-          is Map<String, BuiltList<String>>,
+              is Map<String, BuiltList<String>>,
           isFalse);
     });
 
@@ -115,15 +115,15 @@ void main() {
     test('can be converted to ListMultimapBuilder<K, V>', () {
       expect(
           new BuiltListMultimap<int, String>().toBuilder()
-          is ListMultimapBuilder<int, String>,
+              is ListMultimapBuilder<int, String>,
           isTrue);
       expect(
           new BuiltListMultimap<int, String>().toBuilder()
-          is ListMultimapBuilder<int, int>,
+              is ListMultimapBuilder<int, int>,
           isFalse);
       expect(
           new BuiltListMultimap<int, String>().toBuilder()
-          is ListMultimapBuilder<String, String>,
+              is ListMultimapBuilder<String, String>,
           isFalse);
     });
 
@@ -132,15 +132,15 @@ void main() {
         () {
       expect(
           new BuiltListMultimap<int, String>().toBuilder().build()
-          is BuiltListMultimap<int, String>,
+              is BuiltListMultimap<int, String>,
           isTrue);
       expect(
           new BuiltListMultimap<int, String>().toBuilder().build()
-          is BuiltListMultimap<int, int>,
+              is BuiltListMultimap<int, int>,
           isFalse);
       expect(
           new BuiltListMultimap<int, String>().toBuilder().build()
-          is BuiltListMultimap<String, String>,
+              is BuiltListMultimap<String, String>,
           isFalse);
     });
 

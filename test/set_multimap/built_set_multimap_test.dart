@@ -46,8 +46,8 @@ void main() {
     });
 
     test(
-        'can be instantiated from SetMultimap then converted back to equal SetMultimap',
-        () {
+        'can be instantiated from SetMultimap '
+        'then converted back to equal SetMultimap', () {
       final mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       final multimap = new BuiltSetMultimap<int, String>(mutableMultimap);
@@ -93,15 +93,15 @@ void main() {
     test('can be converted to Map<K, BuiltSet<V>>', () {
       expect(
           new BuiltSetMultimap<int, String>().toMap()
-          is Map<int, BuiltSet<String>>,
+              is Map<int, BuiltSet<String>>,
           isTrue);
       expect(
           new BuiltSetMultimap<int, String>().toMap()
-          is Map<int, BuiltSet<int>>,
+              is Map<int, BuiltSet<int>>,
           isFalse);
       expect(
           new BuiltSetMultimap<int, String>().toMap()
-          is Map<String, BuiltSet<String>>,
+              is Map<String, BuiltSet<String>>,
           isFalse);
     });
 
@@ -115,15 +115,15 @@ void main() {
     test('can be converted to SetMultimapBuilder<K, V>', () {
       expect(
           new BuiltSetMultimap<int, String>().toBuilder()
-          is SetMultimapBuilder<int, String>,
+              is SetMultimapBuilder<int, String>,
           isTrue);
       expect(
           new BuiltSetMultimap<int, String>().toBuilder()
-          is SetMultimapBuilder<int, int>,
+              is SetMultimapBuilder<int, int>,
           isFalse);
       expect(
           new BuiltSetMultimap<int, String>().toBuilder()
-          is SetMultimapBuilder<String, String>,
+              is SetMultimapBuilder<String, String>,
           isFalse);
     });
 
@@ -132,15 +132,15 @@ void main() {
         () {
       expect(
           new BuiltSetMultimap<int, String>().toBuilder().build()
-          is BuiltSetMultimap<int, String>,
+              is BuiltSetMultimap<int, String>,
           isTrue);
       expect(
           new BuiltSetMultimap<int, String>().toBuilder().build()
-          is BuiltSetMultimap<int, int>,
+              is BuiltSetMultimap<int, int>,
           isFalse);
       expect(
           new BuiltSetMultimap<int, String>().toBuilder().build()
-          is BuiltSetMultimap<String, String>,
+              is BuiltSetMultimap<String, String>,
           isFalse);
     });
 

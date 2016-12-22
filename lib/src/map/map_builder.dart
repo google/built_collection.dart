@@ -135,8 +135,8 @@ class MapBuilder<K, V> {
           'explicit key type required, for example "new MapBuilder<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required,'
-          ' for example "new MapBuilder<int, int>"');
+      throw new UnsupportedError('explicit value type required, '
+          'for example "new MapBuilder<int, int>"');
     }
   }
 

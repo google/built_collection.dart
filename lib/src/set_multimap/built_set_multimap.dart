@@ -29,9 +29,11 @@ class BuiltSetMultimap<K, V> {
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new BuiltSetMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
+  /// Wrong:
+  ///   `new BuiltSetMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
   ///
-  /// Right: `new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
+  /// Right:
+  ///   `new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltSetMultimap([multimap = const {}]) {
@@ -44,8 +46,8 @@ class BuiltSetMultimap<K, V> {
       return new BuiltSetMultimap<K, V>._copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
-      throw new ArgumentError(
-          'expected Map, SetMultimap or BuiltSetMultimap, got ${multimap.runtimeType}');
+      throw new ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
+          'got ${multimap.runtimeType}');
     }
   }
 
@@ -65,8 +67,8 @@ class BuiltSetMultimap<K, V> {
   /// Converts to a [Map].
   ///
   /// Note that the implementation is efficient: it returns a copy-on-write
-  /// wrapper around the data from this `BuiltSetMultimap`. So, if no mutations are
-  /// made to the result, no copy is made.
+  /// wrapper around the data from this `BuiltSetMultimap`. So, if no mutations
+  /// are made to the result, no copy is made.
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
@@ -192,8 +194,8 @@ class BuiltSetMultimap<K, V> {
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError(
-          'explicit key type required, for example "new BuiltSetMultimap<int, int>"');
+      throw new UnsupportedError('explicit key type required, '
+          'for example "new BuiltSetMultimap<int, int>"');
     }
     if (V == dynamic) {
       throw new UnsupportedError('explicit value type required,'

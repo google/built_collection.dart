@@ -26,9 +26,11 @@ class SetMultimapBuilder<K, V> {
   ///
   /// Must be called with a generic type parameter.
   ///
-  /// Wrong: `new SetMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
+  /// Wrong:
+  ///   `new SetMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
   ///
-  /// Right: `new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
+  /// Right:
+  ///   `new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory SetMultimapBuilder([multimap = const {}]) {
@@ -37,8 +39,8 @@ class SetMultimapBuilder<K, V> {
 
   /// Converts to a [BuiltSetMultimap].
   ///
-  /// The `SetMultimapBuilder` can be modified again and used to create any number
-  /// of `BuiltSetMultimap`s.
+  /// The `SetMultimapBuilder` can be modified again and used to create any
+  /// number of `BuiltSetMultimap`s.
   BuiltSetMultimap<K, V> build() {
     if (_builtMapOwner == null) {
       for (final key in _builderMap.keys) {
@@ -70,8 +72,8 @@ class SetMultimapBuilder<K, V> {
         multimap is BuiltSetMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
-      throw new ArgumentError(
-          'expected Map, SetMultimap or BuiltSetMultimap, got ${multimap.runtimeType}');
+      throw new ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
+          'got ${multimap.runtimeType}');
     }
   }
 
@@ -199,7 +201,8 @@ class SetMultimapBuilder<K, V> {
           if (value is V) {
             add(key, value);
           } else {
-            throw new ArgumentError('map contained invalid value: ${value}, for key ${key}');
+            throw new ArgumentError(
+                'map contained invalid value: ${value}, for key ${key}');
           }
         }
       } else {
@@ -210,12 +213,12 @@ class SetMultimapBuilder<K, V> {
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError(
-          'explicit key type required, for example "new SetMultimapBuilder<int, int>"');
+      throw new UnsupportedError('explicit key type required, '
+          'for example "new SetMultimapBuilder<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required,'
-          ' for example "new SetMultimapBuilder<int, int>"');
+      throw new UnsupportedError('explicit value type required, '
+          'for example "new SetMultimapBuilder<int, int>"');
     }
   }
 

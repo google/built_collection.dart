@@ -189,7 +189,8 @@ class ListBuilder<E> {
     _setSafeList(_list = _list.take(n).toList(growable: true));
   }
 
-  /// As [Iterable.takeWhile], but updates the builder in place. Returns nothing.
+  /// As [Iterable.takeWhile], but updates the builder in place. Returns
+  /// nothing.
   void takeWhile(bool test(E value)) {
     _setSafeList(_list = _list.takeWhile(test).toList(growable: true));
   }
@@ -199,7 +200,8 @@ class ListBuilder<E> {
     _setSafeList(_list.skip(n).toList(growable: true));
   }
 
-  /// As [Iterable.skipWhile], but updates the builder in place. Returns nothing.
+  /// As [Iterable.skipWhile], but updates the builder in place. Returns
+  /// nothing.
   void skipWhile(bool test(E value)) {
     _setSafeList(_list.skipWhile(test).toList(growable: true));
   }
@@ -229,8 +231,8 @@ class ListBuilder<E> {
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {
-      throw new UnsupportedError('explicit element type required,'
-          ' for example "new ListBuilder<int>"');
+      throw new UnsupportedError('explicit element type required, '
+          'for example "new ListBuilder<int>"');
     }
   }
 

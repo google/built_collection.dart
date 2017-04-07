@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+
+- Allow quiver 0.25.
+
 ## 1.3.0
 
 - Widen parameter of BuiltSet.difference and BuiltSet.intersection to

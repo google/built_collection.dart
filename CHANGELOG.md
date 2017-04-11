@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+Add operator[] to ListBuilder and MapBuilder for easier inline updates.
+
 ## 1.3.1
 
 - Allow quiver 0.25.

@@ -73,6 +73,9 @@ class MapBuilder<K, V> {
   // Based on Map.
 
   /// As [Map].
+  V operator [](Object key) => _map[key];
+
+  /// As [Map].
   void operator []=(K key, V value) {
     _checkKey(key);
     _checkValue(value);

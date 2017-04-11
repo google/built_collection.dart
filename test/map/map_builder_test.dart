@@ -108,6 +108,13 @@ void main() {
 
     // Map.
 
+    test('has a method like Map[]', () {
+      final mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2'});
+      mapBuilder[1] += '*';
+      mapBuilder[2] += '**';
+      expect(mapBuilder.build().asMap(), {1: '1*', 2: '2**'});
+    });
+
     test('has a method like Map[]=', () {
       expect((new MapBuilder<int, String>({1: '1'})..[2] = '2').build().toMap(),
           {1: '1', 2: '2'});

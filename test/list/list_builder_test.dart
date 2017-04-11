@@ -138,6 +138,13 @@ void main() {
 
     // List.
 
+    test('has a method like List[]', () {
+      final listBuilder = new ListBuilder<int>([1, 2]);
+      ++listBuilder[0];
+      --listBuilder[1];
+      expect(listBuilder.build(), [2, 1]);
+    });
+
     test('has a method like List[]=', () {
       expect((new ListBuilder<int>([1])..[0] = 2).build(), [2]);
       expect((new BuiltList<int>([1]).toBuilder()..[0] = 2).build(), [2]);

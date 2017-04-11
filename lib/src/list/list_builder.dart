@@ -55,6 +55,9 @@ class ListBuilder<E> {
 
   // Based on List.
 
+  /// As [List.elementAt].
+  E operator [](int index) => _list[index];
+
   /// As [List].
   void operator []=(int index, E element) {
     _checkElement(element);

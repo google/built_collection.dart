@@ -12,8 +12,8 @@ and an immutable "built" class. Builders are for computation,
 Immutable collections work particularly well with immutable values. See
 [built_value](https://github.com/google/built_value.dart#built-values-for-dart).
 
-You can read more about built_collection [on medium]
-(https://medium.com/@davidmorgan_14314/darts-built-collection-for-immutable-collections-db662f705eff).
+You can read more about built_collection
+[on medium](https://medium.com/@davidmorgan_14314/darts-built-collection-for-immutable-collections-db662f705eff).
 
 ## Design
 

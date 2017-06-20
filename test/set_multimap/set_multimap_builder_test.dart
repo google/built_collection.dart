@@ -257,7 +257,8 @@ void main() {
       expect(
           (new SetMultimapBuilder<int, String>({
             1: ['1']
-          })..add(2, '2'))
+          })
+                ..add(2, '2'))
               .build()
               .toMap(),
           ({
@@ -267,7 +268,8 @@ void main() {
       expect(
           (new BuiltSetMultimap<int, String>({
             1: ['1']
-          }).toBuilder()..add(2, '2'))
+          }).toBuilder()
+                ..add(2, '2'))
               .build()
               .toMap(),
           ({
@@ -280,7 +282,8 @@ void main() {
       expect(
           (new SetMultimapBuilder<int, String>({
             1: ['1']
-          })..addValues(2, ['2', '3']))
+          })
+                ..addValues(2, ['2', '3']))
               .build()
               .toMap(),
           ({
@@ -290,7 +293,8 @@ void main() {
       expect(
           (new BuiltSetMultimap<int, String>({
             1: ['1']
-          }).toBuilder()..addValues(2, ['2', '3']))
+          }).toBuilder()
+                ..addValues(2, ['2', '3']))
               .build()
               .toMap(),
           ({
@@ -327,7 +331,8 @@ void main() {
           (new SetMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2', '3']
-          })..remove(2, '3'))
+          })
+                ..remove(2, '3'))
               .build()
               .toMap(),
           {
@@ -338,7 +343,8 @@ void main() {
           (new BuiltSetMultimap<int, String>({
             1: ['1'],
             2: ['2', '3']
-          }).toBuilder()..remove(2, '3'))
+          }).toBuilder()
+                ..remove(2, '3'))
               .build()
               .toMap(),
           {
@@ -358,7 +364,8 @@ void main() {
           (new SetMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2', '3']
-          })..removeAll(2))
+          })
+                ..removeAll(2))
               .build()
               .toMap(),
           {
@@ -368,7 +375,8 @@ void main() {
           (new BuiltSetMultimap<int, String>({
             1: ['1'],
             2: ['2', '3']
-          }).toBuilder()..removeAll(2))
+          }).toBuilder()
+                ..removeAll(2))
               .build()
               .toMap(),
           {
@@ -387,7 +395,8 @@ void main() {
           (new SetMultimapBuilder<int, String>({
             1: ['1'],
             2: ['2']
-          })..clear())
+          })
+                ..clear())
               .build()
               .toMap(),
           {});
@@ -395,7 +404,8 @@ void main() {
           (new BuiltSetMultimap<int, String>({
             1: ['1'],
             2: ['2']
-          }).toBuilder()..clear())
+          }).toBuilder()
+                ..clear())
               .build()
               .toMap(),
           {});

@@ -1,5 +1,5 @@
 name: built_collection
-version: 1.4.0
+version: 1.4.1
 description: >
   Builder pattern wrappers for core Dart collections.
 authors:

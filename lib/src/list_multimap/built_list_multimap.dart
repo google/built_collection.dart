@@ -86,7 +86,8 @@ class BuiltListMultimap<K, V> {
     if (_hashCode == null) {
       _hashCode = hashObjects(_map.keys
           .map((key) => hash2(key.hashCode, _map[key].hashCode))
-          .toList(growable: false)..sort());
+          .toList(growable: false)
+            ..sort());
     }
     return _hashCode;
   }

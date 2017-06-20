@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.4.1
+
+- Use real generic syntax, drop comment-based syntax.
+
 ## 1.4.0
 
-Add operator[] to ListBuilder and MapBuilder for easier inline updates.
+- Add operator[] to ListBuilder and MapBuilder for easier inline updates.
 
 ## 1.3.1
 

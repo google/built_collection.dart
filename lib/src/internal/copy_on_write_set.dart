@@ -41,7 +41,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   bool every(bool test(E element)) => _set.every(test);
 
   @override
-  Iterable/*<T>*/ expand/*<T>*/(Iterable/*<T>*/ f(E e)) => _set.expand(f);
+  Iterable<T> expand<T>(Iterable<T> f(E e)) => _set.expand(f);
 
   @override
   E get first => _set.first;
@@ -51,8 +51,7 @@ class CopyOnWriteSet<E> implements Set<E> {
       _set.firstWhere(test, orElse: orElse);
 
   @override
-  dynamic/*=T*/ fold/*<T>*/(var/*=T*/ initialValue,
-          dynamic/*=T*/ combine(var/*=T*/ previousValue, E element)) =>
+  T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
       _set.fold(initialValue, combine);
 
   @override
@@ -78,7 +77,7 @@ class CopyOnWriteSet<E> implements Set<E> {
       _set.lastWhere(test, orElse: orElse);
 
   @override
-  Iterable/*<T>*/ map/*<T>*/(/*=T*/ f(E e)) => _set.map(f);
+  Iterable<T> map<T>(T f(E e)) => _set.map(f);
 
   @override
   E reduce(E combine(E value, E element)) => _set.reduce(combine);

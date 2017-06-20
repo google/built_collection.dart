@@ -35,7 +35,7 @@ class CopyOnWriteList<E> implements List<E> {
   bool every(bool test(E element)) => _list.every(test);
 
   @override
-  Iterable/*<T>*/ expand/*<T>*/(Iterable/*<T>*/ f(E e)) => _list.expand(f);
+  Iterable<T> expand<T>(Iterable<T> f(E e)) => _list.expand(f);
 
   @override
   E get first => _list.first;
@@ -45,8 +45,7 @@ class CopyOnWriteList<E> implements List<E> {
       _list.firstWhere(test, orElse: orElse);
 
   @override
-  dynamic/*=T*/ fold/*<T>*/(var/*=T*/ initialValue,
-          dynamic/*=T*/ combine(var/*=T*/ previousValue, E element)) =>
+  T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
       _list.fold(initialValue, combine);
 
   @override
@@ -81,7 +80,7 @@ class CopyOnWriteList<E> implements List<E> {
       _list.lastWhere(test, orElse: orElse);
 
   @override
-  Iterable/*<T>*/ map/*<T>*/(/*=T*/ f(E e)) => _list.map(f);
+  Iterable<T> map<T>(T f(E e)) => _list.map(f);
 
   @override
   E reduce(E combine(E value, E element)) => _list.reduce(combine);

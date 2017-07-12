@@ -171,6 +171,11 @@ void main() {
       expect(new BuiltSet<int>([0, 1, 2]).toBuiltList(), [0, 1, 2]);
     });
 
+    test('returns identical with toBuiltSet', () {
+      final set = new BuiltSet<int>([0, 1, 2]);
+      expect(set.toBuiltSet(), same(set));
+    });
+
     // Lazy copies.
 
     test('reuses BuiltSet instances of the same type', () {

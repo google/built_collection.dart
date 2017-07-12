@@ -6,6 +6,7 @@ library built_collection.list;
 
 import 'dart:math' show Random;
 
+import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 import 'package:built_collection/src/set.dart' show BuiltSet;
 import 'package:quiver/core.dart' show hashObjects;
 

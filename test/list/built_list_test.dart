@@ -147,6 +147,11 @@ void main() {
       expect(new BuiltList<int>([1, 2, 3]).toString(), '[1, 2, 3]');
     });
 
+    test('returns identical with toBuiltList', () {
+      final list = new BuiltList<int>([0, 1, 2]);
+      expect(list.toBuiltList(), same(list));
+    });
+
     test('converts to BuiltSet with toBuiltSet', () {
       expect(new BuiltList<int>([0, 1, 2]).toBuiltSet(), [0, 1, 2]);
     });

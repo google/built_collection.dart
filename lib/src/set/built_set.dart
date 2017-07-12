@@ -13,7 +13,7 @@ part of built_collection.set;
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltSet<E> implements Iterable<E> {
+class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   final Set<E> _set;
   int _hashCode;
 
@@ -47,8 +47,11 @@ class BuiltSet<E> implements Iterable<E> {
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
       (toBuilder()..update(updates)).build();
 
-  /// Converts to a [BuiltList].
+  @override
   BuiltList<E> toBuiltList() => new BuiltList<E>(this);
+
+  @override
+  BuiltSet<E> toBuiltSet() => this;
 
   /// Deep hashCode.
   ///

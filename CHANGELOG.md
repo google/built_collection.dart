@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+
+- Add BuiltIterable interface for when you want to accept a BuiltList or BuiltSet.
+
 ## 1.4.1
 
 - Use real generic syntax, drop comment-based syntax.

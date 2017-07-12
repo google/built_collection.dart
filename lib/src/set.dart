@@ -4,6 +4,7 @@
 
 library built_collection.set;
 
+import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 import 'package:built_collection/src/list.dart' show BuiltList;
 import 'package:collection/collection.dart' show UnmodifiableSetView;
 import 'package:quiver/core.dart' show hashObjects;

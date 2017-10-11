@@ -61,10 +61,10 @@ class MapBuilder<K, V> {
   /// As [Map.fromIterable] but adds.
   ///
   /// [key] and [value] default to the identity function.
-  void addIterable(Iterable iterable,
-      {K key(dynamic element), V value(dynamic element)}) {
-    if (key == null) key = (x) => x as K;
-    if (value == null) value = (x) => x as V;
+  void addIterable<T>(Iterable<T> iterable,
+      {K key(T element), V value(T element)}) {
+    if (key == null) key = (T x) => x as K;
+    if (value == null) value = (T x) => x as V;
     for (final element in iterable) {
       this[key(element)] = value(element);
     }

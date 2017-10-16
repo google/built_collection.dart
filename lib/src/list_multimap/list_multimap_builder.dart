@@ -86,22 +86,22 @@ class ListMultimapBuilder<K, V> {
   ///
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
-  void addIterable(Iterable iterable,
-      {K key(dynamic element),
-      V value(dynamic element),
-      Iterable<V> values(dynamic element)}) {
+  void addIterable<T>(Iterable<T> iterable,
+      {K key(T element),
+      V value(T element),
+      Iterable<V> values(T element)}) {
     if (value != null && values != null) {
       throw new ArgumentError('expected value or values to be set, got both');
     }
 
-    if (key == null) key = (K x) => x;
+    if (key == null) key = (T x) => x as K;
 
     if (values != null) {
       for (final element in iterable) {
         this.addValues(key(element), values(element));
       }
     } else {
-      if (value == null) value = (V x) => x;
+      if (value == null) value = (T x) => x as V;
       for (final element in iterable) {
         this.add(key(element), value(element));
       }

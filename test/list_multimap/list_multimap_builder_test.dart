@@ -12,17 +12,19 @@ void main() {
   group('ListMultimapBuilder', () {
     test('throws on attempt to create ListMultimapBuilder<dynamic, dynamic>',
         () {
-      expect(() => new ListMultimapBuilder(), throws);
+      expect(() => new ListMultimapBuilder(), throwsA(anything));
     });
 
     test('throws on attempt to create ListMultimapBuilder<String, dynamic>',
         () {
-      expect(() => new ListMultimapBuilder<String, dynamic>(), throws);
+      expect(
+          () => new ListMultimapBuilder<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create ListMultimapBuilder<dynamic, String>',
         () {
-      expect(() => new ListMultimapBuilder<dynamic, String>(), throws);
+      expect(
+          () => new ListMultimapBuilder<dynamic, String>(), throwsA(anything));
     });
 
     test('allows ListMultimapBuilder<Object, Object>', () {
@@ -30,12 +32,13 @@ void main() {
     });
 
     test('throws on null key add', () {
-      expect(
-          () => new ListMultimapBuilder<int, String>().add(null, '0'), throws);
+      expect(() => new ListMultimapBuilder<int, String>().add(null, '0'),
+          throwsA(anything));
     });
 
     test('throws on null value add', () {
-      expect(() => new ListMultimapBuilder<int, String>().add(0, null), throws);
+      expect(() => new ListMultimapBuilder<int, String>().add(0, null),
+          throwsA(anything));
     });
 
     test('throws on null key addAll', () {
@@ -44,7 +47,7 @@ void main() {
 
       expect(
           () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null value addAll', () {
@@ -53,14 +56,14 @@ void main() {
 
       expect(
           () => new ListMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type value addValues', () {
       expect(
           () => new ListMultimapBuilder<int, String>()
               .addValues(0, new List<String>.from([0])),
-          throws);
+          throwsA(anything));
     });
 
     test('has replace method that replaces all data', () {

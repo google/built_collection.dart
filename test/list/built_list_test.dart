@@ -17,7 +17,7 @@ void main() {
     });
 
     test('throws on attempt to create BuiltList<dynamic>', () {
-      expect(() => new BuiltList(), throws);
+      expect(() => new BuiltList(), throwsA(anything));
     });
 
     test('allows BuiltList<Object>', () {
@@ -41,7 +41,7 @@ void main() {
     });
 
     test('throws on wrong type element', () {
-      expect(() => new BuiltList<int>(['1']), throws);
+      expect(() => new BuiltList<int>(['1']), throwsA(anything));
     });
 
     test('does not keep a mutable List', () {
@@ -82,7 +82,7 @@ void main() {
     });
 
     test('throws on null', () {
-      expect(() => new BuiltList<int>([null]), throws);
+      expect(() => new BuiltList<int>([null]), throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {
@@ -364,14 +364,14 @@ void main() {
     });
 
     test('implements Iterable.last', () {
-      expect(() => new BuiltList<int>([1, 2]).single, throws);
+      expect(() => new BuiltList<int>([1, 2]).single, throwsA(anything));
       expect(new BuiltList<int>([1]).single, 1);
     });
 
     test('implements Iterable.firstWhere', () {
       expect(new BuiltList<int>([1, 2]).firstWhere((x) => x == 2), 2);
-      expect(
-          () => new BuiltList<int>([1, 2]).firstWhere((x) => x == 3), throws);
+      expect(() => new BuiltList<int>([1, 2]).firstWhere((x) => x == 3),
+          throwsA(anything));
       expect(
           new BuiltList<int>([1, 2]).firstWhere((x) => x == 3, orElse: () => 4),
           4);
@@ -379,7 +379,8 @@ void main() {
 
     test('implements Iterable.lastWhere', () {
       expect(new BuiltList<int>([1, 2]).lastWhere((x) => x == 2), 2);
-      expect(() => new BuiltList<int>([1, 2]).lastWhere((x) => x == 3), throws);
+      expect(() => new BuiltList<int>([1, 2]).lastWhere((x) => x == 3),
+          throwsA(anything));
       expect(
           new BuiltList<int>([1, 2]).lastWhere((x) => x == 3, orElse: () => 4),
           4);
@@ -387,9 +388,10 @@ void main() {
 
     test('implements Iterable.singleWhere', () {
       expect(new BuiltList<int>([1, 2]).singleWhere((x) => x == 2), 2);
-      expect(
-          () => new BuiltList<int>([1, 2]).singleWhere((x) => x == 3), throws);
-      expect(() => new BuiltList<int>([1, 2]).singleWhere((x) => true), throws);
+      expect(() => new BuiltList<int>([1, 2]).singleWhere((x) => x == 3),
+          throwsA(anything));
+      expect(() => new BuiltList<int>([1, 2]).singleWhere((x) => true),
+          throwsA(anything));
     });
 
     test('implements Iterable.elementAt', () {

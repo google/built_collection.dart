@@ -12,15 +12,17 @@ void main() {
   group('SetMultimapBuilder', () {
     test('throws on attempt to create SetMultimapBuilder<dynamic, dynamic>',
         () {
-      expect(() => new SetMultimapBuilder(), throws);
+      expect(() => new SetMultimapBuilder(), throwsA(anything));
     });
 
     test('throws on attempt to create SetMultimapBuilder<String, dynamic>', () {
-      expect(() => new SetMultimapBuilder<String, dynamic>(), throws);
+      expect(
+          () => new SetMultimapBuilder<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create SetMultimapBuilder<dynamic, String>', () {
-      expect(() => new SetMultimapBuilder<dynamic, String>(), throws);
+      expect(
+          () => new SetMultimapBuilder<dynamic, String>(), throwsA(anything));
     });
 
     test('allows SetMultimapBuilder<Object, Object>', () {
@@ -28,12 +30,13 @@ void main() {
     });
 
     test('throws on null key add', () {
-      expect(
-          () => new SetMultimapBuilder<int, String>().add(null, '0'), throws);
+      expect(() => new SetMultimapBuilder<int, String>().add(null, '0'),
+          throwsA(anything));
     });
 
     test('throws on null value add', () {
-      expect(() => new SetMultimapBuilder<int, String>().add(0, null), throws);
+      expect(() => new SetMultimapBuilder<int, String>().add(0, null),
+          throwsA(anything));
     });
 
     test('throws on null key addAll', () {
@@ -42,7 +45,7 @@ void main() {
 
       expect(
           () => new SetMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null value addAll', () {
@@ -51,14 +54,14 @@ void main() {
 
       expect(
           () => new SetMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type value addValues', () {
       expect(
           () => new SetMultimapBuilder<int, String>()
               .addValues(0, new List.from([0])),
-          throws);
+          throwsA(anything));
     });
 
     test('has replace method that replaces all data', () {

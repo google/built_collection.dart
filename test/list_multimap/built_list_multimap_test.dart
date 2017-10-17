@@ -18,15 +18,15 @@ void main() {
     });
 
     test('throws on attempt to create BuiltListMultimap<dynamic, dynamic>', () {
-      expect(() => new BuiltListMultimap(), throws);
+      expect(() => new BuiltListMultimap(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltListMultimap<String, dynamic>', () {
-      expect(() => new BuiltListMultimap<String, dynamic>(), throws);
+      expect(() => new BuiltListMultimap<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltListMultimap<dynamic, String>', () {
-      expect(() => new BuiltListMultimap<dynamic, String>(), throws);
+      expect(() => new BuiltListMultimap<dynamic, String>(), throwsA(anything));
     });
 
     test('allows BuiltListMultimap<Object, Object>', () {
@@ -59,11 +59,12 @@ void main() {
           () => new BuiltListMultimap<int, String>({
                 '1': ['1']
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type value iterable', () {
-      expect(() => new BuiltListMultimap<int, String>({1: 1}), throws);
+      expect(
+          () => new BuiltListMultimap<int, String>({1: 1}), throwsA(anything));
     });
 
     test('throws on wrong type value', () {
@@ -71,7 +72,7 @@ void main() {
           () => new BuiltListMultimap<int, String>({
                 1: [1]
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('does not keep a mutable ListMultimap', () {
@@ -149,11 +150,12 @@ void main() {
           () => new BuiltListMultimap<int, String>({
                 null: ['1']
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null value iterables', () {
-      expect(() => new BuiltListMultimap<int, String>({1: null}), throws);
+      expect(() => new BuiltListMultimap<int, String>({1: null}),
+          throwsA(anything));
     });
 
     test('throws on null values', () {
@@ -161,7 +163,7 @@ void main() {
           () => new BuiltListMultimap<int, String>({
                 1: [null]
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

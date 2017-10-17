@@ -87,9 +87,7 @@ class ListMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable<T>(Iterable<T> iterable,
-      {K key(T element),
-      V value(T element),
-      Iterable<V> values(T element)}) {
+      {K key(T element), V value(T element), Iterable<V> values(T element)}) {
     if (value != null && values != null) {
       throw new ArgumentError('expected value or values to be set, got both');
     }

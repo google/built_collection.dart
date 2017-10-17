@@ -18,15 +18,15 @@ void main() {
     });
 
     test('throws on attempt to create BuiltSetMultimap<dynamic, dynamic>', () {
-      expect(() => new BuiltSetMultimap(), throws);
+      expect(() => new BuiltSetMultimap(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltSetMultimap<String, dynamic>', () {
-      expect(() => new BuiltSetMultimap<String, dynamic>(), throws);
+      expect(() => new BuiltSetMultimap<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltSetMultimap<dynamic, String>', () {
-      expect(() => new BuiltSetMultimap<dynamic, String>(), throws);
+      expect(() => new BuiltSetMultimap<dynamic, String>(), throwsA(anything));
     });
 
     test('allows BuiltSetMultimap<Object, Object>', () {
@@ -59,11 +59,12 @@ void main() {
           () => new BuiltSetMultimap<int, String>({
                 '1': ['1']
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type value iterable', () {
-      expect(() => new BuiltSetMultimap<int, String>({1: 1}), throws);
+      expect(
+          () => new BuiltSetMultimap<int, String>({1: 1}), throwsA(anything));
     });
 
     test('throws on wrong type value', () {
@@ -71,7 +72,7 @@ void main() {
           () => new BuiltSetMultimap<int, String>({
                 1: [1]
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('does not keep a mutable SetMultimap', () {
@@ -149,11 +150,12 @@ void main() {
           () => new BuiltSetMultimap<int, String>({
                 null: ['1']
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null value iterables', () {
-      expect(() => new BuiltSetMultimap<int, String>({1: null}), throws);
+      expect(() => new BuiltSetMultimap<int, String>({1: null}),
+          throwsA(anything));
     });
 
     test('throws on null values', () {
@@ -161,7 +163,7 @@ void main() {
           () => new BuiltSetMultimap<int, String>({
                 1: [null]
               }),
-          throws);
+          throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

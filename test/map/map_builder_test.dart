@@ -10,15 +10,15 @@ import 'package:test/test.dart';
 void main() {
   group('MapBuilder', () {
     test('throws on attempt to create MapBuilder<dynamic, dynamic>', () {
-      expect(() => new MapBuilder(), throws);
+      expect(() => new MapBuilder(), throwsA(anything));
     });
 
     test('throws on attempt to create MapBuilder<String, dynamic>', () {
-      expect(() => new MapBuilder<String, dynamic>(), throws);
+      expect(() => new MapBuilder<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create MapBuilder<dynamic, String>', () {
-      expect(() => new MapBuilder<dynamic, String>(), throws);
+      expect(() => new MapBuilder<dynamic, String>(), throwsA(anything));
     });
 
     test('allows MapBuilder<Object, Object>', () {
@@ -26,29 +26,32 @@ void main() {
     });
 
     test('throws on null key put', () {
-      expect(() => new MapBuilder<int, String>()[null] = '0', throws);
+      expect(
+          () => new MapBuilder<int, String>()[null] = '0', throwsA(anything));
     });
 
     test('throws on null value put', () {
-      expect(() => new MapBuilder<int, String>()[0] = null, throws);
+      expect(() => new MapBuilder<int, String>()[0] = null, throwsA(anything));
     });
 
     test('throws on null key putIfAbsent', () {
       expect(() => new MapBuilder<int, String>().putIfAbsent(null, () => '0'),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null value putIfAbsent', () {
       expect(() => new MapBuilder<int, String>().putIfAbsent(0, () => null),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null key addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({null: '0'}), throws);
+      expect(() => new MapBuilder<int, String>().addAll({null: '0'}),
+          throwsA(anything));
     });
 
     test('throws on null value addAll', () {
-      expect(() => new MapBuilder<int, String>().addAll({0: null}), throws);
+      expect(() => new MapBuilder<int, String>().addAll({0: null}),
+          throwsA(anything));
     });
 
     test('has replace method that replaces all data', () {

@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 void main() {
   group('SetBuilder', () {
     test('throws on attempt to create SetBuilder<dynamic>', () {
-      expect(() => new SetBuilder(), throws);
+      expect(() => new SetBuilder(), throwsA(anything));
     });
 
     test('allows SetBuilder<Object>', () {
@@ -18,25 +18,27 @@ void main() {
     });
 
     test('throws on null add', () {
-      expect(() => new SetBuilder<int>().add(null), throws);
+      expect(() => new SetBuilder<int>().add(null), throwsA(anything));
     });
 
     test('throws on null addAll', () {
-      expect(() => new SetBuilder<int>().addAll([0, 1, null]), throws);
+      expect(
+          () => new SetBuilder<int>().addAll([0, 1, null]), throwsA(anything));
     });
 
     test('throws on null map', () {
-      expect(() => new SetBuilder<int>([0, 1, 2]).map((x) => null), throws);
+      expect(() => new SetBuilder<int>([0, 1, 2]).map((x) => null),
+          throwsA(anything));
     });
 
     test('throws on null expand', () {
       expect(() => new SetBuilder<int>([0, 1, 2]).expand((x) => [x, null]),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type addAll', () {
       expect(() => new SetBuilder<int>().addAll(new List.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('has replace method that replaces all data', () {

@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 void main() {
   group('ListBuilder', () {
     test('throws on attempt to create ListBuilder<dynamic>', () {
-      expect(() => new ListBuilder(), throws);
+      expect(() => new ListBuilder(), throwsA(anything));
     });
 
     test('allows ListBuilder<Object>', () {
@@ -20,88 +20,91 @@ void main() {
     });
 
     test('throws on null assign', () {
-      expect(() => new ListBuilder<int>([0])[0] = null, throws);
+      expect(() => new ListBuilder<int>([0])[0] = null, throwsA(anything));
     });
 
     test('throws on null add', () {
-      expect(() => new ListBuilder<int>().add(null), throws);
+      expect(() => new ListBuilder<int>().add(null), throwsA(anything));
     });
 
     test('throws on null addAll', () {
-      expect(() => new ListBuilder<int>().addAll([0, 1, null]), throws);
+      expect(
+          () => new ListBuilder<int>().addAll([0, 1, null]), throwsA(anything));
     });
 
     test('throws on null insert', () {
-      expect(() => new ListBuilder<int>().insert(0, null), throws);
+      expect(() => new ListBuilder<int>().insert(0, null), throwsA(anything));
     });
 
     test('throws on null insertAll', () {
-      expect(() => new ListBuilder<int>().insertAll(0, [0, 1, null]), throws);
+      expect(() => new ListBuilder<int>().insertAll(0, [0, 1, null]),
+          throwsA(anything));
     });
 
     test('throws on null setAll', () {
       expect(() => new ListBuilder<int>([0, 1, 2]).setAll(0, [0, 1, null]),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null setRange', () {
       expect(() => new ListBuilder<int>([0, 1, 2]).setRange(0, 2, [0, 1, null]),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null fillRange', () {
-      expect(
-          () => new ListBuilder<int>([0, 1, 2]).fillRange(0, 2, null), throws);
+      expect(() => new ListBuilder<int>([0, 1, 2]).fillRange(0, 2, null),
+          throwsA(anything));
     });
 
     test('throws on null replaceRange', () {
       expect(
           () =>
               new ListBuilder<int>([0, 1, 2]).replaceRange(0, 2, [0, 1, null]),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on null map', () {
-      expect(() => new ListBuilder<int>([0, 1, 2]).map((x) => null), throws);
+      expect(() => new ListBuilder<int>([0, 1, 2]).map((x) => null),
+          throwsA(anything));
     });
 
     test('throws on null expand', () {
       expect(() => new ListBuilder<int>([0, 1, 2]).expand((x) => [x, null]),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type addAll', () {
       expect(
           () => new ListBuilder<int>().addAll(new List<int>.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type insertAll', () {
       expect(
           () => new ListBuilder<int>()
               .insertAll(0, new List<int>.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type setAll', () {
       expect(
           () => new ListBuilder<int>([0, 1, 2])
               .setAll(0, new List<int>.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type setRange', () {
       expect(
           () => new ListBuilder<int>([0, 1, 2])
               .setRange(0, 2, new List<int>.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('throws on wrong type replaceRange', () {
       expect(
           () => new ListBuilder<int>([0, 1, 2])
               .replaceRange(0, 2, new List<int>.from([0, 1, '0'])),
-          throws);
+          throwsA(anything));
     });
 
     test('has replace method that replaces all data', () {

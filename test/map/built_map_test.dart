@@ -17,15 +17,15 @@ void main() {
     });
 
     test('throws on attempt to create BuiltMap<dynamic, dynamic>', () {
-      expect(() => new BuiltMap(), throws);
+      expect(() => new BuiltMap(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltMap<String, dynamic>', () {
-      expect(() => new BuiltMap<String, dynamic>(), throws);
+      expect(() => new BuiltMap<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltMap<dynamic, String>', () {
-      expect(() => new BuiltMap<dynamic, String>(), throws);
+      expect(() => new BuiltMap<dynamic, String>(), throwsA(anything));
     });
 
     test('allows BuiltMap<Object, Object>', () {
@@ -49,11 +49,11 @@ void main() {
     });
 
     test('throws on wrong type key', () {
-      expect(() => new BuiltMap<int, String>({'1': '1'}), throws);
+      expect(() => new BuiltMap<int, String>({'1': '1'}), throwsA(anything));
     });
 
     test('throws on wrong type value', () {
-      expect(() => new BuiltMap<int, String>({1: 1}), throws);
+      expect(() => new BuiltMap<int, String>({1: 1}), throwsA(anything));
     });
 
     test('does not keep a mutable Map', () {
@@ -108,11 +108,11 @@ void main() {
     });
 
     test('throws on null keys', () {
-      expect(() => new BuiltMap<int, String>({null: '1'}), throws);
+      expect(() => new BuiltMap<int, String>({null: '1'}), throwsA(anything));
     });
 
     test('throws on null values', () {
-      expect(() => new BuiltMap<int, String>({1: null}), throws);
+      expect(() => new BuiltMap<int, String>({1: null}), throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

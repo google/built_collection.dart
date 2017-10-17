@@ -8,6 +8,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
 
+import '../performance.dart';
+
 void main() {
   group('BuiltList', () {
     test('instantiates empty by default', () {
@@ -398,40 +400,6 @@ void main() {
       expect(new BuiltList<int>([1, 2]).elementAt(0), 1);
     });
   });
-}
-
-void expectMuchFaster(Function fastFunction, Function slowFunction) {
-  final fastStopWatch = new Stopwatch()..start();
-  fastFunction();
-  fastStopWatch.stop();
-
-  final slowStopWatch = new Stopwatch()..start();
-  slowFunction();
-  slowStopWatch.stop();
-
-  if (fastStopWatch.elapsedMicroseconds * 10 >
-      slowStopWatch.elapsedMicroseconds) {
-    throw 'Expected first function to be at least 10x faster than second!'
-        ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
-        ' second=${slowStopWatch.elapsedMicroseconds}';
-  }
-}
-
-void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
-  final fastStopWatch = new Stopwatch()..start();
-  notFastFunction();
-  fastStopWatch.stop();
-
-  final slowStopWatch = new Stopwatch()..start();
-  slowFunction();
-  slowStopWatch.stop();
-
-  if (fastStopWatch.elapsedMicroseconds * 10 <
-      slowStopWatch.elapsedMicroseconds) {
-    throw 'Expected first function to be less than 10x faster than second!'
-        ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
-        ' second=${slowStopWatch.elapsedMicroseconds}';
-  }
 }
 
 class _A {}

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.0
+
+- The addIterable method is now generic. This allows the types of the functions
+  passed in to be inferred.
+
 ## 1.5.0
 
 - Add BuiltIterable interface for when you want to accept a BuiltList or BuiltSet.

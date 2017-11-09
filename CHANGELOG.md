@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+- Allow quiver 0.26.
+
 ## 1.6.0
 
 - The addIterable method is now generic. This allows the types of the functions

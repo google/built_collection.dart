@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.2
+
+- Fix a bug whereby `ListBuilder` and `MapBuilder` allowed nulls to be
+  introduced via `map` and `expand`.
+
 ## 1.6.1
 
 - Allow quiver 0.26.

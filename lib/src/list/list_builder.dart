@@ -13,7 +13,7 @@ part of built_collection.list;
 /// for the general properties of Built Collections.
 class ListBuilder<E> {
   List<E> _list;
-  BuiltList<E> _listOwner;
+  _BuiltList<E> _listOwner;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -34,7 +34,7 @@ class ListBuilder<E> {
   /// of `BuiltList`s.
   BuiltList<E> build() {
     if (_listOwner == null) {
-      _setOwner(new BuiltList<E>._withSafeList(_list));
+      _setOwner(new _BuiltList<E>.withSafeList(_list));
     }
     return _listOwner;
   }
@@ -46,7 +46,7 @@ class ListBuilder<E> {
 
   /// Replaces all elements with elements from an [Iterable].
   void replace(Iterable iterable) {
-    if (iterable is BuiltList<E>) {
+    if (iterable is _BuiltList<E>) {
       _setOwner(iterable);
     } else {
       _setSafeList(new List<E>.from(iterable));
@@ -219,7 +219,7 @@ class ListBuilder<E> {
     _checkGenericTypeParameter();
   }
 
-  void _setOwner(BuiltList<E> listOwner) {
+  void _setOwner(_BuiltList<E> listOwner) {
     _list = listOwner._list;
     _listOwner = listOwner;
   }

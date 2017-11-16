@@ -16,11 +16,11 @@ part 'list/built_list.dart';
 part 'list/list_builder.dart';
 
 // Internal only, for testing.
-class OverriddenHashcodeBuiltList<T> extends BuiltList<T> {
+class OverriddenHashcodeBuiltList<T> extends _BuiltList<T> {
   final int _overridenHashCode;
 
   OverriddenHashcodeBuiltList(Iterable iterable, this._overridenHashCode)
-      : super._copyAndCheck(iterable);
+      : super.copyAndCheck(iterable);
 
   @override
   // ignore: hash_and_equals

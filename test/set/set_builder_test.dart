@@ -20,27 +20,34 @@ void main() {
     });
 
     test('throws on null add', () {
-      expect(() => new SetBuilder<int>().add(null), throwsA(anything));
+      final builder = new SetBuilder<int>();
+      expect(() => builder.add(null), throwsA(anything));
+      expect(builder.build(), isEmpty);
     });
 
     test('throws on null addAll', () {
-      expect(
-          () => new SetBuilder<int>().addAll([0, 1, null]), throwsA(anything));
+      final builder = new SetBuilder<int>();
+      expect(() => builder.addAll([0, 1, null]), throwsA(anything));
+      expect(builder.build(), isEmpty);
     });
 
     test('throws on null map', () {
-      expect(() => new SetBuilder<int>([0, 1, 2]).map((x) => null),
-          throwsA(anything));
+      final builder = new SetBuilder<int>([0, 1, 2]);
+      expect(() => builder.map((x) => null), throwsA(anything));
+      expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null expand', () {
-      expect(() => new SetBuilder<int>([0, 1, 2]).expand((x) => [x, null]),
-          throwsA(anything));
+      final builder = new SetBuilder<int>([0, 1, 2]);
+      expect(() => builder.expand((x) => [x, null]), throwsA(anything));
+      expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on wrong type addAll', () {
-      expect(() => new SetBuilder<int>().addAll(new List.from([0, 1, '0'])),
-          throwsA(anything));
+      final builder = new SetBuilder<int>();
+      expect(
+          () => builder.addAll(new List.from([0, 1, '0'])), throwsA(anything));
+      expect(builder.build(), isEmpty);
     });
 
     test('has replace method that replaces all data', () {

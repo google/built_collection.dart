@@ -111,8 +111,9 @@ class SetBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    _setSafeSet(_set.map(f).toSet());
-    _checkElements(_set);
+    final result = _set.map(f).toSet();
+    _checkElements(result);
+    _setSafeSet(result);
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
@@ -122,8 +123,9 @@ class SetBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    _setSafeSet(_set.expand(f).toSet());
-    _checkElements(_set);
+    final result = _set.expand(f).toSet();
+    _checkElements(result);
+    _setSafeSet(result);
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.

@@ -172,8 +172,9 @@ class ListBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    _setSafeList(_list.map(f).toList(growable: true));
-    _checkElements(_list);
+    final result = _list.map(f).toList(growable: true);
+    _checkElements(result);
+    _setSafeList(result);
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
@@ -183,8 +184,9 @@ class ListBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    _setSafeList(_list.expand(f).toList(growable: true));
-    _checkElements(_list);
+    final result = _list.expand(f).toList(growable: true);
+    _checkElements(result);
+    _setSafeList(result);
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.

@@ -136,6 +136,8 @@ class ListBuilder<E> {
   }
 
   /// As [List.retainWhere].
+  ///
+  /// This method is an alias of [where].
   void retainWhere(bool test(E element)) {
     _safeList.retainWhere(test);
   }
@@ -178,9 +180,9 @@ class ListBuilder<E> {
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
-  void where(bool test(E element)) {
-    _setSafeList(_list.where(test).toList(growable: true));
-  }
+  ///
+  /// This method is an alias of [retainWhere].
+  void where(bool test(E element)) => retainWhere(test);
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {

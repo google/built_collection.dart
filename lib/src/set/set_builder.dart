@@ -103,6 +103,8 @@ class SetBuilder<E> {
   }
 
   /// As [Set.retainWhere].
+  ///
+  /// This method is an alias of [where].
   void retainWhere(bool test(E element)) {
     _safeSet.retainWhere(test);
   }
@@ -117,9 +119,9 @@ class SetBuilder<E> {
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
-  void where(bool test(E element)) {
-    _setSafeSet(_set.where(test).toSet());
-  }
+  ///
+  /// This method is an alias of [retainWhere].
+  void where(bool test(E element)) => retainWhere(test);
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {

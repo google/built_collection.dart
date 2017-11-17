@@ -17,7 +17,7 @@ class SetMultimapBuilder<K, V> {
   Map<K, BuiltSet<V>> _builtMap;
   // Instance that _builtMap belongs to. If present, _builtMap must not be
   // mutated.
-  BuiltSetMultimap<K, V> _builtMapOwner;
+  _BuiltSetMultimap<K, V> _builtMapOwner;
   // SetBuilders for keys that are being changed.
   Map<K, SetBuilder<V>> _builderMap;
 
@@ -52,7 +52,7 @@ class SetMultimapBuilder<K, V> {
         }
       }
 
-      _builtMapOwner = new BuiltSetMultimap<K, V>._withSafeMap(_builtMap);
+      _builtMapOwner = new _BuiltSetMultimap<K, V>.withSafeMap(_builtMap);
     }
     return _builtMapOwner;
   }
@@ -65,7 +65,7 @@ class SetMultimapBuilder<K, V> {
   /// Replaces all elements with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
   void replace(dynamic multimap) {
-    if (multimap is BuiltSetMultimap<K, V>) {
+    if (multimap is _BuiltSetMultimap<K, V>) {
       _setOwner(multimap);
     } else if (multimap is Map ||
         multimap is SetMultimap ||
@@ -184,7 +184,7 @@ class SetMultimapBuilder<K, V> {
     _checkGenericTypeParameter();
   }
 
-  void _setOwner(BuiltSetMultimap<K, V> builtSetMultimap) {
+  void _setOwner(_BuiltSetMultimap<K, V> builtSetMultimap) {
     _builtMapOwner = builtSetMultimap;
     _builtMap = builtSetMultimap._map;
     _builderMap = new Map<K, SetBuilder<V>>();

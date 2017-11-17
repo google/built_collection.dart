@@ -13,7 +13,7 @@ part of built_collection.set_multimap;
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltSetMultimap<K, V> {
+abstract class BuiltSetMultimap<K, V> {
   final Map<K, BuiltSet<V>> _map;
 
   // Precomputed.
@@ -37,13 +37,13 @@ class BuiltSetMultimap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltSetMultimap([multimap = const {}]) {
-    if (multimap is BuiltSetMultimap &&
-        multimap._hasExactKeyAndValueTypes(K, V)) {
+    if (multimap is _BuiltSetMultimap &&
+        multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltSetMultimap<K, V>;
     } else if (multimap is Map ||
         multimap is SetMultimap ||
         multimap is BuiltSetMultimap) {
-      return new BuiltSetMultimap<K, V>._copyAndCheck(
+      return new _BuiltSetMultimap<K, V>.copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
       throw new ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
@@ -174,27 +174,7 @@ class BuiltSetMultimap<K, V> {
 
   // Internal.
 
-  BuiltSetMultimap._copyAndCheck(Iterable keys, Function lookup)
-      : _map = new Map<K, BuiltSet<V>>() {
-    _checkGenericTypeParameter();
-
-    for (final key in keys) {
-      if (key is K) {
-        _map[key] = new BuiltSet<V>(lookup(key));
-      } else {
-        throw new ArgumentError('map contained invalid key: $key');
-      }
-    }
-  }
-
-  BuiltSetMultimap._withSafeMap(this._map) {
-    _checkGenericTypeParameter();
-  }
-
-  bool _hasExactKeyAndValueTypes(Type key, Type value) =>
-      K == key && V == value;
-
-  void _checkGenericTypeParameter() {
+  BuiltSetMultimap._(this._map) {
     if (K == dynamic) {
       throw new UnsupportedError('explicit key type required, '
           'for example "new BuiltSetMultimap<int, int>"');
@@ -204,4 +184,22 @@ class BuiltSetMultimap<K, V> {
           ' for example "new BuiltSetMultimap<int, int>"');
     }
   }
+}
+
+/// Default implementation of the public [BuiltSetMultimap] interface.
+class _BuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
+  _BuiltSetMultimap.withSafeMap(Map<K, BuiltSet<V>> map) : super._(map);
+
+  _BuiltSetMultimap.copyAndCheck(Iterable keys, Function lookup)
+      : super._(new Map<K, BuiltSet<V>>()) {
+    for (final key in keys) {
+      if (key is K) {
+        _map[key] = new BuiltSet<V>(lookup(key));
+      } else {
+        throw new ArgumentError('map contained invalid key: $key');
+      }
+    }
+  }
+
+  bool hasExactKeyAndValueTypes(Type key, Type value) => K == key && V == value;
 }

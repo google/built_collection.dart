@@ -13,7 +13,7 @@ part of built_collection.set;
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
   Set<E> _set;
-  BuiltSet<E> _setOwner;
+  _BuiltSet<E> _setOwner;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -34,7 +34,7 @@ class SetBuilder<E> {
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
     if (_setOwner == null) {
-      _setOwner = new BuiltSet<E>._withSafeSet(_set);
+      _setOwner = new _BuiltSet<E>.withSafeSet(_set);
     }
     return _setOwner;
   }
@@ -46,7 +46,7 @@ class SetBuilder<E> {
 
   /// Replaces all elements with elements from an [Iterable].
   void replace(Iterable iterable) {
-    if (iterable is BuiltSet<E>) {
+    if (iterable is _BuiltSet<E>) {
       _withOwner(iterable);
     } else {
       // Can't use addAll because it requires an Iterable<E>.
@@ -158,7 +158,7 @@ class SetBuilder<E> {
     _checkGenericTypeParameter();
   }
 
-  void _withOwner(BuiltSet<E> setOwner) {
+  void _withOwner(_BuiltSet<E> setOwner) {
     _set = setOwner._set;
     _setOwner = setOwner;
   }

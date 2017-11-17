@@ -72,7 +72,7 @@ class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! _BuiltList) return false;
+    if (other is! BuiltList) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
     for (var i = 0; i != length; ++i) {

@@ -13,7 +13,7 @@ part of built_collection.map;
 /// for the general properties of Built Collections.
 class MapBuilder<K, V> {
   Map<K, V> _map;
-  BuiltMap<K, V> _mapOwner;
+  _BuiltMap<K, V> _mapOwner;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -34,7 +34,7 @@ class MapBuilder<K, V> {
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
     if (_mapOwner == null) {
-      _mapOwner = new BuiltMap<K, V>._withSafeMap(_map);
+      _mapOwner = new _BuiltMap<K, V>.withSafeMap(_map);
     }
     return _mapOwner;
   }
@@ -46,10 +46,10 @@ class MapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map] or [BuiltMap].
   void replace(Object map) {
-    if (map is BuiltMap<K, V>) {
+    if (map is _BuiltMap<K, V>) {
       _setOwner(map);
     } else if (map is BuiltMap) {
-      _setSafeMap(new Map<K, V>.from(map._map));
+      _setSafeMap(new Map<K, V>.fromIterable(map.keys, value: (k) => map[k]));
     } else if (map is Map) {
       _setSafeMap(new Map<K, V>.from(map));
     } else {
@@ -115,7 +115,7 @@ class MapBuilder<K, V> {
     _checkGenericTypeParameter();
   }
 
-  void _setOwner(BuiltMap<K, V> mapOwner) {
+  void _setOwner(_BuiltMap<K, V> mapOwner) {
     _mapOwner = mapOwner;
     _map = mapOwner._map;
   }

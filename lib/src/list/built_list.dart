@@ -13,7 +13,7 @@ part of built_collection.list;
 /// [Built Collection library documentation]
 /// (#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
+abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   final List<E> _list;
   int _hashCode;
 

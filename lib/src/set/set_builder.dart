@@ -12,6 +12,11 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
+  /// Used by [_createSet].
+  ///
+  /// When a [SetBuilder] is not instantiated with the [SetBuilder.using]
+  /// constructor, this property is `null`.
+  final Set<E> Function() _setConstructor;
   Set<E> _set;
   _BuiltSet<E> _setOwner;
 
@@ -28,13 +33,29 @@ class SetBuilder<E> {
     return new SetBuilder<E>._uninitialized()..replace(iterable);
   }
 
+  /// Uses `base` as the collection type for all sets created by this builder.
+  ///
+  ///     // Iterates over elements in ascending order
+  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
+  ///
+  ///     // Uses custom equality
+  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
+  ///         equals: (a, b) => a % 255 == b % 255),
+  ///         hashCode: (n) => (n % 255).hashCode));
+  ///
+  /// The set returned by `base` must be empty, mutable, and each call must
+  /// instantiate and return a new object.
+  factory SetBuilder.using(Set<E> Function() base,
+          [Iterable iterable = const []]) =>
+      new SetBuilder<E>._uninitialized(base)..replace(iterable);
+
   /// Converts to a [BuiltSet].
   ///
   /// The `SetBuilder` can be modified again and used to create any number
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
     if (_setOwner == null) {
-      _setOwner = new _BuiltSet<E>.withSafeSet(_set);
+      _setOwner = new _BuiltSet<E>.withSafeSet(_setConstructor, _set);
     }
     return _setOwner;
   }
@@ -46,11 +67,12 @@ class SetBuilder<E> {
 
   /// Replaces all elements with elements from an [Iterable].
   void replace(Iterable iterable) {
-    if (iterable is _BuiltSet<E>) {
+    if (iterable is _BuiltSet<E> &&
+        iterable._setConstructor == _setConstructor) {
       _withOwner(iterable);
     } else {
       // Can't use addAll because it requires an Iterable<E>.
-      final Set<E> set = new Set<E>();
+      final Set<E> set = _createSet();
       for (final element in iterable) {
         if (element is E) {
           set.add(element);
@@ -113,7 +135,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    final result = _set.map(f).toSet();
+    final result = _createSet()..addAll(_set.map(f));
     _checkElements(result);
     _setSafeSet(result);
   }
@@ -125,40 +147,42 @@ class SetBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    final result = _set.expand(f).toSet();
+    final result = _createSet()..addAll(_set.expand(f));
     _checkElements(result);
     _setSafeSet(result);
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.
   void take(int n) {
-    _setSafeSet(_set.take(n).toSet());
+    _setSafeSet(_createSet()..addAll(_set.take(n)));
   }
 
   /// As [Iterable.takeWhile], but updates the builder in place. Returns
   /// nothing.
   void takeWhile(bool test(E value)) {
-    _setSafeSet(_set.takeWhile(test).toSet());
+    _setSafeSet(_createSet()..addAll(_set.takeWhile(test)));
   }
 
   /// As [Iterable.skip], but updates the builder in place. Returns nothing.
   void skip(int n) {
-    _setSafeSet(_set.skip(n).toSet());
+    _setSafeSet(_createSet()..addAll(_set.skip(n)));
   }
 
   /// As [Iterable.skipWhile], but updates the builder in place. Returns
   /// nothing.
   void skipWhile(bool test(E value)) {
-    _setSafeSet(_set.skipWhile(test).toSet());
+    _setSafeSet(_createSet()..addAll(_set.skipWhile(test)));
   }
 
   // Internal.
 
-  SetBuilder._uninitialized() {
+  SetBuilder._uninitialized([this._setConstructor]) {
     _checkGenericTypeParameter();
   }
 
   void _withOwner(_BuiltSet<E> setOwner) {
+    assert(setOwner._setConstructor == _setConstructor,
+        "Can't reuse a built set that uses a different base");
     _set = setOwner._set;
     _setOwner = setOwner;
   }
@@ -170,11 +194,14 @@ class SetBuilder<E> {
 
   Set<E> get _safeSet {
     if (_setOwner != null) {
-      _set = new Set<E>.from(_set);
+      _set = _createSet()..addAll(_set);
       _setOwner = null;
     }
     return _set;
   }
+
+  Set<E> _createSet() =>
+      _setConstructor != null ? _setConstructor() : new Set<E>();
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

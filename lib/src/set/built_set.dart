@@ -14,6 +14,7 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
+  final Set<E> Function() _setConstructor;
   final Set<E> _set;
   int _hashCode;
 
@@ -30,18 +31,34 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return new _BuiltSet<E>.copyAndCheck(iterable);
+      return new _BuiltSet<E>.copyAndCheck(null, iterable);
     }
   }
 
+  /// Uses `base` as the internal collection type of this set.
+  ///
+  ///     // Iterates over elements in ascending order
+  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
+  ///
+  ///     // Uses custom equality
+  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
+  ///         equals: (a, b) => a % 255 == b % 255),
+  ///         hashCode: (n) => (n % 255).hashCode));
+  ///
+  /// The set returned by `base` must be empty, mutable, and each call must
+  /// instantiate and return a new object.
+  factory BuiltSet.using(Set<E> Function() base,
+          [Iterable iterable = const []]) =>
+      new _BuiltSet<E>.copyAndCheck(base, iterable);
+
   /// Creates a [SetBuilder], applies updates to it, and builds.
-  factory BuiltSet.build(updates(SetBuilder<E> builder)) =>
-      (new SetBuilder<E>()..update(updates)).build();
+  factory BuiltSet.build(updates(SetBuilder<E> builder), [Set<E> base()]) =>
+      (new SetBuilder<E>.using(base)..update(updates)).build();
 
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => new SetBuilder<E>(this);
+  SetBuilder<E> toBuilder() => new SetBuilder<E>.using(_setConstructor, this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
@@ -99,18 +116,20 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> difference(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.difference(other._set));
+      new _BuiltSet<E>.withSafeSet(
+          _setConstructor, _set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> intersection(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.intersection(other._set));
+      new _BuiltSet<E>.withSafeSet(
+          _setConstructor, _set.intersection(other._set));
 
   /// As [Set.lookup].
   E lookup(Object object) => _set.lookup(object);
 
   /// As [Set.union] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> union(BuiltSet<E> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.union(other._set));
+      new _BuiltSet<E>.withSafeSet(_setConstructor, _set.union(other._set));
 
   // Iterable.
 
@@ -205,7 +224,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltSet._(this._set) {
+  BuiltSet._(this._setConstructor, this._set) {
     if (E == dynamic) {
       throw new UnsupportedError(
           'explicit element type required, for example "new BuiltSet<int>"');
@@ -215,10 +234,12 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
 /// Default implementation of the public [BuiltSet] interface.
 class _BuiltSet<E> extends BuiltSet<E> {
-  _BuiltSet.withSafeSet(Set<E> set) : super._(set);
+  _BuiltSet.withSafeSet(Set<E> Function() setConstructor, Set<E> set)
+      : super._(setConstructor, set);
 
-  _BuiltSet.copyAndCheck([Iterable iterable = const []])
-      : super._(new Set<E>()) {
+  _BuiltSet.copyAndCheck(Set<E> Function() setConstructor,
+      [Iterable iterable = const []])
+      : super._(setConstructor, new Set<E>()) {
     for (final element in iterable) {
       if (element is E) {
         _set.add(element);

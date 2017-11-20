@@ -13,7 +13,7 @@ part of built_collection.list;
 /// [Built Collection library documentation]
 /// (#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
+abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   final List<E> _list;
   int _hashCode;
 
@@ -27,10 +27,10 @@ class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList([Iterable iterable = const []]) {
-    if (iterable is BuiltList && iterable._hasExactElementType(E)) {
+    if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {
-      return new BuiltList<E>._copyAndCheck(iterable);
+      return new _BuiltList<E>.copyAndCheck(iterable);
     }
   }
 
@@ -110,7 +110,7 @@ class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [List.sublist] but returns a `BuiltList<E>`.
   BuiltList<E> sublist(int start, [int end]) =>
-      new BuiltList<E>._withSafeList(_list.sublist(start, end));
+      new _BuiltList<E>.withSafeList(_list.sublist(start, end));
 
   /// As [List.getRange].
   Iterable<E> getRange(int start, int end) => _list.getRange(start, end);
@@ -212,10 +212,20 @@ class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltList._copyAndCheck([Iterable iterable = const []])
-      : _list = new List<E>.from(iterable, growable: false) {
-    _checkGenericTypeParameter();
+  BuiltList._(this._list) {
+    if (E == dynamic) {
+      throw new UnsupportedError(
+          'explicit element type required, for example "new BuiltList<int>"');
+    }
+  }
+}
 
+/// Default implementation of the public [BuiltList] interface.
+class _BuiltList<E> extends BuiltList<E> {
+  _BuiltList.withSafeList(List<E> list) : super._(list);
+
+  _BuiltList.copyAndCheck([Iterable iterable = const []])
+      : super._(new List<E>.from(iterable, growable: false)) {
     for (final element in _list) {
       if (element is! E) {
         throw new ArgumentError('iterable contained invalid element: $element');
@@ -223,16 +233,5 @@ class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     }
   }
 
-  BuiltList._withSafeList(this._list) {
-    _checkGenericTypeParameter();
-  }
-
-  bool _hasExactElementType(Type type) => E == type;
-
-  void _checkGenericTypeParameter() {
-    if (E == dynamic) {
-      throw new UnsupportedError(
-          'explicit element type required, for example "new BuiltList<int>"');
-    }
-  }
+  bool hasExactElementType(Type type) => E == type;
 }

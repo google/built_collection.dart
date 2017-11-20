@@ -14,7 +14,7 @@ part of built_collection.list_multimap;
 /// [Built Collection library documentation]
 /// (#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltListMultimap<K, V> {
+abstract class BuiltListMultimap<K, V> {
   final Map<K, BuiltList<V>> _map;
 
   // Precomputed.
@@ -38,13 +38,13 @@ class BuiltListMultimap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltListMultimap([multimap = const {}]) {
-    if (multimap is BuiltListMultimap &&
-        multimap._hasExactKeyAndValueTypes(K, V)) {
+    if (multimap is _BuiltListMultimap &&
+        multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltListMultimap<K, V>;
     } else if (multimap is Map ||
         multimap is ListMultimap ||
         multimap is BuiltListMultimap) {
-      return new BuiltListMultimap<K, V>._copyAndCheck(
+      return new _BuiltListMultimap<K, V>.copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
       throw new ArgumentError(
@@ -176,27 +176,7 @@ class BuiltListMultimap<K, V> {
 
   // Internal.
 
-  BuiltListMultimap._copyAndCheck(Iterable keys, Function lookup)
-      : _map = new Map<K, BuiltList<V>>() {
-    _checkGenericTypeParameter();
-
-    for (final key in keys) {
-      if (key is K) {
-        _map[key] = new BuiltList<V>(lookup(key));
-      } else {
-        throw new ArgumentError('map contained invalid key: $key');
-      }
-    }
-  }
-
-  BuiltListMultimap._withSafeMap(this._map) {
-    _checkGenericTypeParameter();
-  }
-
-  bool _hasExactKeyAndValueTypes(Type key, Type value) =>
-      K == key && V == value;
-
-  void _checkGenericTypeParameter() {
+  BuiltListMultimap._(this._map) {
     if (K == dynamic) {
       throw new UnsupportedError('explicit key type required, '
           'for example "new BuiltListMultimap<int, int>"');
@@ -206,4 +186,22 @@ class BuiltListMultimap<K, V> {
           ' for example "new BuiltListMultimap<int, int>"');
     }
   }
+}
+
+/// Default implementation of the public [BuiltListMultimap] interface.
+class _BuiltListMultimap<K, V> extends BuiltListMultimap<K, V> {
+  _BuiltListMultimap.withSafeMap(Map<K, BuiltList<V>> map) : super._(map);
+
+  _BuiltListMultimap.copyAndCheck(Iterable keys, Function lookup)
+      : super._(new Map<K, BuiltList<V>>()) {
+    for (final key in keys) {
+      if (key is K) {
+        _map[key] = new BuiltList<V>(lookup(key));
+      } else {
+        throw new ArgumentError('map contained invalid key: $key');
+      }
+    }
+  }
+
+  bool hasExactKeyAndValueTypes(Type key, Type value) => K == key && V == value;
 }

@@ -13,7 +13,7 @@ part of built_collection.map;
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltMap<K, V> {
+abstract class BuiltMap<K, V> {
   final Map<K, V> _map;
 
   // Cached.
@@ -31,10 +31,10 @@ class BuiltMap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap([map = const {}]) {
-    if (map is BuiltMap && map._hasExactKeyAndValueTypes(K, V)) {
+    if (map is _BuiltMap && map.hasExactKeyAndValueTypes(K, V)) {
       return map as BuiltMap<K, V>;
     } else if (map is Map || map is BuiltMap) {
-      return new BuiltMap<K, V>._copyAndCheck(map.keys, (k) => map[k]);
+      return new _BuiltMap<K, V>.copyAndCheck(map.keys, (k) => map[k]);
     } else {
       throw new ArgumentError(
           'expected Map or BuiltMap, got ${map.runtimeType}');
@@ -148,10 +148,24 @@ class BuiltMap<K, V> {
 
   // Internal.
 
-  BuiltMap._copyAndCheck(Iterable keys, Function lookup)
-      : _map = new Map<K, V>() {
-    _checkGenericTypeParameter();
+  BuiltMap._(this._map) {
+    if (K == dynamic) {
+      throw new UnsupportedError(
+          'explicit key type required, for example "new BuiltMap<int, int>"');
+    }
+    if (V == dynamic) {
+      throw new UnsupportedError('explicit value type required,'
+          ' for example "new BuiltMap<int, int>"');
+    }
+  }
+}
 
+/// Default implementation of the public [BuiltMap] interface.
+class _BuiltMap<K, V> extends BuiltMap<K, V> {
+  _BuiltMap.withSafeMap(Map<K, V> map) : super._(map);
+
+  _BuiltMap.copyAndCheck(Iterable keys, Function lookup)
+      : super._(new Map<K, V>()) {
     for (final key in keys) {
       if (key is K) {
         final value = lookup(key);
@@ -166,21 +180,5 @@ class BuiltMap<K, V> {
     }
   }
 
-  BuiltMap._withSafeMap(this._map) {
-    _checkGenericTypeParameter();
-  }
-
-  bool _hasExactKeyAndValueTypes(Type key, Type value) =>
-      K == key && V == value;
-
-  void _checkGenericTypeParameter() {
-    if (K == dynamic) {
-      throw new UnsupportedError(
-          'explicit key type required, for example "new BuiltMap<int, int>"');
-    }
-    if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required,'
-          ' for example "new BuiltMap<int, int>"');
-    }
-  }
+  bool hasExactKeyAndValueTypes(Type key, Type value) => K == key && V == value;
 }

@@ -13,7 +13,7 @@ part of built_collection.set;
 /// See the
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
-class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
+abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   final Set<E> _set;
   int _hashCode;
 
@@ -27,10 +27,10 @@ class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet([Iterable iterable = const []]) {
-    if (iterable is BuiltSet && iterable._hasExactElementType(E)) {
+    if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return new BuiltSet<E>._copyAndCheck(iterable);
+      return new _BuiltSet<E>.copyAndCheck(iterable);
     }
   }
 
@@ -99,18 +99,18 @@ class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> difference(BuiltSet<Object> other) =>
-      new BuiltSet<E>._withSafeSet(_set.difference(other._set));
+      new _BuiltSet<E>.withSafeSet(_set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> intersection(BuiltSet<Object> other) =>
-      new BuiltSet<E>._withSafeSet(_set.intersection(other._set));
+      new _BuiltSet<E>.withSafeSet(_set.intersection(other._set));
 
   /// As [Set.lookup].
   E lookup(Object object) => _set.lookup(object);
 
   /// As [Set.union] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> union(BuiltSet<E> other) =>
-      new BuiltSet<E>._withSafeSet(_set.union(other._set));
+      new _BuiltSet<E>.withSafeSet(_set.union(other._set));
 
   // Iterable.
 
@@ -205,9 +205,20 @@ class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltSet._copyAndCheck([Iterable iterable = const []]) : _set = new Set<E>() {
-    _checkGenericTypeParameter();
+  BuiltSet._(this._set) {
+    if (E == dynamic) {
+      throw new UnsupportedError(
+          'explicit element type required, for example "new BuiltSet<int>"');
+    }
+  }
+}
 
+/// Default implementation of the public [BuiltSet] interface.
+class _BuiltSet<E> extends BuiltSet<E> {
+  _BuiltSet.withSafeSet(Set<E> set) : super._(set);
+
+  _BuiltSet.copyAndCheck([Iterable iterable = const []])
+      : super._(new Set<E>()) {
     for (final element in iterable) {
       if (element is E) {
         _set.add(element);
@@ -217,16 +228,5 @@ class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     }
   }
 
-  BuiltSet._withSafeSet(this._set) {
-    _checkGenericTypeParameter();
-  }
-
-  bool _hasExactElementType(Type type) => E == type;
-
-  void _checkGenericTypeParameter() {
-    if (E == dynamic) {
-      throw new UnsupportedError(
-          'explicit element type required, for example "new BuiltSet<int>"');
-    }
-  }
+  bool hasExactElementType(Type type) => E == type;
 }

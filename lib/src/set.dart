@@ -15,11 +15,11 @@ part 'set/built_set.dart';
 part 'set/set_builder.dart';
 
 // Internal only, for testing.
-class OverriddenHashcodeBuiltSet<T> extends BuiltSet<T> {
+class OverriddenHashcodeBuiltSet<T> extends _BuiltSet<T> {
   final int _overridenHashCode;
 
   OverriddenHashcodeBuiltSet(Iterable iterable, this._overridenHashCode)
-      : super._copyAndCheck(iterable);
+      : super.copyAndCheck(iterable);
 
   @override
   // ignore: hash_and_equals

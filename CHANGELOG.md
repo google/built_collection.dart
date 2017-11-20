@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0
+
+- Split collection classes into abstract interfaces and concrete, private,
+  implementations. This allows new implementations of the interfaces. Note that
+  this change is invisible _unless_ you rely on the exact `runtimeType` of the
+  collections.
+
 ## 1.6.2
 
 - Fix a bug whereby `ListBuilder` and `MapBuilder` allowed nulls to be

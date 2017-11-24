@@ -12,11 +12,8 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
-  /// Used by [_createSet].
-  ///
-  /// When a [SetBuilder] is not instantiated with the [SetBuilder.using]
-  /// constructor, this property is `null`.
-  final Set<E> Function() _setConstructor;
+  /// Used by [_createSet] to instantiate [_set]. The default value is `null`.
+  Set<E> Function() _setConstructor;
   Set<E> _set;
   _BuiltSet<E> _setOwner;
 
@@ -32,22 +29,6 @@ class SetBuilder<E> {
   factory SetBuilder([Iterable iterable = const []]) {
     return new SetBuilder<E>._uninitialized()..replace(iterable);
   }
-
-  /// Uses `base` as the collection type for all sets created by this builder.
-  ///
-  ///     // Iterates over elements in ascending order
-  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
-  ///
-  ///     // Uses custom equality
-  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
-  ///         equals: (a, b) => a % 255 == b % 255),
-  ///         hashCode: (n) => (n % 255).hashCode));
-  ///
-  /// The set returned by `base` must be empty, mutable, and each call must
-  /// instantiate and return a new object.
-  factory SetBuilder.using(Set<E> Function() base,
-          [Iterable iterable = const []]) =>
-      new SetBuilder<E>._uninitialized(base)..replace(iterable);
 
   /// Converts to a [BuiltSet].
   ///
@@ -83,6 +64,34 @@ class SetBuilder<E> {
       }
       _setSafeSet(set);
     }
+  }
+
+  /// Uses `base` as the collection type for all sets created by this builder.
+  ///
+  ///     // Iterates over elements in ascending order
+  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
+  ///
+  ///     // Uses custom equality
+  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
+  ///         equals: (a, b) => a % 255 == b % 255),
+  ///         hashCode: (n) => (n % 255).hashCode));
+  ///
+  /// The set returned by `base` must be empty, mutable, and each call must
+  /// instantiate and return a new object. The methods `difference`,
+  /// `intersection` and `union` of the returned set must create sets of the
+  /// same type.
+  ///
+  /// Use [withDefaultBase] to reset `base` to the default value.
+  void withBase(Set<E> Function() base) {
+    _setSafeSet(base()..addAll(_set));
+    _setConstructor = base;
+  }
+
+  /// As [withBase], but sets `base` back to the default value, which
+  /// instantiates `Set<E>`.
+  void withDefaultBase() {
+    _setConstructor = null;
+    _setSafeSet(_createSet()..addAll(_set));
   }
 
   // Based on Set.
@@ -176,9 +185,14 @@ class SetBuilder<E> {
 
   // Internal.
 
-  SetBuilder._uninitialized([this._setConstructor]) {
+  SetBuilder._uninitialized() {
     _checkGenericTypeParameter();
   }
+
+  SetBuilder._fromBuiltSet(_BuiltSet<E> set)
+      : _setConstructor = set._setConstructor,
+        _set = set._set,
+        _setOwner = set;
 
   void _withOwner(_BuiltSet<E> setOwner) {
     assert(setOwner._setConstructor == _setConstructor,

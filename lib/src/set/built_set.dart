@@ -31,34 +31,18 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return new _BuiltSet<E>.copyAndCheck(null, iterable);
+      return new _BuiltSet<E>.copyAndCheck(iterable);
     }
   }
 
-  /// Uses `base` as the internal collection type of this set.
-  ///
-  ///     // Iterates over elements in ascending order
-  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
-  ///
-  ///     // Uses custom equality
-  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
-  ///         equals: (a, b) => a % 255 == b % 255),
-  ///         hashCode: (n) => (n % 255).hashCode));
-  ///
-  /// The set returned by `base` must be empty, mutable, and each call must
-  /// instantiate and return a new object.
-  factory BuiltSet.using(Set<E> Function() base,
-          [Iterable iterable = const []]) =>
-      new _BuiltSet<E>.copyAndCheck(base, iterable);
-
   /// Creates a [SetBuilder], applies updates to it, and builds.
-  factory BuiltSet.build(updates(SetBuilder<E> builder), [Set<E> base()]) =>
-      (new SetBuilder<E>.using(base)..update(updates)).build();
+  factory BuiltSet.build(updates(SetBuilder<E> builder)) =>
+      (new SetBuilder<E>()..update(updates)).build();
 
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => new SetBuilder<E>.using(_setConstructor, this);
+  SetBuilder<E> toBuilder() => new SetBuilder<E>._fromBuiltSet(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
@@ -237,9 +221,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(Set<E> Function() setConstructor, Set<E> set)
       : super._(setConstructor, set);
 
-  _BuiltSet.copyAndCheck(Set<E> Function() setConstructor,
-      [Iterable iterable = const []])
-      : super._(setConstructor, new Set<E>()) {
+  _BuiltSet.copyAndCheck(Iterable iterable) : super._(null, new Set<E>()) {
     for (final element in iterable) {
       if (element is E) {
         _set.add(element);

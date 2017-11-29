@@ -67,10 +67,10 @@ class SetBuilder<E> {
 
   /// Uses `base` as the collection type for all sets created by this builder.
   ///
-  ///     // Iterates over elements in ascending order
+  ///     // Iterates over elements in ascending order.
   ///     new SetBuilder<int>()..withBase(() => new SplayTreeSet<int>());
   ///
-  ///     // Uses custom equality
+  ///     // Uses custom equality.
   ///     new SetBuilder<int>()..withBase(() => new LinkedHashSet<int>(
   ///         equals: (int a, int b) => a % 255 == b % 255,
   ///         hashCode: (int n) => (n % 255).hashCode));

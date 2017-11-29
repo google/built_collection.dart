@@ -13,7 +13,7 @@ part of built_collection.set;
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
   /// Used by [_createSet] to instantiate [_set]. The default value is `null`.
-  Set<E> Function() _setConstructor;
+  Set<E> Function() _setFactory;
   Set<E> _set;
   _BuiltSet<E> _setOwner;
 
@@ -36,7 +36,7 @@ class SetBuilder<E> {
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
     if (_setOwner == null) {
-      _setOwner = new _BuiltSet<E>.withSafeSet(_setConstructor, _set);
+      _setOwner = new _BuiltSet<E>.withSafeSet(_setFactory, _set);
     }
     return _setOwner;
   }
@@ -48,8 +48,7 @@ class SetBuilder<E> {
 
   /// Replaces all elements with elements from an [Iterable].
   void replace(Iterable iterable) {
-    if (iterable is _BuiltSet<E> &&
-        iterable._setConstructor == _setConstructor) {
+    if (iterable is _BuiltSet<E> && iterable._setFactory == _setFactory) {
       _withOwner(iterable);
     } else {
       // Can't use addAll because it requires an Iterable<E>.
@@ -69,12 +68,12 @@ class SetBuilder<E> {
   /// Uses `base` as the collection type for all sets created by this builder.
   ///
   ///     // Iterates over elements in ascending order
-  ///     new SetBuilder<int>.using(() => new SplayTreeSet());
+  ///     new SetBuilder<int>()..withBase(() => new SplayTreeSet<int>());
   ///
   ///     // Uses custom equality
-  ///     new SetBuilder<int>.using(() => new LinkedHashSet(
-  ///         equals: (a, b) => a % 255 == b % 255),
-  ///         hashCode: (n) => (n % 255).hashCode));
+  ///     new SetBuilder<int>()..withBase(() => new LinkedHashSet<int>(
+  ///         equals: (int a, int b) => a % 255 == b % 255,
+  ///         hashCode: (int n) => (n % 255).hashCode));
   ///
   /// The set returned by `base` must be empty, mutable, and each call must
   /// instantiate and return a new object. The methods `difference`,
@@ -83,14 +82,17 @@ class SetBuilder<E> {
   ///
   /// Use [withDefaultBase] to reset `base` to the default value.
   void withBase(Set<E> Function() base) {
-    _setSafeSet(base()..addAll(_set));
-    _setConstructor = base;
+    if (base == null) {
+      throw new ArgumentError.notNull('base');
+    }
+    _setFactory = base;
+    _setSafeSet(_createSet()..addAll(_set));
   }
 
   /// As [withBase], but sets `base` back to the default value, which
   /// instantiates `Set<E>`.
   void withDefaultBase() {
-    _setConstructor = null;
+    _setFactory = null;
     _setSafeSet(_createSet()..addAll(_set));
   }
 
@@ -190,12 +192,12 @@ class SetBuilder<E> {
   }
 
   SetBuilder._fromBuiltSet(_BuiltSet<E> set)
-      : _setConstructor = set._setConstructor,
+      : _setFactory = set._setFactory,
         _set = set._set,
         _setOwner = set;
 
   void _withOwner(_BuiltSet<E> setOwner) {
-    assert(setOwner._setConstructor == _setConstructor,
+    assert(setOwner._setFactory == _setFactory,
         "Can't reuse a built set that uses a different base");
     _set = setOwner._set;
     _setOwner = setOwner;
@@ -214,8 +216,7 @@ class SetBuilder<E> {
     return _set;
   }
 
-  Set<E> _createSet() =>
-      _setConstructor != null ? _setConstructor() : new Set<E>();
+  Set<E> _createSet() => _setFactory != null ? _setFactory() : new Set<E>();
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

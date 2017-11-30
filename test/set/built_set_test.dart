@@ -4,6 +4,7 @@
 
 library built_collection.test.set.built_set_test;
 
+import 'dart:collection' show SplayTreeSet;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
@@ -80,6 +81,14 @@ void main() {
       expect(new BuiltSet<int>().toBuilder().build() is BuiltSet<int>, isTrue);
       expect(
           new BuiltSet<int>().toBuilder().build() is BuiltSet<String>, isFalse);
+    });
+
+    test('passes along its base when converted to SetBuilder', () {
+      final set = new BuiltSet<int>.build((b) => b
+        ..withBase(() => new SplayTreeSet<int>())
+        ..addAll([10, 15, 5]));
+      final builder = set.toBuilder()..addAll([2, 12]);
+      expect(builder.build(), orderedEquals([2, 5, 10, 12, 15]));
     });
 
     test('throws on null', () {

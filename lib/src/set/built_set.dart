@@ -14,6 +14,7 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
+  final Set<E> Function() _setFactory;
   final Set<E> _set;
   int _hashCode;
 
@@ -41,7 +42,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => new SetBuilder<E>(this);
+  SetBuilder<E> toBuilder() => new SetBuilder<E>._fromBuiltSet(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
@@ -99,18 +100,18 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> difference(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.difference(other._set));
+      new _BuiltSet<E>.withSafeSet(_setFactory, _set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> intersection(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.intersection(other._set));
+      new _BuiltSet<E>.withSafeSet(_setFactory, _set.intersection(other._set));
 
   /// As [Set.lookup].
   E lookup(Object object) => _set.lookup(object);
 
   /// As [Set.union] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> union(BuiltSet<E> other) =>
-      new _BuiltSet<E>.withSafeSet(_set.union(other._set));
+      new _BuiltSet<E>.withSafeSet(_setFactory, _set.union(other._set));
 
   // Iterable.
 
@@ -205,7 +206,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltSet._(this._set) {
+  BuiltSet._(this._setFactory, this._set) {
     if (E == dynamic) {
       throw new UnsupportedError(
           'explicit element type required, for example "new BuiltSet<int>"');
@@ -215,10 +216,10 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
 /// Default implementation of the public [BuiltSet] interface.
 class _BuiltSet<E> extends BuiltSet<E> {
-  _BuiltSet.withSafeSet(Set<E> set) : super._(set);
+  _BuiltSet.withSafeSet(Set<E> Function() setFactory, Set<E> set)
+      : super._(setFactory, set);
 
-  _BuiltSet.copyAndCheck([Iterable iterable = const []])
-      : super._(new Set<E>()) {
+  _BuiltSet.copyAndCheck(Iterable iterable) : super._(null, new Set<E>()) {
     for (final element in iterable) {
       if (element is E) {
         _set.add(element);

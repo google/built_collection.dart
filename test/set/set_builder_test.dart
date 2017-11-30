@@ -4,6 +4,7 @@
 
 library built_collection.test.set.set_builder_test;
 
+import 'dart:collection' show SplayTreeSet;
 import 'package:built_collection/built_collection.dart';
 import 'package:test/test.dart';
 
@@ -43,6 +44,12 @@ void main() {
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
+    test('throws on null withBase', () {
+      final builder = new SetBuilder<int>([2, 0, 1]);
+      expect(() => builder.withBase(null), throwsA(anything));
+      expect(builder.build(), orderedEquals([2, 0, 1]));
+    });
+
     test('throws on wrong type addAll', () {
       final builder = new SetBuilder<int>();
       expect(
@@ -52,6 +59,40 @@ void main() {
 
     test('has replace method that replaces all data', () {
       expect((new SetBuilder<int>()..replace([0, 1, 2])).build(), [0, 1, 2]);
+    });
+
+    test('reuses BuiltSet passed to replace if it has the same base', () {
+      final treeSetBase = () => new SplayTreeSet<int>();
+      final set = new BuiltSet<int>.build((b) => b
+        ..withBase(treeSetBase)
+        ..addAll([1, 2]));
+      final builder = new SetBuilder<int>()
+        ..withBase(treeSetBase)
+        ..replace(set);
+      expect(builder.build(), same(set));
+    });
+
+    test("doesn't reuse BuiltSet passed to replace if it has a different base",
+        () {
+      final set = new BuiltSet<int>.build((b) => b
+        ..withBase(() => new SplayTreeSet<int>())
+        ..addAll([1, 2]));
+      final builder = new SetBuilder<int>()..replace(set);
+      expect(builder.build(), isNot(same(set)));
+    });
+
+    test('has withBase method that changes the underlying set type', () {
+      final builder = new SetBuilder<int>([2, 0, 1]);
+      builder.withBase(() => new SplayTreeSet<int>());
+      expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('has withDefaultBase method that resets the underlying set type', () {
+      final builder = new SetBuilder<int>()
+        ..withBase(() => new SplayTreeSet<int>())
+        ..withDefaultBase()
+        ..addAll([2, 0, 1]);
+      expect(builder.build(), orderedEquals([2, 0, 1]));
     });
 
     // Lazy copies.

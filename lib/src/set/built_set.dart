@@ -158,7 +158,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
   @override
-  Set<E> toSet() => new CopyOnWriteSet<E>(_set);
+  Set<E> toSet() => new CopyOnWriteSet<E>(_set, _setFactory);
 
   @override
   List<E> toList({bool growable: true}) => _set.toList(growable: growable);

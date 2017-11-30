@@ -3,10 +3,11 @@
 // license that can be found in the LICENSE file.
 
 class CopyOnWriteSet<E> implements Set<E> {
+  final Set<E> Function() _setFactory;
   bool _copyBeforeWrite;
   Set<E> _set;
 
-  CopyOnWriteSet(this._set) : _copyBeforeWrite = true;
+  CopyOnWriteSet(this._set, [this._setFactory]) : _copyBeforeWrite = true;
 
   // Read-only methods: just forward.
 
@@ -167,6 +168,8 @@ class CopyOnWriteSet<E> implements Set<E> {
   void _maybeCopyBeforeWrite() {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
-    _set = new Set<E>.from(_set);
+    _set = _setFactory != null
+        ? (_setFactory()..addAll(_set))
+        : new Set<E>.from(_set);
   }
 }

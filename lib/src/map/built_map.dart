@@ -14,6 +14,7 @@ part of built_collection.map;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltMap<K, V> {
+  final Map<K, V> Function() _mapFactory;
   final Map<K, V> _map;
 
   // Cached.
@@ -48,7 +49,7 @@ abstract class BuiltMap<K, V> {
   /// Converts to a [MapBuilder] for modification.
   ///
   /// The `BuiltMap` remains immutable and can continue to be used.
-  MapBuilder<K, V> toBuilder() => new MapBuilder<K, V>(this);
+  MapBuilder<K, V> toBuilder() => new MapBuilder<K, V>._fromBuiltMap(this);
 
   /// Converts to a [MapBuilder], applies updates to it, and builds.
   BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
@@ -68,7 +69,7 @@ abstract class BuiltMap<K, V> {
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
-  Map<K, V> toMap() => new CopyOnWriteMap<K, V>(_map);
+  Map<K, V> toMap() => new CopyOnWriteMap<K, V>(_map, _mapFactory);
 
   /// Deep hashCode.
   ///
@@ -148,7 +149,7 @@ abstract class BuiltMap<K, V> {
 
   // Internal.
 
-  BuiltMap._(this._map) {
+  BuiltMap._(this._mapFactory, this._map) {
     if (K == dynamic) {
       throw new UnsupportedError(
           'explicit key type required, for example "new BuiltMap<int, int>"');
@@ -162,10 +163,11 @@ abstract class BuiltMap<K, V> {
 
 /// Default implementation of the public [BuiltMap] interface.
 class _BuiltMap<K, V> extends BuiltMap<K, V> {
-  _BuiltMap.withSafeMap(Map<K, V> map) : super._(map);
+  _BuiltMap.withSafeMap(Map<K, V> Function() mapFactory, Map<K, V> map)
+      : super._(mapFactory, map);
 
   _BuiltMap.copyAndCheck(Iterable keys, Function lookup)
-      : super._(new Map<K, V>()) {
+      : super._(null, new Map<K, V>()) {
     for (final key in keys) {
       if (key is K) {
         final value = lookup(key);

@@ -65,6 +65,14 @@ void main() {
       expect(new BuiltSet<int>().toSet() is Set<String>, isFalse);
     });
 
+    test('uses same base when converted with toSet', () {
+      final built = new BuiltSet<int>.build((b) => b
+        ..withBase(() => new SplayTreeSet<int>())
+        ..addAll([1, 3]));
+      final set = built.toSet()..addAll([2, 4]);
+      expect(set, [1, 2, 3, 4]);
+    });
+
     test('can be converted to an UnmodifiableSetView', () {
       final immutableSet = new BuiltSet<int>().asSet();
       expect(immutableSet is Set<int>, isTrue);

@@ -3,10 +3,11 @@
 // license that can be found in the LICENSE file.
 
 class CopyOnWriteMap<K, V> implements Map<K, V> {
+  final Map<K, V> Function() _mapFactory;
   bool _copyBeforeWrite;
   Map<K, V> _map;
 
-  CopyOnWriteMap(this._map) : _copyBeforeWrite = true;
+  CopyOnWriteMap(this._map, [this._mapFactory]) : _copyBeforeWrite = true;
 
   // Read-only methods: just forward.
 
@@ -77,6 +78,8 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   void _maybeCopyBeforeWrite() {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
-    _map = new Map<K, V>.from(_map);
+    _map = _mapFactory != null
+        ? (_mapFactory()..addAll(_map))
+        : new Map<K, V>.from(_map);
   }
 }

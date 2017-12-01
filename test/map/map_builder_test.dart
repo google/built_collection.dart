@@ -4,6 +4,7 @@
 
 library built_collection.test.map.map_builder_test;
 
+import 'dart:collection' show SplayTreeMap;
 import 'package:built_collection/built_collection.dart';
 import 'package:test/test.dart';
 
@@ -56,6 +57,12 @@ void main() {
           throwsA(anything));
     });
 
+    test('throws on null withBase', () {
+      final builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
+      expect(() => builder.withBase(null), throwsA(anything));
+      expect(builder.build().keys, orderedEquals([2, 0, 1]));
+    });
+
     test('has replace method that replaces all data', () {
       expect(
           (new MapBuilder<int, String>()..replace({1: '1', 2: '2'}))
@@ -80,6 +87,40 @@ void main() {
               .build()
               .toMap(),
           {1: 2, 2: 3, 3: 4});
+    });
+
+    test('reuses BuiltMap passed to replace if it has the same base', () {
+      final treeMapBase = () => new SplayTreeMap<int, String>();
+      final map = new BuiltMap<int, String>.build((b) => b
+        ..withBase(treeMapBase)
+        ..addAll({1: '1', 2: '2'}));
+      final builder = new MapBuilder<int, String>()
+        ..withBase(treeMapBase)
+        ..replace(map);
+      expect(builder.build(), same(map));
+    });
+
+    test("doesn't reuse BuiltMap passed to replace if it has a different base",
+        () {
+      final map = new BuiltMap<int, String>.build((b) => b
+        ..withBase(() => new SplayTreeMap<int, String>())
+        ..addAll({1: '1', 2: '2'}));
+      final builder = new MapBuilder<int, String>()..replace(map);
+      expect(builder.build(), isNot(same(map)));
+    });
+
+    test('has withBase method that changes the underlying map type', () {
+      final builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
+      builder.withBase(() => new SplayTreeMap<int, String>());
+      expect(builder.build().keys, orderedEquals([0, 1, 2]));
+    });
+
+    test('has withDefaultBase method that resets the underlying map type', () {
+      final builder = new MapBuilder<int, String>()
+        ..withBase(() => new SplayTreeMap<int, String>())
+        ..withDefaultBase()
+        ..addAll({2: '2', 0: '0', 1: '1'});
+      expect(builder.build().keys, orderedEquals([2, 0, 1]));
     });
 
     // Lazy copies.

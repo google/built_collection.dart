@@ -4,6 +4,7 @@
 
 library built_collection.test.map.built_map_test;
 
+import 'dart:collection' show SplayTreeMap;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
@@ -78,6 +79,14 @@ void main() {
           new BuiltMap<int, String>().toMap() is Map<String, String>, isFalse);
     });
 
+    test('uses same base when converted with toMap', () {
+      final built = new BuiltMap<int, String>.build((b) => b
+        ..withBase(() => new SplayTreeMap<int, String>())
+        ..addAll({1: '1', 3: '3'}));
+      final map = built.toMap()..addAll({2: '2', 4: '4'});
+      expect(map.keys, [1, 2, 3, 4]);
+    });
+
     test('can be converted to an UnmodifiableMapView', () {
       final immutableMap = new BuiltMap<int, String>().asMap();
       expect(immutableMap is Map<int, String>, isTrue);
@@ -107,6 +116,14 @@ void main() {
           new BuiltMap<int, String>().toBuilder().build()
               is BuiltMap<String, String>,
           isFalse);
+    });
+
+    test('passes along its base when converted to SetBuilder', () {
+      final map = new BuiltMap<int, String>.build((b) => b
+        ..withBase(() => new SplayTreeMap<int, String>())
+        ..addAll({10: '10', 15: '15', 5: '5'}));
+      final builder = map.toBuilder()..addAll({2: '2', 12: '12'});
+      expect(builder.build().keys, orderedEquals([2, 5, 10, 12, 15]));
     });
 
     test('throws on null keys', () {

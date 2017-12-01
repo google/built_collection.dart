@@ -12,6 +12,8 @@ part of built_collection.map;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class MapBuilder<K, V> {
+  /// Used by [_createMap] to instantiate [_map]. The default value is `null`.
+  Map<K, V> Function() _mapFactory;
   Map<K, V> _map;
   _BuiltMap<K, V> _mapOwner;
 
@@ -34,7 +36,7 @@ class MapBuilder<K, V> {
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
     if (_mapOwner == null) {
-      _mapOwner = new _BuiltMap<K, V>.withSafeMap(_map);
+      _mapOwner = new _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
     }
     return _mapOwner;
   }
@@ -46,16 +48,51 @@ class MapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map] or [BuiltMap].
   void replace(Object map) {
-    if (map is _BuiltMap<K, V>) {
+    if (map is _BuiltMap<K, V> && map._mapFactory == _mapFactory) {
       _setOwner(map);
     } else if (map is BuiltMap) {
-      _setSafeMap(new Map<K, V>.fromIterable(map.keys, value: (k) => map[k]));
+      final replacement = _createMap();
+      map.forEach((K key, V value) {
+        replacement[key] = value;
+      });
+      _setSafeMap(replacement);
     } else if (map is Map) {
-      _setSafeMap(new Map<K, V>.from(map));
+      _setSafeMap(_createMap()..addAll(map));
     } else {
       throw new ArgumentError(
           'expected Map or BuiltMap, got ${map.runtimeType}');
     }
+  }
+
+  /// Uses `base` as the collection type for all maps created by this builder.
+  ///
+  ///     // Iterates over elements in ascending order.
+  ///     new MapBuilder<int, String>()
+  ///       ..withBase(() => new SplayTreeMap<int, String>());
+  ///
+  ///     // Uses custom equality.
+  ///     new MapBuilder<int, String>()
+  ///       ..withBase(() => new LinkedHashMap<int, String>(
+  ///           equals: (int a, int b) => a % 255 == b % 255,
+  ///           hashCode: (int n) => (n % 255).hashCode));
+  ///
+  /// The map returned by `base` must be empty, mutable, and each call must
+  /// instantiate and return a new object.
+  ///
+  /// Use [withDefaultBase] to reset `base` to the default value.
+  void withBase(Map<K, V> Function() base) {
+    if (base == null) {
+      throw new ArgumentError.notNull('base');
+    }
+    _mapFactory = base;
+    _setSafeMap(_createMap()..addAll(_map));
+  }
+
+  /// As [withBase], but sets `base` back to the default value, which
+  /// instantiates `Map<K, V>`.
+  void withDefaultBase() {
+    _mapFactory = null;
+    _setSafeMap(_createMap()..addAll(_map));
   }
 
   /// As [Map.fromIterable] but adds.
@@ -115,7 +152,14 @@ class MapBuilder<K, V> {
     _checkGenericTypeParameter();
   }
 
+  MapBuilder._fromBuiltMap(_BuiltMap<K, V> map)
+      : _mapFactory = map._mapFactory,
+        _map = map._map,
+        _mapOwner = map;
+
   void _setOwner(_BuiltMap<K, V> mapOwner) {
+    assert(mapOwner._mapFactory == _mapFactory,
+        "Can't reuse a built map that uses a different base");
     _mapOwner = mapOwner;
     _map = mapOwner._map;
   }
@@ -127,11 +171,14 @@ class MapBuilder<K, V> {
 
   Map<K, V> get _safeMap {
     if (_mapOwner != null) {
-      _map = new Map<K, V>.from(_map);
+      _map = _createMap()..addAll(_map);
       _mapOwner = null;
     }
     return _map;
   }
+
+  Map<K, V> _createMap() =>
+      _mapFactory != null ? _mapFactory() : new Map<K, V>();
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {

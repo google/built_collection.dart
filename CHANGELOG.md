@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0
+
+- `BuiltSet` and `BuiltMap` now allow you to specify the underlying collection
+  type. For example, you can construct a `BuiltSet` using a `SplayTreeSet`.
+  This results in a set that is always in sorted order instead of
+  preserving insertion order. Another useful possibility is to use a
+  `HashSet`, which leads to a random order but improves performance over
+  the default. See `SetBuilder.withBase` and `MapBuilder.withBase`.
+
 ## 2.0.0
 
 - Split collection classes into abstract interfaces and concrete, private,

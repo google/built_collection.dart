@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Prepare for Dart 2; add methods that will appear in `Iterable`.
+
 ## 2.1.0
 
 - `BuiltSet` and `BuiltMap` now allow you to specify the underlying collection

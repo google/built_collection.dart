@@ -122,28 +122,28 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   List<T> cast<T>() {
-    throw new UnimplementedError("cast");
+    throw new UnimplementedError('cast');
   }
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   List<T> retype<T>() {
-    throw new UnimplementedError("cast");
+    throw new UnimplementedError('retype');
   }
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   Iterable<E> followedBy(Iterable<E> other) {
-    throw new UnimplementedError("followedBy");
+    throw new UnimplementedError('followedBy');
   }
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   Iterable<T> whereType<T>() {
-    throw new UnimplementedError("whereType");
+    throw new UnimplementedError('whereType');
   }
 
   @override
@@ -228,7 +228,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   @override
   E singleWhere(bool test(E element), {E orElse()}) {
-    if (orElse != null) throw new UnimplementedError("singleWhere:orElse");
+    if (orElse != null) throw new UnimplementedError('singleWhere:orElse');
     return _set.singleWhere(test);
   }
 

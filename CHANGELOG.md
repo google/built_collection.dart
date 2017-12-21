@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+- Fix changes for Dart 2.
+
 ## 2.1.1
 
 - Prepare for Dart 2; add methods that will appear in `Iterable`.

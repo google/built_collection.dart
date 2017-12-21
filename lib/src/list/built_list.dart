@@ -230,52 +230,15 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
-  List<T> cast<T>() {
+  BuiltList<T> cast<T>() {
     throw new UnimplementedError('cast');
   }
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
-  List<T> retype<T>() {
+  BuiltList<T> retype<T>() {
     throw new UnimplementedError('retype');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  List<E> operator +(List<E> other) {
-    throw new UnimplementedError('+');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  int indexWhere(bool test(E element), [int start = 0]) {
-    throw new UnimplementedError('indexWhere');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  int lastIndexWhere(bool test(E element), [int start]) {
-    throw new UnimplementedError('lastIndexWhere');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_setter
-  void set first(E element) {
-    if (this.isEmpty) throw new RangeError.index(0, this);
-    this[0] = value;
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_setter
-  void set last(E element) {
-    if (this.isEmpty) throw new RangeError.index(0, this);
-    this[this.length - 1] = value;
   }
 
   // Internal.

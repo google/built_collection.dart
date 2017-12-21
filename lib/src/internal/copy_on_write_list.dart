@@ -57,9 +57,9 @@ class CopyOnWriteList<E> implements List<E> {
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_setter
-  void set first(E element) {
+  set first(E element) {
     if (this.isEmpty) throw new RangeError.index(0, this);
-    this[0] = value;
+    this[0] = element;
   }
 
   @override
@@ -111,9 +111,9 @@ class CopyOnWriteList<E> implements List<E> {
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_setter
-  void set last(E element) {
+  set last(E element) {
     if (this.isEmpty) throw new RangeError.index(0, this);
-    this[this.length - 1] = value;
+    this[this.length - 1] = element;
   }
 
   @override

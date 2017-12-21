@@ -33,6 +33,13 @@ class CopyOnWriteSet<E> implements Set<E> {
   bool any(bool test(E element)) => _set.any(test);
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Set<T> cast<T>() {
+    throw new UnimplementedError("cast");
+  }
+
+  @override
   bool contains(Object element) => _set.contains(element);
 
   @override
@@ -54,6 +61,13 @@ class CopyOnWriteSet<E> implements Set<E> {
   @override
   T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
       _set.fold(initialValue, combine);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Iterable<E> followedBy(Iterable<E> other) {
+    throw new UnimplementedError("followedBy");
+  }
 
   @override
   void forEach(void f(E element)) => _set.forEach(f);
@@ -84,10 +98,20 @@ class CopyOnWriteSet<E> implements Set<E> {
   E reduce(E combine(E value, E element)) => _set.reduce(combine);
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Set<T> retype<T>() {
+    throw new UnimplementedError("cast");
+  }
+
+  @override
   E get single => _set.single;
 
   @override
-  E singleWhere(bool test(E element)) => _set.singleWhere(test);
+  E singleWhere(bool test(E element), {E orElse()}) {
+    if (orElse != null) throw new UnimplementedError("singleWhere:orElse");
+    return _set.singleWhere(test);
+  }
 
   @override
   Iterable<E> skip(int count) => _set.skip(count);
@@ -109,6 +133,13 @@ class CopyOnWriteSet<E> implements Set<E> {
 
   @override
   Iterable<E> where(bool test(E element)) => _set.where(test);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Iterable<T> whereType<T>() {
+    throw new UnimplementedError("whereType");
+  }
 
   // Mutating methods: copy first if needed.
 

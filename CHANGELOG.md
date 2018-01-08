@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+- Prepare for Dart 2; add methods that will appear in `Iterable`.
+- Allow quiver 0.27.
+
 ## 2.1.3
 
 - Revert changes for Dart 2; they will be re-released as v3.0.0 as they are

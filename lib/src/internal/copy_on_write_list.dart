@@ -20,10 +20,24 @@ class CopyOnWriteList<E> implements List<E> {
   E operator [](int index) => _list[index];
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  List<E> operator +(List<E> other) {
+    throw new UnimplementedError('+');
+  }
+
+  @override
   bool any(bool test(E element)) => _list.any(test);
 
   @override
   Map<int, E> asMap() => _list.asMap();
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  List<T> cast<T>() {
+    throw new UnimplementedError('cast');
+  }
 
   @override
   bool contains(Object element) => _list.contains(element);
@@ -41,12 +55,27 @@ class CopyOnWriteList<E> implements List<E> {
   E get first => _list.first;
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_setter
+  set first(E element) {
+    if (this.isEmpty) throw new RangeError.index(0, this);
+    this[0] = element;
+  }
+
+  @override
   E firstWhere(bool test(E element), {E orElse()}) =>
       _list.firstWhere(test, orElse: orElse);
 
   @override
   T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
       _list.fold(initialValue, combine);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Iterable<E> followedBy(Iterable<E> other) {
+    throw new UnimplementedError('followedBy');
+  }
 
   @override
   void forEach(void f(E element)) => _list.forEach(f);
@@ -56,6 +85,13 @@ class CopyOnWriteList<E> implements List<E> {
 
   @override
   int indexOf(E element, [int start = 0]) => _list.indexOf(element, start);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  int indexWhere(bool test(E element), [int start = 0]) {
+    throw new UnimplementedError('indexWhere');
+  }
 
   @override
   bool get isEmpty => _list.isEmpty;
@@ -73,7 +109,22 @@ class CopyOnWriteList<E> implements List<E> {
   E get last => _list.last;
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_setter
+  set last(E element) {
+    if (this.isEmpty) throw new RangeError.index(0, this);
+    this[this.length - 1] = element;
+  }
+
+  @override
   int lastIndexOf(E element, [int start]) => _list.lastIndexOf(element, start);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  int lastIndexWhere(bool test(E element), [int start]) {
+    throw new UnimplementedError('lastIndexWhere');
+  }
 
   @override
   E lastWhere(bool test(E element), {E orElse()}) =>
@@ -86,13 +137,23 @@ class CopyOnWriteList<E> implements List<E> {
   E reduce(E combine(E value, E element)) => _list.reduce(combine);
 
   @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  List<T> retype<T>() {
+    throw new UnimplementedError('retype');
+  }
+
+  @override
   Iterable<E> get reversed => _list.reversed;
 
   @override
   E get single => _list.single;
 
   @override
-  E singleWhere(bool test(E element)) => _list.singleWhere(test);
+  E singleWhere(bool test(E element), {E orElse()}) {
+    if (orElse != null) throw new UnimplementedError('singleWhere:orElse');
+    return _list.singleWhere(test);
+  }
 
   @override
   Iterable<E> skip(int count) => _list.skip(count);
@@ -117,6 +178,13 @@ class CopyOnWriteList<E> implements List<E> {
 
   @override
   Iterable<E> where(bool test(E element)) => _list.where(test);
+
+  @override
+  // TODO: Dart 2.0 requires this method to be implemented.
+  // ignore: override_on_non_overriding_method
+  Iterable<T> whereType<T>() {
+    throw new UnimplementedError('whereType');
+  }
 
   // Mutating methods: copy first if needed.
 

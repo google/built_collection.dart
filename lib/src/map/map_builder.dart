@@ -52,8 +52,8 @@ class MapBuilder<K, V> {
       _setOwner(map);
     } else if (map is BuiltMap) {
       final replacement = _createMap();
-      map.forEach((Object key, Object value) {
-        replacement[key as K] = value as V;
+      map.forEach((K key, V value) {
+        replacement[key] = value;
       });
       _setSafeMap(replacement);
     } else if (map is Map) {

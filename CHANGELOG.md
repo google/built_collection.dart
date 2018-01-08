@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.3
+
+- Revert changes for Dart 2; they will be re-released as v3.0.0 as they are
+  break libraries that provide their own implementations of built collections.
+
 ## 2.1.2
 
 - Fix changes for Dart 2.

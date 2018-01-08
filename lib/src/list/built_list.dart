@@ -130,13 +130,6 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<E> where(bool test(E element)) => _list.where(test);
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Iterable<T> whereType<T>() {
-    throw new UnimplementedError('whereType');
-  }
-
-  @override
   Iterable<T> expand<T>(Iterable<T> f(E e)) => _list.expand(f);
 
   @override
@@ -151,13 +144,6 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   @override
   T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
       _list.fold(initialValue, combine);
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Iterable<E> followedBy(Iterable<E> other) {
-    throw new UnimplementedError('followedBy');
-  }
 
   @override
   bool every(bool test(E element)) => _list.every(test);
@@ -219,27 +205,10 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
       _list.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool test(E element), {E orElse()}) {
-    if (orElse != null) throw new UnimplementedError('singleWhere:orElse');
-    return _list.singleWhere(test);
-  }
+  E singleWhere(bool test(E element)) => _list.singleWhere(test);
 
   @override
   E elementAt(int index) => _list.elementAt(index);
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  BuiltList<T> cast<T>() {
-    throw new UnimplementedError('cast');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  BuiltList<T> retype<T>() {
-    throw new UnimplementedError('retype');
-  }
 
   // Internal.
 

@@ -15,26 +15,10 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   V operator [](Object key) => _map[key];
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Map<K2, V2> cast<K2, V2>() {
-    throw new UnimplementedError('cast');
-  }
-
-  @override
   bool containsKey(Object key) => _map.containsKey(key);
 
   @override
   bool containsValue(Object value) => _map.containsValue(value);
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_getter
-  Iterable<Null> get entries {
-    // Change Iterable<Null> to Iterable<MapEntry<K, V>> when
-    // the MapEntry class has been added.
-    throw new UnimplementedError('entries');
-  }
 
   @override
   void forEach(void f(K key, V value)) => _map.forEach(f);
@@ -52,22 +36,6 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   int get length => _map.length;
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Map<K2, V2> map<K2, V2>(Object transform(K key, V value)) {
-    // Change Object to MapEntry<K2, V2> when
-    // the MapEntry class has been added.
-    throw new UnimplementedError('map');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Map<K2, V2> retype<K2, V2>() {
-    throw new UnimplementedError('retype');
-  }
-
-  @override
   Iterable<V> get values => _map.values;
 
   // Mutating methods: copy first if needed.
@@ -82,15 +50,6 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   void addAll(Map<K, V> other) {
     _maybeCopyBeforeWrite();
     _map.addAll(other);
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  void addEntries(Iterable<Object> entries) {
-    // Change Iterable<Object> to Iterable<MapEntry<K, V>> when
-    // the MapEntry class has been added.
-    throw new UnimplementedError('addEntries');
   }
 
   @override
@@ -112,28 +71,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   }
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  void removeWhere(bool test(K key, V value)) {
-    throw new UnimplementedError('removeWhere');
-  }
-
-  @override
   String toString() => _map.toString();
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  V update(K key, V update(V value), {V ifAbsent()}) {
-    throw new UnimplementedError('update');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  void updateAll(V update(K key, V value)) {
-    throw new UnimplementedError('updateAll');
-  }
 
   // Internal.
 

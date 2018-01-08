@@ -1,5 +1,5 @@
 name: built_collection
-version: 2.1.3
+version: 3.0.0
 description: >
   Builder pattern wrappers for core Dart collections.
 authors:
@@ -13,7 +13,7 @@ environment:
 
 dependencies:
   collection: '^1.7.0'
-  quiver: '>=0.21.0 <0.27.0'
+  quiver: '>=0.21.0 <0.28.0'
 
 dev_dependencies:
   test: any

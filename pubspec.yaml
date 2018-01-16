@@ -1,7 +1,7 @@
 name: built_collection
-version: 3.0.0
+version: 3.0.1
 description: >
-  Builder pattern wrappers for core Dart collections.
+  Immutable collections using the builder pattern.
 authors:
 - David Morgan <davidmorgan@google.com>
 - Matan Lurey <matanl@google.com>

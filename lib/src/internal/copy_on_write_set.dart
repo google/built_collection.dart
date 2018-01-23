@@ -2,8 +2,10 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+typedef Set<E> _SetFactory<E>();
+
 class CopyOnWriteSet<E> implements Set<E> {
-  final Set<E> Function() _setFactory;
+  final _SetFactory<E> _setFactory;
   bool _copyBeforeWrite;
   Set<E> _set;
 

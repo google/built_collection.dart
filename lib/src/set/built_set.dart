@@ -4,6 +4,8 @@
 
 part of built_collection.set;
 
+typedef Set<E> _SetFactory<E>();
+
 /// The Built Collection [Set].
 ///
 /// It implements [Iterable] and the non-mutating part of the [Set] interface.
@@ -14,7 +16,7 @@ part of built_collection.set;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
-  final Set<E> Function() _setFactory;
+  final _SetFactory<E> _setFactory;
   final Set<E> _set;
   int _hashCode;
 
@@ -247,7 +249,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
 /// Default implementation of the public [BuiltSet] interface.
 class _BuiltSet<E> extends BuiltSet<E> {
-  _BuiltSet.withSafeSet(Set<E> Function() setFactory, Set<E> set)
+  _BuiltSet.withSafeSet(_SetFactory<E> setFactory, Set<E> set)
       : super._(setFactory, set);
 
   _BuiltSet.copyAndCheck(Iterable iterable) : super._(null, new Set<E>()) {

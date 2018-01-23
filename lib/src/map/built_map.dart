@@ -4,6 +4,8 @@
 
 part of built_collection.map;
 
+typedef Map<K, V> _MapFactory<K, V>();
+
 /// The Built Collection [Map].
 ///
 /// It implements the non-mutating part of the [Map] interface. Iteration over
@@ -14,7 +16,7 @@ part of built_collection.map;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltMap<K, V> {
-  final Map<K, V> Function() _mapFactory;
+  final _MapFactory<K, V> _mapFactory;
   final Map<K, V> _map;
 
   // Cached.
@@ -163,7 +165,7 @@ abstract class BuiltMap<K, V> {
 
 /// Default implementation of the public [BuiltMap] interface.
 class _BuiltMap<K, V> extends BuiltMap<K, V> {
-  _BuiltMap.withSafeMap(Map<K, V> Function() mapFactory, Map<K, V> map)
+  _BuiltMap.withSafeMap(_MapFactory<K, V> mapFactory, Map<K, V> map)
       : super._(mapFactory, map);
 
   _BuiltMap.copyAndCheck(Iterable keys, Function lookup)

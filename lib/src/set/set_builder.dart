@@ -13,7 +13,7 @@ part of built_collection.set;
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
   /// Used by [_createSet] to instantiate [_set]. The default value is `null`.
-  Set<E> Function() _setFactory;
+  _SetFactory<E> _setFactory;
   Set<E> _set;
   _BuiltSet<E> _setOwner;
 
@@ -81,7 +81,7 @@ class SetBuilder<E> {
   /// same type.
   ///
   /// Use [withDefaultBase] to reset `base` to the default value.
-  void withBase(Set<E> Function() base) {
+  void withBase(_SetFactory<E> base) {
     if (base == null) {
       throw new ArgumentError.notNull('base');
     }

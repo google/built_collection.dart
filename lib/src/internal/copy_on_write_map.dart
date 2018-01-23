@@ -2,8 +2,10 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+typedef Map<K, V> _MapFactory<K, V>();
+
 class CopyOnWriteMap<K, V> implements Map<K, V> {
-  final Map<K, V> Function() _mapFactory;
+  final _MapFactory<K, V> _mapFactory;
   bool _copyBeforeWrite;
   Map<K, V> _map;
 

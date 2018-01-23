@@ -13,7 +13,7 @@ part of built_collection.map;
 /// for the general properties of Built Collections.
 class MapBuilder<K, V> {
   /// Used by [_createMap] to instantiate [_map]. The default value is `null`.
-  Map<K, V> Function() _mapFactory;
+  _MapFactory<K, V> _mapFactory;
   Map<K, V> _map;
   _BuiltMap<K, V> _mapOwner;
 
@@ -80,7 +80,7 @@ class MapBuilder<K, V> {
   /// instantiate and return a new object.
   ///
   /// Use [withDefaultBase] to reset `base` to the default value.
-  void withBase(Map<K, V> Function() base) {
+  void withBase(_MapFactory<K, V> base) {
     if (base == null) {
       throw new ArgumentError.notNull('base');
     }

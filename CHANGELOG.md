@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.2
+
+- Stop using `Function()` syntax for `Set` and `Map` factories. It causes
+  problems for the analyzer when using a pre-Dart-2 SDK.
+
+## 3.0.1
+
+- Improve package description.
+
 ## 3.0.0
 
 - Prepare for Dart 2; add methods that will appear in `Iterable`.

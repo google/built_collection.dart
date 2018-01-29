@@ -1,5 +1,5 @@
 name: built_collection
-version: 3.0.2
+version: 3.0.3
 description: >
   Immutable collections using the builder pattern.
 authors:
@@ -13,7 +13,7 @@ environment:
 
 dependencies:
   collection: '^1.7.0'
-  quiver: '>=0.21.0 <0.28.0'
+  quiver: '>=0.21.0 <0.29.0'
 
 dev_dependencies:
   test: any

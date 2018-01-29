@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.3
+
+- Allow quiver 0.28.
+
 ## 3.0.2
 
 - Stop using `Function()` syntax for `Set` and `Map` factories. It causes

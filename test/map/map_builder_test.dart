@@ -186,8 +186,6 @@ void main() {
               .build()
               .toMap(),
           {1: '1', 2: '2'});
-      expect(new MapBuilder<int, String>({1: '1'}).putIfAbsent(1, () => '3'),
-          isNull);
     });
 
     test('has a method like Map.addAll', () {
@@ -214,7 +212,6 @@ void main() {
               .build()
               .toMap(),
           {1: '1'});
-      expect(new MapBuilder<int, String>({1: '1'}).remove(1), isNull);
     });
 
     test('has a method like Map.clear', () {

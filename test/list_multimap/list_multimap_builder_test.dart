@@ -360,12 +360,6 @@ void main() {
             1: ['1'],
             2: ['2']
           });
-      expect(
-          new ListMultimapBuilder<int, String>({
-            1: ['1'],
-            2: ['2', '3']
-          }).remove(2, '3'),
-          isNull);
     });
 
     test('has a method like ListMultimap.removeAll that returns nothing', () {
@@ -391,12 +385,6 @@ void main() {
           {
             1: ['1']
           });
-      expect(
-          new ListMultimapBuilder<int, String>({
-            1: ['1'],
-            2: ['2', '3']
-          }).removeAll(2),
-          isNull);
     });
 
     test('has a method like ListMultimap.clear', () {

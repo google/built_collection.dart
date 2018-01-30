@@ -242,21 +242,18 @@ void main() {
     test('has a method like List.remove that returns nothing', () {
       expect((new ListBuilder<int>([1, 2])..remove(2)).build(), [1]);
       expect((new BuiltList<int>([1, 2]).toBuilder()..remove(2)).build(), [1]);
-      expect(new ListBuilder<int>([1, 2]).remove(2), isNull);
     });
 
     test('has a method like List.removeAt that returns nothing', () {
       expect((new ListBuilder<int>([1, 2])..removeAt(1)).build(), [1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()..removeAt(1)).build(), [1]);
-      expect(new ListBuilder<int>([1, 2]).removeAt(0), isNull);
     });
 
     test('has a method like List.removeLast that returns nothing', () {
       expect((new ListBuilder<int>([1, 2])..removeLast()).build(), [1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()..removeLast()).build(), [1]);
-      expect(new ListBuilder<int>([1, 2]).removeLast(), isNull);
     });
 
     test('has a method like List.removeWhere', () {

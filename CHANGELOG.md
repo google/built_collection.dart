@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.4
+
+- Tweaks to tests.
+
 ## 3.0.3
 
 - Allow quiver 0.28.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.5
+
+- Type fixes for DDC. Stop using a `Map` as a `Map<K, V>` in `MapBuilder`.
+
 ## 3.0.4
 
 - Tweaks to tests.

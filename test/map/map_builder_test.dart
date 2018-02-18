@@ -71,6 +71,15 @@ void main() {
           {1: '1', 2: '2'});
     });
 
+    test('has replace method that casts the supplied map', () {
+      expect(
+          (new MapBuilder<int, String>()
+                ..replace(<num, Object>{1: '1', 2: '2'}))
+              .build()
+              .toMap(),
+          {1: '1', 2: '2'});
+    });
+
     test('has addIterable method like Map.fromIterable', () {
       expect(
           (new MapBuilder<int, int>()..addIterable([1, 2, 3])).build().toMap(),

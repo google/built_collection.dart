@@ -57,7 +57,11 @@ class MapBuilder<K, V> {
       });
       _setSafeMap(replacement);
     } else if (map is Map) {
-      _setSafeMap(_createMap()..addAll(map));
+      final replacement = _createMap();
+      map.forEach((Object key, Object value) {
+        replacement[key as K] = value as V;
+      });
+      _setSafeMap(replacement);
     } else {
       throw new ArgumentError(
           'expected Map or BuiltMap, got ${map.runtimeType}');

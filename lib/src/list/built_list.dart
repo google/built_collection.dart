@@ -153,11 +153,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
       _list.fold(initialValue, combine);
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Iterable<E> followedBy(Iterable<E> other) {
-    throw new UnimplementedError('followedBy');
-  }
+  Iterable<E> followedBy(Iterable<E> other) => _list.followedBy(other);
 
   @override
   bool every(bool test(E element)) => _list.every(test);

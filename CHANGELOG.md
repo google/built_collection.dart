@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- Implement `followedBy` on `BuiltList` and `BuiltSet`.
+
 ## 3.0.5
 
 - Type fixes for DDC. Stop using a `Map` as a `Map<K, V>` in `MapBuilder`.

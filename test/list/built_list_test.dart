@@ -322,6 +322,11 @@ void main() {
           '12');
     });
 
+    test('implements Iterable.followedBy', () {
+      expect(new BuiltList<int>([1, 2]).followedBy(new BuiltList<int>([3, 4])),
+          [1, 2, 3, 4]);
+    });
+
     test('implements Iterable.every', () {
       expect(new BuiltList<int>([1, 2]).every((x) => x == 1), isFalse);
       expect(new BuiltList<int>([1, 2]).every((x) => x == 1 || x == 2), isTrue);

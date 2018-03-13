@@ -135,11 +135,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Iterable<E> followedBy(Iterable<E> other) {
-    throw new UnimplementedError('followedBy');
-  }
+  Iterable<E> followedBy(Iterable<E> other) => _set.followedBy(other);
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.

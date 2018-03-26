@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1
+
+- Allow quiver 0.29.
+
 ## 3.1.0
 
 - Implement `followedBy` on `BuiltList` and `BuiltSet`.

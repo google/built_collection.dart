@@ -124,14 +124,14 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   BuiltSet<T> cast<T>() {
-    throw new UnimplementedError('cast');
+    return new _BuiltSet<T>.withSafeSet(() => _setFactory().cast<T>(), _set.cast<T>());
   }
 
   @override
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   BuiltSet<T> retype<T>() {
-    throw new UnimplementedError('retype');
+    return cast<T>();
   }
 
   @override
@@ -141,7 +141,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   // TODO: Dart 2.0 requires this method to be implemented.
   // ignore: override_on_non_overriding_method
   Iterable<T> whereType<T>() {
-    throw new UnimplementedError('whereType');
+    return _set.whereType<T>();
   }
 
   @override

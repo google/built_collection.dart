@@ -121,15 +121,16 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Iterator<E> get iterator => _set.iterator;
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
   BuiltSet<T> cast<T>() {
-    return new _BuiltSet<T>.withSafeSet(() => _setFactory().cast<T>(), _set.cast<T>());
+    if (T == E) {
+      return this as BuiltSet<T>;
+    } else {
+      return new _BuiltSet<T>.withSafeSet(() => _setFactory().cast<T>(),
+          _set.cast<T>());
+    }
   }
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
   BuiltSet<T> retype<T>() {
     return cast<T>();
   }

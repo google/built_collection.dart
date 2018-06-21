@@ -224,15 +224,15 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   E elementAt(int index) => _list.elementAt(index);
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
   BuiltList<T> cast<T>() {
-    return new _BuiltList.withSafeList(_list.cast<T>());
+    if (T == E) {
+      return this as BuiltList<T>;
+    } else {
+      return new _BuiltList<T>.withSafeList(_list.cast<T>());
+    }
   }
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
   BuiltList<T> retype<T>() => cast<T>();
 
   // Internal.

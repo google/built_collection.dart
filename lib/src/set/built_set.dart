@@ -131,11 +131,6 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   @override
-  BuiltSet<T> retype<T>() {
-    return cast<T>();
-  }
-
-  @override
   Iterable<E> followedBy(Iterable<E> other) => _set.followedBy(other);
 
   @override

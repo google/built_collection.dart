@@ -232,9 +232,6 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     }
   }
 
-  @override
-  BuiltList<T> retype<T>() => cast<T>();
-
   // Internal.
 
   BuiltList._(this._list) {

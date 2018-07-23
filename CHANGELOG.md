@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.3
+
+- Allow SDK 2.0.0.
+
 ## 3.1.2
 
 - Allow quiver 2.0.0, use test version 1.

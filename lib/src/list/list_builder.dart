@@ -64,6 +64,15 @@ class ListBuilder<E> {
     _safeList[index] = element;
   }
 
+  /// As [List.length].
+  int get length => _list.length;
+  
+  /// As [List.isEmpty].
+  bool get isEmpty => _list.isEmpty;
+  
+  /// As [List.isNotEmpty].
+  bool get isNotEmpty => _list.isNotEmpty;
+
   /// As [List.add].
   void add(E value) {
     _checkElement(value);

@@ -130,6 +130,21 @@ void main() {
 
     // Set.
 
+    test('has a method like Set.length', () {
+      expect(new SetBuilder<int>([1, 2]).length, 2);
+      expect(new BuiltSet<int>([1, 2]).toBuilder().length, 2);
+      
+      expect(new SetBuilder<int>([]).length, 0);
+      expect(new BuiltSet<int>([]).toBuilder().length, 0);
+    });
+
+    test('has methods like Set.isEmpty and Set.isNotEmpty', () {
+      final setBuilderA = new SetBuilder<int>([1, 2]);
+      final setBuilderB = new BuiltSet<int>([1, 2]).toBuilder();
+      expect(setBuilderA.isEmpty, !setBuilderA.isNotEmpty);
+      expect(setBuilderB.isEmpty, !setBuilderB.isNotEmpty);
+    });
+
     test('has a method like Set.add', () {
       expect((new SetBuilder<int>()..add(1)).build(), [1]);
       expect((new BuiltSet<int>().toBuilder()..add(1)).build(), [1]);

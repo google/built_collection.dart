@@ -180,6 +180,21 @@ void main() {
           {1: '1', 2: '2'});
     });
 
+    test('has a method like Map.length', () {
+      expect(new MapBuilder<int, String>({1: '1', 2: '2'}).length, 2);
+      expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().length, 2);
+      
+      expect(new MapBuilder<int, String>({}).length, 0);
+      expect(new BuiltMap<int, String>({}).toBuilder().length, 0);
+    });
+
+    test('has methods like Map.isEmpty and Map.isNotEmpty', () {
+      final mapBuilderA = new MapBuilder<int, String>({1: '1', 2: '2'});
+      final mapBuilderB = new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder();
+      expect(mapBuilderA.isEmpty, !mapBuilderA.isNotEmpty);
+      expect(mapBuilderB.isEmpty, !mapBuilderB.isNotEmpty);
+    });
+
     test('has a method like Map.putIfAbsent that returns nothing', () {
       expect(
           (new MapBuilder<int, String>({1: '1'})

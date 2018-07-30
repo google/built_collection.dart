@@ -176,11 +176,20 @@ void main() {
       expect(new BuiltList<int>().toBuilder().length, 0);
     });
              
-    test('has methods like List.isEmpty and List.isNotEmpty', () {
-      final listBuilderA = new ListBuilder<int>([]);
-      final listBuilderB = new BuiltList<int>([]).toBuilder();
-      expect(listBuilderA.isEmpty, !listBuilderA.isNotEmpty);
-      expect(listBuilderB.isEmpty, !listBuilderB.isNotEmpty);
+    test('has a method like List.isEmpty', () {
+      expect(new ListBuilder<int>([1, 2]).isEmpty, false);
+      expect(new BuiltList<int>([1, 2]).toBuilder().isEmpty, false);
+             
+      expect(new ListBuilder<int>().isEmpty, true);
+      expect(new BuiltList<int>().toBuilder().isEmpty, true);
+    });
+
+    test('has a method like List.isNotEmpty', () {
+      expect(new ListBuilder<int>([1, 2]).isNotEmpty, true);
+      expect(new BuiltList<int>([1, 2]).toBuilder().isNotEmpty, true);
+             
+      expect(new ListBuilder<int>().isNotEmpty, false);
+      expect(new BuiltList<int>().toBuilder().isNotEmpty, false);
     });
 
     test('has a method like List.add', () {

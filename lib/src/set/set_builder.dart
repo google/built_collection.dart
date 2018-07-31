@@ -98,6 +98,15 @@ class SetBuilder<E> {
 
   // Based on Set.
 
+  /// As [Set.length].
+  int get length => _set.length;
+
+  /// As [Set.isEmpty].
+  bool get isEmpty => _set.isEmpty;
+  
+  /// As [Set.isNotEmpty].
+  bool get isNotEmpty => _set.isNotEmpty;
+
   /// As [Set.add].
   void add(E value) {
     _checkElement(value);

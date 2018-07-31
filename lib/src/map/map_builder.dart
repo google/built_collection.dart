@@ -123,6 +123,15 @@ class MapBuilder<K, V> {
     _safeMap[key] = value;
   }
 
+  /// As [Map.length].
+  int get length => _map.length;
+
+  /// As [Map.isEmpty].
+  bool get isEmpty => _map.isEmpty;
+  
+  /// As [Map.isNotEmpty].
+  bool get isNotEmpty => _map.isNotEmpty;
+
   /// As [Map.putIfAbsent] but returns nothing.
   void putIfAbsent(K key, V ifAbsent()) {
     _checkKey(key);

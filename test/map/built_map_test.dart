@@ -189,19 +189,19 @@ void main() {
 
     test('compares not equal to different hashcode BuiltMap', () {
       expect(
-          BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltMap({1: '1', 2: '2', 3: '3'}, 0) ==
-              BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltMap({1: '1', 2: '2', 3: '3'}, 1),
+          BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 3: '3'}, 0) ==
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 3: '3'}, 1),
           isFalse);
     });
 
     test('compares not equal to different content BuiltMap', () {
       expect(
-          BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltMap({1: '1', 2: '2', 3: '3'}, 0) ==
-              BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltMap({1: '1', 2: '2', 4: '4'}, 0),
+          BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 3: '3'}, 0) ==
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltMap(
+                  {1: '1', 2: '2', 4: '4'}, 0),
           isFalse);
     });
 

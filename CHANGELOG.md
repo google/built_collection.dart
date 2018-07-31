@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.2.0 (unreleased)
+## 3.2.0
 
 - Add length, isEmpty and isNotEmpty to ListBuilder, MapBuilder and SetBuilder
 

@@ -132,16 +132,16 @@ void main() {
     test('compares not equal to different hashcode BuiltList', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltList([1, 2, 3], 0) ==
-              BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltList([1, 2, 3], 1),
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltList(
+                  [1, 2, 3], 1),
           isFalse);
     });
 
     test('compares not equal to different content BuiltList', () {
       expect(
           BuiltCollectionTestHelpers.overridenHashcodeBuiltList([1, 2, 3], 0) ==
-              BuiltCollectionTestHelpers
-                  .overridenHashcodeBuiltList([1, 2, 4], 0),
+              BuiltCollectionTestHelpers.overridenHashcodeBuiltList(
+                  [1, 2, 4], 0),
           isFalse);
     });
 

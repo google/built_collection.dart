@@ -66,10 +66,10 @@ class ListBuilder<E> {
 
   /// As [List.length].
   int get length => _list.length;
-  
+
   /// As [List.isEmpty].
   bool get isEmpty => _list.isEmpty;
-  
+
   /// As [List.isNotEmpty].
   bool get isNotEmpty => _list.isNotEmpty;
 

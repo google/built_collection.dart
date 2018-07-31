@@ -128,7 +128,7 @@ class MapBuilder<K, V> {
 
   /// As [Map.isEmpty].
   bool get isEmpty => _map.isEmpty;
-  
+
   /// As [Map.isNotEmpty].
   bool get isNotEmpty => _map.isNotEmpty;
 

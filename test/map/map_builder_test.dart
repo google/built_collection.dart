@@ -183,23 +183,25 @@ void main() {
     test('has a method like Map.length', () {
       expect(new MapBuilder<int, String>({1: '1', 2: '2'}).length, 2);
       expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().length, 2);
-      
+
       expect(new MapBuilder<int, String>({}).length, 0);
       expect(new BuiltMap<int, String>({}).toBuilder().length, 0);
     });
 
     test('has a method like Map.isEmpty', () {
       expect(new MapBuilder<int, String>({1: '1', 2: '2'}).isEmpty, false);
-      expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().isEmpty, false);
-             
+      expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().isEmpty,
+          false);
+
       expect(new MapBuilder<int, String>().isEmpty, true);
       expect(new BuiltMap<int, String>().toBuilder().isEmpty, true);
     });
-             
+
     test('has a method like Map.isNotEmpty', () {
       expect(new MapBuilder<int, String>({1: '1', 2: '2'}).isNotEmpty, true);
-      expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().isNotEmpty, true);
-             
+      expect(new BuiltMap<int, String>({1: '1', 2: '2'}).toBuilder().isNotEmpty,
+          true);
+
       expect(new MapBuilder<int, String>().isNotEmpty, false);
       expect(new BuiltMap<int, String>().toBuilder().isNotEmpty, false);
     });

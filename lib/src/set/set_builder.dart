@@ -103,7 +103,7 @@ class SetBuilder<E> {
 
   /// As [Set.isEmpty].
   bool get isEmpty => _set.isEmpty;
-  
+
   /// As [Set.isNotEmpty].
   bool get isNotEmpty => _set.isNotEmpty;
 

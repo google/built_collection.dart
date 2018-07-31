@@ -171,15 +171,15 @@ void main() {
     test('has a method like List.length', () {
       expect(new ListBuilder<int>([1, 2]).length, 2);
       expect(new BuiltList<int>([1, 2]).toBuilder().length, 2);
-             
+
       expect(new ListBuilder<int>().length, 0);
       expect(new BuiltList<int>().toBuilder().length, 0);
     });
-             
+
     test('has a method like List.isEmpty', () {
       expect(new ListBuilder<int>([1, 2]).isEmpty, false);
       expect(new BuiltList<int>([1, 2]).toBuilder().isEmpty, false);
-             
+
       expect(new ListBuilder<int>().isEmpty, true);
       expect(new BuiltList<int>().toBuilder().isEmpty, true);
     });
@@ -187,7 +187,7 @@ void main() {
     test('has a method like List.isNotEmpty', () {
       expect(new ListBuilder<int>([1, 2]).isNotEmpty, true);
       expect(new BuiltList<int>([1, 2]).toBuilder().isNotEmpty, true);
-             
+
       expect(new ListBuilder<int>().isNotEmpty, false);
       expect(new BuiltList<int>().toBuilder().isNotEmpty, false);
     });

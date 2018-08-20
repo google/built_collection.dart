@@ -22,12 +22,20 @@ void main() {
       expect(() => new BuiltList(), throwsA(anything));
     });
 
+    test('of constructor throws on attempt to create BuiltList<dynamic>', () {
+      expect(() => new BuiltList.of(<dynamic>[]), throwsA(anything));
+    });
+
     test('allows BuiltList<Object>', () {
       new BuiltList<Object>();
     });
 
     test('can be instantiated from List', () {
       new BuiltList<int>([]);
+    });
+
+    test('of constructor takes inferred type', () {
+      expect(new BuiltList.of([1, 2, 3]), const TypeMatcher<BuiltList<int>>());
     });
 
     test('reports non-emptiness', () {
@@ -85,6 +93,10 @@ void main() {
 
     test('throws on null', () {
       expect(() => new BuiltList<int>([null]), throwsA(anything));
+    });
+
+    test('of constructor throws on null', () {
+      expect(() => new BuiltList<int>.of([null]), throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

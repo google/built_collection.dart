@@ -10,7 +10,13 @@
   - Add `ListBuilder` setters and getters: `first`, `last`.
   - Add `BuiltMap` methods: `entries`, `map`.
   - Add `MapBuilder` methods: `addEntries`, `updateValue`, `updateAllValues`.
-  - Implement Dart 2 methods in internal collections used by `toList`, `toMap` and `toSet`.
+  - Implement Dart 2 methods in internal collections used by `toList`, `toMap`
+    and `toSet`.
+- Add `from` and `of` constructors to `BuiltList`, `BuiltMap` and `BuiltSet`.
+  The `from` constructors, like the current constructors, take collections
+  of any type and check each element. The `of` constructors, like the SDK `of`
+  constructors, take a collection of the correct type. This means they can be
+  used for type inference, allowing you to omit the explicit type.
 
 ## 3.2.0
 

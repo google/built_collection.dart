@@ -30,18 +30,44 @@ abstract class BuiltMap<K, V> {
   ///
   /// Wrong: `new BuiltMap({1: '1', 2: '2', 3: '3'})`.
   ///
-  /// Right: `new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})`,
+  /// Right: `new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})`.
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap([map = const {}]) {
     if (map is _BuiltMap && map.hasExactKeyAndValueTypes(K, V)) {
       return map as BuiltMap<K, V>;
     } else if (map is Map || map is BuiltMap) {
-      return new _BuiltMap<K, V>.copyAndCheck(map.keys, (k) => map[k]);
+      return new _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
     } else {
       throw new ArgumentError(
           'expected Map or BuiltMap, got ${map.runtimeType}');
     }
+  }
+
+  /// Instantiates with elements from a [Map].
+  ///
+  /// Must be called with a generic type parameter.
+  ///
+  /// Wrong: `new BuiltMap.from({1: '1', 2: '2', 3: '3'})`.
+  ///
+  /// Right: `new BuiltMap<int, String>.from({1: '1', 2: '2', 3: '3'})`.
+  ///
+  /// Rejects nulls. Rejects keys and values of the wrong type.
+  factory BuiltMap.from(Map map) {
+    return new _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
+  }
+
+  /// Instantiates with elements from a [Map<K, V>].
+  ///
+  /// `K` and `V` must not be `dynamic`.
+  ///
+  /// Wrong: `new BuiltMap.of({1: '1', 2: '2', 3: '3'})`.
+  ///
+  /// Right: `new BuiltMap<int, String>.of({1: '1', 2: '2', 3: '3'})`.
+  ///
+  /// Rejects nulls. Rejects keys and values of the wrong type.
+  factory BuiltMap.of(Map<K, V> map) {
+    return new _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]);
   }
 
   /// Creates a [MapBuilder], applies updates to it, and builds.
@@ -175,7 +201,7 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
   _BuiltMap.withSafeMap(_MapFactory<K, V> mapFactory, Map<K, V> map)
       : super._(mapFactory, map);
 
-  _BuiltMap.copyAndCheck(Iterable keys, Function lookup)
+  _BuiltMap.copyAndCheckTypes(Iterable keys, Function lookup)
       : super._(null, new Map<K, V>()) {
     for (final key in keys) {
       if (key is K) {
@@ -188,6 +214,20 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
       } else {
         throw new ArgumentError('map contained invalid key: $key');
       }
+    }
+  }
+
+  _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V lookup(K value))
+      : super._(null, new Map<K, V>()) {
+    for (final key in keys) {
+      if (identical(key, null)) {
+        throw new ArgumentError('map contained invalid key: null');
+      }
+      final value = lookup(key);
+      if (value == null) {
+        throw new ArgumentError('map contained invalid value: null');
+      }
+      _map[key] = value;
     }
   }
 

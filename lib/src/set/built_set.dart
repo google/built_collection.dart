@@ -121,28 +121,13 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Iterator<E> get iterator => _set.iterator;
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  BuiltSet<T> cast<T>() {
-    throw new UnimplementedError('cast');
-  }
-
-  @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  BuiltSet<T> retype<T>() {
-    throw new UnimplementedError('retype');
-  }
+  Iterable<T> cast<T>() => Iterable.castFrom<E, T>(_set);
 
   @override
   Iterable<E> followedBy(Iterable<E> other) => _set.followedBy(other);
 
   @override
-  // TODO: Dart 2.0 requires this method to be implemented.
-  // ignore: override_on_non_overriding_method
-  Iterable<T> whereType<T>() {
-    throw new UnimplementedError('whereType');
-  }
+  Iterable<T> whereType<T>() => _set.whereType<T>();
 
   @override
   Iterable<T> map<T>(T f(E e)) => _set.map(f);
@@ -225,10 +210,8 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
       _set.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool test(E element), {E orElse()}) {
-    if (orElse != null) throw new UnimplementedError('singleWhere:orElse');
-    return _set.singleWhere(test);
-  }
+  E singleWhere(bool test(E element), {E orElse()}) =>
+      _set.singleWhere(test, orElse: orElse);
 
   @override
   E elementAt(int index) => _set.elementAt(index);

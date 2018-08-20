@@ -245,6 +245,11 @@ void main() {
       expect(new BuiltList<int>([1, 2, 3])[1], 2);
     });
 
+    test('has a method like List+', () {
+      expect(new BuiltList<int>([1, 2, 3]) + new BuiltList<int>([4, 5, 6]),
+          [1, 2, 3, 4, 5, 6]);
+    });
+
     test('has a method like List.length', () {
       expect(new BuiltList<int>([1, 2, 3]).length, 3);
     });
@@ -274,6 +279,17 @@ void main() {
 
     test('has a method like List.asMap', () {
       expect(new BuiltList<int>([1, 2, 3]).asMap(), {0: 1, 1: 2, 2: 3});
+    });
+
+    test('has a method like List.indexWhere', () {
+      expect(new BuiltList<int>([1, 2, 3, 2]).indexWhere((x) => x == 2), 1);
+      expect(new BuiltList<int>([1, 2, 3, 2]).indexWhere((x) => x == 2, 2), 3);
+    });
+
+    test('has a method like List.lastIndexWhere', () {
+      expect(new BuiltList<int>([1, 2, 3, 2]).lastIndexWhere((x) => x == 2), 3);
+      expect(
+          new BuiltList<int>([1, 2, 3, 2]).lastIndexWhere((x) => x == 2, 2), 1);
     });
 
     // Iterable.
@@ -399,10 +415,24 @@ void main() {
           throwsA(anything));
       expect(() => new BuiltList<int>([1, 2]).singleWhere((x) => true),
           throwsA(anything));
+      expect(new BuiltList<int>([1, 2]).singleWhere((x) => x == 2), 2);
+      expect(
+          new BuiltList<int>([1, 2]).singleWhere((x) => false, orElse: () => 7),
+          7);
     });
 
     test('implements Iterable.elementAt', () {
       expect(new BuiltList<int>([1, 2]).elementAt(0), 1);
+    });
+
+    test('implements Iterable.cast', () {
+      expect(new BuiltList<int>([1, 2]).cast<Object>(),
+          const TypeMatcher<Iterable<Object>>());
+      expect(new BuiltList<int>([1, 2]).cast<Object>(), [1, 2]);
+    });
+
+    test('implements Iterable.whereType', () {
+      expect(new BuiltList<Object>([1, 'two', 3]).whereType<String>(), ['two']);
     });
   });
 }

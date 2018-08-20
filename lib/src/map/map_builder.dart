@@ -154,9 +154,28 @@ class MapBuilder<K, V> {
     _safeMap.remove(key);
   }
 
+  /// As [Map.removeWhere].
+  void removeWhere(bool predicate(K key, V value)) {
+    _safeMap.removeWhere(predicate);
+  }
+
   /// As [Map.clear].
   void clear() {
     _safeMap.clear();
+  }
+
+  /// As [Map.addEntries].
+  void addEntries(Iterable<MapEntry<K, V>> newEntries) {
+    _safeMap.addEntries(newEntries);
+  }
+
+  /// As [Map.update].
+  V updateValue(K key, V update(V value), {V ifAbsent()}) =>
+      _safeMap.update(key, update, ifAbsent: ifAbsent);
+
+  /// As [Map.updateAll].
+  void updateAllValues(V update(K key, V value)) {
+    _safeMap.updateAll(update);
   }
 
   // Internal.

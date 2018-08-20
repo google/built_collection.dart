@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.0 (unreleased)
+
+- Many changes following Dart 2 improvements to collections:
+  - Implement `Iterable` methods: `cast`, `followedBy` and `whereType`.
+  - Remove obsolete `Iterable` method: `retype`.
+  - Support `orElse` in `singleWhere`.
+  - Add `BuiltList` methods: `+`, `indexWhere`, `lastIndexWhere`.
+  - Add `ListBuilder` setters and getters: `first`, `last`.
+  - Add `BuiltMap` methods: `entries`, `map`.
+  - Add `MapBuilder` methods: `addEntries`, `updateValue`, `updateAllValues`.
+  - Implement Dart 2 methods in internal collections used by `toList`, `toMap` and `toSet`.
+
 ## 3.2.0
 
 - Add length, isEmpty and isNotEmpty to ListBuilder, MapBuilder and SetBuilder

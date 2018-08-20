@@ -168,6 +168,20 @@ void main() {
       expect((new BuiltList<int>([1]).toBuilder()..[0] = 2).build(), [2]);
     });
 
+    test('has a property like List.first', () {
+      final builder = new BuiltList<int>([1, 2, 3]).toBuilder();
+      expect(builder.first, 1);
+      builder.first = 2;
+      expect(builder.build().first, 2);
+    });
+
+    test('has a property like List.last', () {
+      final builder = new BuiltList<int>([1, 2, 3]).toBuilder();
+      expect(builder.last, 3);
+      builder.last = 2;
+      expect(builder.build().last, 2);
+    });
+
     test('has a method like List.length', () {
       expect(new ListBuilder<int>([1, 2]).length, 2);
       expect(new BuiltList<int>([1, 2]).toBuilder().length, 2);

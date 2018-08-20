@@ -23,14 +23,39 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Wrong: `new BuiltList([1, 2, 3])`.
   ///
-  /// Right: `new BuiltList<int>([1, 2, 3])`,
+  /// Right: `new BuiltList<int>([1, 2, 3])`.
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
-  factory BuiltList([Iterable iterable = const []]) {
+  factory BuiltList([Iterable iterable = const []]) =>
+      new BuiltList<E>.from(iterable);
+
+  /// Instantiates with elements from an [Iterable].
+  ///
+  /// Must be called with a generic type parameter.
+  ///
+  /// Wrong: `new BuiltList.from([1, 2, 3])`.
+  ///
+  /// Right: `new BuiltList<int>.from([1, 2, 3])`.
+  ///
+  /// Rejects nulls. Rejects elements of the wrong type.
+  factory BuiltList.from(Iterable iterable) {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {
-      return new _BuiltList<E>.copyAndCheck(iterable);
+      return new _BuiltList<E>.copyAndCheckTypes(iterable);
+    }
+  }
+
+  /// Instantiates with elements from an [Iterable<E>].
+  ///
+  /// `E` must not be `dynamic`.
+  ///
+  /// Rejects nulls. Rejects elements of the wrong type.
+  factory BuiltList.of(Iterable<E> iterable) {
+    if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
+      return iterable;
+    } else {
+      return new _BuiltList<E>.copyAndCheckForNull(iterable);
     }
   }
 
@@ -246,11 +271,20 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 class _BuiltList<E> extends BuiltList<E> {
   _BuiltList.withSafeList(List<E> list) : super._(list);
 
-  _BuiltList.copyAndCheck([Iterable iterable = const []])
+  _BuiltList.copyAndCheckTypes([Iterable iterable = const []])
       : super._(new List<E>.from(iterable, growable: false)) {
     for (final element in _list) {
       if (element is! E) {
         throw new ArgumentError('iterable contained invalid element: $element');
+      }
+    }
+  }
+
+  _BuiltList.copyAndCheckForNull(Iterable<E> iterable)
+      : super._(new List<E>.from(iterable, growable: false)) {
+    for (final element in _list) {
+      if (identical(element, null)) {
+        throw new ArgumentError('iterable contained invalid element: null');
       }
     }
   }

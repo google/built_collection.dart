@@ -31,12 +31,37 @@ void main() {
       expect(() => new BuiltMap<dynamic, String>(), throwsA(anything));
     });
 
+    test(
+        'of constructor throws on attempt to create BuiltMap<dynamic, dynamic>',
+        () {
+      expect(() => new BuiltMap.of({}), throwsA(anything));
+    });
+
+    test('of constructor throws on attempt to create BuiltMap<String, dynamic>',
+        () {
+      expect(() => new BuiltMap.of(<String, dynamic>{}), throwsA(anything));
+    });
+
+    test('of constructor throws on attempt to create BuiltMap<dynamic, String>',
+        () {
+      expect(() => new BuiltMap.of(<dynamic, String>{}), throwsA(anything));
+    });
+
     test('allows BuiltMap<Object, Object>', () {
       new BuiltMap<Object, Object>();
     });
 
     test('can be instantiated from Map', () {
       new BuiltMap<int, String>({});
+    });
+
+    test('from constructor takes Map', () {
+      new BuiltMap<int, String>.from({});
+    });
+
+    test('of constructor takes inferred type', () {
+      expect(new BuiltMap.of({1: '1'}),
+          const TypeMatcher<BuiltMap<int, String>>());
     });
 
     test('reports non-emptiness', () {
@@ -132,6 +157,15 @@ void main() {
 
     test('throws on null values', () {
       expect(() => new BuiltMap<int, String>({1: null}), throwsA(anything));
+    });
+
+    test('of constructor throws on null keys', () {
+      expect(
+          () => new BuiltMap<int, String>.of({null: '1'}), throwsA(anything));
+    });
+
+    test('of constructor throws on null values', () {
+      expect(() => new BuiltMap<int, String>.of({1: null}), throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

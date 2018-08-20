@@ -26,14 +26,39 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Wrong: `new BuiltSet([1, 2, 3])`.
   ///
-  /// Right: `new BuiltSet<int>([1, 2, 3])`,
+  /// Right: `new BuiltSet<int>([1, 2, 3])`.
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
-  factory BuiltSet([Iterable iterable = const []]) {
+  factory BuiltSet([Iterable iterable = const []]) =>
+      new BuiltSet.from(iterable);
+
+  /// Instantiates with elements from an [Iterable].
+  ///
+  /// Must be called with a generic type parameter.
+  ///
+  /// Wrong: `new BuiltSet([1, 2, 3])`.
+  ///
+  /// Right: `new BuiltSet<int>([1, 2, 3])`.
+  ///
+  /// Rejects nulls. Rejects elements of the wrong type.
+  factory BuiltSet.from(Iterable iterable) {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return new _BuiltSet<E>.copyAndCheck(iterable);
+      return new _BuiltSet<E>.copyAndCheckTypes(iterable);
+    }
+  }
+
+  /// Instantiates with elements from an [Iterable<E>].
+  ///
+  /// `E` must not be `dynamic`.
+  ///
+  /// Rejects nulls. Rejects elements of the wrong type.
+  factory BuiltSet.of(Iterable<E> iterable) {
+    if (iterable is _BuiltSet<E> && iterable.hasExactElementType(E)) {
+      return iterable;
+    } else {
+      return new _BuiltSet<E>.copyAndCheckForNull(iterable);
     }
   }
 
@@ -231,12 +256,23 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(_SetFactory<E> setFactory, Set<E> set)
       : super._(setFactory, set);
 
-  _BuiltSet.copyAndCheck(Iterable iterable) : super._(null, new Set<E>()) {
+  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, new Set<E>()) {
     for (final element in iterable) {
       if (element is E) {
         _set.add(element);
       } else {
         throw new ArgumentError('iterable contained invalid element: $element');
+      }
+    }
+  }
+
+  _BuiltSet.copyAndCheckForNull(Iterable iterable)
+      : super._(null, new Set<E>()) {
+    for (final element in iterable) {
+      if (identical(element, null)) {
+        throw new ArgumentError('iterable contained invalid element: null');
+      } else {
+        _set.add(element);
       }
     }
   }

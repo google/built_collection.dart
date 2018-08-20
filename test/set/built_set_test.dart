@@ -23,12 +23,20 @@ void main() {
       expect(() => new BuiltSet(), throwsA(anything));
     });
 
+    test('of constructor throws on attempt to create BuiltSet<dynamic>', () {
+      expect(() => new BuiltSet.of(<dynamic>[]), throwsA(anything));
+    });
+
     test('allows BuiltSet<Object>', () {
       new BuiltSet<Object>();
     });
 
     test('can be instantiated from Set', () {
       new BuiltSet<int>([]);
+    });
+
+    test('of constructor takes inferred type', () {
+      expect(new BuiltSet.of([1, 2, 3]), const TypeMatcher<BuiltSet<int>>());
     });
 
     test('reports non-emptiness', () {

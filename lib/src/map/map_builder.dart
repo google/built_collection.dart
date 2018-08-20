@@ -132,10 +132,10 @@ class MapBuilder<K, V> {
   /// As [Map.isNotEmpty].
   bool get isNotEmpty => _map.isNotEmpty;
 
-  /// As [Map.putIfAbsent] but returns nothing.
-  void putIfAbsent(K key, V ifAbsent()) {
+  /// As [Map.putIfAbsent].
+  V putIfAbsent(K key, V ifAbsent()) {
     _checkKey(key);
-    _safeMap.putIfAbsent(key, () {
+    return _safeMap.putIfAbsent(key, () {
       final value = ifAbsent();
       _checkValue(value);
       return value;
@@ -149,10 +149,8 @@ class MapBuilder<K, V> {
     _safeMap.addAll(other);
   }
 
-  /// As [Map.remove] but returns nothing.
-  void remove(Object key) {
-    _safeMap.remove(key);
-  }
+  /// As [Map.remove].
+  V remove(Object key) => _safeMap.remove(key);
 
   /// As [Map.removeWhere].
   void removeWhere(bool predicate(K key, V value)) {

@@ -124,10 +124,8 @@ class SetBuilder<E> {
     _safeSet.clear();
   }
 
-  /// As [Set.remove] but returns nothing.
-  void remove(Object value) {
-    _safeSet.remove(value);
-  }
+  /// As [Set.remove].
+  bool remove(Object value) => _safeSet.remove(value);
 
   /// As [Set.removeAll].
   void removeAll(Iterable<Object> elements) {

@@ -17,6 +17,8 @@
   of any type and check each element. The `of` constructors, like the SDK `of`
   constructors, take a collection of the correct type. This means they can be
   used for type inference, allowing you to omit the explicit type.
+- Make `remove`, `removeAt` and `removeLast` methods on builders return values
+  like their SDK collection equivalents.
 
 ## 3.2.0
 

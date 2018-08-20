@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 (unreleased)
+## 4.0.0
 
 - Many changes following Dart 2 improvements to collections:
   - Implement `Iterable` methods: `cast`, `followedBy` and `whereType`.

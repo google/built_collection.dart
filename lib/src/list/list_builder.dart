@@ -140,20 +140,14 @@ class ListBuilder<E> {
     _safeList.setAll(index, iterable);
   }
 
-  /// As [List.remove], but returns nothing.
-  void remove(Object value) {
-    _safeList.remove(value);
-  }
+  /// As [List.remove].
+  bool remove(Object value) => _safeList.remove(value);
 
-  /// As [List.removeAt], but returns nothing.
-  void removeAt(int index) {
-    _safeList.removeAt(index);
-  }
+  /// As [List.removeAt].
+  E removeAt(int index) => _safeList.removeAt(index);
 
-  /// As [List.removeLast], but returns nothing.
-  void removeLast() {
-    _safeList.removeLast();
-  }
+  /// As [List.removeLast].
+  E removeLast() => _safeList.removeLast();
 
   /// As [List.removeWhere].
   void removeWhere(bool test(E element)) {

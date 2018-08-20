@@ -219,7 +219,9 @@ void main() {
       expect(new BuiltMap<int, String>().toBuilder().isNotEmpty, false);
     });
 
-    test('has a method like Map.putIfAbsent that returns nothing', () {
+    test('has a method like Map.putIfAbsent', () {
+      expect(
+          new MapBuilder<int, String>({1: '1'}).putIfAbsent(2, () => '2'), '2');
       expect(
           (new MapBuilder<int, String>({1: '1'})
                 ..putIfAbsent(2, () => '2')
@@ -249,7 +251,9 @@ void main() {
           {1: '1', 2: '2'});
     });
 
-    test('has a method like Map.remove that returns nothing', () {
+    test('has a method like Map.remove', () {
+      expect(new MapBuilder<int, String>({1: '1', 2: '2'}).remove(2), '2');
+      expect(new MapBuilder<int, String>({1: '1', 2: '2'}).remove(3), null);
       expect(
           (new MapBuilder<int, String>({1: '1', 2: '2'})..remove(2))
               .build()

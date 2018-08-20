@@ -277,18 +277,22 @@ void main() {
           [3, 4]);
     });
 
-    test('has a method like List.remove that returns nothing', () {
+    test('has a method like List.remove', () {
+      expect(new ListBuilder<int>([1, 2]).remove(2), true);
+      expect(new ListBuilder<int>([1, 2]).remove(3), false);
       expect((new ListBuilder<int>([1, 2])..remove(2)).build(), [1]);
       expect((new BuiltList<int>([1, 2]).toBuilder()..remove(2)).build(), [1]);
     });
 
-    test('has a method like List.removeAt that returns nothing', () {
+    test('has a method like List.removeAt', () {
+      expect(new ListBuilder<int>([1, 2]).removeAt(1), 2);
       expect((new ListBuilder<int>([1, 2])..removeAt(1)).build(), [1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()..removeAt(1)).build(), [1]);
     });
 
-    test('has a method like List.removeLast that returns nothing', () {
+    test('has a method like List.removeLast', () {
+      expect(new ListBuilder<int>([1, 2]).removeLast(), 2);
       expect((new ListBuilder<int>([1, 2])..removeLast()).build(), [1]);
       expect(
           (new BuiltList<int>([1, 2]).toBuilder()..removeLast()).build(), [1]);

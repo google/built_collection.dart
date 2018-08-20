@@ -169,7 +169,9 @@ void main() {
       expect((new BuiltSet<int>([1, 2]).toBuilder()..clear()).build(), []);
     });
 
-    test('has a method like Set.remove that returns nothing', () {
+    test('has a method like Set.remove', () {
+      expect(new SetBuilder<int>([1, 2]).remove(2), true);
+      expect(new SetBuilder<int>([1, 2]).remove(3), false);
       expect((new SetBuilder<int>([1, 2])..remove(2)).build(), [1]);
       expect((new BuiltSet<int>([1, 2]).toBuilder()..remove(2)).build(), [1]);
     });

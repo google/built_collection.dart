@@ -149,6 +149,13 @@ abstract class BuiltMap<K, V> {
     return _values;
   }
 
+  /// As [Map.entries].
+  Iterable<MapEntry<K, V>> get entries => _map.entries;
+
+  /// As [Map.map], but returns a [BuiltMap].
+  BuiltMap<K2, V2> map<K2, V2>(MapEntry<K2, V2> f(K key, V value)) =>
+      new _BuiltMap<K2, V2>.withSafeMap(null, _map.map(f));
+
   // Internal.
 
   BuiltMap._(this._mapFactory, this._map) {

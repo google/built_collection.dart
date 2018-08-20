@@ -419,10 +419,23 @@ void main() {
           throwsA(anything));
       expect(() => new BuiltSet<int>([1, 2]).singleWhere((x) => true),
           throwsA(anything));
+      expect(
+          new BuiltSet<int>([1, 2]).singleWhere((x) => false, orElse: () => 7),
+          7);
     });
 
     test('implements Iterable.elementAt', () {
       expect(new BuiltSet<int>([1, 2]).elementAt(0), 1);
+    });
+
+    test('implements Iterable.cast', () {
+      expect(new BuiltSet<int>([1, 2]).cast<Object>(),
+          const TypeMatcher<Iterable<Object>>());
+      expect(new BuiltSet<int>([1, 2]).cast<Object>(), [1, 2]);
+    });
+
+    test('implements Iterable.whereType', () {
+      expect(new BuiltSet<Object>([1, 'two', 3]).whereType<String>(), ['two']);
     });
   });
 }

@@ -370,6 +370,19 @@ void main() {
           ['1', '2', '3']);
     });
 
+    test('has a method like Map.entries', () {
+      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(new BuiltMap<int, String>(new Map.fromEntries(map.entries)), map);
+    });
+
+    test('has a method like Map.map', () {
+      expect(
+          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
+              .map((key, value) => new MapEntry(value, key))
+              .asMap(),
+          {'1': 1, '2': 2, '3': 3});
+    });
+
     test('has stable keys', () {
       final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.keys, same(map.keys));

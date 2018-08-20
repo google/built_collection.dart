@@ -98,6 +98,19 @@ void main() {
           {1: 2, 2: 3, 3: 4});
     });
 
+    test('has addEntries method like Map.addEntries', () {
+      expect(
+          (new MapBuilder<int, int>()
+                ..addEntries([
+                  new MapEntry(1, 1),
+                  new MapEntry(2, 2),
+                  new MapEntry(3, 3),
+                ]))
+              .build()
+              .toMap(),
+          {1: 1, 2: 2, 3: 3});
+    });
+
     test('reuses BuiltMap passed to replace if it has the same base', () {
       final treeMapBase = () => new SplayTreeMap<int, String>();
       final map = new BuiltMap<int, String>.build((b) => b
@@ -249,6 +262,21 @@ void main() {
           {1: '1'});
     });
 
+    test('has a method like Map.removeWhere', () {
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})
+                ..removeWhere((k, v) => k == 2))
+              .build()
+              .toMap(),
+          {1: '1'});
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})
+                ..removeWhere((k, v) => v == '2'))
+              .build()
+              .toMap(),
+          {1: '1'});
+    });
+
     test('has a method like Map.clear', () {
       expect(
           (new MapBuilder<int, String>({1: '1', 2: '2'})..clear())
@@ -260,6 +288,30 @@ void main() {
               .build()
               .toMap(),
           {});
+    });
+
+    test('has a method like Map.update called updateValue', () {
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})
+                ..updateValue(1, (v) => v + '1', ifAbsent: () => '7'))
+              .build()
+              .toMap(),
+          {1: '11', 2: '2'});
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})
+                ..updateValue(7, (v) => v + '1', ifAbsent: () => '7'))
+              .build()
+              .toMap(),
+          {1: '1', 2: '2', 7: '7'});
+    });
+
+    test('has a method like Map.updateAll called updateAllValues', () {
+      expect(
+          (new MapBuilder<int, String>({1: '1', 2: '2'})
+                ..updateAllValues((k, v) => v + k.toString()))
+              .build()
+              .toMap(),
+          {1: '11', 2: '22'});
     });
   });
 }

@@ -64,6 +64,22 @@ class ListBuilder<E> {
     _safeList[index] = element;
   }
 
+  /// As [List.first].
+  E get first => _list.first;
+
+  /// As [List.first].
+  set first(E value) {
+    _list.first = value;
+  }
+
+  /// As [List.last].
+  E get last => _list.last;
+
+  /// As [List.last].
+  set last(E value) {
+    _list.last = value;
+  }
+
   /// As [List.length].
   int get length => _list.length;
 

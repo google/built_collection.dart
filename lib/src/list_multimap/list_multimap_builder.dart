@@ -132,22 +132,22 @@ class ListMultimapBuilder<K, V> {
     });
   }
 
-  /// As [ListMultimap.remove] but returns nothing.
-  void remove(Object key, V value) {
+  /// As [ListMultimap.remove].
+  bool remove(Object key, V value) {
     if (key is K) {
       _makeWriteableCopy();
-      _getValuesBuilder(key).remove(value);
+      return _getValuesBuilder(key).remove(value);
     }
+    return false;
   }
 
-  /// As [ListMultimap.removeAll] but returns nothing.
-  void removeAll(Object key) {
-    if (key is K) {
-      _makeWriteableCopy();
-
-      _builtMap = _builtMap;
-      _builderMap[key] = new ListBuilder<V>();
-    }
+  /// As [ListMultimap.removeAll], but results are [ListBuilder]s.
+  ListBuilder<V> removeAll(Object key) {
+    if (key is! K) return new ListBuilder<V>();
+    _makeWriteableCopy();
+    final old = _getValuesBuilder(key);
+    _builderMap[key] = new ListBuilder<V>();
+    return old;
   }
 
   /// As [ListMultimap.clear].
@@ -157,6 +157,10 @@ class ListMultimapBuilder<K, V> {
     _builtMap.clear();
     _builderMap.clear();
   }
+
+  /// As [ListMultimap], but results are [ListBuilder]s.
+  ListBuilder<V> operator [](Object key) =>
+      key is K ? _getValuesBuilder(key) : new ListBuilder<V>();
 
   // Internal.
 

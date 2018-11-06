@@ -231,7 +231,8 @@ void main() {
         1: ['1', '2', '3']
       });
       final multimapBuilder = multimap.toBuilder();
-      expect((multimapBuilder..remove(1, '2')).build().toMap(), {
+      expect(multimapBuilder.remove(1, '2'), true);
+      expect(multimapBuilder.build().toMap(), {
         1: ['1', '3']
       });
     });
@@ -241,15 +242,16 @@ void main() {
         1: ['1']
       });
       final multimapBuilder = multimap.toBuilder();
-      expect((multimapBuilder..remove(1, '1')).build().toMap(), {});
+      expect(multimapBuilder.remove(1, '1'), true);
+      expect(multimapBuilder.build().toMap(), {});
     });
 
     test('removes all from copied lists', () {
-      final multimap = new BuiltListMultimap<int, String>({
-        1: ['1', '2', '3']
-      });
+      final value = ['1', '2', '3'];
+      final multimap = new BuiltListMultimap<int, String>({1: value});
       final multimapBuilder = multimap.toBuilder();
-      expect((multimapBuilder..removeAll(1)).build().toMap(), {});
+      expect(multimapBuilder.removeAll(1).build().toList(), value);
+      expect(multimapBuilder.build().toMap(), {});
     });
 
     test('clears copied lists', () {
@@ -335,19 +337,18 @@ void main() {
           }));
     });
 
-    test('has a method like ListMultimap.remove that returns nothing', () {
-      expect(
-          (new ListMultimapBuilder<int, String>({
-            1: ['1'],
-            2: ['2', '3']
-          })
-                ..remove(2, '3'))
-              .build()
-              .toMap(),
-          {
-            1: ['1'],
-            2: ['2']
-          });
+    test('has a method like ListMultimap.remove', () {
+      final builder = new ListMultimapBuilder<int, String>({
+        1: ['1'],
+        2: ['2', '3']
+      });
+      expect(builder.remove(2, '3'), true);
+      expect(builder.remove(2, '3'), false);
+      expect(builder.remove(2, '7'), false);
+      expect(builder.build().toMap(), {
+        1: ['1'],
+        2: ['2']
+      });
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1'],
@@ -362,22 +363,22 @@ void main() {
           });
     });
 
-    test('has a method like ListMultimap.removeAll that returns nothing', () {
-      expect(
-          (new ListMultimapBuilder<int, String>({
-            1: ['1'],
-            2: ['2', '3']
-          })
-                ..removeAll(2))
-              .build()
-              .toMap(),
-          {
-            1: ['1']
-          });
+    test('has a method like ListMultimap.removeAll', () {
+      final value = ['2', '3'];
+      final builder = new ListMultimapBuilder<int, String>({
+        1: ['1'],
+        2: value
+      });
+      expect(builder.removeAll(2).build().toList(), value);
+      expect(builder.removeAll(2).build().toList(), []);
+      expect(builder.removeAll(3).build().toList(), []);
+      expect(builder.build().toMap(), {
+        1: ['1']
+      });
       expect(
           (new BuiltListMultimap<int, String>({
             1: ['1'],
-            2: ['2', '3']
+            2: value
           }).toBuilder()
                 ..removeAll(2))
               .build()
@@ -406,6 +407,27 @@ void main() {
               .build()
               .toMap(),
           {});
+    });
+
+    test('has a method like ListMultimap[]', () {
+      expect(
+          new BuiltListMultimap<int, String>({
+            1: ['1'],
+            2: ['2'],
+            3: ['3']
+          })[2]
+              .build()
+              .toList(),
+          ['2']);
+      expect(
+          new BuiltListMultimap<int, String>({
+            1: ['1'],
+            2: ['2'],
+            3: ['3']
+          })[4]
+              .build()
+              .toList(),
+          []);
     });
   });
 }

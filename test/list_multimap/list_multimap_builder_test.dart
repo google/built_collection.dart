@@ -415,18 +415,14 @@ void main() {
             1: ['1'],
             2: ['2'],
             3: ['3']
-          })[2]
-              .build()
-              .toList(),
+          }).toBuilder()[2].build().toList(),
           ['2']);
       expect(
           new BuiltListMultimap<int, String>({
             1: ['1'],
             2: ['2'],
             3: ['3']
-          })[4]
-              .build()
-              .toList(),
+          }).toBuilder()[4].build().toList(),
           []);
     });
   });

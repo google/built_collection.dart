@@ -134,11 +134,9 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.remove].
   bool remove(Object key, V value) {
-    if (key is K) {
-      _makeWriteableCopy();
-      return _getValuesBuilder(key).remove(value);
-    }
-    return false;
+    if (key is! K) return false;
+    _makeWriteableCopy();
+    return _getValuesBuilder(key).remove(value);
   }
 
   /// As [ListMultimap.removeAll], but results are [ListBuilder]s.

@@ -108,9 +108,9 @@ class SetBuilder<E> {
   bool get isNotEmpty => _set.isNotEmpty;
 
   /// As [Set.add].
-  void add(E value) {
+  bool add(E value) {
     _checkElement(value);
-    _safeSet.add(value);
+    return _safeSet.add(value);
   }
 
   /// As [Set.addAll].

@@ -388,6 +388,19 @@ void main() {
           });
     });
 
+    test('removeAll does not detach ListBuilder', () {
+      final builder = new ListMultimapBuilder<int, String>({
+        1: ['1'],
+        2: ['2', '3'],
+      });
+      final listBuilder = builder[2];
+      builder.removeAll(2);
+      expect(listBuilder.build().toList(), []);
+
+      listBuilder.add('4');
+      expect(builder.build()[2].toList(), ['4']);
+    });
+
     test('has a method like ListMultimap.clear', () {
       expect(
           (new ListMultimapBuilder<int, String>({

@@ -250,7 +250,7 @@ void main() {
       final value = ['1', '2', '3'];
       final multimap = new BuiltListMultimap<int, String>({1: value});
       final multimapBuilder = multimap.toBuilder();
-      expect(multimapBuilder.removeAll(1).build().toList(), value);
+      expect(multimapBuilder.removeAll(1).toList(), value);
       expect(multimapBuilder.build().toMap(), {});
     });
 
@@ -369,9 +369,9 @@ void main() {
         1: ['1'],
         2: value
       });
-      expect(builder.removeAll(2).build().toList(), value);
-      expect(builder.removeAll(2).build().toList(), []);
-      expect(builder.removeAll(3).build().toList(), []);
+      expect(builder.removeAll(2).toList(), value);
+      expect(builder.removeAll(2).toList(), []);
+      expect(builder.removeAll(3).toList(), []);
       expect(builder.build().toMap(), {
         1: ['1']
       });

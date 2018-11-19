@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0 (unreleased)
+
+- Fix #168 - implement return val for SetBuilder.add() to match Set.add()
+
 ## 4.0.0
 
 - Many changes following Dart 2 improvements to collections:

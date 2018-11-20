@@ -157,6 +157,8 @@ void main() {
     test('has a method like Set.add', () {
       expect((new SetBuilder<int>()..add(1)).build(), [1]);
       expect((new BuiltSet<int>().toBuilder()..add(1)).build(), [1]);
+      expect(new SetBuilder<int>().add(1), true);
+      expect((new SetBuilder<int>()..add(1)).add(1), false);
     });
 
     test('has a method like Set.addAll', () {

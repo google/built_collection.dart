@@ -64,6 +64,8 @@ class ListMultimapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
+  ///
+  /// Any [ListBuilder]s associated with this collection are disconnected.
   void replace(dynamic multimap) {
     if (multimap is _BuiltListMultimap<K, V>) {
       _setOwner(multimap);
@@ -154,6 +156,8 @@ class ListMultimapBuilder<K, V> {
   }
 
   /// As [ListMultimap.clear].
+  ///
+  /// Any [ListBuilder]s associated with this collection are disconnected.
   void clear() {
     _makeWriteableCopy();
 

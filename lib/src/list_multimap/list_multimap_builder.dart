@@ -64,6 +64,8 @@ class ListMultimapBuilder<K, V> {
 
   /// Replaces all elements with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
+  ///
+  /// Any [ListBuilder]s associated with this collection are disconnected.
   void replace(dynamic multimap) {
     if (multimap is _BuiltListMultimap<K, V>) {
       _setOwner(multimap);
@@ -132,31 +134,40 @@ class ListMultimapBuilder<K, V> {
     });
   }
 
-  /// As [ListMultimap.remove] but returns nothing.
-  void remove(Object key, V value) {
-    if (key is K) {
-      _makeWriteableCopy();
-      _getValuesBuilder(key).remove(value);
-    }
+  /// As [ListMultimap.remove].
+  bool remove(Object key, V value) {
+    if (key is! K) return false;
+    _makeWriteableCopy();
+    return _getValuesBuilder(key).remove(value);
   }
 
-  /// As [ListMultimap.removeAll] but returns nothing.
-  void removeAll(Object key) {
-    if (key is K) {
-      _makeWriteableCopy();
-
-      _builtMap = _builtMap;
+  /// As [ListMultimap.removeAll], but results are [BuiltList]s.
+  BuiltList<V> removeAll(Object key) {
+    if (key is! K) return new BuiltList<V>();
+    _makeWriteableCopy();
+    final builder = _builderMap[key];
+    if (builder == null) {
       _builderMap[key] = new ListBuilder<V>();
+      return _builtMap[key] ?? new BuiltList<V>();
     }
+    final old = builder.build();
+    builder.clear();
+    return old;
   }
 
   /// As [ListMultimap.clear].
+  ///
+  /// Any [ListBuilder]s associated with this collection are disconnected.
   void clear() {
     _makeWriteableCopy();
 
     _builtMap.clear();
     _builderMap.clear();
   }
+
+  /// As [ListMultimap], but results are [ListBuilder]s.
+  ListBuilder<V> operator [](Object key) =>
+      key is K ? _getValuesBuilder(key) : new ListBuilder<V>();
 
   // Internal.
 

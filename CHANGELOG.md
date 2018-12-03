@@ -1,10 +1,10 @@
 # Changelog
 
-## 4.1.0 (unreleased)
+## 4.1.0
 
-- Fix #168 - implement return val for SetBuilder.add() to match Set.add()
-- Expand ListMultimapBuilder: implement `[]` and add return values to `remove`
-  and `removeAll`.
+- Add return val to `SetBuilder.add()` to match `Set.add()`.
+- Expand `ListMultimapBuilder`: implement `[]` and add return values to
+  `remove` and `removeAll`.
 
 ## 4.0.0
 

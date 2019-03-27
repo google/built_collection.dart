@@ -97,8 +97,7 @@ class ListBuilder<E> {
 
   /// As [List.addAll].
   void addAll(Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.addAll(iterable);
+    _safeList.addAll(iterable.map(_checkElement));
   }
 
   /// As [List.reversed], but updates the builder in place. Returns nothing.
@@ -130,14 +129,12 @@ class ListBuilder<E> {
 
   /// As [List.insertAll].
   void insertAll(int index, Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.insertAll(index, iterable);
+    _safeList.insertAll(index, iterable.map(_checkElement));
   }
 
   /// As [List.setAll].
   void setAll(int index, Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.setAll(index, iterable);
+    _safeList.setAll(index, iterable.map(_checkElement));
   }
 
   /// As [List.remove].
@@ -168,8 +165,7 @@ class ListBuilder<E> {
 
   /// As [List.setRange].
   void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]) {
-    _checkElements(iterable);
-    _safeList.setRange(start, end, iterable, skipCount);
+    _safeList.setRange(start, end, iterable.map(_checkElement), skipCount);
   }
 
   /// As [List.removeRange].
@@ -185,16 +181,14 @@ class ListBuilder<E> {
 
   /// As [List.replaceRange].
   void replaceRange(int start, int end, Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.replaceRange(start, end, iterable);
+    _safeList.replaceRange(start, end, iterable.map(_checkElement));
   }
 
   // Based on Iterable.
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    final result = _list.map(f).toList(growable: true);
-    _checkElements(result);
+    final result = _list.map(f).toList(growable: true).map(_checkElement);
     _setSafeList(result);
   }
 
@@ -205,8 +199,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    final result = _list.expand(f).toList(growable: true);
-    _checkElements(result);
+    final result = _list.expand(f).toList(growable: true).map(_checkElement);
     _setSafeList(result);
   }
 
@@ -265,14 +258,6 @@ class ListBuilder<E> {
   void _checkElement(E element) {
     if (identical(element, null)) {
       throw new ArgumentError('null element');
-    }
-  }
-
-  void _checkElements(Iterable elements) {
-    for (final element in elements) {
-      if (element is! E) {
-        throw new ArgumentError('invalid element: $element');
-      }
     }
   }
 }

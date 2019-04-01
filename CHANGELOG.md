@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.2.0 (unreleased)
+## 4.2.0
 
 - Add benchmark for VM and dart2js.
 - Stop doing explicit type checks on elements; in Dart 2 these are implied.

@@ -206,7 +206,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
   @override
-  List<E> toList({bool growable: true}) =>
+  List<E> toList({bool growable = true}) =>
       new CopyOnWriteList<E>(_list, growable);
 
   @override

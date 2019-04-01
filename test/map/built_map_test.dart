@@ -14,7 +14,7 @@ import '../performance.dart';
 void main() {
   group('BuiltMap', () {
     test('instantiates empty by default', () {
-      final map = new BuiltMap<int, String>();
+      var map = new BuiltMap<int, String>();
       expect(map.isEmpty, isTrue);
       expect(map.isNotEmpty, isFalse);
     });
@@ -65,14 +65,14 @@ void main() {
     });
 
     test('reports non-emptiness', () {
-      final map = new BuiltMap<int, String>({1: '1'});
+      var map = new BuiltMap<int, String>({1: '1'});
       expect(map.isEmpty, isFalse);
       expect(map.isNotEmpty, isTrue);
     });
 
     test('can be instantiated from Map then converted back to equal Map', () {
-      final mutableMap = {1: '1'};
-      final map = new BuiltMap<int, String>(mutableMap);
+      var mutableMap = {1: '1'};
+      var map = new BuiltMap<int, String>(mutableMap);
       expect(map.toMap(), mutableMap);
     });
 
@@ -85,15 +85,15 @@ void main() {
     });
 
     test('does not keep a mutable Map', () {
-      final mutableMap = {1: '1'};
-      final map = new BuiltMap<int, String>(mutableMap);
+      var mutableMap = {1: '1'};
+      var map = new BuiltMap<int, String>(mutableMap);
       mutableMap.clear();
       expect(map.toMap(), {1: '1'});
     });
 
     test('copies from BuiltMap instances of different type', () {
-      final map1 = new BuiltMap<Object, Object>();
-      final map2 = new BuiltMap<int, String>(map1);
+      var map1 = new BuiltMap<Object, Object>();
+      var map2 = new BuiltMap<int, String>(map1);
       expect(map1, isNot(same(map2)));
     });
 
@@ -105,15 +105,15 @@ void main() {
     });
 
     test('uses same base when converted with toMap', () {
-      final built = new BuiltMap<int, String>.build((b) => b
+      var built = new BuiltMap<int, String>.build((b) => b
         ..withBase(() => new SplayTreeMap<int, String>())
         ..addAll({1: '1', 3: '3'}));
-      final map = built.toMap()..addAll({2: '2', 4: '4'});
+      var map = built.toMap()..addAll({2: '2', 4: '4'});
       expect(map.keys, [1, 2, 3, 4]);
     });
 
     test('can be converted to an UnmodifiableMapView', () {
-      final immutableMap = new BuiltMap<int, String>().asMap();
+      var immutableMap = new BuiltMap<int, String>().asMap();
       expect(immutableMap is Map<int, String>, isTrue);
       expect(() => immutableMap[1] = 'Hello', throwsUnsupportedError);
       expect(immutableMap, isEmpty);
@@ -144,10 +144,10 @@ void main() {
     });
 
     test('passes along its base when converted to SetBuilder', () {
-      final map = new BuiltMap<int, String>.build((b) => b
+      var map = new BuiltMap<int, String>.build((b) => b
         ..withBase(() => new SplayTreeMap<int, String>())
         ..addAll({10: '10', 15: '15', 5: '5'}));
-      final builder = map.toBuilder()..addAll({2: '2', 12: '12'});
+      var builder = map.toBuilder()..addAll({2: '2', 12: '12'});
       expect(builder.build().keys, orderedEquals([2, 5, 10, 12, 15]));
     });
 
@@ -169,41 +169,41 @@ void main() {
     });
 
     test('hashes to same value for same contents', () {
-      final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      final map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
 
       expect(map1.hashCode, map2.hashCode);
     });
 
     test('hashes to different value for different keys', () {
-      final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      final map2 = new BuiltMap<int, String>({1: '1', 2: '2', 4: '3'});
+      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 4: '3'});
 
       expect(map1.hashCode, isNot(map2.hashCode));
     });
 
     test('hashes to different value for different values', () {
-      final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      final map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '4'});
+      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '4'});
 
       expect(map1.hashCode, isNot(map2.hashCode));
     });
 
     test('caches hash', () {
-      final map = new BuiltMap<Object, Object>({1: new _HashcodeOnlyOnce()});
+      var map = new BuiltMap<Object, Object>({1: new _HashcodeOnlyOnce()});
 
       map.hashCode;
       map.hashCode;
     });
 
     test('compares equal to same instance', () {
-      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map == map, isTrue);
     });
 
     test('compares equal to same contents', () {
-      final map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      final map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map1 == map2, isTrue);
     });
 
@@ -263,71 +263,71 @@ void main() {
     // Lazy copies.
 
     test('reuses BuiltMap instances of the same type', () {
-      final map1 = new BuiltMap<int, String>();
-      final map2 = new BuiltMap<int, String>(map1);
+      var map1 = new BuiltMap<int, String>();
+      var map2 = new BuiltMap<int, String>(map1);
       expect(map1, same(map2));
     });
 
     test('does not reuse BuiltMap instances with subtype key type', () {
-      final map1 = new BuiltMap<_ExtendsA, String>();
-      final map2 = new BuiltMap<_A, String>(map1);
+      var map1 = new BuiltMap<_ExtendsA, String>();
+      var map2 = new BuiltMap<_A, String>(map1);
       expect(map1, isNot(same(map2)));
     });
 
     test('does not reuse BuiltMap instances with subtype value type', () {
-      final map1 = new BuiltMap<String, _ExtendsA>();
-      final map2 = new BuiltMap<String, _A>(map1);
+      var map1 = new BuiltMap<String, _ExtendsA>();
+      var map2 = new BuiltMap<String, _A>(map1);
       expect(map1, isNot(same(map2)));
     });
 
     test('can be reused via MapBuilder if there are no changes', () {
-      final map1 = new BuiltMap<Object, Object>();
-      final map2 = map1.toBuilder().build();
+      var map1 = new BuiltMap<Object, Object>();
+      var map2 = map1.toBuilder().build();
       expect(map1, same(map2));
     });
 
     test('converts to MapBuilder from correct type without copying', () {
-      final makeLongMap = () => new BuiltMap<int, int>(
+      var makeLongMap = () => new BuiltMap<int, int>(
           new Map<int, int>.fromIterable(
               new List<int>.generate(100000, (x) => x)));
-      final longMap = makeLongMap();
-      final longMapToMapBuilder = longMap.toBuilder;
+      var longMap = makeLongMap();
+      var longMapToMapBuilder = longMap.toBuilder;
 
       expectMuchFaster(longMapToMapBuilder, makeLongMap);
     });
 
     test('converts to MapBuilder from wrong type by copying', () {
-      final makeLongMap = () => new BuiltMap<Object, Object>(
+      var makeLongMap = () => new BuiltMap<Object, Object>(
           new Map<int, int>.fromIterable(
               new List<int>.generate(100000, (x) => x)));
-      final longMap = makeLongMap();
-      final longMapToMapBuilder = () => new MapBuilder<int, int>(longMap);
+      var longMap = makeLongMap();
+      var longMapToMapBuilder = () => new MapBuilder<int, int>(longMap);
 
       expectNotMuchFaster(longMapToMapBuilder, makeLongMap);
     });
 
     test('has fast toMap', () {
-      final makeLongMap = () => new BuiltMap<Object, Object>(
+      var makeLongMap = () => new BuiltMap<Object, Object>(
           new Map<int, int>.fromIterable(
               new List<int>.generate(100000, (x) => x)));
-      final longMap = makeLongMap();
-      final longMapToMap = () => longMap.toMap();
+      var longMap = makeLongMap();
+      var longMapToMap = () => longMap.toMap();
 
       expectMuchFaster(longMapToMap, makeLongMap);
     });
 
     test('checks for reference identity', () {
-      final makeLongMap = () => new BuiltMap<Object, Object>(
+      var makeLongMap = () => new BuiltMap<Object, Object>(
           new Map<int, int>.fromIterable(
               new List<int>.generate(100000, (x) => x)));
-      final longMap = makeLongMap();
-      final otherLongMap = makeLongMap();
+      var longMap = makeLongMap();
+      var otherLongMap = makeLongMap();
 
       expectMuchFaster(() => longMap == longMap, () => longMap == otherLongMap);
     });
 
     test('is not mutated when Map from toMap is mutated', () {
-      final map = new BuiltMap<int, String>();
+      var map = new BuiltMap<int, String>();
       map.toMap()[1] = '1';
       expect(map.isEmpty, isTrue);
     });
@@ -346,7 +346,7 @@ void main() {
     });
 
     test('returns identical BuiltMap on repeated build', () {
-      final mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'});
+      var mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'});
       expect(mapBuilder.build(), same(mapBuilder.build()));
     });
 
@@ -405,7 +405,7 @@ void main() {
     });
 
     test('has a method like Map.entries', () {
-      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(new BuiltMap<int, String>(new Map.fromEntries(map.entries)), map);
     });
 
@@ -418,12 +418,12 @@ void main() {
     });
 
     test('has stable keys', () {
-      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.keys, same(map.keys));
     });
 
     test('has stable values', () {
-      final map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.values, same(map.values));
     });
   });

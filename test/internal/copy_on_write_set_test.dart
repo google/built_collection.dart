@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 void main() {
   group('CopyOnWriteSet', () {
     test('has toString equal to Set.toString', () {
-      final set = new Set<int>.from([1, 2, 3]);
+      var set = new Set<int>.from([1, 2, 3]);
       expect(new CopyOnWriteSet(set).toString(), set.toString());
     });
   });

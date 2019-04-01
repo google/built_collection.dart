@@ -52,8 +52,8 @@ class SetBuilder<E> {
       _withOwner(iterable);
     } else {
       // Can't use addAll because it requires an Iterable<E>.
-      final Set<E> set = _createSet();
-      for (final element in iterable) {
+      var set = _createSet();
+      for (var element in iterable) {
         if (element is E) {
           set.add(element);
         } else {
@@ -153,7 +153,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    final result = _createSet()..addAll(_set.map(f));
+    var result = _createSet()..addAll(_set.map(f));
     _checkElements(result);
     _setSafeSet(result);
   }
@@ -165,7 +165,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    final result = _createSet()..addAll(_set.expand(f));
+    var result = _createSet()..addAll(_set.expand(f));
     _checkElements(result);
     _setSafeSet(result);
   }
@@ -239,7 +239,7 @@ class SetBuilder<E> {
   }
 
   void _checkElements(Iterable elements) {
-    for (final element in elements) {
+    for (var element in elements) {
       if (element is! E) {
         throw new ArgumentError('invalid element: $element');
       }

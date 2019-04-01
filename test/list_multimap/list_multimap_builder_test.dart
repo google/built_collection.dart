@@ -44,7 +44,7 @@ void main() {
     });
 
     test('throws on null key addAll', () {
-      final mutableMultimap = new ListMultimap<int, String>();
+      var mutableMultimap = new ListMultimap<int, String>();
       mutableMultimap.add(null, '0');
 
       expect(
@@ -53,7 +53,7 @@ void main() {
     });
 
     test('throws on null value addAll', () {
-      final mutableMultimap = new ListMultimap<int, String>();
+      var mutableMultimap = new ListMultimap<int, String>();
       mutableMultimap.add(0, null);
 
       expect(
@@ -130,11 +130,11 @@ void main() {
 
     test('does not mutate BuiltListMultimap following reuse of underlying Map',
         () {
-      final multimap = new BuiltListMultimap<int, String>({
+      var multimap = new BuiltListMultimap<int, String>({
         1: ['1'],
         2: ['2']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       multimapBuilder.add(3, '3');
       expect(
           multimap.toMap(),
@@ -145,28 +145,27 @@ void main() {
     });
 
     test('converts to BuiltListMultimap without copying', () {
-      final makeLongListMultimapBuilder = () {
-        final result = new ListMultimapBuilder<int, int>();
+      var makeLongListMultimapBuilder = () {
+        var result = new ListMultimapBuilder<int, int>();
         for (int i = 0; i != 100000; ++i) {
           result.add(0, i);
         }
         return result;
       };
-      final longListMultimapBuilder = makeLongListMultimapBuilder();
-      final buildLongListMultimapBuilder =
-          () => longListMultimapBuilder.build();
+      var longListMultimapBuilder = makeLongListMultimapBuilder();
+      var buildLongListMultimapBuilder = () => longListMultimapBuilder.build();
 
       expectMuchFaster(
           buildLongListMultimapBuilder, makeLongListMultimapBuilder);
     });
 
     test('does not mutate BuiltListMultimap following mutates after build', () {
-      final multimapBuilder = new ListMultimapBuilder<int, String>({
+      var multimapBuilder = new ListMultimapBuilder<int, String>({
         1: ['1'],
         2: ['2']
       });
 
-      final map1 = multimapBuilder.build();
+      var map1 = multimapBuilder.build();
       expect(
           map1.toMap(),
           ({
@@ -208,7 +207,7 @@ void main() {
     });
 
     test('returns identical BuiltListMultimap on repeated build', () {
-      final multimapBuilder = new ListMultimapBuilder<int, String>({
+      var multimapBuilder = new ListMultimapBuilder<int, String>({
         1: ['1', '2', '3']
       });
       expect(multimapBuilder.build(), same(multimapBuilder.build()));
@@ -217,20 +216,20 @@ void main() {
     // Modification of existing data.
 
     test('adds to copied lists', () {
-      final multimap = new BuiltListMultimap<int, String>({
+      var multimap = new BuiltListMultimap<int, String>({
         1: ['1']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..add(1, '2')).build().toMap(), {
         1: ['1', '2']
       });
     });
 
     test('removes from copied lists', () {
-      final multimap = new BuiltListMultimap<int, String>({
+      var multimap = new BuiltListMultimap<int, String>({
         1: ['1', '2', '3']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect(multimapBuilder.remove(1, '2'), true);
       expect(multimapBuilder.build().toMap(), {
         1: ['1', '3']
@@ -238,27 +237,27 @@ void main() {
     });
 
     test('removes from copied lists to empty', () {
-      final multimap = new BuiltListMultimap<int, String>({
+      var multimap = new BuiltListMultimap<int, String>({
         1: ['1']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect(multimapBuilder.remove(1, '1'), true);
       expect(multimapBuilder.build().toMap(), {});
     });
 
     test('removes all from copied lists', () {
-      final value = ['1', '2', '3'];
-      final multimap = new BuiltListMultimap<int, String>({1: value});
-      final multimapBuilder = multimap.toBuilder();
+      var value = ['1', '2', '3'];
+      var multimap = new BuiltListMultimap<int, String>({1: value});
+      var multimapBuilder = multimap.toBuilder();
       expect(multimapBuilder.removeAll(1).toList(), value);
       expect(multimapBuilder.build().toMap(), {});
     });
 
     test('clears copied lists', () {
-      final multimap = new BuiltListMultimap<int, String>({
+      var multimap = new BuiltListMultimap<int, String>({
         1: ['1', '2', '3']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..clear()).build().toMap(), {});
     });
 
@@ -315,7 +314,7 @@ void main() {
     });
 
     test('has a method like ListMultimap.addAll', () {
-      final mutableMultimap = new ListMultimap<int, String>();
+      var mutableMultimap = new ListMultimap<int, String>();
       mutableMultimap.add(1, '1');
       mutableMultimap.add(2, '2');
       expect(
@@ -338,7 +337,7 @@ void main() {
     });
 
     test('has a method like ListMultimap.remove', () {
-      final builder = new ListMultimapBuilder<int, String>({
+      var builder = new ListMultimapBuilder<int, String>({
         1: ['1'],
         2: ['2', '3']
       });
@@ -364,8 +363,8 @@ void main() {
     });
 
     test('has a method like ListMultimap.removeAll', () {
-      final value = ['2', '3'];
-      final builder = new ListMultimapBuilder<int, String>({
+      var value = ['2', '3'];
+      var builder = new ListMultimapBuilder<int, String>({
         1: ['1'],
         2: value
       });
@@ -389,11 +388,11 @@ void main() {
     });
 
     test('removeAll does not detach ListBuilder', () {
-      final builder = new ListMultimapBuilder<int, String>({
+      var builder = new ListMultimapBuilder<int, String>({
         1: ['1'],
         2: ['2', '3'],
       });
-      final listBuilder = builder[2];
+      var listBuilder = builder[2];
       builder.removeAll(2);
       expect(listBuilder.build().toList(), []);
 

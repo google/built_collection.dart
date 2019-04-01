@@ -193,7 +193,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E f(E element)) {
-    final result = _list.map(f).toList(growable: true);
+    var result = _list.map(f).toList(growable: true);
     _checkElements(result);
     _setSafeList(result);
   }
@@ -205,7 +205,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> f(E element)) {
-    final result = _list.expand(f).toList(growable: true);
+    var result = _list.expand(f).toList(growable: true);
     _checkElements(result);
     _setSafeList(result);
   }
@@ -269,7 +269,7 @@ class ListBuilder<E> {
   }
 
   void _checkElements(Iterable elements) {
-    for (final element in elements) {
+    for (var element in elements) {
       if (element is! E) {
         throw new ArgumentError('invalid element: $element');
       }

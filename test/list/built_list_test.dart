@@ -13,7 +13,7 @@ import '../performance.dart';
 void main() {
   group('BuiltList', () {
     test('instantiates empty by default', () {
-      final list = new BuiltList<int>();
+      var list = new BuiltList<int>();
       expect(list.isEmpty, isTrue);
       expect(list.isNotEmpty, isFalse);
     });
@@ -39,14 +39,14 @@ void main() {
     });
 
     test('reports non-emptiness', () {
-      final list = new BuiltList<int>([1]);
+      var list = new BuiltList<int>([1]);
       expect(list.isEmpty, isFalse);
       expect(list.isNotEmpty, isTrue);
     });
 
     test('can be instantiated from List then converted back to equal List', () {
-      final mutableList = [1];
-      final list = new BuiltList<int>(mutableList);
+      var mutableList = [1];
+      var list = new BuiltList<int>(mutableList);
       expect(list.toList(), mutableList);
     });
 
@@ -55,15 +55,15 @@ void main() {
     });
 
     test('does not keep a mutable List', () {
-      final mutableList = [1];
-      final list = new BuiltList<int>(mutableList);
+      var mutableList = [1];
+      var list = new BuiltList<int>(mutableList);
       mutableList.clear();
       expect(list.toList(), [1]);
     });
 
     test('copies from BuiltList instances of different type', () {
-      final list1 = new BuiltList<Object>();
-      final list2 = new BuiltList<int>(list1);
+      var list1 = new BuiltList<Object>();
+      var list2 = new BuiltList<int>(list1);
       expect(list1, isNot(same(list2)));
     });
 
@@ -73,7 +73,7 @@ void main() {
     });
 
     test('can be converted to an UnmodifiableListView', () {
-      final immutableList = new BuiltList<int>().asList();
+      var immutableList = new BuiltList<int>().asList();
       expect(immutableList is List<int>, isTrue);
       expect(() => immutableList.add(1), throwsUnsupportedError);
       expect(immutableList, isEmpty);
@@ -100,34 +100,34 @@ void main() {
     });
 
     test('hashes to same value for same contents', () {
-      final list1 = new BuiltList<int>([1, 2, 3]);
-      final list2 = new BuiltList<int>([1, 2, 3]);
+      var list1 = new BuiltList<int>([1, 2, 3]);
+      var list2 = new BuiltList<int>([1, 2, 3]);
 
       expect(list1.hashCode, list2.hashCode);
     });
 
     test('hashes to different value for different contents', () {
-      final list1 = new BuiltList<int>([1, 2, 3]);
-      final list2 = new BuiltList<int>([1, 2, 4]);
+      var list1 = new BuiltList<int>([1, 2, 3]);
+      var list2 = new BuiltList<int>([1, 2, 4]);
 
       expect(list1.hashCode, isNot(list2.hashCode));
     });
 
     test('caches hash', () {
-      final list = new BuiltList<Object>([new _HashcodeOnlyOnce()]);
+      var list = new BuiltList<Object>([new _HashcodeOnlyOnce()]);
 
       list.hashCode;
       list.hashCode;
     });
 
     test('compares equal to same instance', () {
-      final list = new BuiltList<int>([1, 2, 3]);
+      var list = new BuiltList<int>([1, 2, 3]);
       expect(list == list, isTrue);
     });
 
     test('compares equal to same contents', () {
-      final list1 = new BuiltList<int>([1, 2, 3]);
-      final list2 = new BuiltList<int>([1, 2, 3]);
+      var list1 = new BuiltList<int>([1, 2, 3]);
+      var list2 = new BuiltList<int>([1, 2, 3]);
       expect(list1 == list2, isTrue);
     });
 
@@ -162,7 +162,7 @@ void main() {
     });
 
     test('returns identical with toBuiltList', () {
-      final list = new BuiltList<int>([0, 1, 2]);
+      var list = new BuiltList<int>([0, 1, 2]);
       expect(list.toBuiltList(), same(list));
     });
 
@@ -173,62 +173,62 @@ void main() {
     // Lazy copies.
 
     test('reuses BuiltList instances of the same type', () {
-      final list1 = new BuiltList<int>();
-      final list2 = new BuiltList<int>(list1);
+      var list1 = new BuiltList<int>();
+      var list2 = new BuiltList<int>(list1);
       expect(list1, same(list2));
     });
 
     test('does not reuse BuiltList instances with subtype element type', () {
-      final list1 = new BuiltList<_ExtendsA>();
-      final list2 = new BuiltList<_A>(list1);
+      var list1 = new BuiltList<_ExtendsA>();
+      var list2 = new BuiltList<_A>(list1);
       expect(list1, isNot(same(list2)));
     });
 
     test('can be reused via ListBuilder if there are no changes', () {
-      final list1 = new BuiltList<Object>();
-      final list2 = list1.toBuilder().build();
+      var list1 = new BuiltList<Object>();
+      var list2 = list1.toBuilder().build();
       expect(list1, same(list2));
     });
 
     test('converts to ListBuilder from correct type without copying', () {
-      final makeLongList =
+      var makeLongList =
           () => new BuiltList<int>(new List<int>.filled(1000000, 0));
-      final longList = makeLongList();
-      final longListToListBuilder = longList.toBuilder;
+      var longList = makeLongList();
+      var longListToListBuilder = longList.toBuilder;
 
       expectMuchFaster(longListToListBuilder, makeLongList);
     });
 
     test('converts to ListBuilder from wrong type by copying', () {
-      final makeLongList =
+      var makeLongList =
           () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
-      final longList = makeLongList();
-      final longListToListBuilder = () => new ListBuilder<int>(longList);
+      var longList = makeLongList();
+      var longListToListBuilder = () => new ListBuilder<int>(longList);
 
       expectNotMuchFaster(longListToListBuilder, makeLongList);
     });
 
     test('has fast toList', () {
-      final makeLongList =
+      var makeLongList =
           () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
-      final longList = makeLongList();
-      final longListToList = () => longList.toList();
+      var longList = makeLongList();
+      var longListToList = () => longList.toList();
 
       expectMuchFaster(longListToList, makeLongList);
     });
 
     test('checks for reference identity', () {
-      final makeLongList =
+      var makeLongList =
           () => new BuiltList<Object>(new List<int>.filled(1000000, 0));
-      final longList = makeLongList();
-      final otherLongList = makeLongList();
+      var longList = makeLongList();
+      var otherLongList = makeLongList();
 
       expectMuchFaster(
           () => longList == longList, () => longList == otherLongList);
     });
 
     test('is not mutated when List from toList is mutated', () {
-      final list = new BuiltList<int>();
+      var list = new BuiltList<int>();
       list.toList().add(1);
       expect(list, []);
     });
@@ -243,7 +243,7 @@ void main() {
     });
 
     test('returns identical BuiltList on repeated build', () {
-      final listBuilder = new ListBuilder<int>([1, 2, 3]);
+      var listBuilder = new ListBuilder<int>([1, 2, 3]);
       expect(listBuilder.build(), same(listBuilder.build()));
     });
 

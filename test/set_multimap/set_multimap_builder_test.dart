@@ -42,7 +42,7 @@ void main() {
     });
 
     test('throws on null key addAll', () {
-      final mutableMultimap = new SetMultimap<int, String>();
+      var mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(0, null);
 
       expect(
@@ -51,7 +51,7 @@ void main() {
     });
 
     test('throws on null value addAll', () {
-      final mutableMultimap = new SetMultimap<int, String>();
+      var mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(0, null);
 
       expect(
@@ -128,11 +128,11 @@ void main() {
 
     test('does not mutate BuiltSetMultimap following reuse of underlying Map',
         () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1'],
         2: ['2']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       multimapBuilder.add(3, '3');
       expect(
           multimap.toMap(),
@@ -143,26 +143,26 @@ void main() {
     });
 
     test('converts to BuiltSetMultimap without copying', () {
-      final makeLongSetMultimapBuilder = () {
-        final result = new SetMultimapBuilder<int, int>();
+      var makeLongSetMultimapBuilder = () {
+        var result = new SetMultimapBuilder<int, int>();
         for (int i = 0; i != 100000; ++i) {
           result.add(0, i);
         }
         return result;
       };
-      final longSetMultimapBuilder = makeLongSetMultimapBuilder();
-      final buildLongSetMultimapBuilder = () => longSetMultimapBuilder.build();
+      var longSetMultimapBuilder = makeLongSetMultimapBuilder();
+      var buildLongSetMultimapBuilder = () => longSetMultimapBuilder.build();
 
       expectMuchFaster(buildLongSetMultimapBuilder, makeLongSetMultimapBuilder);
     });
 
     test('does not mutate BuiltSetMultimap following mutates after build', () {
-      final multimapBuilder = new SetMultimapBuilder<int, String>({
+      var multimapBuilder = new SetMultimapBuilder<int, String>({
         1: ['1'],
         2: ['2']
       });
 
-      final map1 = multimapBuilder.build();
+      var map1 = multimapBuilder.build();
       expect(
           map1.toMap(),
           ({
@@ -204,7 +204,7 @@ void main() {
     });
 
     test('returns identical BuiltSetMultimap on repeated build', () {
-      final multimapBuilder = new SetMultimapBuilder<int, String>({
+      var multimapBuilder = new SetMultimapBuilder<int, String>({
         1: ['1', '2', '3']
       });
       expect(multimapBuilder.build(), same(multimapBuilder.build()));
@@ -213,46 +213,46 @@ void main() {
     // Modification of existing data.
 
     test('adds to copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..add(1, '2')).build().toMap(), {
         1: ['1', '2']
       });
     });
 
     test('removes from copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1', '2', '3']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..remove(1, '2')).build().toMap(), {
         1: ['1', '3']
       });
     });
 
     test('removes from copied sets to empty', () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..remove(1, '1')).build().toMap(), {});
     });
 
     test('removes all from copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1', '2', '3']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..removeAll(1)).build().toMap(), {});
     });
 
     test('clears copied sets', () {
-      final multimap = new BuiltSetMultimap<int, String>({
+      var multimap = new BuiltSetMultimap<int, String>({
         1: ['1', '2', '3']
       });
-      final multimapBuilder = multimap.toBuilder();
+      var multimapBuilder = multimap.toBuilder();
       expect((multimapBuilder..clear()).build().toMap(), {});
     });
 
@@ -309,7 +309,7 @@ void main() {
     });
 
     test('has a method like SetMultimap.addAll', () {
-      final mutableMultimap = new SetMultimap<int, String>();
+      var mutableMultimap = new SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       mutableMultimap.add(2, '2');
       expect(

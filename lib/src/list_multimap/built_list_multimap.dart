@@ -102,7 +102,7 @@ abstract class BuiltListMultimap<K, V> {
     if (other is! BuiltListMultimap) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
-    for (final key in keys) {
+    for (var key in keys) {
       if (other[key] != this[key]) return false;
     }
     return true;
@@ -121,7 +121,7 @@ abstract class BuiltListMultimap<K, V> {
 
   /// As [ListMultimap], but results are [BuiltList]s and not mutable.
   BuiltList<V> operator [](Object key) {
-    final result = _map[key];
+    var result = _map[key];
     return identical(result, null) ? _emptyList : result;
   }
 
@@ -194,7 +194,7 @@ class _BuiltListMultimap<K, V> extends BuiltListMultimap<K, V> {
 
   _BuiltListMultimap.copyAndCheck(Iterable keys, Function lookup)
       : super._(new Map<K, BuiltList<V>>()) {
-    for (final key in keys) {
+    for (var key in keys) {
       if (key is K) {
         _map[key] = new BuiltList<V>(lookup(key));
       } else {

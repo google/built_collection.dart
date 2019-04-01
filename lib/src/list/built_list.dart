@@ -273,7 +273,7 @@ class _BuiltList<E> extends BuiltList<E> {
 
   _BuiltList.copyAndCheckTypes([Iterable iterable = const []])
       : super._(new List<E>.from(iterable, growable: false)) {
-    for (final element in _list) {
+    for (var element in _list) {
       if (element is! E) {
         throw new ArgumentError('iterable contained invalid element: $element');
       }
@@ -282,7 +282,7 @@ class _BuiltList<E> extends BuiltList<E> {
 
   _BuiltList.copyAndCheckForNull(Iterable<E> iterable)
       : super._(new List<E>.from(iterable, growable: false)) {
-    for (final element in _list) {
+    for (var element in _list) {
       if (identical(element, null)) {
         throw new ArgumentError('iterable contained invalid element: null');
       }

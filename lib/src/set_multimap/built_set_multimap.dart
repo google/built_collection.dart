@@ -100,7 +100,7 @@ abstract class BuiltSetMultimap<K, V> {
     if (other is! BuiltSetMultimap) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
-    for (final key in keys) {
+    for (var key in keys) {
       if (other[key] != this[key]) return false;
     }
     return true;
@@ -119,7 +119,7 @@ abstract class BuiltSetMultimap<K, V> {
 
   /// As [SetMultimap], but results are [BuiltSet]s and not mutable.
   BuiltSet<V> operator [](Object key) {
-    final result = _map[key];
+    var result = _map[key];
     return identical(result, null) ? _emptySet : result;
   }
 
@@ -192,7 +192,7 @@ class _BuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
 
   _BuiltSetMultimap.copyAndCheck(Iterable keys, Function lookup)
       : super._(new Map<K, BuiltSet<V>>()) {
-    for (final key in keys) {
+    for (var key in keys) {
       if (key is K) {
         _map[key] = new BuiltSet<V>(lookup(key));
       } else {

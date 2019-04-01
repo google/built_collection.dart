@@ -43,8 +43,8 @@ class ListMultimapBuilder<K, V> {
   /// number of `BuiltListMultimap`s.
   BuiltListMultimap<K, V> build() {
     if (_builtMapOwner == null) {
-      for (final key in _builderMap.keys) {
-        final builtList = _builderMap[key].build();
+      for (var key in _builderMap.keys) {
+        var builtList = _builderMap[key].build();
         if (builtList.isEmpty) {
           _builtMap.remove(key);
         } else {
@@ -97,12 +97,12 @@ class ListMultimapBuilder<K, V> {
     if (key == null) key = (T x) => x as K;
 
     if (values != null) {
-      for (final element in iterable) {
+      for (var element in iterable) {
         this.addValues(key(element), values(element));
       }
     } else {
       if (value == null) value = (T x) => x as V;
-      for (final element in iterable) {
+      for (var element in iterable) {
         this.add(key(element), value(element));
       }
     }
@@ -145,12 +145,12 @@ class ListMultimapBuilder<K, V> {
   BuiltList<V> removeAll(Object key) {
     if (key is! K) return new BuiltList<V>();
     _makeWriteableCopy();
-    final builder = _builderMap[key];
+    var builder = _builderMap[key];
     if (builder == null) {
       _builderMap[key] = new ListBuilder<V>();
       return _builtMap[key] ?? new BuiltList<V>();
     }
-    final old = builder.build();
+    var old = builder.build();
     builder.clear();
     return old;
   }
@@ -174,7 +174,7 @@ class ListMultimapBuilder<K, V> {
   ListBuilder<V> _getValuesBuilder(K key) {
     var result = _builderMap[key];
     if (result == null) {
-      final builtValues = _builtMap[key];
+      var builtValues = _builtMap[key];
       if (builtValues == null) {
         result = new ListBuilder<V>();
       } else {
@@ -207,9 +207,9 @@ class ListMultimapBuilder<K, V> {
     _builtMap = new Map<K, BuiltList<V>>();
     _builderMap = new Map<K, ListBuilder<V>>();
 
-    for (final key in keys) {
+    for (var key in keys) {
       if (key is K) {
-        for (final value in lookup(key)) {
+        for (var value in lookup(key)) {
           if (value is V) {
             add(key, value);
           } else {

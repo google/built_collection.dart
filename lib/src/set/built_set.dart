@@ -257,7 +257,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
       : super._(setFactory, set);
 
   _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, new Set<E>()) {
-    for (final element in iterable) {
+    for (var element in iterable) {
       if (element is E) {
         _set.add(element);
       } else {
@@ -268,7 +268,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
 
   _BuiltSet.copyAndCheckForNull(Iterable iterable)
       : super._(null, new Set<E>()) {
-    for (final element in iterable) {
+    for (var element in iterable) {
       if (identical(element, null)) {
         throw new ArgumentError('iterable contained invalid element: null');
       } else {

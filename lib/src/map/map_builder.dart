@@ -51,13 +51,13 @@ class MapBuilder<K, V> {
     if (map is _BuiltMap<K, V> && map._mapFactory == _mapFactory) {
       _setOwner(map);
     } else if (map is BuiltMap) {
-      final replacement = _createMap();
+      var replacement = _createMap();
       map.forEach((Object key, Object value) {
         replacement[key as K] = value as V;
       });
       _setSafeMap(replacement);
     } else if (map is Map) {
-      final replacement = _createMap();
+      var replacement = _createMap();
       map.forEach((Object key, Object value) {
         replacement[key as K] = value as V;
       });
@@ -106,7 +106,7 @@ class MapBuilder<K, V> {
       {K key(T element), V value(T element)}) {
     if (key == null) key = (T x) => x as K;
     if (value == null) value = (T x) => x as V;
-    for (final element in iterable) {
+    for (var element in iterable) {
       this[key(element)] = value(element);
     }
   }
@@ -136,7 +136,7 @@ class MapBuilder<K, V> {
   V putIfAbsent(K key, V ifAbsent()) {
     _checkKey(key);
     return _safeMap.putIfAbsent(key, () {
-      final value = ifAbsent();
+      var value = ifAbsent();
       _checkValue(value);
       return value;
     });
@@ -228,7 +228,7 @@ class MapBuilder<K, V> {
   }
 
   void _checkKeys(Iterable keys) {
-    for (final key in keys) {
+    for (var key in keys) {
       if (key is! K) {
         throw new ArgumentError('invalid key: $key');
       }
@@ -242,7 +242,7 @@ class MapBuilder<K, V> {
   }
 
   void _checkValues(Iterable values) {
-    for (final value in values) {
+    for (var value in values) {
       if (value is! V) {
         throw new ArgumentError('invalid value: $value');
       }

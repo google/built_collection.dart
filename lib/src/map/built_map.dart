@@ -124,7 +124,7 @@ abstract class BuiltMap<K, V> {
     if (other is! BuiltMap) return false;
     if (other.length != length) return false;
     if (other.hashCode != hashCode) return false;
-    for (final key in keys) {
+    for (var key in keys) {
       if (other[key] != this[key]) return false;
     }
     return true;
@@ -203,9 +203,9 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
 
   _BuiltMap.copyAndCheckTypes(Iterable keys, Function lookup)
       : super._(null, new Map<K, V>()) {
-    for (final key in keys) {
+    for (var key in keys) {
       if (key is K) {
-        final value = lookup(key);
+        var value = lookup(key);
         if (value is V) {
           _map[key] = value;
         } else {
@@ -219,11 +219,11 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
 
   _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V lookup(K value))
       : super._(null, new Map<K, V>()) {
-    for (final key in keys) {
+    for (var key in keys) {
       if (identical(key, null)) {
         throw new ArgumentError('map contained invalid key: null');
       }
-      final value = lookup(key);
+      var value = lookup(key);
       if (value == null) {
         throw new ArgumentError('map contained invalid value: null');
       }

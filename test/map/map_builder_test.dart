@@ -58,7 +58,7 @@ void main() {
     });
 
     test('throws on null withBase', () {
-      final builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
+      var builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
       expect(() => builder.withBase(null), throwsA(anything));
       expect(builder.build().keys, orderedEquals([2, 0, 1]));
     });
@@ -112,11 +112,11 @@ void main() {
     });
 
     test('reuses BuiltMap passed to replace if it has the same base', () {
-      final treeMapBase = () => new SplayTreeMap<int, String>();
-      final map = new BuiltMap<int, String>.build((b) => b
+      var treeMapBase = () => new SplayTreeMap<int, String>();
+      var map = new BuiltMap<int, String>.build((b) => b
         ..withBase(treeMapBase)
         ..addAll({1: '1', 2: '2'}));
-      final builder = new MapBuilder<int, String>()
+      var builder = new MapBuilder<int, String>()
         ..withBase(treeMapBase)
         ..replace(map);
       expect(builder.build(), same(map));
@@ -124,21 +124,21 @@ void main() {
 
     test("doesn't reuse BuiltMap passed to replace if it has a different base",
         () {
-      final map = new BuiltMap<int, String>.build((b) => b
+      var map = new BuiltMap<int, String>.build((b) => b
         ..withBase(() => new SplayTreeMap<int, String>())
         ..addAll({1: '1', 2: '2'}));
-      final builder = new MapBuilder<int, String>()..replace(map);
+      var builder = new MapBuilder<int, String>()..replace(map);
       expect(builder.build(), isNot(same(map)));
     });
 
     test('has withBase method that changes the underlying map type', () {
-      final builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
+      var builder = new MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
       builder.withBase(() => new SplayTreeMap<int, String>());
       expect(builder.build().keys, orderedEquals([0, 1, 2]));
     });
 
     test('has withDefaultBase method that resets the underlying map type', () {
-      final builder = new MapBuilder<int, String>()
+      var builder = new MapBuilder<int, String>()
         ..withBase(() => new SplayTreeMap<int, String>())
         ..withDefaultBase()
         ..addAll({2: '2', 0: '0', 1: '1'});
@@ -148,26 +148,26 @@ void main() {
     // Lazy copies.
 
     test('does not mutate BuiltMap following reuse of underlying Map', () {
-      final map = new BuiltMap<int, String>({1: '1', 2: '2'});
-      final mapBuilder = map.toBuilder();
+      var map = new BuiltMap<int, String>({1: '1', 2: '2'});
+      var mapBuilder = map.toBuilder();
       mapBuilder[3] = '3';
       expect(map.toMap(), {1: '1', 2: '2'});
     });
 
     test('converts to BuiltMap without copying', () {
-      final makeLongMapBuilder = () => new MapBuilder<int, int>(
+      var makeLongMapBuilder = () => new MapBuilder<int, int>(
           new Map<int, int>.fromIterable(
               new List<int>.generate(100000, (x) => x)));
-      final longMapBuilder = makeLongMapBuilder();
-      final buildLongMapBuilder = () => longMapBuilder.build();
+      var longMapBuilder = makeLongMapBuilder();
+      var buildLongMapBuilder = () => longMapBuilder.build();
 
       expectMuchFaster(buildLongMapBuilder, makeLongMapBuilder);
     });
 
     test('does not mutate BuiltMap following mutates after build', () {
-      final mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2'});
+      var mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2'});
 
-      final map1 = mapBuilder.build();
+      var map1 = mapBuilder.build();
       expect(map1.toMap(), {1: '1', 2: '2'});
 
       mapBuilder[3] = '3';
@@ -177,7 +177,7 @@ void main() {
     // Map.
 
     test('has a method like Map[]', () {
-      final mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2'});
+      var mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2'});
       mapBuilder[1] += '*';
       mapBuilder[2] += '**';
       expect(mapBuilder.build().asMap(), {1: '1*', 2: '2**'});

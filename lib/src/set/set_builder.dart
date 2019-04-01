@@ -238,11 +238,9 @@ class SetBuilder<E> {
     }
   }
 
-  void _checkElements(Iterable elements) {
+  void _checkElements(Iterable<E> elements) {
     for (var element in elements) {
-      if (element is! E) {
-        throw new ArgumentError('invalid element: $element');
-      }
+      _checkElement(element);
     }
   }
 }

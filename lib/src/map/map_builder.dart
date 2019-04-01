@@ -227,11 +227,9 @@ class MapBuilder<K, V> {
     }
   }
 
-  void _checkKeys(Iterable keys) {
+  void _checkKeys(Iterable<K> keys) {
     for (var key in keys) {
-      if (key is! K) {
-        throw new ArgumentError('invalid key: $key');
-      }
+      _checkKey(key);
     }
   }
 
@@ -241,11 +239,9 @@ class MapBuilder<K, V> {
     }
   }
 
-  void _checkValues(Iterable values) {
+  void _checkValues(Iterable<V> values) {
     for (var value in values) {
-      if (value is! V) {
-        throw new ArgumentError('invalid value: $value');
-      }
+      _checkValue(value);
     }
   }
 }

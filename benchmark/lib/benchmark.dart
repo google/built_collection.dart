@@ -20,12 +20,15 @@ class BuiltCollectionBenchmark {
       var function = entry.value;
 
       Iterable<int> list = List<int>.generate(1000, (x) => x);
-      Iterable<int> lazyIterable = list.map(_shortDelay);
+      Iterable<int> fastLazyIterable = list.map((x) => x + 1);
+      Iterable<int> slowLazyIterable = list.map(_shortDelay);
       var builderFactory = () => ListBuilder<int>()..addAll(list);
 
       _benchmark('ListBuilder.$name,list', function, builderFactory, list);
+      _benchmark('ListBuilder.$name,fast lazy iterable', function,
+          builderFactory, fastLazyIterable);
       _benchmark('ListBuilder.$name,slow lazy iterable', function,
-          builderFactory, lazyIterable);
+          builderFactory, slowLazyIterable);
     }
   }
 }

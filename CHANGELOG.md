@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1 (unreleased)
+
+- Stop doing explicit type checks on elements; in Dart 2 these are implied.
+
 ## 4.1.0
 
 - Add return val to `SetBuilder.add()` to match `Set.add()`.

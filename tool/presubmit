@@ -8,6 +8,9 @@ set -e
 dartfmt -w $(find bin lib test -name \*.dart 2>/dev/null)
 pub get
 pub upgrade
-dartanalyzer --strong --fatal-warnings --fatal-infos \
+dartanalyzer \
+    --fatal-warnings \
+    --fatal-infos \
+    --packages="$PWD/.packages" \
     $(find bin lib test -name \*.dart 2>/dev/null)
 pub run test

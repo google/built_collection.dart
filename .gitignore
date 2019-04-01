@@ -4,3 +4,4 @@ packages
 .idea
 .packages
 .pub
+**/*.iml

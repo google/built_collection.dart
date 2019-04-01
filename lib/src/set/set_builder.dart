@@ -115,6 +115,7 @@ class SetBuilder<E> {
 
   /// As [Set.addAll].
   void addAll(Iterable<E> iterable) {
+    iterable = evaluateIterable(iterable);
     _checkElements(iterable);
     _safeSet.addAll(iterable);
   }

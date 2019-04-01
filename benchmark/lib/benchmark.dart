@@ -10,8 +10,14 @@ class BuiltCollectionBenchmark {
     'replaceRange': (b, iterable) => b.replaceRange(0, 1000, iterable),
   };
 
+  final Map<String, void Function(SetBuilder<int>, Iterable<int>)>
+  setBuilderFunctions = {
+    'addAll': (b, iterable) => b.addAll(iterable),
+  };
+
   Future<void> run() async {
     await benchmarkListBuilder();
+    await benchmarkSetBuilder();
   }
 
   Future<void> benchmarkListBuilder() async {
@@ -28,6 +34,24 @@ class BuiltCollectionBenchmark {
       _benchmark('ListBuilder.$name,fast lazy iterable', function,
           builderFactory, fastLazyIterable);
       _benchmark('ListBuilder.$name,slow lazy iterable', function,
+          builderFactory, slowLazyIterable);
+    }
+  }
+
+  Future<void> benchmarkSetBuilder() async {
+    for (var entry in setBuilderFunctions.entries) {
+      var name = entry.key;
+      var function = entry.value;
+
+      Iterable<int> list = List<int>.generate(1000, (x) => x);
+      Iterable<int> fastLazyIterable = list.map((x) => x + 1);
+      Iterable<int> slowLazyIterable = list.map(_shortDelay);
+      var builderFactory = () => SetBuilder<int>();
+
+      _benchmark('SetBuilder.$name,list', function, builderFactory, list);
+      _benchmark('SetBuilder.$name,fast lazy iterable', function,
+          builderFactory, fastLazyIterable);
+      _benchmark('SetBuilder.$name,slow lazy iterable', function,
           builderFactory, slowLazyIterable);
     }
   }

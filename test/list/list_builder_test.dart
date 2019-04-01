@@ -417,6 +417,44 @@ void main() {
               .build(),
           [2]);
     });
+
+    group('iterates at most once in', () {
+      Iterable<int> onceIterable;
+      setUp(() {
+        var count = 0;
+        onceIterable = [1].map((x) {
+          ++count;
+          if (count > 1) throw StateError('Iterated twice.');
+          return x;
+        });
+      });
+
+      test('addAll', () {
+        new ListBuilder<int>().addAll(onceIterable);
+      });
+
+      test('insertAll', () {
+        new ListBuilder<int>().insertAll(0, onceIterable);
+      });
+
+      test('setAll', () {
+        new ListBuilder<int>()
+          ..addAll([0])
+          ..setAll(0, onceIterable);
+      });
+
+      test('setRange', () {
+        new ListBuilder<int>()
+          ..addAll([0])
+          ..setRange(0, 1, onceIterable);
+      });
+
+      test('replaceRange', () {
+        new ListBuilder<int>()
+          ..addAll([0])
+          ..replaceRange(0, 1, onceIterable);
+      });
+    });
   });
 }
 

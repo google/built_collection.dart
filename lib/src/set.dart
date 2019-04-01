@@ -10,6 +10,7 @@ import 'package:collection/collection.dart' show UnmodifiableSetView;
 import 'package:quiver/core.dart' show hashObjects;
 
 import 'internal/copy_on_write_set.dart';
+import 'internal/iterables.dart';
 
 part 'set/built_set.dart';
 part 'set/set_builder.dart';

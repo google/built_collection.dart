@@ -111,7 +111,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   Iterable<E> takeWhile(bool test(E value)) => _set.takeWhile(test);
 
   @override
-  List<E> toList({bool growable: true}) => _set.toList(growable: growable);
+  List<E> toList({bool growable = true}) => _set.toList(growable: growable);
 
   @override
   Set<E> toSet() => _set.toSet();

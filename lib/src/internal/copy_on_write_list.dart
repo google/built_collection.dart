@@ -128,7 +128,7 @@ class CopyOnWriteList<E> implements List<E> {
   Iterable<E> takeWhile(bool test(E value)) => _list.takeWhile(test);
 
   @override
-  List<E> toList({bool growable: true}) => _list.toList(growable: growable);
+  List<E> toList({bool growable = true}) => _list.toList(growable: growable);
 
   @override
   Set<E> toSet() => _list.toSet();

@@ -197,7 +197,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Set<E> toSet() => new CopyOnWriteSet<E>(_set, _setFactory);
 
   @override
-  List<E> toList({bool growable: true}) => _set.toList(growable: growable);
+  List<E> toList({bool growable = true}) => _set.toList(growable: growable);
 
   @override
   bool get isEmpty => _set.isEmpty;

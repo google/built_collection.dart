@@ -259,5 +259,21 @@ void main() {
               .build(),
           [2]);
     });
+
+    group('iterates at most once in', () {
+      Iterable<int> onceIterable;
+      setUp(() {
+        var count = 0;
+        onceIterable = [1].map((x) {
+          ++count;
+          if (count > 1) throw StateError('Iterated twice.');
+          return x;
+        });
+      });
+
+      test('addAll', () {
+        new SetBuilder<int>().addAll(onceIterable);
+      });
+    });
   });
 }

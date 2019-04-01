@@ -11,6 +11,7 @@ import 'package:built_collection/src/set.dart' show BuiltSet;
 import 'package:quiver/core.dart' show hashObjects;
 
 import 'internal/copy_on_write_list.dart';
+import 'internal/iterables.dart';
 
 part 'list/built_list.dart';
 part 'list/list_builder.dart';

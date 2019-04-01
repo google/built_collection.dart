@@ -97,8 +97,19 @@ class ListBuilder<E> {
 
   /// As [List.addAll].
   void addAll(Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.addAll(iterable);
+    // Add directly to the underlying `List` then check elements there, for
+    // performance. Roll back the changes if validation fails.
+    var safeList = _safeList;
+    var lengthBefore = safeList.length;
+    safeList.addAll(iterable);
+    try {
+      for (var i = lengthBefore; i != safeList.length; ++i) {
+        _checkElement(safeList[i]);
+      }
+    } catch (_) {
+      safeList.removeRange(lengthBefore, safeList.length);
+      rethrow;
+    }
   }
 
   /// As [List.reversed], but updates the builder in place. Returns nothing.
@@ -130,12 +141,26 @@ class ListBuilder<E> {
 
   /// As [List.insertAll].
   void insertAll(int index, Iterable<E> iterable) {
-    _checkElements(iterable);
-    _safeList.insertAll(index, iterable);
+    // Add directly to the underlying `List` then check elements there, for
+    // performance. Roll back the changes if validation fails.
+    var safeList = _safeList;
+    var lengthBefore = safeList.length;
+    safeList.insertAll(index, iterable);
+    var insertedLength = safeList.length - lengthBefore;
+
+    try {
+      for (var i = index; i != index + insertedLength; ++i) {
+        _checkElement(safeList[i]);
+      }
+    } catch (_) {
+      safeList.removeRange(index, index + insertedLength);
+      rethrow;
+    }
   }
 
   /// As [List.setAll].
   void setAll(int index, Iterable<E> iterable) {
+    iterable = evaluateIterable(iterable);
     _checkElements(iterable);
     _safeList.setAll(index, iterable);
   }
@@ -168,6 +193,7 @@ class ListBuilder<E> {
 
   /// As [List.setRange].
   void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]) {
+    iterable = evaluateIterable(iterable);
     _checkElements(iterable);
     _safeList.setRange(start, end, iterable, skipCount);
   }
@@ -185,6 +211,7 @@ class ListBuilder<E> {
 
   /// As [List.replaceRange].
   void replaceRange(int start, int end, Iterable<E> iterable) {
+    iterable = evaluateIterable(iterable);
     _checkElements(iterable);
     _safeList.replaceRange(start, end, iterable);
   }

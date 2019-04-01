@@ -1,8 +1,12 @@
 # Changelog
 
-## 4.1.1 (unreleased)
+## 4.2.0 (unreleased)
 
+- Add benchmark for VM and dart2js.
 - Stop doing explicit type checks on elements; in Dart 2 these are implied.
+- Modify methods on `ListBuilder` and `SetBuilder` that take `Iterable`
+  elements so they only iterate over the iterable once. Improves performance
+  when the iterable are slow/lazy.
 
 ## 4.1.0
 

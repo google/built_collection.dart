@@ -69,7 +69,8 @@ class ListBuilder<E> {
 
   /// As [List.first].
   set first(E value) {
-    _list.first = value;
+    _checkElement(value);
+    _safeList.first = value;
   }
 
   /// As [List.last].
@@ -77,7 +78,8 @@ class ListBuilder<E> {
 
   /// As [List.last].
   set last(E value) {
-    _list.last = value;
+    _checkElement(value);
+    _safeList.last = value;
   }
 
   /// As [List.length].

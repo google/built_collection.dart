@@ -27,6 +27,18 @@ void main() {
       expect(builder.build(), orderedEquals([0]));
     });
 
+    test('throws on null first', () {
+      var builder = new ListBuilder<int>([0]);
+      expect(() => builder.first = null, throwsA(anything));
+      expect(builder.build(), orderedEquals([0]));
+    });
+
+    test('throws on null last', () {
+      var builder = new ListBuilder<int>([0]);
+      expect(() => builder.last = null, throwsA(anything));
+      expect(builder.build(), orderedEquals([0]));
+    });
+
     test('throws on null add', () {
       var builder = new ListBuilder<int>();
       expect(() => builder.add(null), throwsA(anything));
@@ -128,10 +140,95 @@ void main() {
 
     // Lazy copies.
 
-    test('does not mutate BuiltList following reuse of underlying List', () {
+    test('does not mutate BuiltList when modifying ListBuilder assign', () {
       var list = new BuiltList<int>([1, 2]);
       var listBuilder = list.toBuilder();
-      listBuilder.add(3);
+      listBuilder[0] = 3;
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder first', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.first = 3;
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder last', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.last = 3;
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder add', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder[0] = 3;
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder addAll', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.addAll([3, 4]);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder insert', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.insert(0, 3);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder insertAll', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.insertAll(0, [3, 4]);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder setAll', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.setAll(0, [3, 4]);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder setRange', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.setRange(0, 2, [3, 4, 5]);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder fillRange', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.fillRange(0, 2, 3);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder replaceRange',
+        () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.replaceRange(0, 2, [3, 4]);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder map', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.map((x) => 3);
+      expect(list, [1, 2]);
+    });
+
+    test('does not mutate BuiltList when modifying ListBuilder expand', () {
+      var list = new BuiltList<int>([1, 2]);
+      var listBuilder = list.toBuilder();
+      listBuilder.expand((x) => [3, 4]);
       expect(list, [1, 2]);
     });
 

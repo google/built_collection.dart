@@ -164,7 +164,7 @@ void main() {
     test('does not mutate BuiltList when modifying ListBuilder add', () {
       var list = new BuiltList<int>([1, 2]);
       var listBuilder = list.toBuilder();
-      listBuilder[0] = 3;
+      listBuilder.add(3);
       expect(list, [1, 2]);
     });
 

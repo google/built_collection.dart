@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.1
+
+- Bug fix: `ListBuilder` `first` and `last` setters can no longer modify the
+  underlying collection.
+
 ## 4.2.0
 
 - Add benchmark for VM and dart2js.

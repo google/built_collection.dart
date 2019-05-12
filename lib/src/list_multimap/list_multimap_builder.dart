@@ -166,8 +166,10 @@ class ListMultimapBuilder<K, V> {
   }
 
   /// As [ListMultimap], but results are [ListBuilder]s.
-  ListBuilder<V> operator [](Object key) =>
-      key is K ? _getValuesBuilder(key) : new ListBuilder<V>();
+  ListBuilder<V> operator [](Object key) {
+    _makeWriteableCopy();
+    return key is K ? _getValuesBuilder(key) : new ListBuilder<V>();
+  }
 
   // Internal.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.2 (unreleased)
+
+- Bug fix: `ListMultimapBuilder.[]` no longer ignores modifications under some
+  circumstances.
+
 ## 4.2.1
 
 - Bug fix: `ListBuilder` `first` and `last` setters can no longer modify the

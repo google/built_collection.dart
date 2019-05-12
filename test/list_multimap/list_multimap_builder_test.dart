@@ -421,7 +421,8 @@ void main() {
           {});
     });
 
-    test('has a method like ListMultimap[]', () {
+    test('has a method like ListMultimap[] which can be used to read values',
+        () {
       expect(
           new BuiltListMultimap<int, String>({
             1: ['1'],
@@ -436,6 +437,13 @@ void main() {
             3: ['3']
           }).toBuilder()[4].build().toList(),
           []);
+    });
+
+    test('has a method like ListMultimap[] which can be used to write values',
+        () {
+      var builder = BuiltListMultimap<int, String>().toBuilder();
+      builder[1].add('1');
+      expect(builder.build()[1], ['1']);
     });
   });
 }

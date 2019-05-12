@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.2.2 (unreleased)
+## 4.2.2
 
 - Bug fix: `ListMultimapBuilder.[]` no longer ignores modifications under some
   circumstances.

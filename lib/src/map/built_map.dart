@@ -61,10 +61,6 @@ abstract class BuiltMap<K, V> {
   ///
   /// `K` and `V` must not be `dynamic`.
   ///
-  /// Wrong: `new BuiltMap.of({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Right: `new BuiltMap<int, String>.of({1: '1', 2: '2', 3: '3'})`.
-  ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.of(Map<K, V> map) {
     return new _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]);

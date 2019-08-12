@@ -59,7 +59,7 @@ abstract class BuiltMap<K, V> {
 
   /// Instantiates with elements from a [Map<K, V>].
   ///
-  /// `K` and `V` must not be `dynamic`.
+  /// `K` and `V` are inferred from `map`, and must not be `dynamic`.
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.of(Map<K, V> map) {

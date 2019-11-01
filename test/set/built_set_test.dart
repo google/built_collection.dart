@@ -436,6 +436,16 @@ void main() {
     test('implements Iterable.whereType', () {
       expect(BuiltSet<Object>([1, 'two', 3]).whereType<String>(), ['two']);
     });
+
+    test('can be created from`Set` using extension methods', () {
+      expect({1, 2, 3}.build() is BuiltSet<int>, true);
+      expect({1, 2, 3}.build(), [1, 2, 3]);
+    });
+
+    test('can be created from`Iterable` using extension methods', () {
+      expect([1, 2, 3].map((x) => x).toBuiltSet() is BuiltSet<int>, true);
+      expect([1, 2, 3].map((x) => x).toBuiltSet(), [1, 2, 3]);
+    });
   });
 }
 

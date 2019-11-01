@@ -277,3 +277,15 @@ class _BuiltSet<E> extends BuiltSet<E> {
 
   bool hasExactElementType(Type type) => E == type;
 }
+
+/// Extensions for [BuiltSet] on [Set].
+extension BuiltSetExtension<T> on Set<T> {
+  /// Converts to a [BuiltSet].
+  BuiltSet<T> build() => BuiltSet<T>.of(this);
+}
+
+/// Extensions for [BuiltSet] on [Iterable].
+extension BuiltIterableExtension<E> on Iterable<E> {
+  /// Converts to a [BuiltSet].
+  BuiltSet<E> toBuiltSet() => BuiltSet.of(this);
+}

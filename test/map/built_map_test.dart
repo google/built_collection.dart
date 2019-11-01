@@ -405,6 +405,12 @@ void main() {
       var map = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.values, same(map.values));
     });
+
+    test('can be created from`Map` using extension methods', () {
+      expect({1: '1', 2: '2', 3: '3'}.build() is BuiltMap<int, String>, true);
+      expect(
+          {1: '1', 2: '2', 3: '3'}.build().toMap(), {1: '1', 2: '2', 3: '3'});
+    });
   });
 }
 

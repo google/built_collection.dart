@@ -2,6 +2,8 @@
 
 ## 4.3.0 (unreleased)
 
+- Add extensions methods: `List.build`, `Set.build`, `Map.build`,
+  `Iterable.toBuiltList` and `Iterable.toBuiltSet`. Requires SDK 2.6.0.
 - Cleanup: remove unnecessary `new` and `const`.
 
 ## 4.2.2

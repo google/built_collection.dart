@@ -290,3 +290,15 @@ class _BuiltList<E> extends BuiltList<E> {
 
   bool hasExactElementType(Type type) => E == type;
 }
+
+/// Extensions for [BuiltList] on [List].
+extension BuiltListExtension<T> on List<T> {
+  /// Converts to a [BuiltList].
+  BuiltList<T> build() => BuiltList<T>.of(this);
+}
+
+/// Extensions for [BuiltList] on [Iterable].
+extension BuiltListIterableExtension<E> on Iterable<E> {
+  /// Converts to a [BuiltList].
+  BuiltList<E> toBuiltList() => BuiltList.of(this);
+}

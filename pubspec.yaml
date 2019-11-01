@@ -1,5 +1,5 @@
 name: built_collection
-version: 4.2.2
+version: 4.3.0
 description: >
   Immutable collections based on the SDK collections. Each SDK collection class
   is split into a new immutable collection class and a corresponding mutable
@@ -11,7 +11,7 @@ authors:
 homepage: https://github.com/google/built_collection.dart
 
 environment:
-  sdk: '>=2-0-0-dev <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   collection: '^1.7.0'

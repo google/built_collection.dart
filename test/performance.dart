@@ -9,11 +9,11 @@ void expectMuchFaster(Function fastFunction, Function slowFunction) {
   // Retry; we only need one good result to prove the performance
   // characteristics. Bad performance can come from machine load.
   for (var i = 0; i != 10; ++i) {
-    fastStopWatch = new Stopwatch()..start();
+    fastStopWatch = Stopwatch()..start();
     fastFunction();
     fastStopWatch.stop();
 
-    slowStopWatch = new Stopwatch()..start();
+    slowStopWatch = Stopwatch()..start();
     slowFunction();
     slowStopWatch.stop();
 
@@ -35,11 +35,11 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
   // Retry; we only need one good result to prove the performance
   // characteristics. Bad performance can come from machine load.
   for (var i = 0; i != 10; ++i) {
-    fastStopWatch = new Stopwatch()..start();
+    fastStopWatch = Stopwatch()..start();
     notFastFunction();
     fastStopWatch.stop();
 
-    slowStopWatch = new Stopwatch()..start();
+    slowStopWatch = Stopwatch()..start();
     slowFunction();
     slowStopWatch.stop();
 

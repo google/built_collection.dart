@@ -37,10 +37,9 @@ abstract class BuiltMap<K, V> {
     if (map is _BuiltMap && map.hasExactKeyAndValueTypes(K, V)) {
       return map as BuiltMap<K, V>;
     } else if (map is Map || map is BuiltMap) {
-      return new _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
+      return _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
     } else {
-      throw new ArgumentError(
-          'expected Map or BuiltMap, got ${map.runtimeType}');
+      throw ArgumentError('expected Map or BuiltMap, got ${map.runtimeType}');
     }
   }
 
@@ -54,7 +53,7 @@ abstract class BuiltMap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.from(Map map) {
-    return new _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
+    return _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
   }
 
   /// Instantiates with elements from a [Map<K, V>].
@@ -63,17 +62,17 @@ abstract class BuiltMap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.of(Map<K, V> map) {
-    return new _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]);
+    return _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]);
   }
 
   /// Creates a [MapBuilder], applies updates to it, and builds.
   factory BuiltMap.build(updates(MapBuilder<K, V> builder)) =>
-      (new MapBuilder<K, V>()..update(updates)).build();
+      (MapBuilder<K, V>()..update(updates)).build();
 
   /// Converts to a [MapBuilder] for modification.
   ///
   /// The `BuiltMap` remains immutable and can continue to be used.
-  MapBuilder<K, V> toBuilder() => new MapBuilder<K, V>._fromBuiltMap(this);
+  MapBuilder<K, V> toBuilder() => MapBuilder<K, V>._fromBuiltMap(this);
 
   /// Converts to a [MapBuilder], applies updates to it, and builds.
   BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
@@ -83,7 +82,7 @@ abstract class BuiltMap<K, V> {
   ///
   /// Useful when producing or using APIs that need the [Map] interface. This
   /// differs from [toMap] where mutations are explicitly disallowed.
-  Map<K, V> asMap() => new Map<K, V>.unmodifiable(_map);
+  Map<K, V> asMap() => Map<K, V>.unmodifiable(_map);
 
   /// Converts to a [Map].
   ///
@@ -93,7 +92,7 @@ abstract class BuiltMap<K, V> {
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
-  Map<K, V> toMap() => new CopyOnWriteMap<K, V>(_map, _mapFactory);
+  Map<K, V> toMap() => CopyOnWriteMap<K, V>(_map, _mapFactory);
 
   /// Deep hashCode.
   ///
@@ -176,17 +175,17 @@ abstract class BuiltMap<K, V> {
 
   /// As [Map.map], but returns a [BuiltMap].
   BuiltMap<K2, V2> map<K2, V2>(MapEntry<K2, V2> f(K key, V value)) =>
-      new _BuiltMap<K2, V2>.withSafeMap(null, _map.map(f));
+      _BuiltMap<K2, V2>.withSafeMap(null, _map.map(f));
 
   // Internal.
 
   BuiltMap._(this._mapFactory, this._map) {
     if (K == dynamic) {
-      throw new UnsupportedError(
+      throw UnsupportedError(
           'explicit key type required, for example "new BuiltMap<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required,'
+      throw UnsupportedError('explicit value type required,'
           ' for example "new BuiltMap<int, int>"');
     }
   }
@@ -198,30 +197,30 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
       : super._(mapFactory, map);
 
   _BuiltMap.copyAndCheckTypes(Iterable keys, Function lookup)
-      : super._(null, new Map<K, V>()) {
+      : super._(null, Map<K, V>()) {
     for (var key in keys) {
       if (key is K) {
         var value = lookup(key);
         if (value is V) {
           _map[key] = value;
         } else {
-          throw new ArgumentError('map contained invalid value: $value');
+          throw ArgumentError('map contained invalid value: $value');
         }
       } else {
-        throw new ArgumentError('map contained invalid key: $key');
+        throw ArgumentError('map contained invalid key: $key');
       }
     }
   }
 
   _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V lookup(K value))
-      : super._(null, new Map<K, V>()) {
+      : super._(null, Map<K, V>()) {
     for (var key in keys) {
       if (identical(key, null)) {
-        throw new ArgumentError('map contained invalid key: null');
+        throw ArgumentError('map contained invalid key: null');
       }
       var value = lookup(key);
       if (value == null) {
-        throw new ArgumentError('map contained invalid value: null');
+        throw ArgumentError('map contained invalid value: null');
       }
       _map[key] = value;
     }

@@ -12,36 +12,35 @@ import '../set_multimap.dart';
 class BuiltCollectionTestHelpers {
   static BuiltList<int> overridenHashcodeBuiltList(
           Iterable iterable, int hashCode) =>
-      new OverriddenHashcodeBuiltList<int>(iterable, hashCode);
+      OverriddenHashcodeBuiltList<int>(iterable, hashCode);
 
   static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
           Object map, int hashCode) =>
-      new OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
+      OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
 
   static BuiltListMultimap<String, String>
       overridenHashcodeBuiltListMultimapWithStringKeys(
               Object map, int hashCode) =>
-          new OverriddenHashcodeBuiltListMultimap<String, String>(
-              map, hashCode);
+          OverriddenHashcodeBuiltListMultimap<String, String>(map, hashCode);
 
   static BuiltMap<int, String> overridenHashcodeBuiltMap(
           Object map, int hashCode) =>
-      new OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
+      OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
 
   static BuiltMap<String, String> overridenHashcodeBuiltMapWithStringKeys(
           Object map, int hashCode) =>
-      new OverriddenHashcodeBuiltMap<String, String>(map, hashCode);
+      OverriddenHashcodeBuiltMap<String, String>(map, hashCode);
 
   static BuiltSet<int> overridenHashcodeBuiltSet(
           Iterable iterable, int hashCode) =>
-      new OverriddenHashcodeBuiltSet<int>(iterable, hashCode);
+      OverriddenHashcodeBuiltSet<int>(iterable, hashCode);
 
   static BuiltSetMultimap<int, String> overridenHashcodeBuiltSetMultimap(
           Object map, int hashCode) =>
-      new OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);
+      OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);
 
   static BuiltSetMultimap<String, String>
       overridenHashcodeBuiltSetMultimapWithStringKeys(
               Object map, int hashCode) =>
-          new OverriddenHashcodeBuiltSetMultimap<String, String>(map, hashCode);
+          OverriddenHashcodeBuiltSetMultimap<String, String>(map, hashCode);
 }

@@ -27,7 +27,7 @@ class MapBuilder<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory MapBuilder([map = const {}]) {
-    return new MapBuilder<K, V>._uninitialized()..replace(map);
+    return MapBuilder<K, V>._uninitialized()..replace(map);
   }
 
   /// Converts to a [BuiltMap].
@@ -36,7 +36,7 @@ class MapBuilder<K, V> {
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
     if (_mapOwner == null) {
-      _mapOwner = new _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
+      _mapOwner = _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
     }
     return _mapOwner;
   }
@@ -63,8 +63,7 @@ class MapBuilder<K, V> {
       });
       _setSafeMap(replacement);
     } else {
-      throw new ArgumentError(
-          'expected Map or BuiltMap, got ${map.runtimeType}');
+      throw ArgumentError('expected Map or BuiltMap, got ${map.runtimeType}');
     }
   }
 
@@ -86,7 +85,7 @@ class MapBuilder<K, V> {
   /// Use [withDefaultBase] to reset `base` to the default value.
   void withBase(_MapFactory<K, V> base) {
     if (base == null) {
-      throw new ArgumentError.notNull('base');
+      throw ArgumentError.notNull('base');
     }
     _mapFactory = base;
     _setSafeMap(_createMap()..addAll(_map));
@@ -207,23 +206,22 @@ class MapBuilder<K, V> {
     return _map;
   }
 
-  Map<K, V> _createMap() =>
-      _mapFactory != null ? _mapFactory() : new Map<K, V>();
+  Map<K, V> _createMap() => _mapFactory != null ? _mapFactory() : Map<K, V>();
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError(
+      throw UnsupportedError(
           'explicit key type required, for example "new MapBuilder<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required, '
+      throw UnsupportedError('explicit value type required, '
           'for example "new MapBuilder<int, int>"');
     }
   }
 
   void _checkKey(K key) {
     if (identical(key, null)) {
-      throw new ArgumentError('null key');
+      throw ArgumentError('null key');
     }
   }
 
@@ -235,7 +233,7 @@ class MapBuilder<K, V> {
 
   void _checkValue(V value) {
     if (identical(value, null)) {
-      throw new ArgumentError('null value');
+      throw ArgumentError('null value');
     }
   }
 

@@ -27,7 +27,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList([Iterable iterable = const []]) =>
-      new BuiltList<E>.from(iterable);
+      BuiltList<E>.from(iterable);
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -42,7 +42,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {
-      return new _BuiltList<E>.copyAndCheckTypes(iterable);
+      return _BuiltList<E>.copyAndCheckTypes(iterable);
     }
   }
 
@@ -55,18 +55,18 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return new _BuiltList<E>.copyAndCheckForNull(iterable);
+      return _BuiltList<E>.copyAndCheckForNull(iterable);
     }
   }
 
   /// Creates a [ListBuilder], applies updates to it, and builds.
   factory BuiltList.build(updates(ListBuilder<E> builder)) =>
-      (new ListBuilder<E>()..update(updates)).build();
+      (ListBuilder<E>()..update(updates)).build();
 
   /// Converts to a [ListBuilder] for modification.
   ///
   /// The `BuiltList` remains immutable and can continue to be used.
-  ListBuilder<E> toBuilder() => new ListBuilder<E>(this);
+  ListBuilder<E> toBuilder() => ListBuilder<E>(this);
 
   /// Converts to a [ListBuilder], applies updates to it, and builds.
   BuiltList<E> rebuild(updates(ListBuilder<E> builder)) =>
@@ -76,7 +76,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   BuiltList<E> toBuiltList() => this;
 
   @override
-  BuiltSet<E> toBuiltSet() => new BuiltSet<E>(this);
+  BuiltSet<E> toBuiltSet() => BuiltSet<E>(this);
 
   /// Deep hashCode.
   ///
@@ -113,7 +113,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Useful when producing or using APIs that need the [List] interface. This
   /// differs from [toList] where mutations are explicitly disallowed.
-  List<E> asList() => new List<E>.unmodifiable(_list);
+  List<E> asList() => List<E>.unmodifiable(_list);
 
   // List.
 
@@ -122,7 +122,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [List.+].
   BuiltList<E> operator +(BuiltList<E> other) =>
-      new _BuiltList<E>.withSafeList(_list + other._list);
+      _BuiltList<E>.withSafeList(_list + other._list);
 
   /// As [List.length].
   @override
@@ -147,7 +147,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [List.sublist] but returns a `BuiltList<E>`.
   BuiltList<E> sublist(int start, [int end]) =>
-      new _BuiltList<E>.withSafeList(_list.sublist(start, end));
+      _BuiltList<E>.withSafeList(_list.sublist(start, end));
 
   /// As [List.getRange].
   Iterable<E> getRange(int start, int end) => _list.getRange(start, end);
@@ -206,8 +206,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
   @override
-  List<E> toList({bool growable = true}) =>
-      new CopyOnWriteList<E>(_list, growable);
+  List<E> toList({bool growable = true}) => CopyOnWriteList<E>(_list, growable);
 
   @override
   Set<E> toSet() => _list.toSet();
@@ -261,7 +260,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   BuiltList._(this._list) {
     if (E == dynamic) {
-      throw new UnsupportedError(
+      throw UnsupportedError(
           'explicit element type required, for example "new BuiltList<int>"');
     }
   }
@@ -272,19 +271,19 @@ class _BuiltList<E> extends BuiltList<E> {
   _BuiltList.withSafeList(List<E> list) : super._(list);
 
   _BuiltList.copyAndCheckTypes([Iterable iterable = const []])
-      : super._(new List<E>.from(iterable, growable: false)) {
+      : super._(List<E>.from(iterable, growable: false)) {
     for (var element in _list) {
       if (element is! E) {
-        throw new ArgumentError('iterable contained invalid element: $element');
+        throw ArgumentError('iterable contained invalid element: $element');
       }
     }
   }
 
   _BuiltList.copyAndCheckForNull(Iterable<E> iterable)
-      : super._(new List<E>.from(iterable, growable: false)) {
+      : super._(List<E>.from(iterable, growable: false)) {
     for (var element in _list) {
       if (identical(element, null)) {
-        throw new ArgumentError('iterable contained invalid element: null');
+        throw ArgumentError('iterable contained invalid element: null');
       }
     }
   }

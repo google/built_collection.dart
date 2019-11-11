@@ -14,210 +14,204 @@ import '../performance.dart';
 void main() {
   group('BuiltMap', () {
     test('instantiates empty by default', () {
-      var map = new BuiltMap<int, String>();
+      var map = BuiltMap<int, String>();
       expect(map.isEmpty, isTrue);
       expect(map.isNotEmpty, isFalse);
     });
 
     test('throws on attempt to create BuiltMap<dynamic, dynamic>', () {
-      expect(() => new BuiltMap(), throwsA(anything));
+      expect(() => BuiltMap(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltMap<String, dynamic>', () {
-      expect(() => new BuiltMap<String, dynamic>(), throwsA(anything));
+      expect(() => BuiltMap<String, dynamic>(), throwsA(anything));
     });
 
     test('throws on attempt to create BuiltMap<dynamic, String>', () {
-      expect(() => new BuiltMap<dynamic, String>(), throwsA(anything));
+      expect(() => BuiltMap<dynamic, String>(), throwsA(anything));
     });
 
     test(
         'of constructor throws on attempt to create BuiltMap<dynamic, dynamic>',
         () {
-      expect(() => new BuiltMap.of({}), throwsA(anything));
+      expect(() => BuiltMap.of({}), throwsA(anything));
     });
 
     test('of constructor throws on attempt to create BuiltMap<String, dynamic>',
         () {
-      expect(() => new BuiltMap.of(<String, dynamic>{}), throwsA(anything));
+      expect(() => BuiltMap.of(<String, dynamic>{}), throwsA(anything));
     });
 
     test('of constructor throws on attempt to create BuiltMap<dynamic, String>',
         () {
-      expect(() => new BuiltMap.of(<dynamic, String>{}), throwsA(anything));
+      expect(() => BuiltMap.of(<dynamic, String>{}), throwsA(anything));
     });
 
     test('allows BuiltMap<Object, Object>', () {
-      new BuiltMap<Object, Object>();
+      BuiltMap<Object, Object>();
     });
 
     test('can be instantiated from Map', () {
-      new BuiltMap<int, String>({});
+      BuiltMap<int, String>({});
     });
 
     test('from constructor takes Map', () {
-      new BuiltMap<int, String>.from({});
+      BuiltMap<int, String>.from({});
     });
 
     test('of constructor takes inferred type', () {
-      expect(new BuiltMap.of({1: '1'}),
-          const TypeMatcher<BuiltMap<int, String>>());
+      expect(BuiltMap.of({1: '1'}), const TypeMatcher<BuiltMap<int, String>>());
     });
 
     test('reports non-emptiness', () {
-      var map = new BuiltMap<int, String>({1: '1'});
+      var map = BuiltMap<int, String>({1: '1'});
       expect(map.isEmpty, isFalse);
       expect(map.isNotEmpty, isTrue);
     });
 
     test('can be instantiated from Map then converted back to equal Map', () {
       var mutableMap = {1: '1'};
-      var map = new BuiltMap<int, String>(mutableMap);
+      var map = BuiltMap<int, String>(mutableMap);
       expect(map.toMap(), mutableMap);
     });
 
     test('throws on wrong type key', () {
-      expect(() => new BuiltMap<int, String>({'1': '1'}), throwsA(anything));
+      expect(() => BuiltMap<int, String>({'1': '1'}), throwsA(anything));
     });
 
     test('throws on wrong type value', () {
-      expect(() => new BuiltMap<int, String>({1: 1}), throwsA(anything));
+      expect(() => BuiltMap<int, String>({1: 1}), throwsA(anything));
     });
 
     test('does not keep a mutable Map', () {
       var mutableMap = {1: '1'};
-      var map = new BuiltMap<int, String>(mutableMap);
+      var map = BuiltMap<int, String>(mutableMap);
       mutableMap.clear();
       expect(map.toMap(), {1: '1'});
     });
 
     test('copies from BuiltMap instances of different type', () {
-      var map1 = new BuiltMap<Object, Object>();
-      var map2 = new BuiltMap<int, String>(map1);
+      var map1 = BuiltMap<Object, Object>();
+      var map2 = BuiltMap<int, String>(map1);
       expect(map1, isNot(same(map2)));
     });
 
     test('can be converted to Map<K, V>', () {
-      expect(new BuiltMap<int, String>().toMap() is Map<int, String>, isTrue);
-      expect(new BuiltMap<int, String>().toMap() is Map<int, int>, isFalse);
-      expect(
-          new BuiltMap<int, String>().toMap() is Map<String, String>, isFalse);
+      expect(BuiltMap<int, String>().toMap() is Map<int, String>, isTrue);
+      expect(BuiltMap<int, String>().toMap() is Map<int, int>, isFalse);
+      expect(BuiltMap<int, String>().toMap() is Map<String, String>, isFalse);
     });
 
     test('uses same base when converted with toMap', () {
-      var built = new BuiltMap<int, String>.build((b) => b
-        ..withBase(() => new SplayTreeMap<int, String>())
+      var built = BuiltMap<int, String>.build((b) => b
+        ..withBase(() => SplayTreeMap<int, String>())
         ..addAll({1: '1', 3: '3'}));
       var map = built.toMap()..addAll({2: '2', 4: '4'});
       expect(map.keys, [1, 2, 3, 4]);
     });
 
     test('can be converted to an UnmodifiableMapView', () {
-      var immutableMap = new BuiltMap<int, String>().asMap();
+      var immutableMap = BuiltMap<int, String>().asMap();
       expect(immutableMap is Map<int, String>, isTrue);
       expect(() => immutableMap[1] = 'Hello', throwsUnsupportedError);
       expect(immutableMap, isEmpty);
     });
 
     test('can be converted to MapBuilder<K, V>', () {
-      expect(new BuiltMap<int, String>().toBuilder() is MapBuilder<int, String>,
+      expect(BuiltMap<int, String>().toBuilder() is MapBuilder<int, String>,
           isTrue);
-      expect(new BuiltMap<int, String>().toBuilder() is MapBuilder<int, int>,
-          isFalse);
       expect(
-          new BuiltMap<int, String>().toBuilder() is MapBuilder<String, String>,
+          BuiltMap<int, String>().toBuilder() is MapBuilder<int, int>, isFalse);
+      expect(BuiltMap<int, String>().toBuilder() is MapBuilder<String, String>,
           isFalse);
     });
 
     test('can be converted to MapBuilder<K, V> and back to Map<K, V>', () {
       expect(
-          new BuiltMap<int, String>().toBuilder().build()
-              is BuiltMap<int, String>,
+          BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, String>,
           isTrue);
-      expect(
-          new BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, int>,
+      expect(BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, int>,
           isFalse);
       expect(
-          new BuiltMap<int, String>().toBuilder().build()
+          BuiltMap<int, String>().toBuilder().build()
               is BuiltMap<String, String>,
           isFalse);
     });
 
     test('passes along its base when converted to SetBuilder', () {
-      var map = new BuiltMap<int, String>.build((b) => b
-        ..withBase(() => new SplayTreeMap<int, String>())
+      var map = BuiltMap<int, String>.build((b) => b
+        ..withBase(() => SplayTreeMap<int, String>())
         ..addAll({10: '10', 15: '15', 5: '5'}));
       var builder = map.toBuilder()..addAll({2: '2', 12: '12'});
       expect(builder.build().keys, orderedEquals([2, 5, 10, 12, 15]));
     });
 
     test('throws on null keys', () {
-      expect(() => new BuiltMap<int, String>({null: '1'}), throwsA(anything));
+      expect(() => BuiltMap<int, String>({null: '1'}), throwsA(anything));
     });
 
     test('throws on null values', () {
-      expect(() => new BuiltMap<int, String>({1: null}), throwsA(anything));
+      expect(() => BuiltMap<int, String>({1: null}), throwsA(anything));
     });
 
     test('of constructor throws on null keys', () {
-      expect(
-          () => new BuiltMap<int, String>.of({null: '1'}), throwsA(anything));
+      expect(() => BuiltMap<int, String>.of({null: '1'}), throwsA(anything));
     });
 
     test('of constructor throws on null values', () {
-      expect(() => new BuiltMap<int, String>.of({1: null}), throwsA(anything));
+      expect(() => BuiltMap<int, String>.of({1: null}), throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {
-      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map1 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
 
       expect(map1.hashCode, map2.hashCode);
     });
 
     test('hashes to different value for different keys', () {
-      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 4: '3'});
+      var map1 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = BuiltMap<int, String>({1: '1', 2: '2', 4: '3'});
 
       expect(map1.hashCode, isNot(map2.hashCode));
     });
 
     test('hashes to different value for different values', () {
-      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '4'});
+      var map1 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = BuiltMap<int, String>({1: '1', 2: '2', 3: '4'});
 
       expect(map1.hashCode, isNot(map2.hashCode));
     });
 
     test('caches hash', () {
-      var map = new BuiltMap<Object, Object>({1: new _HashcodeOnlyOnce()});
+      var map = BuiltMap<Object, Object>({1: _HashcodeOnlyOnce()});
 
       map.hashCode;
       map.hashCode;
     });
 
     test('compares equal to same instance', () {
-      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map == map, isTrue);
     });
 
     test('compares equal to same contents', () {
-      var map1 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      var map2 = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map1 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map2 = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map1 == map2, isTrue);
     });
 
     test('compares not equal to different type', () {
       expect(
           // ignore: unrelated_type_equality_checks
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) == '',
+          BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) == '',
           isFalse);
     });
 
     test('compares not equal to different length BuiltMap', () {
       expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
-              new BuiltMap<int, String>({1: '1', 2: '2'}),
+          BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}) ==
+              BuiltMap<int, String>({1: '1', 2: '2'}),
           isFalse);
     });
 
@@ -249,47 +243,44 @@ void main() {
     });
 
     test('provides toString() for debugging', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).toString(),
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).toString(),
           '{1: 1, 2: 2, 3: 3}');
     });
 
     test('preserves key order', () {
-      expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).keys, [1, 2, 3]);
-      expect(
-          new BuiltMap<int, String>({3: '3', 2: '2', 1: '1'}).keys, [3, 2, 1]);
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).keys, [1, 2, 3]);
+      expect(BuiltMap<int, String>({3: '3', 2: '2', 1: '1'}).keys, [3, 2, 1]);
     });
 
     // Lazy copies.
 
     test('reuses BuiltMap instances of the same type', () {
-      var map1 = new BuiltMap<int, String>();
-      var map2 = new BuiltMap<int, String>(map1);
+      var map1 = BuiltMap<int, String>();
+      var map2 = BuiltMap<int, String>(map1);
       expect(map1, same(map2));
     });
 
     test('does not reuse BuiltMap instances with subtype key type', () {
-      var map1 = new BuiltMap<_ExtendsA, String>();
-      var map2 = new BuiltMap<_A, String>(map1);
+      var map1 = BuiltMap<_ExtendsA, String>();
+      var map2 = BuiltMap<_A, String>(map1);
       expect(map1, isNot(same(map2)));
     });
 
     test('does not reuse BuiltMap instances with subtype value type', () {
-      var map1 = new BuiltMap<String, _ExtendsA>();
-      var map2 = new BuiltMap<String, _A>(map1);
+      var map1 = BuiltMap<String, _ExtendsA>();
+      var map2 = BuiltMap<String, _A>(map1);
       expect(map1, isNot(same(map2)));
     });
 
     test('can be reused via MapBuilder if there are no changes', () {
-      var map1 = new BuiltMap<Object, Object>();
+      var map1 = BuiltMap<Object, Object>();
       var map2 = map1.toBuilder().build();
       expect(map1, same(map2));
     });
 
     test('converts to MapBuilder from correct type without copying', () {
-      var makeLongMap = () => new BuiltMap<int, int>(
-          new Map<int, int>.fromIterable(
-              new List<int>.generate(100000, (x) => x)));
+      var makeLongMap = () => BuiltMap<int, int>(
+          Map<int, int>.fromIterable(List<int>.generate(100000, (x) => x)));
       var longMap = makeLongMap();
       var longMapToMapBuilder = longMap.toBuilder;
 
@@ -297,19 +288,17 @@ void main() {
     });
 
     test('converts to MapBuilder from wrong type by copying', () {
-      var makeLongMap = () => new BuiltMap<Object, Object>(
-          new Map<int, int>.fromIterable(
-              new List<int>.generate(100000, (x) => x)));
+      var makeLongMap = () => BuiltMap<Object, Object>(
+          Map<int, int>.fromIterable(List<int>.generate(100000, (x) => x)));
       var longMap = makeLongMap();
-      var longMapToMapBuilder = () => new MapBuilder<int, int>(longMap);
+      var longMapToMapBuilder = () => MapBuilder<int, int>(longMap);
 
       expectNotMuchFaster(longMapToMapBuilder, makeLongMap);
     });
 
     test('has fast toMap', () {
-      var makeLongMap = () => new BuiltMap<Object, Object>(
-          new Map<int, int>.fromIterable(
-              new List<int>.generate(100000, (x) => x)));
+      var makeLongMap = () => BuiltMap<Object, Object>(
+          Map<int, int>.fromIterable(List<int>.generate(100000, (x) => x)));
       var longMap = makeLongMap();
       var longMapToMap = () => longMap.toMap();
 
@@ -317,9 +306,8 @@ void main() {
     });
 
     test('checks for reference identity', () {
-      var makeLongMap = () => new BuiltMap<Object, Object>(
-          new Map<int, int>.fromIterable(
-              new List<int>.generate(100000, (x) => x)));
+      var makeLongMap = () => BuiltMap<Object, Object>(
+          Map<int, int>.fromIterable(List<int>.generate(100000, (x) => x)));
       var longMap = makeLongMap();
       var otherLongMap = makeLongMap();
 
@@ -327,65 +315,57 @@ void main() {
     });
 
     test('is not mutated when Map from toMap is mutated', () {
-      var map = new BuiltMap<int, String>();
+      var map = BuiltMap<int, String>();
       map.toMap()[1] = '1';
       expect(map.isEmpty, isTrue);
     });
 
     test('has build constructor', () {
-      expect(
-          new BuiltMap<int, String>.build((b) => b[0] = '0').toMap(), {0: '0'});
+      expect(BuiltMap<int, String>.build((b) => b[0] = '0').toMap(), {0: '0'});
     });
 
     test('has rebuild method', () {
-      expect(
-          new BuiltMap<int, String>({0: '0'})
-              .rebuild((b) => b[1] = '1')
-              .toMap(),
+      expect(BuiltMap<int, String>({0: '0'}).rebuild((b) => b[1] = '1').toMap(),
           {0: '0', 1: '1'});
     });
 
     test('returns identical BuiltMap on repeated build', () {
-      var mapBuilder = new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'});
+      var mapBuilder = MapBuilder<int, String>({1: '1', 2: '2', 3: '3'});
       expect(mapBuilder.build(), same(mapBuilder.build()));
     });
 
     // Map.
 
     test('does not implement Map', () {
-      expect(new BuiltMap<int, String>() is Map, isFalse);
+      expect(BuiltMap<int, String>() is Map, isFalse);
     });
 
     test('has a method like Map[]', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})[2], '2');
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})[2], '2');
     });
 
     test('has a method like Map.length', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).length, 3);
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).length, 3);
     });
 
     test('has a method like Map.containsKey', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsKey(3),
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsKey(3),
           isTrue);
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsKey(4),
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsKey(4),
           isFalse);
     });
 
     test('has a method like Map.containsValue', () {
-      expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
-              .containsValue('3'),
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsValue('3'),
           isTrue);
-      expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
-              .containsValue('4'),
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).containsValue('4'),
           isFalse);
     });
 
     test('has a method like Map.forEach', () {
       var totalKeys = 0;
       var concatenatedValues = '';
-      new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).forEach((key, value) {
+      BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).forEach((key, value) {
         totalKeys += key;
         concatenatedValues += value;
       });
@@ -395,35 +375,34 @@ void main() {
     });
 
     test('has a method like Map.keys', () {
-      expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).keys, [1, 2, 3]);
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).keys, [1, 2, 3]);
     });
 
     test('has a method like Map.values', () {
-      expect(new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).values,
+      expect(BuiltMap<int, String>({1: '1', 2: '2', 3: '3'}).values,
           ['1', '2', '3']);
     });
 
     test('has a method like Map.entries', () {
-      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
-      expect(new BuiltMap<int, String>(new Map.fromEntries(map.entries)), map);
+      var map = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      expect(BuiltMap<int, String>(Map.fromEntries(map.entries)), map);
     });
 
     test('has a method like Map.map', () {
       expect(
-          new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
-              .map((key, value) => new MapEntry(value, key))
+          BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})
+              .map((key, value) => MapEntry(value, key))
               .asMap(),
           {'1': 1, '2': 2, '3': 3});
     });
 
     test('has stable keys', () {
-      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.keys, same(map.keys));
     });
 
     test('has stable values', () {
-      var map = new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
+      var map = BuiltMap<int, String>({1: '1', 2: '2', 3: '3'});
       expect(map.values, same(map.values));
     });
   });

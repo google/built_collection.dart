@@ -25,7 +25,7 @@ class ListBuilder<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory ListBuilder([Iterable iterable = const []]) {
-    return new ListBuilder<E>._uninitialized()..replace(iterable);
+    return ListBuilder<E>._uninitialized()..replace(iterable);
   }
 
   /// Converts to a [BuiltList].
@@ -34,7 +34,7 @@ class ListBuilder<E> {
   /// of `BuiltList`s.
   BuiltList<E> build() {
     if (_listOwner == null) {
-      _setOwner(new _BuiltList<E>.withSafeList(_list));
+      _setOwner(_BuiltList<E>.withSafeList(_list));
     }
     return _listOwner;
   }
@@ -49,7 +49,7 @@ class ListBuilder<E> {
     if (iterable is _BuiltList<E>) {
       _setOwner(iterable);
     } else {
-      _setSafeList(new List<E>.from(iterable));
+      _setSafeList(List<E>.from(iterable));
     }
   }
 
@@ -279,21 +279,21 @@ class ListBuilder<E> {
 
   List<E> get _safeList {
     if (_listOwner != null) {
-      _setSafeList(new List<E>.from(_list, growable: true));
+      _setSafeList(List<E>.from(_list, growable: true));
     }
     return _list;
   }
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {
-      throw new UnsupportedError('explicit element type required, '
+      throw UnsupportedError('explicit element type required, '
           'for example "new ListBuilder<int>"');
     }
   }
 
   void _checkElement(E element) {
     if (identical(element, null)) {
-      throw new ArgumentError('null element');
+      throw ArgumentError('null element');
     }
   }
 

@@ -27,7 +27,7 @@ class SetBuilder<E> {
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
   factory SetBuilder([Iterable iterable = const []]) {
-    return new SetBuilder<E>._uninitialized()..replace(iterable);
+    return SetBuilder<E>._uninitialized()..replace(iterable);
   }
 
   /// Converts to a [BuiltSet].
@@ -36,7 +36,7 @@ class SetBuilder<E> {
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
     if (_setOwner == null) {
-      _setOwner = new _BuiltSet<E>.withSafeSet(_setFactory, _set);
+      _setOwner = _BuiltSet<E>.withSafeSet(_setFactory, _set);
     }
     return _setOwner;
   }
@@ -57,8 +57,7 @@ class SetBuilder<E> {
         if (element is E) {
           set.add(element);
         } else {
-          throw new ArgumentError(
-              'iterable contained invalid element: $element');
+          throw ArgumentError('iterable contained invalid element: $element');
         }
       }
       _setSafeSet(set);
@@ -83,7 +82,7 @@ class SetBuilder<E> {
   /// Use [withDefaultBase] to reset `base` to the default value.
   void withBase(_SetFactory<E> base) {
     if (base == null) {
-      throw new ArgumentError.notNull('base');
+      throw ArgumentError.notNull('base');
     }
     _setFactory = base;
     _setSafeSet(_createSet()..addAll(_set));
@@ -224,18 +223,18 @@ class SetBuilder<E> {
     return _set;
   }
 
-  Set<E> _createSet() => _setFactory != null ? _setFactory() : new Set<E>();
+  Set<E> _createSet() => _setFactory != null ? _setFactory() : Set<E>();
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {
-      throw new UnsupportedError('explicit element type required, '
+      throw UnsupportedError('explicit element type required, '
           'for example "new SetBuilder<int>"');
     }
   }
 
   void _checkElement(E element) {
     if (identical(element, null)) {
-      throw new ArgumentError('null element');
+      throw ArgumentError('null element');
     }
   }
 

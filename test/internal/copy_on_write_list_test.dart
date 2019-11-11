@@ -9,7 +9,7 @@ void main() {
   group('CopyOnWriteList', () {
     test('has toString equal to List.toString', () {
       var list = <int>[1, 2, 3];
-      expect(new CopyOnWriteList(list, false).toString(), list.toString());
+      expect(CopyOnWriteList(list, false).toString(), list.toString());
     });
   });
 }

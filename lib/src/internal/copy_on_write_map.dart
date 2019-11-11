@@ -17,7 +17,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   V operator [](Object key) => _map[key];
 
   @override
-  Map<K2, V2> cast<K2, V2>() => new CopyOnWriteMap<K2, V2>(_map.cast<K2, V2>());
+  Map<K2, V2> cast<K2, V2>() => CopyOnWriteMap<K2, V2>(_map.cast<K2, V2>());
 
   @override
   bool containsKey(Object key) => _map.containsKey(key);
@@ -115,6 +115,6 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
     _copyBeforeWrite = false;
     _map = _mapFactory != null
         ? (_mapFactory()..addAll(_map))
-        : new Map<K, V>.from(_map);
+        : Map<K, V>.from(_map);
   }
 }

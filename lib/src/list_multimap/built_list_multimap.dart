@@ -18,7 +18,7 @@ abstract class BuiltListMultimap<K, V> {
   final Map<K, BuiltList<V>> _map;
 
   // Precomputed.
-  final BuiltList<V> _emptyList = new BuiltList<V>();
+  final BuiltList<V> _emptyList = BuiltList<V>();
 
   // Cached.
   int _hashCode;
@@ -44,23 +44,22 @@ abstract class BuiltListMultimap<K, V> {
     } else if (multimap is Map ||
         multimap is ListMultimap ||
         multimap is BuiltListMultimap) {
-      return new _BuiltListMultimap<K, V>.copyAndCheck(
+      return _BuiltListMultimap<K, V>.copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
-      throw new ArgumentError(
-          'expected Map, ListMultimap or BuiltListMultimap, '
+      throw ArgumentError('expected Map, ListMultimap or BuiltListMultimap, '
           'got ${multimap.runtimeType}');
     }
   }
 
   /// Creates a [ListMultimapBuilder], applies updates to it, and builds.
   factory BuiltListMultimap.build(updates(ListMultimapBuilder<K, V> builder)) =>
-      (new ListMultimapBuilder<K, V>()..update(updates)).build();
+      (ListMultimapBuilder<K, V>()..update(updates)).build();
 
   /// Converts to a [ListMultimapBuilder] for modification.
   ///
   /// The `BuiltListMultimap` remains immutable and can continue to be used.
-  ListMultimapBuilder<K, V> toBuilder() => new ListMultimapBuilder<K, V>(this);
+  ListMultimapBuilder<K, V> toBuilder() => ListMultimapBuilder<K, V>(this);
 
   /// Converts to a [ListMultimapBuilder], applies updates to it, and builds.
   BuiltListMultimap<K, V> rebuild(updates(ListMultimapBuilder<K, V> builder)) =>
@@ -74,7 +73,7 @@ abstract class BuiltListMultimap<K, V> {
   ///
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
-  Map<K, BuiltList<V>> toMap() => new CopyOnWriteMap<K, BuiltList<V>>(_map);
+  Map<K, BuiltList<V>> toMap() => CopyOnWriteMap<K, BuiltList<V>>(_map);
 
   /// Deep hashCode.
   ///
@@ -115,7 +114,7 @@ abstract class BuiltListMultimap<K, V> {
   ///
   /// Useful when producing or using APIs that need the [Map] interface. This
   /// differs from [toMap] where mutations are explicitly disallowed.
-  Map<K, Iterable<V>> asMap() => new Map<K, Iterable<V>>.unmodifiable(_map);
+  Map<K, Iterable<V>> asMap() => Map<K, Iterable<V>>.unmodifiable(_map);
 
   // ListMultimap.
 
@@ -178,11 +177,11 @@ abstract class BuiltListMultimap<K, V> {
 
   BuiltListMultimap._(this._map) {
     if (K == dynamic) {
-      throw new UnsupportedError('explicit key type required, '
+      throw UnsupportedError('explicit key type required, '
           'for example "new BuiltListMultimap<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required,'
+      throw UnsupportedError('explicit value type required,'
           ' for example "new BuiltListMultimap<int, int>"');
     }
   }
@@ -193,12 +192,12 @@ class _BuiltListMultimap<K, V> extends BuiltListMultimap<K, V> {
   _BuiltListMultimap.withSafeMap(Map<K, BuiltList<V>> map) : super._(map);
 
   _BuiltListMultimap.copyAndCheck(Iterable keys, Function lookup)
-      : super._(new Map<K, BuiltList<V>>()) {
+      : super._(Map<K, BuiltList<V>>()) {
     for (var key in keys) {
       if (key is K) {
-        _map[key] = new BuiltList<V>(lookup(key));
+        _map[key] = BuiltList<V>(lookup(key));
       } else {
-        throw new ArgumentError('map contained invalid key: $key');
+        throw ArgumentError('map contained invalid key: $key');
       }
     }
   }

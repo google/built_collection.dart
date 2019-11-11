@@ -34,7 +34,7 @@ class ListMultimapBuilder<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory ListMultimapBuilder([multimap = const {}]) {
-    return new ListMultimapBuilder<K, V>._uninitialized()..replace(multimap);
+    return ListMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
 
   /// Converts to a [BuiltListMultimap].
@@ -52,7 +52,7 @@ class ListMultimapBuilder<K, V> {
         }
       }
 
-      _builtMapOwner = new _BuiltListMultimap<K, V>.withSafeMap(_builtMap);
+      _builtMapOwner = _BuiltListMultimap<K, V>.withSafeMap(_builtMap);
     }
     return _builtMapOwner;
   }
@@ -74,8 +74,7 @@ class ListMultimapBuilder<K, V> {
         multimap is BuiltListMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
-      throw new ArgumentError(
-          'expected Map, ListMultimap or BuiltListMultimap, '
+      throw ArgumentError('expected Map, ListMultimap or BuiltListMultimap, '
           'got ${multimap.runtimeType}');
     }
   }
@@ -91,7 +90,7 @@ class ListMultimapBuilder<K, V> {
   void addIterable<T>(Iterable<T> iterable,
       {K key(T element), V value(T element), Iterable<V> values(T element)}) {
     if (value != null && values != null) {
-      throw new ArgumentError('expected value or values to be set, got both');
+      throw ArgumentError('expected value or values to be set, got both');
     }
 
     if (key == null) key = (T x) => x as K;
@@ -143,12 +142,12 @@ class ListMultimapBuilder<K, V> {
 
   /// As [ListMultimap.removeAll], but results are [BuiltList]s.
   BuiltList<V> removeAll(Object key) {
-    if (key is! K) return new BuiltList<V>();
+    if (key is! K) return BuiltList<V>();
     _makeWriteableCopy();
     var builder = _builderMap[key];
     if (builder == null) {
-      _builderMap[key] = new ListBuilder<V>();
-      return _builtMap[key] ?? new BuiltList<V>();
+      _builderMap[key] = ListBuilder<V>();
+      return _builtMap[key] ?? BuiltList<V>();
     }
     var old = builder.build();
     builder.clear();
@@ -168,7 +167,7 @@ class ListMultimapBuilder<K, V> {
   /// As [ListMultimap], but results are [ListBuilder]s.
   ListBuilder<V> operator [](Object key) {
     _makeWriteableCopy();
-    return key is K ? _getValuesBuilder(key) : new ListBuilder<V>();
+    return key is K ? _getValuesBuilder(key) : ListBuilder<V>();
   }
 
   // Internal.
@@ -178,7 +177,7 @@ class ListMultimapBuilder<K, V> {
     if (result == null) {
       var builtValues = _builtMap[key];
       if (builtValues == null) {
-        result = new ListBuilder<V>();
+        result = ListBuilder<V>();
       } else {
         result = builtValues.toBuilder();
       }
@@ -189,7 +188,7 @@ class ListMultimapBuilder<K, V> {
 
   void _makeWriteableCopy() {
     if (_builtMapOwner != null) {
-      _builtMap = new Map<K, BuiltList<V>>.from(_builtMap);
+      _builtMap = Map<K, BuiltList<V>>.from(_builtMap);
       _builtMapOwner = null;
     }
   }
@@ -201,13 +200,13 @@ class ListMultimapBuilder<K, V> {
   void _setOwner(_BuiltListMultimap<K, V> builtListMultimap) {
     _builtMapOwner = builtListMultimap;
     _builtMap = builtListMultimap._map;
-    _builderMap = new Map<K, ListBuilder<V>>();
+    _builderMap = Map<K, ListBuilder<V>>();
   }
 
   void _setWithCopyAndCheck(Iterable keys, Function lookup) {
     _builtMapOwner = null;
-    _builtMap = new Map<K, BuiltList<V>>();
-    _builderMap = new Map<K, ListBuilder<V>>();
+    _builtMap = Map<K, BuiltList<V>>();
+    _builderMap = Map<K, ListBuilder<V>>();
 
     for (var key in keys) {
       if (key is K) {
@@ -215,36 +214,36 @@ class ListMultimapBuilder<K, V> {
           if (value is V) {
             add(key, value);
           } else {
-            throw new ArgumentError(
+            throw ArgumentError(
                 'map contained invalid value: $value, for key $key');
           }
         }
       } else {
-        throw new ArgumentError('map contained invalid key: $key');
+        throw ArgumentError('map contained invalid key: $key');
       }
     }
   }
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError('explicit key type required, '
+      throw UnsupportedError('explicit key type required, '
           'for example "new ListMultimapBuilder<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required, '
+      throw UnsupportedError('explicit value type required, '
           'for example "new ListMultimapBuilder<int, int>"');
     }
   }
 
   void _checkKey(K key) {
     if (identical(key, null)) {
-      throw new ArgumentError('null key');
+      throw ArgumentError('null key');
     }
   }
 
   void _checkValue(V value) {
     if (identical(value, null)) {
-      throw new ArgumentError('null value');
+      throw ArgumentError('null value');
     }
   }
 }

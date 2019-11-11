@@ -29,8 +29,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Right: `new BuiltSet<int>([1, 2, 3])`.
   ///
   /// Rejects nulls. Rejects elements of the wrong type.
-  factory BuiltSet([Iterable iterable = const []]) =>
-      new BuiltSet.from(iterable);
+  factory BuiltSet([Iterable iterable = const []]) => BuiltSet.from(iterable);
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -45,7 +44,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return new _BuiltSet<E>.copyAndCheckTypes(iterable);
+      return _BuiltSet<E>.copyAndCheckTypes(iterable);
     }
   }
 
@@ -58,25 +57,25 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return new _BuiltSet<E>.copyAndCheckForNull(iterable);
+      return _BuiltSet<E>.copyAndCheckForNull(iterable);
     }
   }
 
   /// Creates a [SetBuilder], applies updates to it, and builds.
   factory BuiltSet.build(updates(SetBuilder<E> builder)) =>
-      (new SetBuilder<E>()..update(updates)).build();
+      (SetBuilder<E>()..update(updates)).build();
 
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => new SetBuilder<E>._fromBuiltSet(this);
+  SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  BuiltList<E> toBuiltList() => new BuiltList<E>(this);
+  BuiltList<E> toBuiltList() => BuiltList<E>(this);
 
   @override
   BuiltSet<E> toBuiltSet() => this;
@@ -114,7 +113,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// Useful when producing or using APIs that need the [Set] interface. This
   /// differs from [toSet] where mutations are explicitly disallowed.
-  Set<E> asSet() => new UnmodifiableSetView<E>(_set);
+  Set<E> asSet() => UnmodifiableSetView<E>(_set);
 
   // Set.
 
@@ -127,18 +126,18 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> difference(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_setFactory, _set.difference(other._set));
+      _BuiltSet<E>.withSafeSet(_setFactory, _set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> intersection(BuiltSet<Object> other) =>
-      new _BuiltSet<E>.withSafeSet(_setFactory, _set.intersection(other._set));
+      _BuiltSet<E>.withSafeSet(_setFactory, _set.intersection(other._set));
 
   /// As [Set.lookup].
   E lookup(Object object) => _set.lookup(object);
 
   /// As [Set.union] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> union(BuiltSet<E> other) =>
-      new _BuiltSet<E>.withSafeSet(_setFactory, _set.union(other._set));
+      _BuiltSet<E>.withSafeSet(_setFactory, _set.union(other._set));
 
   // Iterable.
 
@@ -194,7 +193,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// This allows efficient use of APIs that ask for a mutable collection
   /// but don't actually mutate it.
   @override
-  Set<E> toSet() => new CopyOnWriteSet<E>(_set, _setFactory);
+  Set<E> toSet() => CopyOnWriteSet<E>(_set, _setFactory);
 
   @override
   List<E> toList({bool growable = true}) => _set.toList(growable: growable);
@@ -245,7 +244,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   BuiltSet._(this._setFactory, this._set) {
     if (E == dynamic) {
-      throw new UnsupportedError(
+      throw UnsupportedError(
           'explicit element type required, for example "new BuiltSet<int>"');
     }
   }
@@ -256,21 +255,20 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(_SetFactory<E> setFactory, Set<E> set)
       : super._(setFactory, set);
 
-  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, new Set<E>()) {
+  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, Set<E>()) {
     for (var element in iterable) {
       if (element is E) {
         _set.add(element);
       } else {
-        throw new ArgumentError('iterable contained invalid element: $element');
+        throw ArgumentError('iterable contained invalid element: $element');
       }
     }
   }
 
-  _BuiltSet.copyAndCheckForNull(Iterable iterable)
-      : super._(null, new Set<E>()) {
+  _BuiltSet.copyAndCheckForNull(Iterable iterable) : super._(null, Set<E>()) {
     for (var element in iterable) {
       if (identical(element, null)) {
-        throw new ArgumentError('iterable contained invalid element: null');
+        throw ArgumentError('iterable contained invalid element: null');
       } else {
         _set.add(element);
       }

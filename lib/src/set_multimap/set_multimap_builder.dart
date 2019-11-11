@@ -34,7 +34,7 @@ class SetMultimapBuilder<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory SetMultimapBuilder([multimap = const {}]) {
-    return new SetMultimapBuilder<K, V>._uninitialized()..replace(multimap);
+    return SetMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
 
   /// Converts to a [BuiltSetMultimap].
@@ -52,7 +52,7 @@ class SetMultimapBuilder<K, V> {
         }
       }
 
-      _builtMapOwner = new _BuiltSetMultimap<K, V>.withSafeMap(_builtMap);
+      _builtMapOwner = _BuiltSetMultimap<K, V>.withSafeMap(_builtMap);
     }
     return _builtMapOwner;
   }
@@ -72,7 +72,7 @@ class SetMultimapBuilder<K, V> {
         multimap is BuiltSetMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
-      throw new ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
+      throw ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
           'got ${multimap.runtimeType}');
     }
   }
@@ -88,7 +88,7 @@ class SetMultimapBuilder<K, V> {
   void addIterable<T>(Iterable<T> iterable,
       {K key(T element), V value(T element), Iterable<V> values(T element)}) {
     if (value != null && values != null) {
-      throw new ArgumentError('expected value or values to be set, got both');
+      throw ArgumentError('expected value or values to be set, got both');
     }
 
     if (key == null) key = (T x) => x as K;
@@ -145,7 +145,7 @@ class SetMultimapBuilder<K, V> {
       _makeWriteableCopy();
 
       _builtMap = _builtMap;
-      _builderMap[key] = new SetBuilder<V>();
+      _builderMap[key] = SetBuilder<V>();
     }
   }
 
@@ -164,7 +164,7 @@ class SetMultimapBuilder<K, V> {
     if (result == null) {
       var builtValues = _builtMap[key];
       if (builtValues == null) {
-        result = new SetBuilder<V>();
+        result = SetBuilder<V>();
       } else {
         result = builtValues.toBuilder();
       }
@@ -175,7 +175,7 @@ class SetMultimapBuilder<K, V> {
 
   void _makeWriteableCopy() {
     if (_builtMapOwner != null) {
-      _builtMap = new Map<K, BuiltSet<V>>.from(_builtMap);
+      _builtMap = Map<K, BuiltSet<V>>.from(_builtMap);
       _builtMapOwner = null;
     }
   }
@@ -187,13 +187,13 @@ class SetMultimapBuilder<K, V> {
   void _setOwner(_BuiltSetMultimap<K, V> builtSetMultimap) {
     _builtMapOwner = builtSetMultimap;
     _builtMap = builtSetMultimap._map;
-    _builderMap = new Map<K, SetBuilder<V>>();
+    _builderMap = Map<K, SetBuilder<V>>();
   }
 
   void _setWithCopyAndCheck(Iterable keys, Function lookup) {
     _builtMapOwner = null;
-    _builtMap = new Map<K, BuiltSet<V>>();
-    _builderMap = new Map<K, SetBuilder<V>>();
+    _builtMap = Map<K, BuiltSet<V>>();
+    _builderMap = Map<K, SetBuilder<V>>();
 
     for (var key in keys) {
       if (key is K) {
@@ -201,36 +201,36 @@ class SetMultimapBuilder<K, V> {
           if (value is V) {
             add(key, value);
           } else {
-            throw new ArgumentError(
+            throw ArgumentError(
                 'map contained invalid value: $value, for key $key');
           }
         }
       } else {
-        throw new ArgumentError('map contained invalid key: $key');
+        throw ArgumentError('map contained invalid key: $key');
       }
     }
   }
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {
-      throw new UnsupportedError('explicit key type required, '
+      throw UnsupportedError('explicit key type required, '
           'for example "new SetMultimapBuilder<int, int>"');
     }
     if (V == dynamic) {
-      throw new UnsupportedError('explicit value type required, '
+      throw UnsupportedError('explicit value type required, '
           'for example "new SetMultimapBuilder<int, int>"');
     }
   }
 
   void _checkKey(K key) {
     if (identical(key, null)) {
-      throw new ArgumentError('invalid key: $key');
+      throw ArgumentError('invalid key: $key');
     }
   }
 
   void _checkValue(V value) {
     if (identical(value, null)) {
-      throw new ArgumentError('invalid value: $value');
+      throw ArgumentError('invalid value: $value');
     }
   }
 }

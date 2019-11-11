@@ -35,7 +35,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   bool any(bool test(E element)) => _set.any(test);
 
   @override
-  Set<T> cast<T>() => new CopyOnWriteSet<T>(_set.cast<T>());
+  Set<T> cast<T>() => CopyOnWriteSet<T>(_set.cast<T>());
 
   @override
   bool contains(Object element) => _set.contains(element);
@@ -180,8 +180,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   void _maybeCopyBeforeWrite() {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
-    _set = _setFactory != null
-        ? (_setFactory()..addAll(_set))
-        : new Set<E>.from(_set);
+    _set =
+        _setFactory != null ? (_setFactory()..addAll(_set)) : Set<E>.from(_set);
   }
 }

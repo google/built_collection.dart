@@ -29,7 +29,7 @@ class CopyOnWriteList<E> implements List<E> {
   Map<int, E> asMap() => _list.asMap();
 
   @override
-  List<T> cast<T>() => new CopyOnWriteList<T>(_list.cast<T>(), _growable);
+  List<T> cast<T>() => CopyOnWriteList<T>(_list.cast<T>(), _growable);
 
   @override
   bool contains(Object element) => _list.contains(element);
@@ -275,6 +275,6 @@ class CopyOnWriteList<E> implements List<E> {
   void _maybeCopyBeforeWrite() {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
-    _list = new List<E>.from(_list, growable: _growable);
+    _list = List<E>.from(_list, growable: _growable);
   }
 }

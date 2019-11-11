@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.3.0 (unreleased)
+
+- Cleanup: remove unnecessary `new` and `const`.
+
 ## 4.2.2
 
 - Bug fix: `ListMultimapBuilder.[]` no longer ignores modifications under some

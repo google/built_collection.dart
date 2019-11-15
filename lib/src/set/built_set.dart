@@ -281,11 +281,16 @@ class _BuiltSet<E> extends BuiltSet<E> {
 /// Extensions for [BuiltSet] on [Set].
 extension BuiltSetExtension<T> on Set<T> {
   /// Converts to a [BuiltSet].
-  BuiltSet<T> build() => BuiltSet<T>.of(this);
+  BuiltSet<T> build() {
+    // We know a `Set` is not a `BuiltSet`, so we have to copy.
+    return _BuiltSet<T>.copyAndCheckForNull(this);
+  }
 }
 
 /// Extensions for [BuiltSet] on [Iterable].
-extension BuiltIterableExtension<E> on Iterable<E> {
+extension BuiltSetIterableExtension<E> on Iterable<E> {
   /// Converts to a [BuiltSet].
-  BuiltSet<E> toBuiltSet() => BuiltSet.of(this);
+  ///
+  /// Just returns the [Iterable] if it is already a `BuiltSet<E>`.
+  BuiltSet<E> toBuiltSet() => BuiltSet<E>.of(this);
 }

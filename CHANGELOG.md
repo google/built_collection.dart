@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.3.0 (unreleased)
+## 4.3.0
 
 - Add extensions methods: `List.build`, `Set.build`, `Map.build`,
   `Iterable.toBuiltList` and `Iterable.toBuiltSet`. Requires SDK 2.6.0.

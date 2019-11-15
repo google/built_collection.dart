@@ -294,11 +294,16 @@ class _BuiltList<E> extends BuiltList<E> {
 /// Extensions for [BuiltList] on [List].
 extension BuiltListExtension<T> on List<T> {
   /// Converts to a [BuiltList].
-  BuiltList<T> build() => BuiltList<T>.of(this);
+  BuiltList<T> build() {
+    // We know a `List` is not a `BuiltList`, so we have to copy.
+    return _BuiltList<T>.copyAndCheckForNull(this);
+  }
 }
 
 /// Extensions for [BuiltList] on [Iterable].
 extension BuiltListIterableExtension<E> on Iterable<E> {
   /// Converts to a [BuiltList].
-  BuiltList<E> toBuiltList() => BuiltList.of(this);
+  ///
+  /// Just returns the [Iterable] if it is already a `BuiltList<E>`.
+  BuiltList<E> toBuiltList() => BuiltList<E>.of(this);
 }

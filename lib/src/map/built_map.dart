@@ -4,7 +4,7 @@
 
 part of built_collection.map;
 
-typedef Map<K, V> _MapFactory<K, V>();
+typedef _MapFactory<K, V> = Map<K, V> Function();
 
 /// The Built Collection [Map].
 ///
@@ -66,7 +66,7 @@ abstract class BuiltMap<K, V> {
   }
 
   /// Creates a [MapBuilder], applies updates to it, and builds.
-  factory BuiltMap.build(updates(MapBuilder<K, V> builder)) =>
+  factory BuiltMap.build(Function(MapBuilder<K, V>) updates) =>
       (MapBuilder<K, V>()..update(updates)).build();
 
   /// Converts to a [MapBuilder] for modification.
@@ -75,7 +75,7 @@ abstract class BuiltMap<K, V> {
   MapBuilder<K, V> toBuilder() => MapBuilder<K, V>._fromBuiltMap(this);
 
   /// Converts to a [MapBuilder], applies updates to it, and builds.
-  BuiltMap<K, V> rebuild(updates(MapBuilder<K, V> builder)) =>
+  BuiltMap<K, V> rebuild(Function(MapBuilder<K, V>) updates) =>
       (toBuilder()..update(updates)).build();
 
   /// Returns as an immutable map.
@@ -100,12 +100,10 @@ abstract class BuiltMap<K, V> {
   /// pairs in any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = hashObjects(_map.keys
-          .map((key) => hash2(key.hashCode, _map[key].hashCode))
-          .toList(growable: false)
-            ..sort());
-    }
+    _hashCode ??= hashObjects(_map.keys
+        .map((key) => hash2(key.hashCode, _map[key].hashCode))
+        .toList(growable: false)
+          ..sort());
     return _hashCode;
   }
 
@@ -140,7 +138,7 @@ abstract class BuiltMap<K, V> {
   bool containsValue(Object value) => _map.containsValue(value);
 
   /// As [Map.forEach].
-  void forEach(void f(K key, V value)) {
+  void forEach(void Function(K, V) f) {
     _map.forEach(f);
   }
 
@@ -152,9 +150,7 @@ abstract class BuiltMap<K, V> {
 
   /// As [Map.keys], but result is stable; it always returns the same instance.
   Iterable<K> get keys {
-    if (_keys == null) {
-      _keys = _map.keys;
-    }
+    _keys ??= _map.keys;
     return _keys;
   }
 
@@ -164,9 +160,7 @@ abstract class BuiltMap<K, V> {
   /// As [Map.values], but result is stable; it always returns the same
   /// instance.
   Iterable<V> get values {
-    if (_values == null) {
-      _values = _map.values;
-    }
+    _values ??= _map.values;
     return _values;
   }
 
@@ -174,7 +168,7 @@ abstract class BuiltMap<K, V> {
   Iterable<MapEntry<K, V>> get entries => _map.entries;
 
   /// As [Map.map], but returns a [BuiltMap].
-  BuiltMap<K2, V2> map<K2, V2>(MapEntry<K2, V2> f(K key, V value)) =>
+  BuiltMap<K2, V2> map<K2, V2>(MapEntry<K2, V2> Function(K, V) f) =>
       _BuiltMap<K2, V2>.withSafeMap(null, _map.map(f));
 
   // Internal.
@@ -197,7 +191,7 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
       : super._(mapFactory, map);
 
   _BuiltMap.copyAndCheckTypes(Iterable keys, Function lookup)
-      : super._(null, Map<K, V>()) {
+      : super._(null, <K, V>{}) {
     for (var key in keys) {
       if (key is K) {
         var value = lookup(key);
@@ -212,8 +206,8 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
     }
   }
 
-  _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V lookup(K value))
-      : super._(null, Map<K, V>()) {
+  _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V Function(K) lookup)
+      : super._(null, <K, V>{}) {
     for (var key in keys) {
       if (identical(key, null)) {
         throw ArgumentError('map contained invalid key: null');

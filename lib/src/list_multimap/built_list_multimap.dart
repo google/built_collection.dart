@@ -53,7 +53,8 @@ abstract class BuiltListMultimap<K, V> {
   }
 
   /// Creates a [ListMultimapBuilder], applies updates to it, and builds.
-  factory BuiltListMultimap.build(updates(ListMultimapBuilder<K, V> builder)) =>
+  factory BuiltListMultimap.build(
+          Function(ListMultimapBuilder<K, V>) updates) =>
       (ListMultimapBuilder<K, V>()..update(updates)).build();
 
   /// Converts to a [ListMultimapBuilder] for modification.
@@ -62,7 +63,8 @@ abstract class BuiltListMultimap<K, V> {
   ListMultimapBuilder<K, V> toBuilder() => ListMultimapBuilder<K, V>(this);
 
   /// Converts to a [ListMultimapBuilder], applies updates to it, and builds.
-  BuiltListMultimap<K, V> rebuild(updates(ListMultimapBuilder<K, V> builder)) =>
+  BuiltListMultimap<K, V> rebuild(
+          Function(ListMultimapBuilder<K, V>) updates) =>
       (toBuilder()..update(updates)).build();
 
   /// Converts to a [Map].
@@ -82,12 +84,10 @@ abstract class BuiltListMultimap<K, V> {
   /// to be the same.
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = hashObjects(_map.keys
-          .map((key) => hash2(key.hashCode, _map[key].hashCode))
-          .toList(growable: false)
-            ..sort());
-    }
+    _hashCode ??= hashObjects(_map.keys
+        .map((key) => hash2(key.hashCode, _map[key].hashCode))
+        .toList(growable: false)
+          ..sort());
     return _hashCode;
   }
 
@@ -131,7 +131,7 @@ abstract class BuiltListMultimap<K, V> {
   bool containsValue(Object value) => values.contains(value);
 
   /// As [ListMultimap.forEach].
-  void forEach(void f(K key, V value)) {
+  void forEach(void Function(K, V) f) {
     _map.forEach((key, values) {
       values.forEach((value) {
         f(key, value);
@@ -140,7 +140,7 @@ abstract class BuiltListMultimap<K, V> {
   }
 
   /// As [ListMultimap.forEachKey].
-  void forEachKey(void f(K key, Iterable<V> value)) {
+  void forEachKey(void Function(K, Iterable<V>) f) {
     _map.forEach((key, values) {
       f(key, values);
     });
@@ -155,9 +155,7 @@ abstract class BuiltListMultimap<K, V> {
   /// As [ListMultimap.keys], but result is stable; it always returns the same
   /// instance.
   Iterable<K> get keys {
-    if (_keys == null) {
-      _keys = _map.keys;
-    }
+    _keys ??= _map.keys;
     return _keys;
   }
 
@@ -167,9 +165,7 @@ abstract class BuiltListMultimap<K, V> {
   /// As [ListMultimap.values], but result is stable; it always returns the
   /// same instance.
   Iterable<V> get values {
-    if (_values == null) {
-      _values = _map.values.expand((x) => x);
-    }
+    _values ??= _map.values.expand((x) => x);
     return _values;
   }
 
@@ -192,7 +188,7 @@ class _BuiltListMultimap<K, V> extends BuiltListMultimap<K, V> {
   _BuiltListMultimap.withSafeMap(Map<K, BuiltList<V>> map) : super._(map);
 
   _BuiltListMultimap.copyAndCheck(Iterable keys, Function lookup)
-      : super._(Map<K, BuiltList<V>>()) {
+      : super._(<K, BuiltList<V>>{}) {
     for (var key in keys) {
       if (key is K) {
         _map[key] = BuiltList<V>(lookup(key));

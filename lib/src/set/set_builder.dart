@@ -35,14 +35,12 @@ class SetBuilder<E> {
   /// The `SetBuilder` can be modified again and used to create any number
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
-    if (_setOwner == null) {
-      _setOwner = _BuiltSet<E>.withSafeSet(_setFactory, _set);
-    }
+    _setOwner ??= _BuiltSet<E>.withSafeSet(_setFactory, _set);
     return _setOwner;
   }
 
   /// Applies a function to `this`.
-  void update(updates(SetBuilder<E> builder)) {
+  void update(Function(SetBuilder<E>) updates) {
     updates(this);
   }
 
@@ -133,7 +131,7 @@ class SetBuilder<E> {
   }
 
   /// As [Set.removeWhere].
-  void removeWhere(bool test(E element)) {
+  void removeWhere(bool Function(E) test) {
     _safeSet.removeWhere(test);
   }
 
@@ -145,14 +143,14 @@ class SetBuilder<E> {
   /// As [Set.retainWhere].
   ///
   /// This method is an alias of [where].
-  void retainWhere(bool test(E element)) {
+  void retainWhere(bool Function(E) test) {
     _safeSet.retainWhere(test);
   }
 
   // Based on Iterable.
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
-  void map(E f(E element)) {
+  void map(E Function(E) f) {
     var result = _createSet()..addAll(_set.map(f));
     _checkElements(result);
     _setSafeSet(result);
@@ -161,10 +159,10 @@ class SetBuilder<E> {
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
   ///
   /// This method is an alias of [retainWhere].
-  void where(bool test(E element)) => retainWhere(test);
+  void where(bool Function(E) test) => retainWhere(test);
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
-  void expand(Iterable<E> f(E element)) {
+  void expand(Iterable<E> Function(E) f) {
     var result = _createSet()..addAll(_set.expand(f));
     _checkElements(result);
     _setSafeSet(result);
@@ -177,7 +175,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.takeWhile], but updates the builder in place. Returns
   /// nothing.
-  void takeWhile(bool test(E value)) {
+  void takeWhile(bool Function(E) test) {
     _setSafeSet(_createSet()..addAll(_set.takeWhile(test)));
   }
 
@@ -188,7 +186,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.skipWhile], but updates the builder in place. Returns
   /// nothing.
-  void skipWhile(bool test(E value)) {
+  void skipWhile(bool Function(E) test) {
     _setSafeSet(_createSet()..addAll(_set.skipWhile(test)));
   }
 
@@ -223,7 +221,7 @@ class SetBuilder<E> {
     return _set;
   }
 
-  Set<E> _createSet() => _setFactory != null ? _setFactory() : Set<E>();
+  Set<E> _createSet() => _setFactory != null ? _setFactory() : <E>{};
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

@@ -374,7 +374,7 @@ void main() {
         () {
       var makeLongListMultimap = () {
         var result = ListMultimapBuilder<int, int>();
-        for (int i = 0; i != 100000; ++i) {
+        for (var i = 0; i != 100000; ++i) {
           result.add(i, i);
         }
         return result.build();
@@ -389,7 +389,7 @@ void main() {
     test('converts to ListMultimapBuilder from wrong type by copying', () {
       var makeLongListMultimap = () {
         var result = ListMultimapBuilder<Object, Object>();
-        for (int i = 0; i != 100000; ++i) {
+        for (var i = 0; i != 100000; ++i) {
           result.add(i, i);
         }
         return result.build();
@@ -405,7 +405,7 @@ void main() {
     test('has fast toMap', () {
       var makeLongListMultimap = () {
         var result = ListMultimapBuilder<int, int>();
-        for (int i = 0; i != 100000; ++i) {
+        for (var i = 0; i != 100000; ++i) {
           result.add(i, i);
         }
         return result.build();
@@ -419,7 +419,7 @@ void main() {
     test('checks for reference identity', () {
       var makeLongListMultimap = () {
         var result = ListMultimapBuilder<int, int>();
-        for (int i = 0; i != 100000; ++i) {
+        for (var i = 0; i != 100000; ++i) {
           result.add(i, i);
         }
         return result.build();

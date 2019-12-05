@@ -60,7 +60,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   /// Creates a [ListBuilder], applies updates to it, and builds.
-  factory BuiltList.build(updates(ListBuilder<E> builder)) =>
+  factory BuiltList.build(Function(ListBuilder<E>) updates) =>
       (ListBuilder<E>()..update(updates)).build();
 
   /// Converts to a [ListBuilder] for modification.
@@ -69,7 +69,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ListBuilder<E> toBuilder() => ListBuilder<E>(this);
 
   /// Converts to a [ListBuilder], applies updates to it, and builds.
-  BuiltList<E> rebuild(updates(ListBuilder<E> builder)) =>
+  BuiltList<E> rebuild(Function(ListBuilder<E>) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -84,9 +84,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// the same order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = hashObjects(_list);
-    }
+    _hashCode ??= hashObjects(_list);
     return _hashCode;
   }
 
@@ -138,11 +136,11 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   int lastIndexOf(E element, [int start]) => _list.lastIndexOf(element, start);
 
   /// As [List.indexWhere].
-  int indexWhere(bool test(E element), [int start = 0]) =>
+  int indexWhere(bool Function(E) test, [int start = 0]) =>
       _list.indexWhere(test, start);
 
   /// As [List.lastIndexWhere].
-  int lastIndexWhere(bool test(E element), [int start]) =>
+  int lastIndexWhere(bool Function(E) test, [int start]) =>
       _list.lastIndexWhere(test, start);
 
   /// As [List.sublist] but returns a `BuiltList<E>`.
@@ -161,41 +159,41 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   Iterator<E> get iterator => _list.iterator;
 
   @override
-  Iterable<T> map<T>(T f(E e)) => _list.map(f);
+  Iterable<T> map<T>(T Function(E) f) => _list.map(f);
 
   @override
-  Iterable<E> where(bool test(E element)) => _list.where(test);
+  Iterable<E> where(bool Function(E) test) => _list.where(test);
 
   @override
   Iterable<T> whereType<T>() => _list.whereType<T>();
 
   @override
-  Iterable<T> expand<T>(Iterable<T> f(E e)) => _list.expand(f);
+  Iterable<T> expand<T>(Iterable<T> Function(E) f) => _list.expand(f);
 
   @override
   bool contains(Object element) => _list.contains(element);
 
   @override
-  void forEach(void f(E element)) => _list.forEach(f);
+  void forEach(void Function(E) f) => _list.forEach(f);
 
   @override
-  E reduce(E combine(E value, E element)) => _list.reduce(combine);
+  E reduce(E Function(E, E) combine) => _list.reduce(combine);
 
   @override
-  T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
+  T fold<T>(T initialValue, T Function(T, E) combine) =>
       _list.fold(initialValue, combine);
 
   @override
   Iterable<E> followedBy(Iterable<E> other) => _list.followedBy(other);
 
   @override
-  bool every(bool test(E element)) => _list.every(test);
+  bool every(bool Function(E) test) => _list.every(test);
 
   @override
   String join([String separator = '']) => _list.join(separator);
 
   @override
-  bool any(bool test(E element)) => _list.any(test);
+  bool any(bool Function(E) test) => _list.any(test);
 
   /// As [Iterable.toList].
   ///
@@ -221,13 +219,13 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<E> take(int n) => _list.take(n);
 
   @override
-  Iterable<E> takeWhile(bool test(E value)) => _list.takeWhile(test);
+  Iterable<E> takeWhile(bool Function(E) test) => _list.takeWhile(test);
 
   @override
   Iterable<E> skip(int n) => _list.skip(n);
 
   @override
-  Iterable<E> skipWhile(bool test(E value)) => _list.skipWhile(test);
+  Iterable<E> skipWhile(bool Function(E) test) => _list.skipWhile(test);
 
   @override
   E get first => _list.first;
@@ -239,15 +237,15 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   E get single => _list.single;
 
   @override
-  E firstWhere(bool test(E element), {E orElse()}) =>
+  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
       _list.firstWhere(test, orElse: orElse);
 
   @override
-  E lastWhere(bool test(E element), {E orElse()}) =>
+  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
       _list.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool test(E element), {E orElse()}) =>
+  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
       _list.singleWhere(test, orElse: orElse);
 
   @override

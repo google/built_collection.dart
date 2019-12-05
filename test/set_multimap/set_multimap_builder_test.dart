@@ -140,7 +140,7 @@ void main() {
     test('converts to BuiltSetMultimap without copying', () {
       var makeLongSetMultimapBuilder = () {
         var result = SetMultimapBuilder<int, int>();
-        for (int i = 0; i != 100000; ++i) {
+        for (var i = 0; i != 100000; ++i) {
           result.add(0, i);
         }
         return result;

@@ -58,7 +58,7 @@ class SetMultimapBuilder<K, V> {
   }
 
   /// Applies a function to `this`.
-  void update(updates(SetMultimapBuilder<K, V> builder)) {
+  void update(Function(SetMultimapBuilder<K, V>) updates) {
     updates(this);
   }
 
@@ -86,21 +86,23 @@ class SetMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable<T>(Iterable<T> iterable,
-      {K key(T element), V value(T element), Iterable<V> values(T element)}) {
+      {K Function(T) key,
+      V Function(T) value,
+      Iterable<V> Function(T) values}) {
     if (value != null && values != null) {
       throw ArgumentError('expected value or values to be set, got both');
     }
 
-    if (key == null) key = (T x) => x as K;
+    key ??= (T x) => x as K;
 
     if (values != null) {
       for (var element in iterable) {
-        this.addValues(key(element), values(element));
+        addValues(key(element), values(element));
       }
     } else {
-      if (value == null) value = (T x) => x as V;
+      value ??= (T x) => x as V;
       for (var element in iterable) {
-        this.add(key(element), value(element));
+        add(key(element), value(element));
       }
     }
   }
@@ -187,13 +189,13 @@ class SetMultimapBuilder<K, V> {
   void _setOwner(_BuiltSetMultimap<K, V> builtSetMultimap) {
     _builtMapOwner = builtSetMultimap;
     _builtMap = builtSetMultimap._map;
-    _builderMap = Map<K, SetBuilder<V>>();
+    _builderMap = <K, SetBuilder<V>>{};
   }
 
   void _setWithCopyAndCheck(Iterable keys, Function lookup) {
     _builtMapOwner = null;
-    _builtMap = Map<K, BuiltSet<V>>();
-    _builderMap = Map<K, SetBuilder<V>>();
+    _builtMap = <K, BuiltSet<V>>{};
+    _builderMap = <K, SetBuilder<V>>{};
 
     for (var key in keys) {
       if (key is K) {

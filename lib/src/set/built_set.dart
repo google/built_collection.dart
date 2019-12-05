@@ -4,7 +4,7 @@
 
 part of built_collection.set;
 
-typedef Set<E> _SetFactory<E>();
+typedef _SetFactory<E> = Set<E> Function();
 
 /// The Built Collection [Set].
 ///
@@ -62,7 +62,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   /// Creates a [SetBuilder], applies updates to it, and builds.
-  factory BuiltSet.build(updates(SetBuilder<E> builder)) =>
+  factory BuiltSet.build(Function(SetBuilder<E>) updates) =>
       (SetBuilder<E>()..update(updates)).build();
 
   /// Converts to a [SetBuilder] for modification.
@@ -71,7 +71,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
-  BuiltSet<E> rebuild(updates(SetBuilder<E> builder)) =>
+  BuiltSet<E> rebuild(Function(SetBuilder<E>) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -86,10 +86,8 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// any order. Then, the `hashCode` is guaranteed to be the same.
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = hashObjects(
-          _set.map((e) => e.hashCode).toList(growable: false)..sort());
-    }
+    _hashCode ??= hashObjects(
+        _set.map((e) => e.hashCode).toList(growable: false)..sort());
     return _hashCode;
   }
 
@@ -154,35 +152,35 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<T> whereType<T>() => _set.whereType<T>();
 
   @override
-  Iterable<T> map<T>(T f(E e)) => _set.map(f);
+  Iterable<T> map<T>(T Function(E) f) => _set.map(f);
 
   @override
-  Iterable<E> where(bool test(E element)) => _set.where(test);
+  Iterable<E> where(bool Function(E) test) => _set.where(test);
 
   @override
-  Iterable<T> expand<T>(Iterable<T> f(E e)) => _set.expand(f);
+  Iterable<T> expand<T>(Iterable<T> Function(E) f) => _set.expand(f);
 
   @override
   bool contains(Object element) => _set.contains(element);
 
   @override
-  void forEach(void f(E element)) => _set.forEach(f);
+  void forEach(void Function(E) f) => _set.forEach(f);
 
   @override
-  E reduce(E combine(E value, E element)) => _set.reduce(combine);
+  E reduce(E Function(E, E) combine) => _set.reduce(combine);
 
   @override
-  T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
+  T fold<T>(T initialValue, T Function(T, E) combine) =>
       _set.fold(initialValue, combine);
 
   @override
-  bool every(bool test(E element)) => _set.every(test);
+  bool every(bool Function(E) test) => _set.every(test);
 
   @override
   String join([String separator = '']) => _set.join(separator);
 
   @override
-  bool any(bool test(E element)) => _set.any(test);
+  bool any(bool Function(E) test) => _set.any(test);
 
   /// As [Iterable.toSet].
   ///
@@ -208,13 +206,13 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<E> take(int n) => _set.take(n);
 
   @override
-  Iterable<E> takeWhile(bool test(E value)) => _set.takeWhile(test);
+  Iterable<E> takeWhile(bool Function(E) test) => _set.takeWhile(test);
 
   @override
   Iterable<E> skip(int n) => _set.skip(n);
 
   @override
-  Iterable<E> skipWhile(bool test(E value)) => _set.skipWhile(test);
+  Iterable<E> skipWhile(bool Function(E) test) => _set.skipWhile(test);
 
   @override
   E get first => _set.first;
@@ -226,15 +224,15 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   E get single => _set.single;
 
   @override
-  E firstWhere(bool test(E element), {E orElse()}) =>
+  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.firstWhere(test, orElse: orElse);
 
   @override
-  E lastWhere(bool test(E element), {E orElse()}) =>
+  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool test(E element), {E orElse()}) =>
+  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.singleWhere(test, orElse: orElse);
 
   @override
@@ -255,7 +253,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(_SetFactory<E> setFactory, Set<E> set)
       : super._(setFactory, set);
 
-  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, Set<E>()) {
+  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, <E>{}) {
     for (var element in iterable) {
       if (element is E) {
         _set.add(element);
@@ -265,7 +263,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
     }
   }
 
-  _BuiltSet.copyAndCheckForNull(Iterable iterable) : super._(null, Set<E>()) {
+  _BuiltSet.copyAndCheckForNull(Iterable iterable) : super._(null, <E>{}) {
     for (var element in iterable) {
       if (identical(element, null)) {
         throw ArgumentError('iterable contained invalid element: null');

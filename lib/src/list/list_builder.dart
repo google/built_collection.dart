@@ -40,7 +40,7 @@ class ListBuilder<E> {
   }
 
   /// Applies a function to `this`.
-  void update(updates(ListBuilder<E> builder)) {
+  void update(Function(ListBuilder<E>) updates) {
     updates(this);
   }
 
@@ -121,7 +121,7 @@ class ListBuilder<E> {
   }
 
   /// As [List.sort].
-  void sort([int compare(E a, E b)]) {
+  void sort([int Function(E, E) compare]) {
     _safeList.sort(compare);
   }
 
@@ -177,14 +177,14 @@ class ListBuilder<E> {
   E removeLast() => _safeList.removeLast();
 
   /// As [List.removeWhere].
-  void removeWhere(bool test(E element)) {
+  void removeWhere(bool Function(E) test) {
     _safeList.removeWhere(test);
   }
 
   /// As [List.retainWhere].
   ///
   /// This method is an alias of [where].
-  void retainWhere(bool test(E element)) {
+  void retainWhere(bool Function(E) test) {
     _safeList.retainWhere(test);
   }
 
@@ -221,7 +221,7 @@ class ListBuilder<E> {
   // Based on Iterable.
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
-  void map(E f(E element)) {
+  void map(E Function(E) f) {
     var result = _list.map(f).toList(growable: true);
     _checkElements(result);
     _setSafeList(result);
@@ -230,10 +230,10 @@ class ListBuilder<E> {
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
   ///
   /// This method is an alias of [retainWhere].
-  void where(bool test(E element)) => retainWhere(test);
+  void where(bool Function(E) test) => retainWhere(test);
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
-  void expand(Iterable<E> f(E element)) {
+  void expand(Iterable<E> Function(E) f) {
     var result = _list.expand(f).toList(growable: true);
     _checkElements(result);
     _setSafeList(result);
@@ -246,7 +246,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.takeWhile], but updates the builder in place. Returns
   /// nothing.
-  void takeWhile(bool test(E value)) {
+  void takeWhile(bool Function(E) test) {
     _setSafeList(_list = _list.takeWhile(test).toList(growable: true));
   }
 
@@ -257,7 +257,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.skipWhile], but updates the builder in place. Returns
   /// nothing.
-  void skipWhile(bool test(E value)) {
+  void skipWhile(bool Function(E) test) {
     _setSafeList(_list.skipWhile(test).toList(growable: true));
   }
 

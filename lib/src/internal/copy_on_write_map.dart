@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-typedef Map<K, V> _MapFactory<K, V>();
+typedef _MapFactory<K, V> = Map<K, V> Function();
 
 class CopyOnWriteMap<K, V> implements Map<K, V> {
   final _MapFactory<K, V> _mapFactory;
@@ -29,7 +29,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   Iterable<MapEntry<K, V>> get entries => _map.entries;
 
   @override
-  void forEach(void f(K key, V value)) => _map.forEach(f);
+  void forEach(void Function(K, V) f) => _map.forEach(f);
 
   @override
   bool get isEmpty => _map.isEmpty;
@@ -44,7 +44,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   int get length => _map.length;
 
   @override
-  Map<K2, V2> map<K2, V2>(MapEntry<K2, V2> f(K key, V value)) => _map.map(f);
+  Map<K2, V2> map<K2, V2>(MapEntry<K2, V2> Function(K, V) f) => _map.map(f);
 
   @override
   Iterable<V> get values => _map.values;
@@ -76,7 +76,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   }
 
   @override
-  V putIfAbsent(K key, V ifAbsent()) {
+  V putIfAbsent(K key, V Function() ifAbsent) {
     _maybeCopyBeforeWrite();
     return _map.putIfAbsent(key, ifAbsent);
   }
@@ -88,7 +88,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   }
 
   @override
-  void removeWhere(bool test(K key, V value)) {
+  void removeWhere(bool Function(K, V) test) {
     _maybeCopyBeforeWrite();
     _map.removeWhere(test);
   }
@@ -97,13 +97,13 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   String toString() => _map.toString();
 
   @override
-  V update(K key, V update(V value), {V ifAbsent()}) {
+  V update(K key, V Function(V) update, {V Function() ifAbsent}) {
     _maybeCopyBeforeWrite();
     return _map.update(key, update, ifAbsent: ifAbsent);
   }
 
   @override
-  void updateAll(V update(K key, V value)) {
+  void updateAll(V Function(K, V) update) {
     _maybeCopyBeforeWrite();
     _map.updateAll(update);
   }

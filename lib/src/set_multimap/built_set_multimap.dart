@@ -52,7 +52,7 @@ abstract class BuiltSetMultimap<K, V> {
   }
 
   /// Creates a [SetMultimapBuilder], applies updates to it, and builds.
-  factory BuiltSetMultimap.build(updates(SetMultimapBuilder<K, V> builder)) =>
+  factory BuiltSetMultimap.build(Function(SetMultimapBuilder<K, V>) updates) =>
       (SetMultimapBuilder<K, V>()..update(updates)).build();
 
   /// Converts to a [SetMultimapBuilder] for modification.
@@ -61,7 +61,7 @@ abstract class BuiltSetMultimap<K, V> {
   SetMultimapBuilder<K, V> toBuilder() => SetMultimapBuilder<K, V>(this);
 
   /// Converts to a [SetMultimapBuilder], applies updates to it, and builds.
-  BuiltSetMultimap<K, V> rebuild(updates(SetMultimapBuilder<K, V> builder)) =>
+  BuiltSetMultimap<K, V> rebuild(Function(SetMultimapBuilder<K, V>) updates) =>
       (toBuilder()..update(updates)).build();
 
   /// Converts to a [Map].
@@ -81,12 +81,10 @@ abstract class BuiltSetMultimap<K, V> {
   /// to be the same.
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = hashObjects(_map.keys
-          .map((key) => hash2(key.hashCode, _map[key].hashCode))
-          .toList(growable: false)
-            ..sort());
-    }
+    _hashCode ??= hashObjects(_map.keys
+        .map((key) => hash2(key.hashCode, _map[key].hashCode))
+        .toList(growable: false)
+          ..sort());
     return _hashCode;
   }
 
@@ -130,7 +128,7 @@ abstract class BuiltSetMultimap<K, V> {
   bool containsValue(Object value) => values.contains(value);
 
   /// As [SetMultimap.forEach].
-  void forEach(void f(K key, V value)) {
+  void forEach(void Function(K, V) f) {
     _map.forEach((key, values) {
       values.forEach((value) {
         f(key, value);
@@ -139,7 +137,7 @@ abstract class BuiltSetMultimap<K, V> {
   }
 
   /// As [SetMultimap.forEachKey].
-  void forEachKey(void f(K key, Iterable<V> value)) {
+  void forEachKey(void Function(K, Iterable<V>) f) {
     _map.forEach((key, values) {
       f(key, values);
     });
@@ -154,9 +152,7 @@ abstract class BuiltSetMultimap<K, V> {
   /// As [SetMultimap.keys], but result is stable; it always returns the same
   /// instance.
   Iterable<K> get keys {
-    if (_keys == null) {
-      _keys = _map.keys;
-    }
+    _keys ??= _map.keys;
     return _keys;
   }
 
@@ -166,9 +162,7 @@ abstract class BuiltSetMultimap<K, V> {
   /// As [SetMultimap.values], but result is stable; it always returns the
   /// same instance.
   Iterable<V> get values {
-    if (_values == null) {
-      _values = _map.values.expand((x) => x);
-    }
+    _values ??= _map.values.expand((x) => x);
     return _values;
   }
 
@@ -191,7 +185,7 @@ class _BuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
   _BuiltSetMultimap.withSafeMap(Map<K, BuiltSet<V>> map) : super._(map);
 
   _BuiltSetMultimap.copyAndCheck(Iterable keys, Function lookup)
-      : super._(Map<K, BuiltSet<V>>()) {
+      : super._(<K, BuiltSet<V>>{}) {
     for (var key in keys) {
       if (key is K) {
         _map[key] = BuiltSet<V>(lookup(key));

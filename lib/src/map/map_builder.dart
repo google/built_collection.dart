@@ -35,14 +35,12 @@ class MapBuilder<K, V> {
   /// The `MapBuilder` can be modified again and used to create any number
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
-    if (_mapOwner == null) {
-      _mapOwner = _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
-    }
+    _mapOwner ??= _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
     return _mapOwner;
   }
 
   /// Applies a function to `this`.
-  void update(updates(MapBuilder<K, V> builder)) {
+  void update(Function(MapBuilder<K, V> builder) updates) {
     updates(this);
   }
 
@@ -102,9 +100,9 @@ class MapBuilder<K, V> {
   ///
   /// [key] and [value] default to the identity function.
   void addIterable<T>(Iterable<T> iterable,
-      {K key(T element), V value(T element)}) {
-    if (key == null) key = (T x) => x as K;
-    if (value == null) value = (T x) => x as V;
+      {K Function(T) key, V Function(T) value}) {
+    key ??= (T x) => x as K;
+    value ??= (T x) => x as V;
     for (var element in iterable) {
       this[key(element)] = value(element);
     }
@@ -132,7 +130,7 @@ class MapBuilder<K, V> {
   bool get isNotEmpty => _map.isNotEmpty;
 
   /// As [Map.putIfAbsent].
-  V putIfAbsent(K key, V ifAbsent()) {
+  V putIfAbsent(K key, V Function() ifAbsent) {
     _checkKey(key);
     return _safeMap.putIfAbsent(key, () {
       var value = ifAbsent();
@@ -152,7 +150,7 @@ class MapBuilder<K, V> {
   V remove(Object key) => _safeMap.remove(key);
 
   /// As [Map.removeWhere].
-  void removeWhere(bool predicate(K key, V value)) {
+  void removeWhere(bool Function(K, V) predicate) {
     _safeMap.removeWhere(predicate);
   }
 
@@ -167,11 +165,11 @@ class MapBuilder<K, V> {
   }
 
   /// As [Map.update].
-  V updateValue(K key, V update(V value), {V ifAbsent()}) =>
+  V updateValue(K key, V Function(V) update, {V Function() ifAbsent}) =>
       _safeMap.update(key, update, ifAbsent: ifAbsent);
 
   /// As [Map.updateAll].
-  void updateAllValues(V update(K key, V value)) {
+  void updateAllValues(V Function(K, V) update) {
     _safeMap.updateAll(update);
   }
 
@@ -206,7 +204,7 @@ class MapBuilder<K, V> {
     return _map;
   }
 
-  Map<K, V> _createMap() => _mapFactory != null ? _mapFactory() : Map<K, V>();
+  Map<K, V> _createMap() => _mapFactory != null ? _mapFactory() : <K, V>{};
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {

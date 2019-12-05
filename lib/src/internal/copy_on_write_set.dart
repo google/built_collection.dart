@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-typedef Set<E> _SetFactory<E>();
+typedef _SetFactory<E> = Set<E> Function();
 
 class CopyOnWriteSet<E> implements Set<E> {
   final _SetFactory<E> _setFactory;
@@ -32,7 +32,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   bool containsAll(Iterable<Object> other) => _set.containsAll(other);
 
   @override
-  bool any(bool test(E element)) => _set.any(test);
+  bool any(bool Function(E) test) => _set.any(test);
 
   @override
   Set<T> cast<T>() => CopyOnWriteSet<T>(_set.cast<T>());
@@ -44,27 +44,27 @@ class CopyOnWriteSet<E> implements Set<E> {
   E elementAt(int index) => _set.elementAt(index);
 
   @override
-  bool every(bool test(E element)) => _set.every(test);
+  bool every(bool Function(E) test) => _set.every(test);
 
   @override
-  Iterable<T> expand<T>(Iterable<T> f(E e)) => _set.expand(f);
+  Iterable<T> expand<T>(Iterable<T> Function(E) f) => _set.expand(f);
 
   @override
   E get first => _set.first;
 
   @override
-  E firstWhere(bool test(E element), {E orElse()}) =>
+  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.firstWhere(test, orElse: orElse);
 
   @override
-  T fold<T>(T initialValue, T combine(T previousValue, E element)) =>
+  T fold<T>(T initialValue, T Function(T, E) combine) =>
       _set.fold(initialValue, combine);
 
   @override
   Iterable<E> followedBy(Iterable<E> other) => _set.followedBy(other);
 
   @override
-  void forEach(void f(E element)) => _set.forEach(f);
+  void forEach(void Function(E) f) => _set.forEach(f);
 
   @override
   bool get isEmpty => _set.isEmpty;
@@ -76,39 +76,39 @@ class CopyOnWriteSet<E> implements Set<E> {
   Iterator<E> get iterator => _set.iterator;
 
   @override
-  String join([String separator = ""]) => _set.join(separator);
+  String join([String separator = '']) => _set.join(separator);
 
   @override
   E get last => _set.last;
 
   @override
-  E lastWhere(bool test(E element), {E orElse()}) =>
+  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.lastWhere(test, orElse: orElse);
 
   @override
-  Iterable<T> map<T>(T f(E e)) => _set.map(f);
+  Iterable<T> map<T>(T Function(E) f) => _set.map(f);
 
   @override
-  E reduce(E combine(E value, E element)) => _set.reduce(combine);
+  E reduce(E Function(E, E) combine) => _set.reduce(combine);
 
   @override
   E get single => _set.single;
 
   @override
-  E singleWhere(bool test(E element), {E orElse()}) =>
+  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
       _set.singleWhere(test, orElse: orElse);
 
   @override
   Iterable<E> skip(int count) => _set.skip(count);
 
   @override
-  Iterable<E> skipWhile(bool test(E value)) => _set.skipWhile(test);
+  Iterable<E> skipWhile(bool Function(E) test) => _set.skipWhile(test);
 
   @override
   Iterable<E> take(int count) => _set.take(count);
 
   @override
-  Iterable<E> takeWhile(bool test(E value)) => _set.takeWhile(test);
+  Iterable<E> takeWhile(bool Function(E) test) => _set.takeWhile(test);
 
   @override
   List<E> toList({bool growable = true}) => _set.toList(growable: growable);
@@ -117,7 +117,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   Set<E> toSet() => _set.toSet();
 
   @override
-  Iterable<E> where(bool test(E element)) => _set.where(test);
+  Iterable<E> where(bool Function(E) test) => _set.where(test);
 
   @override
   Iterable<T> whereType<T>() => _set.whereType<T>();
@@ -149,13 +149,13 @@ class CopyOnWriteSet<E> implements Set<E> {
   }
 
   @override
-  void removeWhere(bool test(E element)) {
+  void removeWhere(bool Function(E) test) {
     _maybeCopyBeforeWrite();
     _set.removeWhere(test);
   }
 
   @override
-  void retainWhere(bool test(E element)) {
+  void retainWhere(bool Function(E) test) {
     _maybeCopyBeforeWrite();
     _set.retainWhere(test);
   }

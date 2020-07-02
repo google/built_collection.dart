@@ -6,10 +6,10 @@ library built_collection.set;
 
 import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 import 'package:built_collection/src/list.dart' show BuiltList;
-import 'package:collection/collection.dart' show UnmodifiableSetView;
 
 import 'internal/hash.dart';
 import 'internal/copy_on_write_set.dart';
+import 'internal/unmodifiable_set.dart';
 import 'internal/iterables.dart';
 
 part 'set/built_set.dart';

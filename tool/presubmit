@@ -9,8 +9,16 @@ dartfmt -w $(find bin lib test -name \*.dart 2>/dev/null)
 pub get
 pub upgrade
 dartanalyzer \
+    --enable-experiment=non-nullable \
     --fatal-warnings \
     --fatal-infos \
-    --packages="$PWD/.packages" \
     $(find bin lib test -name \*.dart 2>/dev/null)
-pub run test
+
+# pub run test doesn't support NNBD yet.
+for src in $(find test -name \*.dart); do
+  grep -q 'main()' "$src" || continue
+  echo "$src in sound mode."
+  dart --enable-experiment=non-nullable --null-safety "$src" || exit 1
+  echo "$src in unsound mode."
+  dart --enable-experiment=non-nullable "$src" || exit 1
+done

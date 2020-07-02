@@ -94,7 +94,7 @@ abstract class BuiltSetMultimap<K, V> {
   /// A `BuiltSetMultimap` is only equal to another `BuiltSetMultimap` with
   /// equal key/values pairs in any order.
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
     if (other is! BuiltSetMultimap) return false;
     if (other.length != length) return false;

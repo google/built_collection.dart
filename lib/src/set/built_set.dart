@@ -97,7 +97,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// A `BuiltSet` is only equal to another `BuiltSet` with equal elements in
   /// any order.
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
     if (other is! BuiltSet) return false;
     if (other.length != length) return false;
@@ -123,11 +123,13 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// As [Set.containsAll].
   bool containsAll(Iterable<Object?> other) => _set.containsAll(other);
 
-  /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
+  /// As [Set.difference] but takes a `BuiltSet<Object?>` and returns a
+  /// `BuiltSet<E>`.
   BuiltSet<E> difference(BuiltSet<Object?> other) =>
       _BuiltSet<E>.withSafeSet(_setFactory, _set.difference(other._set));
 
-  /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
+  /// As [Set.intersection] but takes a `BuiltSet<Object?>` and returns a
+  /// `BuiltSet<E>`.
   BuiltSet<E> intersection(BuiltSet<Object?> other) =>
       _BuiltSet<E>.withSafeSet(_setFactory, _set.intersection(other._set));
 

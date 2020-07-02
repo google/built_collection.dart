@@ -21,8 +21,8 @@ abstract class BuiltMap<K, V> {
 
   // Cached.
   int? _hashCode;
-  Iterable<K>? _keys;
-  Iterable<V>? _values;
+  late Iterable<K>? _keys;
+  late Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -113,7 +113,7 @@ abstract class BuiltMap<K, V> {
   /// A `BuiltMap` is only equal to another `BuiltMap` with equal key/value
   /// pairs in any order.
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
     if (other is! BuiltMap) return false;
     if (other.length != length) return false;

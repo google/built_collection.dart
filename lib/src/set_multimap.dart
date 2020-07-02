@@ -1,13 +1,10 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.set_multimap;
 
-import 'package:quiver/collection.dart' show SetMultimap;
-import 'package:quiver/core.dart' show hashObjects, hash2;
-
+import 'internal/hash.dart';
 import 'internal/copy_on_write_map.dart';
 
 import 'set.dart';

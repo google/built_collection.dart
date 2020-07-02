@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.set_multimap;
 
@@ -15,12 +14,12 @@ part of built_collection.set_multimap;
 class SetMultimapBuilder<K, V> {
   // BuiltSets copied from another instance so they can be reused directly for
   // keys without changes.
-  Map<K, BuiltSet<V>> _builtMap;
+  Map<K, BuiltSet<V>>? _builtMap;
   // Instance that _builtMap belongs to. If present, _builtMap must not be
   // mutated.
-  _BuiltSetMultimap<K, V> _builtMapOwner;
+  _BuiltSetMultimap<K, V>? _builtMapOwner;
   // SetBuilders for keys that are being changed.
-  Map<K, SetBuilder<V>> _builderMap;
+  late Map<K, SetBuilder<V>> _builderMap;
 
   /// Instantiates with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
@@ -45,17 +44,17 @@ class SetMultimapBuilder<K, V> {
   BuiltSetMultimap<K, V> build() {
     if (_builtMapOwner == null) {
       for (var key in _builderMap.keys) {
-        var builtSet = _builderMap[key].build();
+        var builtSet = _builderMap[key]!.build();
         if (builtSet.isEmpty) {
-          _builtMap.remove(key);
+          _builtMap!.remove(key);
         } else {
-          _builtMap[key] = builtSet;
+          _builtMap![key] = builtSet;
         }
       }
 
-      _builtMapOwner = _BuiltSetMultimap<K, V>.withSafeMap(_builtMap);
+      _builtMapOwner = _BuiltSetMultimap<K, V>.withSafeMap(_builtMap!);
     }
-    return _builtMapOwner;
+    return _builtMapOwner!;
   }
 
   /// Applies a function to `this`.
@@ -68,9 +67,7 @@ class SetMultimapBuilder<K, V> {
   void replace(dynamic multimap) {
     if (multimap is _BuiltSetMultimap<K, V>) {
       _setOwner(multimap);
-    } else if (multimap is Map ||
-        multimap is SetMultimap ||
-        multimap is BuiltSetMultimap) {
+    } else if (multimap is Map || multimap is BuiltSetMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
       throw ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
@@ -87,9 +84,9 @@ class SetMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable<T>(Iterable<T> iterable,
-      {K Function(T) key,
-      V Function(T) value,
-      Iterable<V> Function(T) values}) {
+      {K Function(T)? key,
+      V Function(T)? value,
+      Iterable<V> Function(T)? values}) {
     if (value != null && values != null) {
       throw ArgumentError('expected value or values to be set, got both');
     }
@@ -126,16 +123,8 @@ class SetMultimapBuilder<K, V> {
     });
   }
 
-  /// As [SetMultimap.addAll].
-  void addAll(SetMultimap<K, V> other) {
-    // _disown is called in add.
-    other.forEach((key, value) {
-      add(key, value);
-    });
-  }
-
   /// As [SetMultimap.remove] but returns nothing.
-  void remove(Object key, V value) {
+  void remove(Object? key, V? value) {
     if (key is K) {
       _makeWriteableCopy();
       _getValuesBuilder(key).remove(value);
@@ -143,7 +132,7 @@ class SetMultimapBuilder<K, V> {
   }
 
   /// As [SetMultimap.removeAll] but returns nothing.
-  void removeAll(Object key) {
+  void removeAll(Object? key) {
     if (key is K) {
       _makeWriteableCopy();
 
@@ -156,7 +145,7 @@ class SetMultimapBuilder<K, V> {
   void clear() {
     _makeWriteableCopy();
 
-    _builtMap.clear();
+    _builtMap!.clear();
     _builderMap.clear();
   }
 
@@ -165,7 +154,7 @@ class SetMultimapBuilder<K, V> {
   SetBuilder<V> _getValuesBuilder(K key) {
     var result = _builderMap[key];
     if (result == null) {
-      var builtValues = _builtMap[key];
+      var builtValues = _builtMap![key];
       if (builtValues == null) {
         result = SetBuilder<V>();
       } else {
@@ -178,7 +167,7 @@ class SetMultimapBuilder<K, V> {
 
   void _makeWriteableCopy() {
     if (_builtMapOwner != null) {
-      _builtMap = Map<K, BuiltSet<V>>.from(_builtMap);
+      _builtMap = Map<K, BuiltSet<V>>.from(_builtMap!);
       _builtMapOwner = null;
     }
   }

@@ -6,7 +6,7 @@ library built_collection.test.list_multimap.built_list_multimap_test;
 
 import 'package:built_collection/src/list.dart';
 import 'package:built_collection/src/list_multimap.dart';
-import 'package:built_collection/src/internal/test_helpers_nnbd.dart';
+import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';

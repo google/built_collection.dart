@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.set_multimap;
 
@@ -21,9 +20,9 @@ abstract class BuiltSetMultimap<K, V> {
   final BuiltSet<V> _emptySet = BuiltSet<V>();
 
   // Cached.
-  int _hashCode;
-  Iterable<K> _keys;
-  Iterable<V> _values;
+  int? _hashCode;
+  Iterable<K>? _keys;
+  Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
@@ -41,14 +40,15 @@ abstract class BuiltSetMultimap<K, V> {
     if (multimap is _BuiltSetMultimap &&
         multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltSetMultimap<K, V>;
-    } else if (multimap is Map ||
-        multimap is SetMultimap ||
-        multimap is BuiltSetMultimap) {
+    } else if (multimap is Map) {
+      return _BuiltSetMultimap<K, V>.copyAndCheck(
+          multimap.keys, (k) => multimap[k]);
+    } else if (multimap is BuiltSetMultimap) {
       return _BuiltSetMultimap<K, V>.copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
-      throw ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
-          'got ${multimap.runtimeType}');
+      return _BuiltSetMultimap<K, V>.copyAndCheck(
+          multimap.keys, (k) => multimap[k]);
     }
   }
 
@@ -86,7 +86,7 @@ abstract class BuiltSetMultimap<K, V> {
         .map((key) => hash2(key.hashCode, _map[key].hashCode))
         .toList(growable: false)
           ..sort());
-    return _hashCode;
+    return _hashCode!;
   }
 
   /// Deep equality.
@@ -117,16 +117,16 @@ abstract class BuiltSetMultimap<K, V> {
   // SetMultimap.
 
   /// As [SetMultimap], but results are [BuiltSet]s and not mutable.
-  BuiltSet<V> operator [](Object key) {
+  BuiltSet<V>? operator [](Object? key) {
     var result = _map[key];
     return identical(result, null) ? _emptySet : result;
   }
 
   /// As [SetMultimap.containsKey].
-  bool containsKey(Object key) => _map.containsKey(key);
+  bool containsKey(Object? key) => _map.containsKey(key);
 
   /// As [SetMultimap.containsValue].
-  bool containsValue(Object value) => values.contains(value);
+  bool containsValue(Object? value) => values.contains(value);
 
   /// As [SetMultimap.forEach].
   void forEach(void Function(K, V) f) {
@@ -154,7 +154,7 @@ abstract class BuiltSetMultimap<K, V> {
   /// instance.
   Iterable<K> get keys {
     _keys ??= _map.keys;
-    return _keys;
+    return _keys!;
   }
 
   /// As [SetMultimap.length].
@@ -164,7 +164,7 @@ abstract class BuiltSetMultimap<K, V> {
   /// same instance.
   Iterable<V> get values {
     _values ??= _map.values.expand((x) => x);
-    return _values;
+    return _values!;
   }
 
   // Internal.

@@ -1,13 +1,12 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.set_multimap.built_set_multimap_test;
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';
-import 'package:quiver/collection.dart';
+import 'package:built_collection/src/set.dart';
+import 'package:built_collection/src/set_multimap.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -51,7 +50,7 @@ void main() {
     test(
         'can be instantiated from SetMultimap '
         'then converted back to equal SetMultimap', () {
-      var mutableMultimap = SetMultimap<int, String>();
+      var mutableMultimap = _SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       var multimap = BuiltSetMultimap<int, String>(mutableMultimap);
       expect(multimap.toMap(), mutableMultimap.asMap());
@@ -78,7 +77,7 @@ void main() {
     });
 
     test('does not keep a mutable SetMultimap', () {
-      var mutableMultimap = SetMultimap<int, String>();
+      var mutableMultimap = _SetMultimap<int, String>();
       mutableMultimap.add(1, '1');
       var multimap = BuiltSetMultimap<int, String>(mutableMultimap);
       mutableMultimap.clear();
@@ -454,10 +453,6 @@ void main() {
 
     // SetMultimap.
 
-    test('does not implement SetMultimap', () {
-      expect(BuiltSetMultimap<int, String>() is SetMultimap, isFalse);
-    });
-
     test('has a method like SetMultimap[]', () {
       expect(
           BuiltSetMultimap<int, String>({
@@ -611,4 +606,22 @@ class _HashcodeOnlyTwice {
     hashCodeAllowed--;
     return 0;
   }
+}
+
+// All the methods from `SetMultimap` that we care about, to avoid taking a
+// dependency on `quiver`.
+class _SetMultimap<K, V> {
+  final Map<K, Set<V>> _map = {};
+
+  void add(K key, V value) {
+    _map[key] ??= {};
+    _map[key]!.add(value);
+  }
+
+  Iterable<K> get keys => _map.keys;
+  Iterable<V> operator [](K key) => _map[key] ?? <V>[];
+
+  void clear() => _map.clear();
+
+  Map<K, Set<V>> asMap() => _map;
 }

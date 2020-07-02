@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.0 (unreleased)
+
+- Migrate to NNBD.
+- Deps on `package:collection` and `package:quiver` have been removed.
+- Multimap builders no longer have `addAll` methods that accept multimaps from
+  quiver. But, the constructors still work with quiver multimaps.
+
 ## 4.3.2
 
 - Add an `example` folder with some example code.

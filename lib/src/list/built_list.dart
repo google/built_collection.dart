@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-
 part of built_collection.list;
 
 /// The Built Collection [List].
@@ -94,7 +93,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// A `BuiltList` is only equal to another `BuiltList` with equal elements in
   /// the same order.
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
     if (other is! BuiltList) return false;
     if (other.length != length) return false;
@@ -290,7 +289,7 @@ class _BuiltList<E> extends BuiltList<E> {
   bool hasExactElementType(Type type) => E == type;
 }
 
-/// Extensions for [BuiltList] on [List].
+/// Extensions for [BuiltList] on [List].f
 extension BuiltListExtension<T> on List<T> {
   /// Converts to a [BuiltList].
   BuiltList<T> build() {

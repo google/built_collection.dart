@@ -97,7 +97,7 @@ abstract class BuiltListMultimap<K, V> {
   /// A `BuiltListMultimap` is only equal to another `BuiltListMultimap` with
   /// equal key/values pairs in any order.
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
     if (other is! BuiltListMultimap) return false;
     if (other.length != length) return false;

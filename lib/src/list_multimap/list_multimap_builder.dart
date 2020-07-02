@@ -126,7 +126,7 @@ class ListMultimapBuilder<K, V> {
   }
 
   /// As [ListMultimap.remove].
-  bool remove(Object? key, V value) {
+  bool remove(Object? key, V? value) {
     if (key is! K) return false;
     _makeWriteableCopy();
     return _getValuesBuilder(key).remove(value);

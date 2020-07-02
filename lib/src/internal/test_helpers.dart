@@ -2,21 +2,10 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-import '../list_multimap.dart';
-import '../map.dart';
 import '../set_multimap.dart';
 
 /// Internal only test helpers.
 class BuiltCollectionTestHelpers {
-  static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
-          Object map, int hashCode) =>
-      OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
-
-  static BuiltListMultimap<String, String>
-      overridenHashcodeBuiltListMultimapWithStringKeys(
-              Object map, int hashCode) =>
-          OverriddenHashcodeBuiltListMultimap<String, String>(map, hashCode);
-
   static BuiltSetMultimap<int, String> overridenHashcodeBuiltSetMultimap(
           Object map, int hashCode) =>
       OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);

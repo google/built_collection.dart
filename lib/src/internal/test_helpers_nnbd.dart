@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import '../list.dart';
+import '../list_multimap.dart';
 import '../map.dart';
 import '../set.dart';
 
@@ -11,6 +12,15 @@ class BuiltCollectionTestHelpers {
   static BuiltList<int> overridenHashcodeBuiltList(
           Iterable iterable, int hashCode) =>
       OverriddenHashcodeBuiltList<int>(iterable, hashCode);
+
+  static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
+          Object map, int hashCode) =>
+      OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);
+
+  static BuiltListMultimap<String, String>
+      overridenHashcodeBuiltListMultimapWithStringKeys(
+              Object map, int hashCode) =>
+          OverriddenHashcodeBuiltListMultimap<String, String>(map, hashCode);
 
   static BuiltMap<int, String> overridenHashcodeBuiltMap(
           Object map, int hashCode) =>

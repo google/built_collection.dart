@@ -1,12 +1,11 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 typedef _SetFactory<E> = Set<E> Function();
 
 class CopyOnWriteSet<E> implements Set<E> {
-  final _SetFactory<E> _setFactory;
+  final _SetFactory<E>? _setFactory;
   bool _copyBeforeWrite;
   Set<E> _set;
 
@@ -18,19 +17,19 @@ class CopyOnWriteSet<E> implements Set<E> {
   int get length => _set.length;
 
   @override
-  E lookup(Object object) => _set.lookup(object);
+  E? lookup(Object? object) => _set.lookup(object);
 
   @override
-  Set<E> intersection(Set<Object> other) => _set.intersection(other);
+  Set<E> intersection(Set<Object?> other) => _set.intersection(other);
 
   @override
   Set<E> union(Set<E> other) => _set.union(other);
 
   @override
-  Set<E> difference(Set<Object> other) => _set.difference(other);
+  Set<E> difference(Set<Object?> other) => _set.difference(other);
 
   @override
-  bool containsAll(Iterable<Object> other) => _set.containsAll(other);
+  bool containsAll(Iterable<Object?> other) => _set.containsAll(other);
 
   @override
   bool any(bool Function(E) test) => _set.any(test);
@@ -39,7 +38,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   Set<T> cast<T>() => CopyOnWriteSet<T>(_set.cast<T>());
 
   @override
-  bool contains(Object element) => _set.contains(element);
+  bool contains(Object? element) => _set.contains(element);
 
   @override
   E elementAt(int index) => _set.elementAt(index);
@@ -54,7 +53,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   E get first => _set.first;
 
   @override
-  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
+  E firstWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.firstWhere(test, orElse: orElse);
 
   @override
@@ -83,7 +82,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   E get last => _set.last;
 
   @override
-  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
+  E lastWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.lastWhere(test, orElse: orElse);
 
   @override
@@ -96,7 +95,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   E get single => _set.single;
 
   @override
-  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
+  E singleWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.singleWhere(test, orElse: orElse);
 
   @override
@@ -144,7 +143,7 @@ class CopyOnWriteSet<E> implements Set<E> {
   }
 
   @override
-  bool remove(Object value) {
+  bool remove(Object? value) {
     _maybeCopyBeforeWrite();
     return _set.remove(value);
   }
@@ -162,13 +161,13 @@ class CopyOnWriteSet<E> implements Set<E> {
   }
 
   @override
-  void removeAll(Iterable<Object> elements) {
+  void removeAll(Iterable<Object?> elements) {
     _maybeCopyBeforeWrite();
     _set.removeAll(elements);
   }
 
   @override
-  void retainAll(Iterable<Object> elements) {
+  void retainAll(Iterable<Object?> elements) {
     _maybeCopyBeforeWrite();
     _set.retainAll(elements);
   }
@@ -182,6 +181,6 @@ class CopyOnWriteSet<E> implements Set<E> {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
     _set =
-        _setFactory != null ? (_setFactory()..addAll(_set)) : Set<E>.from(_set);
+        _setFactory != null ? (_setFactory!()..addAll(_set)) : Set<E>.from(_set);
   }
 }

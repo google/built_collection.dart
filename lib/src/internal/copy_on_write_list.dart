@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 import 'dart:math';
 
@@ -33,7 +32,7 @@ class CopyOnWriteList<E> implements List<E> {
   List<T> cast<T>() => CopyOnWriteList<T>(_list.cast<T>(), _growable);
 
   @override
-  bool contains(Object element) => _list.contains(element);
+  bool contains(Object? element) => _list.contains(element);
 
   @override
   E elementAt(int index) => _list.elementAt(index);
@@ -48,7 +47,7 @@ class CopyOnWriteList<E> implements List<E> {
   E get first => _list.first;
 
   @override
-  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
+  E firstWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.firstWhere(test, orElse: orElse);
 
   @override
@@ -87,14 +86,14 @@ class CopyOnWriteList<E> implements List<E> {
   E get last => _list.last;
 
   @override
-  int lastIndexOf(E element, [int start]) => _list.lastIndexOf(element, start);
+  int lastIndexOf(E element, [int? start]) => _list.lastIndexOf(element, start);
 
   @override
-  int lastIndexWhere(bool Function(E) test, [int start]) =>
+  int lastIndexWhere(bool Function(E) test, [int? start]) =>
       _list.lastIndexWhere(test, start);
 
   @override
-  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
+  E lastWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.lastWhere(test, orElse: orElse);
 
   @override
@@ -110,7 +109,7 @@ class CopyOnWriteList<E> implements List<E> {
   E get single => _list.single;
 
   @override
-  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
+  E singleWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.singleWhere(test, orElse: orElse);
 
   @override
@@ -120,7 +119,7 @@ class CopyOnWriteList<E> implements List<E> {
   Iterable<E> skipWhile(bool Function(E) test) => _list.skipWhile(test);
 
   @override
-  List<E> sublist(int start, [int end]) => _list.sublist(start, end);
+  List<E> sublist(int start, [int? end]) => _list.sublist(start, end);
 
   @override
   Iterable<E> take(int count) => _list.take(count);
@@ -179,13 +178,13 @@ class CopyOnWriteList<E> implements List<E> {
   }
 
   @override
-  void sort([int Function(E, E) compare]) {
+  void sort([int Function(E, E)? compare]) {
     _maybeCopyBeforeWrite();
     _list.sort(compare);
   }
 
   @override
-  void shuffle([Random random]) {
+  void shuffle([Random? random]) {
     _maybeCopyBeforeWrite();
     _list.shuffle(random);
   }
@@ -215,7 +214,7 @@ class CopyOnWriteList<E> implements List<E> {
   }
 
   @override
-  bool remove(Object value) {
+  bool remove(Object? value) {
     _maybeCopyBeforeWrite();
     return _list.remove(value);
   }
@@ -257,7 +256,7 @@ class CopyOnWriteList<E> implements List<E> {
   }
 
   @override
-  void fillRange(int start, int end, [E fillValue]) {
+  void fillRange(int start, int end, [E? fillValue]) {
     _maybeCopyBeforeWrite();
     _list.fillRange(start, end, fillValue);
   }

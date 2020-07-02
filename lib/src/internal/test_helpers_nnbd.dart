@@ -3,10 +3,15 @@
 // license that can be found in the LICENSE file.
 
 import '../list.dart';
+import '../set.dart';
 
 /// Internal only test helpers.
 class BuiltCollectionTestHelpers {
   static BuiltList<int> overridenHashcodeBuiltList(
           Iterable iterable, int hashCode) =>
       OverriddenHashcodeBuiltList<int>(iterable, hashCode);
+
+  static BuiltSet<int> overridenHashcodeBuiltSet(
+          Iterable iterable, int hashCode) =>
+      OverriddenHashcodeBuiltSet<int>(iterable, hashCode);
 }

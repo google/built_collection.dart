@@ -1,12 +1,11 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.set.set_builder_test;
 
 import 'dart:collection' show SplayTreeSet;
-import 'package:built_collection/built_collection.dart';
+import 'package:built_collection/src/set.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -23,31 +22,32 @@ void main() {
 
     test('throws on null add', () {
       var builder = SetBuilder<int>();
-      expect(() => builder.add(null), throwsA(anything));
+      expect(() => builder.add(null as int), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null addAll', () {
       var builder = SetBuilder<int>();
-      expect(() => builder.addAll([0, 1, null]), throwsA(anything));
+      expect(() => builder.addAll([0, 1, null as int]), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null map', () {
       var builder = SetBuilder<int>([0, 1, 2]);
-      expect(() => builder.map((x) => null), throwsA(anything));
+      expect(() => builder.map((x) => null as int), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null expand', () {
       var builder = SetBuilder<int>([0, 1, 2]);
-      expect(() => builder.expand((x) => [x, null]), throwsA(anything));
+      expect(() => builder.expand((x) => [x, null as int]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null withBase', () {
       var builder = SetBuilder<int>([2, 0, 1]);
-      expect(() => builder.withBase(null), throwsA(anything));
+      expect(() => builder.withBase(null as Set<int> Function()),
+          throwsA(anything));
       expect(builder.build(), orderedEquals([2, 0, 1]));
     });
 
@@ -254,7 +254,7 @@ void main() {
     });
 
     group('iterates at most once in', () {
-      Iterable<int> onceIterable;
+      late Iterable<int> onceIterable;
       setUp(() {
         var count = 0;
         onceIterable = [1].map((x) {

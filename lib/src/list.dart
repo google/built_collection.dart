@@ -7,7 +7,7 @@ library built_collection.list;
 import 'dart:math' show Random;
 
 import 'package:built_collection/src/iterable.dart' show BuiltIterable;
-import 'package:built_collection/set.dart' show BuiltSet;
+import 'package:built_collection/src/set.dart' show BuiltSet;
 
 import 'internal/copy_on_write_list.dart';
 import 'internal/hash.dart';

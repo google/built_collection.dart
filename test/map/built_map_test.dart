@@ -1,13 +1,12 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.map.built_map_test;
 
 import 'dart:collection' show SplayTreeMap;
-import 'package:built_collection/built_collection.dart';
-import 'package:built_collection/src/internal/test_helpers.dart';
+import 'package:built_collection/src/map.dart';
+import 'package:built_collection/src/internal/test_helpers_nnbd.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -156,11 +155,13 @@ void main() {
     });
 
     test('of constructor throws on null keys', () {
-      expect(() => BuiltMap<int, String>.of({null: '1'}), throwsA(anything));
+      expect(() => BuiltMap<int, String>.of({null as int: '1'}),
+          throwsA(anything));
     });
 
     test('of constructor throws on null values', () {
-      expect(() => BuiltMap<int, String>.of({1: null}), throwsA(anything));
+      expect(() => BuiltMap<int, String>.of({1: null as String}),
+          throwsA(anything));
     });
 
     test('hashes to same value for same contents', () {

@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.map;
 
@@ -14,9 +13,9 @@ part of built_collection.map;
 /// for the general properties of Built Collections.
 class MapBuilder<K, V> {
   /// Used by [_createMap] to instantiate [_map]. The default value is `null`.
-  _MapFactory<K, V> _mapFactory;
-  Map<K, V> _map;
-  _BuiltMap<K, V> _mapOwner;
+  _MapFactory<K, V>? _mapFactory;
+  late Map<K, V> _map;
+  _BuiltMap<K, V>? _mapOwner;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -37,7 +36,7 @@ class MapBuilder<K, V> {
   /// of `BuiltMap`s.
   BuiltMap<K, V> build() {
     _mapOwner ??= _BuiltMap<K, V>.withSafeMap(_mapFactory, _map);
-    return _mapOwner;
+    return _mapOwner!;
   }
 
   /// Applies a function to `this`.
@@ -51,13 +50,13 @@ class MapBuilder<K, V> {
       _setOwner(map);
     } else if (map is BuiltMap) {
       var replacement = _createMap();
-      map.forEach((Object key, Object value) {
+      map.forEach((dynamic key, dynamic value) {
         replacement[key as K] = value as V;
       });
       _setSafeMap(replacement);
     } else if (map is Map) {
       var replacement = _createMap();
-      map.forEach((Object key, Object value) {
+      map.forEach((dynamic key, dynamic value) {
         replacement[key as K] = value as V;
       });
       _setSafeMap(replacement);
@@ -101,7 +100,7 @@ class MapBuilder<K, V> {
   ///
   /// [key] and [value] default to the identity function.
   void addIterable<T>(Iterable<T> iterable,
-      {K Function(T) key, V Function(T) value}) {
+      {K Function(T)? key, V Function(T)? value}) {
     key ??= (T x) => x as K;
     value ??= (T x) => x as V;
     for (var element in iterable) {
@@ -112,7 +111,7 @@ class MapBuilder<K, V> {
   // Based on Map.
 
   /// As [Map].
-  V operator [](Object key) => _map[key];
+  V? operator [](Object? key) => _map[key];
 
   /// As [Map].
   void operator []=(K key, V value) {
@@ -148,7 +147,7 @@ class MapBuilder<K, V> {
   }
 
   /// As [Map.remove].
-  V remove(Object key) => _safeMap.remove(key);
+  V? remove(Object? key) => _safeMap.remove(key);
 
   /// As [Map.removeWhere].
   void removeWhere(bool Function(K, V) predicate) {
@@ -166,7 +165,7 @@ class MapBuilder<K, V> {
   }
 
   /// As [Map.update].
-  V updateValue(K key, V Function(V) update, {V Function() ifAbsent}) =>
+  V updateValue(K key, V Function(V) update, {V Function()? ifAbsent}) =>
       _safeMap.update(key, update, ifAbsent: ifAbsent);
 
   /// As [Map.updateAll].
@@ -205,7 +204,7 @@ class MapBuilder<K, V> {
     return _map;
   }
 
-  Map<K, V> _createMap() => _mapFactory != null ? _mapFactory() : <K, V>{};
+  Map<K, V> _createMap() => _mapFactory != null ? _mapFactory!() : <K, V>{};
 
   void _checkGenericTypeParameter() {
     if (K == dynamic) {

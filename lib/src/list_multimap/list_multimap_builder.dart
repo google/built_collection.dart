@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.list_multimap;
 
@@ -15,12 +14,12 @@ part of built_collection.list_multimap;
 class ListMultimapBuilder<K, V> {
   // BuiltLists copied from another instance so they can be reused directly for
   // keys without changes.
-  Map<K, BuiltList<V>> _builtMap;
+  late Map<K, BuiltList<V>> _builtMap;
   // Instance that _builtMap belongs to. If present, _builtMap must not be
   // mutated.
-  _BuiltListMultimap<K, V> _builtMapOwner;
+  _BuiltListMultimap<K, V>? _builtMapOwner;
   // ListBuilders for keys that are being changed.
-  Map<K, ListBuilder<V>> _builderMap;
+  late Map<K, ListBuilder<V>> _builderMap;
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
@@ -45,7 +44,7 @@ class ListMultimapBuilder<K, V> {
   BuiltListMultimap<K, V> build() {
     if (_builtMapOwner == null) {
       for (var key in _builderMap.keys) {
-        var builtList = _builderMap[key].build();
+        var builtList = _builderMap[key]!.build();
         if (builtList.isEmpty) {
           _builtMap.remove(key);
         } else {
@@ -55,7 +54,7 @@ class ListMultimapBuilder<K, V> {
 
       _builtMapOwner = _BuiltListMultimap<K, V>.withSafeMap(_builtMap);
     }
-    return _builtMapOwner;
+    return _builtMapOwner!;
   }
 
   /// Applies a function to `this`.
@@ -70,9 +69,7 @@ class ListMultimapBuilder<K, V> {
   void replace(dynamic multimap) {
     if (multimap is _BuiltListMultimap<K, V>) {
       _setOwner(multimap);
-    } else if (multimap is Map ||
-        multimap is ListMultimap ||
-        multimap is BuiltListMultimap) {
+    } else if (multimap is Map || multimap is BuiltListMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
       throw ArgumentError('expected Map, ListMultimap or BuiltListMultimap, '
@@ -89,9 +86,9 @@ class ListMultimapBuilder<K, V> {
   /// [key] and [value] default to the identity function. [values] is ignored
   /// if not specified.
   void addIterable<T>(Iterable<T> iterable,
-      {K Function(T) key,
-      V Function(T) value,
-      Iterable<V> Function(T) values}) {
+      {K Function(T)? key,
+      V Function(T)? value,
+      Iterable<V> Function(T)? values}) {
     if (value != null && values != null) {
       throw ArgumentError('expected value or values to be set, got both');
     }
@@ -128,23 +125,15 @@ class ListMultimapBuilder<K, V> {
     });
   }
 
-  /// As [ListMultimap.addAll].
-  void addAll(ListMultimap<K, V> other) {
-    // _disown is called in add.
-    other.forEach((key, value) {
-      add(key, value);
-    });
-  }
-
   /// As [ListMultimap.remove].
-  bool remove(Object key, V value) {
+  bool remove(Object? key, V value) {
     if (key is! K) return false;
     _makeWriteableCopy();
     return _getValuesBuilder(key).remove(value);
   }
 
   /// As [ListMultimap.removeAll], but results are [BuiltList]s.
-  BuiltList<V> removeAll(Object key) {
+  BuiltList<V> removeAll(Object? key) {
     if (key is! K) return BuiltList<V>();
     _makeWriteableCopy();
     var builder = _builderMap[key];
@@ -168,7 +157,7 @@ class ListMultimapBuilder<K, V> {
   }
 
   /// As [ListMultimap], but results are [ListBuilder]s.
-  ListBuilder<V> operator [](Object key) {
+  ListBuilder<V> operator [](Object? key) {
     _makeWriteableCopy();
     return key is K ? _getValuesBuilder(key) : ListBuilder<V>();
   }

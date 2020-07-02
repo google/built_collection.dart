@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.list_multimap;
 
@@ -22,9 +21,9 @@ abstract class BuiltListMultimap<K, V> {
   final BuiltList<V> _emptyList = BuiltList<V>();
 
   // Cached.
-  int _hashCode;
-  Iterable<K> _keys;
-  Iterable<V> _values;
+  int? _hashCode;
+  Iterable<K>? _keys;
+  Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
@@ -42,14 +41,15 @@ abstract class BuiltListMultimap<K, V> {
     if (multimap is _BuiltListMultimap &&
         multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltListMultimap<K, V>;
-    } else if (multimap is Map ||
-        multimap is ListMultimap ||
-        multimap is BuiltListMultimap) {
+    } else if (multimap is Map) {
+      return _BuiltListMultimap<K, V>.copyAndCheck(
+          multimap.keys, (k) => multimap[k]);
+    } else if (multimap is BuiltListMultimap) {
       return _BuiltListMultimap<K, V>.copyAndCheck(
           multimap.keys, (k) => multimap[k]);
     } else {
-      throw ArgumentError('expected Map, ListMultimap or BuiltListMultimap, '
-          'got ${multimap.runtimeType}');
+      return _BuiltListMultimap<K, V>.copyAndCheck(
+          multimap.keys, (k) => multimap[k]);
     }
   }
 
@@ -89,7 +89,7 @@ abstract class BuiltListMultimap<K, V> {
         .map((key) => hash2(key.hashCode, _map[key].hashCode))
         .toList(growable: false)
           ..sort());
-    return _hashCode;
+    return _hashCode!;
   }
 
   /// Deep equality.
@@ -120,16 +120,16 @@ abstract class BuiltListMultimap<K, V> {
   // ListMultimap.
 
   /// As [ListMultimap], but results are [BuiltList]s and not mutable.
-  BuiltList<V> operator [](Object key) {
+  BuiltList<V> operator [](Object? key) {
     var result = _map[key];
-    return identical(result, null) ? _emptyList : result;
+    return identical(result, null) ? _emptyList : result!;
   }
 
   /// As [ListMultimap.containsKey].
-  bool containsKey(Object key) => _map.containsKey(key);
+  bool containsKey(Object? key) => _map.containsKey(key);
 
   /// As [ListMultimap.containsValue].
-  bool containsValue(Object value) => values.contains(value);
+  bool containsValue(Object? value) => values.contains(value);
 
   /// As [ListMultimap.forEach].
   void forEach(void Function(K, V) f) {
@@ -157,7 +157,7 @@ abstract class BuiltListMultimap<K, V> {
   /// instance.
   Iterable<K> get keys {
     _keys ??= _map.keys;
-    return _keys;
+    return _keys!;
   }
 
   /// As [ListMultimap.length].
@@ -167,7 +167,7 @@ abstract class BuiltListMultimap<K, V> {
   /// same instance.
   Iterable<V> get values {
     _values ??= _map.values.expand((x) => x);
-    return _values;
+    return _values!;
   }
 
   // Internal.

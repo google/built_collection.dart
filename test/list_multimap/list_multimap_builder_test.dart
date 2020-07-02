@@ -1,12 +1,10 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.list_multimap.list_multimap_builder_test;
 
-import 'package:built_collection/built_collection.dart';
-import 'package:quiver/collection.dart';
+import 'package:built_collection/src/list_multimap.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -33,28 +31,12 @@ void main() {
     });
 
     test('throws on null key add', () {
-      expect(() => ListMultimapBuilder<int, String>().add(null, '0'),
+      expect(() => ListMultimapBuilder<int, String>().add(null as int, '0'),
           throwsA(anything));
     });
 
     test('throws on null value add', () {
-      expect(() => ListMultimapBuilder<int, String>().add(0, null),
-          throwsA(anything));
-    });
-
-    test('throws on null key addAll', () {
-      var mutableMultimap = ListMultimap<int, String>();
-      mutableMultimap.add(null, '0');
-
-      expect(() => ListMultimapBuilder<int, String>().addAll(mutableMultimap),
-          throwsA(anything));
-    });
-
-    test('throws on null value addAll', () {
-      var mutableMultimap = ListMultimap<int, String>();
-      mutableMultimap.add(0, null);
-
-      expect(() => ListMultimapBuilder<int, String>().addAll(mutableMultimap),
+      expect(() => ListMultimapBuilder<int, String>().add(0, null as String),
           throwsA(anything));
     });
 
@@ -92,7 +74,7 @@ void main() {
           });
       expect(
           (ListMultimapBuilder<int, int>()
-                ..addIterable([1, 2, 3], key: (element) => element + 1))
+                ..addIterable([1, 2, 3], key: (int element) => element + 1))
               .build()
               .toMap(),
           {
@@ -102,7 +84,7 @@ void main() {
           });
       expect(
           (ListMultimapBuilder<int, int>()
-                ..addIterable([1, 2, 3], value: (element) => element + 1))
+                ..addIterable([1, 2, 3], value: (int element) => element + 1))
               .build()
               .toMap(),
           {
@@ -113,7 +95,7 @@ void main() {
       expect(
           (ListMultimapBuilder<int, int>()
                 ..addIterable([1, 2, 3],
-                    values: (element) => <int>[element, element + 1]))
+                    values: (int element) => <int>[element, element + 1]))
               .build()
               .toMap(),
           {
@@ -307,29 +289,6 @@ void main() {
           ({
             1: ['1'],
             2: ['2', '3']
-          }));
-    });
-
-    test('has a method like ListMultimap.addAll', () {
-      var mutableMultimap = ListMultimap<int, String>();
-      mutableMultimap.add(1, '1');
-      mutableMultimap.add(2, '2');
-      expect(
-          (ListMultimapBuilder<int, String>()..addAll(mutableMultimap))
-              .build()
-              .toMap(),
-          ({
-            1: ['1'],
-            2: ['2']
-          }));
-      expect(
-          (BuiltListMultimap<int, String>().toBuilder()
-                ..addAll(mutableMultimap))
-              .build()
-              .toMap(),
-          ({
-            1: ['1'],
-            2: ['2']
           }));
     });
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
+
 
 part of built_collection.set;
 
@@ -17,9 +17,9 @@ typedef _SetFactory<E> = Set<E> Function();
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
-  final _SetFactory<E> _setFactory;
+  final _SetFactory<E>? _setFactory;
   final Set<E> _set;
-  int _hashCode;
+  int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -69,7 +69,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this);
+  SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this as _BuiltSet<E>);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(Function(SetBuilder<E>) updates) =>
@@ -89,7 +89,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   int get hashCode {
     _hashCode ??= hashObjects(
         _set.map((e) => e.hashCode).toList(growable: false)..sort());
-    return _hashCode;
+    return _hashCode!;
   }
 
   /// Deep equality.
@@ -121,18 +121,18 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   int get length => _set.length;
 
   /// As [Set.containsAll].
-  bool containsAll(Iterable<Object> other) => _set.containsAll(other);
+  bool containsAll(Iterable<Object?> other) => _set.containsAll(other);
 
   /// As [Set.difference] but takes and returns a `BuiltSet<E>`.
-  BuiltSet<E> difference(BuiltSet<Object> other) =>
+  BuiltSet<E> difference(BuiltSet<Object?> other) =>
       _BuiltSet<E>.withSafeSet(_setFactory, _set.difference(other._set));
 
   /// As [Set.intersection] but takes and returns a `BuiltSet<E>`.
-  BuiltSet<E> intersection(BuiltSet<Object> other) =>
+  BuiltSet<E> intersection(BuiltSet<Object?> other) =>
       _BuiltSet<E>.withSafeSet(_setFactory, _set.intersection(other._set));
 
   /// As [Set.lookup].
-  E lookup(Object object) => _set.lookup(object);
+  E? lookup(Object? object) => _set.lookup(object);
 
   /// As [Set.union] but takes and returns a `BuiltSet<E>`.
   BuiltSet<E> union(BuiltSet<E> other) =>
@@ -162,7 +162,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<T> expand<T>(Iterable<T> Function(E) f) => _set.expand(f);
 
   @override
-  bool contains(Object element) => _set.contains(element);
+  bool contains(Object? element) => _set.contains(element);
 
   @override
   void forEach(void Function(E) f) => _set.forEach(f);
@@ -225,15 +225,15 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   E get single => _set.single;
 
   @override
-  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
+  E firstWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.firstWhere(test, orElse: orElse);
 
   @override
-  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
+  E lastWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
+  E singleWhere(bool Function(E) test, {E Function()? orElse}) =>
       _set.singleWhere(test, orElse: orElse);
 
   @override
@@ -251,7 +251,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
 /// Default implementation of the public [BuiltSet] interface.
 class _BuiltSet<E> extends BuiltSet<E> {
-  _BuiltSet.withSafeSet(_SetFactory<E> setFactory, Set<E> set)
+  _BuiltSet.withSafeSet(_SetFactory<E>? setFactory, Set<E> set)
       : super._(setFactory, set);
 
   _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, <E>{}) {

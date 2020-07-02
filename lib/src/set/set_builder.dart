@@ -1,7 +1,7 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
+
 
 part of built_collection.set;
 
@@ -14,9 +14,9 @@ part of built_collection.set;
 /// for the general properties of Built Collections.
 class SetBuilder<E> {
   /// Used by [_createSet] to instantiate [_set]. The default value is `null`.
-  _SetFactory<E> _setFactory;
-  Set<E> _set;
-  _BuiltSet<E> _setOwner;
+  _SetFactory<E>? _setFactory;
+  late Set<E> _set;
+  _BuiltSet<E>? _setOwner;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -37,7 +37,7 @@ class SetBuilder<E> {
   /// of `BuiltSet`s.
   BuiltSet<E> build() {
     _setOwner ??= _BuiltSet<E>.withSafeSet(_setFactory, _set);
-    return _setOwner;
+    return _setOwner!;
   }
 
   /// Applies a function to `this`.
@@ -124,10 +124,10 @@ class SetBuilder<E> {
   }
 
   /// As [Set.remove].
-  bool remove(Object value) => _safeSet.remove(value);
+  bool remove(Object? value) => _safeSet.remove(value);
 
   /// As [Set.removeAll].
-  void removeAll(Iterable<Object> elements) {
+  void removeAll(Iterable<Object?> elements) {
     _safeSet.removeAll(elements);
   }
 
@@ -137,7 +137,7 @@ class SetBuilder<E> {
   }
 
   /// As [Set.retainAll].
-  void retainAll(Iterable<Object> elements) {
+  void retainAll(Iterable<Object?> elements) {
     _safeSet.retainAll(elements);
   }
 
@@ -222,7 +222,7 @@ class SetBuilder<E> {
     return _set;
   }
 
-  Set<E> _createSet() => _setFactory != null ? _setFactory() : <E>{};
+  Set<E> _createSet() => _setFactory != null ? _setFactory!() : <E>{};
 
   void _checkGenericTypeParameter() {
     if (E == dynamic) {

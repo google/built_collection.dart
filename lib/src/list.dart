@@ -2,16 +2,15 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-
 library built_collection.list;
 
 import 'dart:math' show Random;
 
 import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 import 'package:built_collection/src/set.dart' show BuiltSet;
-import 'package:quiver/core.dart' show hashObjects;
 
 import 'internal/copy_on_write_list.dart';
+import 'internal/hash.dart';
 import 'internal/iterables.dart';
 
 part 'list/built_list.dart';

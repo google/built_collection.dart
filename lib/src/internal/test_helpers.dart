@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-import '../list.dart';
 import '../list_multimap.dart';
 import '../map.dart';
 import '../set.dart';
@@ -10,10 +9,6 @@ import '../set_multimap.dart';
 
 /// Internal only test helpers.
 class BuiltCollectionTestHelpers {
-  static BuiltList<int> overridenHashcodeBuiltList(
-          Iterable iterable, int hashCode) =>
-      OverriddenHashcodeBuiltList<int>(iterable, hashCode);
-
   static BuiltListMultimap<int, String> overridenHashcodeBuiltListMultimap(
           Object map, int hashCode) =>
       OverriddenHashcodeBuiltListMultimap<int, String>(map, hashCode);

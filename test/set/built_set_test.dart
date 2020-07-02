@@ -6,7 +6,7 @@ library built_collection.test.set.built_set_test;
 
 import 'dart:collection' show SplayTreeSet;
 import 'package:built_collection/src/set.dart';
-import 'package:built_collection/src/internal/test_helpers_nnbd.dart';
+import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';

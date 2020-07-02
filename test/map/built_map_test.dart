@@ -6,7 +6,7 @@ library built_collection.test.map.built_map_test;
 
 import 'dart:collection' show SplayTreeMap;
 import 'package:built_collection/src/map.dart';
-import 'package:built_collection/src/internal/test_helpers_nnbd.dart';
+import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';

@@ -82,9 +82,7 @@ class MapBuilder<K, V> {
   ///
   /// Use [withDefaultBase] to reset `base` to the default value.
   void withBase(_MapFactory<K, V> base) {
-    if (base == null) {
-      throw ArgumentError.notNull('base');
-    }
+    ArgumentError.checkNotNull(base, 'base');
     _mapFactory = base;
     _setSafeMap(_createMap()..addAll(_map));
   }

@@ -79,9 +79,7 @@ class SetBuilder<E> {
   ///
   /// Use [withDefaultBase] to reset `base` to the default value.
   void withBase(_SetFactory<E> base) {
-    if (base == null) {
-      throw ArgumentError.notNull('base');
-    }
+    ArgumentError.checkNotNull(base, 'base');
     _setFactory = base;
     _setSafeSet(_createSet()..addAll(_set));
   }

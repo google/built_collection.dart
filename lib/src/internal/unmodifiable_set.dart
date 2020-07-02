@@ -118,7 +118,7 @@ class UnmodifiableSetView<E> implements Set<E> {
   @override
   Iterable<T> whereType<T>() => _set.whereType<T>();
 
-  // Mutating methods: just throw!.
+  // Mutating methods: just throw!
 
   @override
   bool add(E value) => _throw();

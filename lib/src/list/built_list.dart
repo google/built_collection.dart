@@ -1,7 +1,7 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
+
 
 part of built_collection.list;
 
@@ -16,7 +16,7 @@ part of built_collection.list;
 /// for the general properties of Built Collections.
 abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   final List<E> _list;
-  int _hashCode;
+  int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -86,7 +86,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   @override
   int get hashCode {
     _hashCode ??= hashObjects(_list);
-    return _hashCode;
+    return _hashCode!;
   }
 
   /// Deep equality.
@@ -134,18 +134,18 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   int indexOf(E element, [int start = 0]) => _list.indexOf(element, start);
 
   /// As [List.lastIndexOf].
-  int lastIndexOf(E element, [int start]) => _list.lastIndexOf(element, start);
+  int lastIndexOf(E element, [int? start]) => _list.lastIndexOf(element, start);
 
   /// As [List.indexWhere].
   int indexWhere(bool Function(E) test, [int start = 0]) =>
       _list.indexWhere(test, start);
 
   /// As [List.lastIndexWhere].
-  int lastIndexWhere(bool Function(E) test, [int start]) =>
+  int lastIndexWhere(bool Function(E) test, [int? start]) =>
       _list.lastIndexWhere(test, start);
 
   /// As [List.sublist] but returns a `BuiltList<E>`.
-  BuiltList<E> sublist(int start, [int end]) =>
+  BuiltList<E> sublist(int start, [int? end]) =>
       _BuiltList<E>.withSafeList(_list.sublist(start, end));
 
   /// As [List.getRange].
@@ -172,7 +172,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   Iterable<T> expand<T>(Iterable<T> Function(E) f) => _list.expand(f);
 
   @override
-  bool contains(Object element) => _list.contains(element);
+  bool contains(Object? element) => _list.contains(element);
 
   @override
   void forEach(void Function(E) f) => _list.forEach(f);
@@ -238,15 +238,15 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   E get single => _list.single;
 
   @override
-  E firstWhere(bool Function(E) test, {E Function() orElse}) =>
+  E firstWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.firstWhere(test, orElse: orElse);
 
   @override
-  E lastWhere(bool Function(E) test, {E Function() orElse}) =>
+  E lastWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.lastWhere(test, orElse: orElse);
 
   @override
-  E singleWhere(bool Function(E) test, {E Function() orElse}) =>
+  E singleWhere(bool Function(E) test, {E Function()? orElse}) =>
       _list.singleWhere(test, orElse: orElse);
 
   @override

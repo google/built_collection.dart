@@ -4,7 +4,7 @@
 
 import '../list_multimap.dart';
 import '../map.dart';
-import '../set.dart';
+import '../../set.dart';
 import '../set_multimap.dart';
 
 /// Internal only test helpers.

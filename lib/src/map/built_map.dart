@@ -21,8 +21,8 @@ abstract class BuiltMap<K, V> {
 
   // Cached.
   int? _hashCode;
-  late Iterable<K>? _keys;
-  late Iterable<V>? _values;
+  Iterable<K>? _keys;
+  Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///

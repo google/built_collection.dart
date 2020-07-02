@@ -165,9 +165,9 @@ void main() {
       expect(list.toBuiltList(), same(list));
     });
 
-    /*test('converts to BuiltSet with toBuiltSet', () {
+    test('converts to BuiltSet with toBuiltSet', () {
       expect(BuiltList<int>([0, 1, 2]).toBuiltSet(), [0, 1, 2]);
-    });*/
+    });
 
     // Lazy copies.
 

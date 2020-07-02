@@ -69,11 +69,12 @@ class ListMultimapBuilder<K, V> {
   void replace(dynamic multimap) {
     if (multimap is _BuiltListMultimap<K, V>) {
       _setOwner(multimap);
-    } else if (multimap is Map || multimap is BuiltListMultimap) {
+    } else if (multimap is Map) {
+      _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
+    } else if (multimap is BuiltListMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
-      throw ArgumentError('expected Map, ListMultimap or BuiltListMultimap, '
-          'got ${multimap.runtimeType}');
+      _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     }
   }
 

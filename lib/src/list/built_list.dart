@@ -270,15 +270,15 @@ class _BuiltList<E> extends BuiltList<E> {
 
   _BuiltList.copyAndCheckTypes([Iterable iterable = const []])
       : super._(List<E>.from(iterable, growable: false)) {
-    for (var element in _list) {
-      if (element is! E) {
-        throw ArgumentError('iterable contained invalid element: $element');
-      }
-    }
+    _checkForNull();
   }
 
   _BuiltList.copyAndCheckForNull(Iterable<E> iterable)
       : super._(List<E>.from(iterable, growable: false)) {
+    _checkForNull();
+  }
+
+  void _checkForNull() {
     for (var element in _list) {
       if (identical(element, null)) {
         throw ArgumentError('iterable contained invalid element: null');
@@ -289,7 +289,7 @@ class _BuiltList<E> extends BuiltList<E> {
   bool hasExactElementType(Type type) => E == type;
 }
 
-/// Extensions for [BuiltList] on [List].f
+/// Extensions for [BuiltList] on [List].
 extension BuiltListExtension<T> on List<T> {
   /// Converts to a [BuiltList].
   BuiltList<T> build() {

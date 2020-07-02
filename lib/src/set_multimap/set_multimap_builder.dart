@@ -14,7 +14,7 @@ part of built_collection.set_multimap;
 class SetMultimapBuilder<K, V> {
   // BuiltSets copied from another instance so they can be reused directly for
   // keys without changes.
-  Map<K, BuiltSet<V>>? _builtMap;
+  late Map<K, BuiltSet<V>> _builtMap;
   // Instance that _builtMap belongs to. If present, _builtMap must not be
   // mutated.
   _BuiltSetMultimap<K, V>? _builtMapOwner;
@@ -46,13 +46,13 @@ class SetMultimapBuilder<K, V> {
       for (var key in _builderMap.keys) {
         var builtSet = _builderMap[key]!.build();
         if (builtSet.isEmpty) {
-          _builtMap!.remove(key);
+          _builtMap.remove(key);
         } else {
-          _builtMap![key] = builtSet;
+          _builtMap[key] = builtSet;
         }
       }
 
-      _builtMapOwner = _BuiltSetMultimap<K, V>.withSafeMap(_builtMap!);
+      _builtMapOwner = _BuiltSetMultimap<K, V>.withSafeMap(_builtMap);
     }
     return _builtMapOwner!;
   }
@@ -67,11 +67,12 @@ class SetMultimapBuilder<K, V> {
   void replace(dynamic multimap) {
     if (multimap is _BuiltSetMultimap<K, V>) {
       _setOwner(multimap);
-    } else if (multimap is Map || multimap is BuiltSetMultimap) {
+    } else if (multimap is Map) {
+      _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
+    } else if (multimap is BuiltSetMultimap) {
       _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     } else {
-      throw ArgumentError('expected Map, SetMultimap or BuiltSetMultimap, '
-          'got ${multimap.runtimeType}');
+      _setWithCopyAndCheck(multimap.keys, (k) => multimap[k]);
     }
   }
 
@@ -145,7 +146,7 @@ class SetMultimapBuilder<K, V> {
   void clear() {
     _makeWriteableCopy();
 
-    _builtMap!.clear();
+    _builtMap.clear();
     _builderMap.clear();
   }
 
@@ -154,7 +155,7 @@ class SetMultimapBuilder<K, V> {
   SetBuilder<V> _getValuesBuilder(K key) {
     var result = _builderMap[key];
     if (result == null) {
-      var builtValues = _builtMap![key];
+      var builtValues = _builtMap[key];
       if (builtValues == null) {
         result = SetBuilder<V>();
       } else {
@@ -167,7 +168,7 @@ class SetMultimapBuilder<K, V> {
 
   void _makeWriteableCopy() {
     if (_builtMapOwner != null) {
-      _builtMap = Map<K, BuiltSet<V>>.from(_builtMap!);
+      _builtMap = Map<K, BuiltSet<V>>.from(_builtMap);
       _builtMapOwner = null;
     }
   }

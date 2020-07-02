@@ -1,7 +1,7 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
+
 
 part of built_collection.list;
 
@@ -13,8 +13,8 @@ part of built_collection.list;
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 class ListBuilder<E> {
-  List<E> _list;
-  _BuiltList<E> _listOwner;
+  late List<E> _list;
+  _BuiltList<E>? _listOwner;
 
   /// Instantiates with elements from an [Iterable].
   ///
@@ -37,7 +37,7 @@ class ListBuilder<E> {
     if (_listOwner == null) {
       _setOwner(_BuiltList<E>.withSafeList(_list));
     }
-    return _listOwner;
+    return _listOwner!;
   }
 
   /// Applies a function to `this`.
@@ -122,12 +122,12 @@ class ListBuilder<E> {
   }
 
   /// As [List.sort].
-  void sort([int Function(E, E) compare]) {
+  void sort([int Function(E, E)? compare]) {
     _safeList.sort(compare);
   }
 
   /// As [List.shuffle].
-  void shuffle([Random random]) {
+  void shuffle([Random? random]) {
     _safeList.shuffle(random);
   }
 
@@ -169,7 +169,7 @@ class ListBuilder<E> {
   }
 
   /// As [List.remove].
-  bool remove(Object value) => _safeList.remove(value);
+  bool remove(Object? value) => _safeList.remove(value);
 
   /// As [List.removeAt].
   E removeAt(int index) => _safeList.removeAt(index);
@@ -190,7 +190,7 @@ class ListBuilder<E> {
   }
 
   /// As [List.sublist], but updates the builder in place. Returns nothing.
-  void sublist(int start, [int end]) {
+  void sublist(int start, [int? end]) {
     _setSafeList(_list.sublist(start, end));
   }
 

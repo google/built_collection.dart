@@ -1,12 +1,11 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.map.map_builder_test;
 
 import 'dart:collection' show SplayTreeMap;
-import 'package:built_collection/built_collection.dart';
+import 'package:built_collection/src/map.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -30,36 +29,41 @@ void main() {
     });
 
     test('throws on null key put', () {
-      expect(() => MapBuilder<int, String>()[null] = '0', throwsA(anything));
+      expect(() => MapBuilder<int, String>()[null as int] = '0',
+          throwsA(anything));
     });
 
     test('throws on null value put', () {
-      expect(() => MapBuilder<int, String>()[0] = null, throwsA(anything));
+      expect(() => MapBuilder<int, String>()[0] = null as String,
+          throwsA(anything));
     });
 
     test('throws on null key putIfAbsent', () {
-      expect(() => MapBuilder<int, String>().putIfAbsent(null, () => '0'),
+      expect(
+          () => MapBuilder<int, String>().putIfAbsent(null as int, () => '0'),
           throwsA(anything));
     });
 
     test('throws on null value putIfAbsent', () {
-      expect(() => MapBuilder<int, String>().putIfAbsent(0, () => null),
+      expect(
+          () => MapBuilder<int, String>().putIfAbsent(0, () => null as String),
           throwsA(anything));
     });
 
     test('throws on null key addAll', () {
-      expect(() => MapBuilder<int, String>().addAll({null: '0'}),
+      expect(() => MapBuilder<int, String>().addAll({null as int: '0'}),
           throwsA(anything));
     });
 
     test('throws on null value addAll', () {
-      expect(
-          () => MapBuilder<int, String>().addAll({0: null}), throwsA(anything));
+      expect(() => MapBuilder<int, String>().addAll({0: null as String}),
+          throwsA(anything));
     });
 
     test('throws on null withBase', () {
       var builder = MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
-      expect(() => builder.withBase(null), throwsA(anything));
+      expect(() => builder.withBase(null as Map<int, String> Function()),
+          throwsA(anything));
       expect(builder.build().keys, orderedEquals([2, 0, 1]));
     });
 
@@ -84,13 +88,13 @@ void main() {
           {1: 1, 2: 2, 3: 3});
       expect(
           (MapBuilder<int, int>()
-                ..addIterable([1, 2, 3], key: (element) => element + 1))
+                ..addIterable([1, 2, 3], key: (int element) => element + 1))
               .build()
               .toMap(),
           {2: 1, 3: 2, 4: 3});
       expect(
           (MapBuilder<int, int>()
-                ..addIterable([1, 2, 3], value: (element) => element + 1))
+                ..addIterable([1, 2, 3], value: (int element) => element + 1))
               .build()
               .toMap(),
           {1: 2, 2: 3, 3: 4});
@@ -175,8 +179,8 @@ void main() {
 
     test('has a method like Map[]', () {
       var mapBuilder = MapBuilder<int, String>({1: '1', 2: '2'});
-      mapBuilder[1] += '*';
-      mapBuilder[2] += '**';
+      mapBuilder[1] = mapBuilder[1]! + '*';
+      mapBuilder[2] = mapBuilder[2]! + '**';
       expect(mapBuilder.build().asMap(), {1: '1*', 2: '2**'});
     });
 

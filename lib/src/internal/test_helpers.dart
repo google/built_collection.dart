@@ -17,14 +17,6 @@ class BuiltCollectionTestHelpers {
               Object map, int hashCode) =>
           OverriddenHashcodeBuiltListMultimap<String, String>(map, hashCode);
 
-  static BuiltMap<int, String> overridenHashcodeBuiltMap(
-          Object map, int hashCode) =>
-      OverriddenHashcodeBuiltMap<int, String>(map, hashCode);
-
-  static BuiltMap<String, String> overridenHashcodeBuiltMapWithStringKeys(
-          Object map, int hashCode) =>
-      OverriddenHashcodeBuiltMap<String, String>(map, hashCode);
-
   static BuiltSetMultimap<int, String> overridenHashcodeBuiltSetMultimap(
           Object map, int hashCode) =>
       OverriddenHashcodeBuiltSetMultimap<int, String>(map, hashCode);

@@ -1,7 +1,6 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 part of built_collection.map;
 
@@ -17,13 +16,13 @@ typedef _MapFactory<K, V> = Map<K, V> Function();
 /// [Built Collection library documentation](#built_collection/built_collection)
 /// for the general properties of Built Collections.
 abstract class BuiltMap<K, V> {
-  final _MapFactory<K, V> _mapFactory;
+  final _MapFactory<K, V>? _mapFactory;
   final Map<K, V> _map;
 
   // Cached.
-  int _hashCode;
-  Iterable<K> _keys;
-  Iterable<V> _values;
+  int? _hashCode;
+  Iterable<K>? _keys;
+  Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
   ///
@@ -63,7 +62,7 @@ abstract class BuiltMap<K, V> {
   ///
   /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.of(Map<K, V> map) {
-    return _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]);
+    return _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]!);
   }
 
   /// Creates a [MapBuilder], applies updates to it, and builds.
@@ -73,7 +72,8 @@ abstract class BuiltMap<K, V> {
   /// Converts to a [MapBuilder] for modification.
   ///
   /// The `BuiltMap` remains immutable and can continue to be used.
-  MapBuilder<K, V> toBuilder() => MapBuilder<K, V>._fromBuiltMap(this);
+  MapBuilder<K, V> toBuilder() =>
+      MapBuilder<K, V>._fromBuiltMap(this as _BuiltMap<K, V>);
 
   /// Converts to a [MapBuilder], applies updates to it, and builds.
   BuiltMap<K, V> rebuild(Function(MapBuilder<K, V>) updates) =>
@@ -105,7 +105,7 @@ abstract class BuiltMap<K, V> {
         .map((key) => hash2(key.hashCode, _map[key].hashCode))
         .toList(growable: false)
           ..sort());
-    return _hashCode;
+    return _hashCode!;
   }
 
   /// Deep equality.
@@ -130,7 +130,7 @@ abstract class BuiltMap<K, V> {
   // Map.
 
   /// As [Map].
-  V operator [](Object key) => _map[key];
+  V? operator [](Object? key) => _map[key];
 
   /// As [Map.containsKey].
   bool containsKey(Object key) => _map.containsKey(key);
@@ -152,7 +152,7 @@ abstract class BuiltMap<K, V> {
   /// As [Map.keys], but result is stable; it always returns the same instance.
   Iterable<K> get keys {
     _keys ??= _map.keys;
-    return _keys;
+    return _keys!;
   }
 
   /// As [Map.length].
@@ -162,7 +162,7 @@ abstract class BuiltMap<K, V> {
   /// instance.
   Iterable<V> get values {
     _values ??= _map.values;
-    return _values;
+    return _values!;
   }
 
   /// As [Map.entries].
@@ -188,7 +188,7 @@ abstract class BuiltMap<K, V> {
 
 /// Default implementation of the public [BuiltMap] interface.
 class _BuiltMap<K, V> extends BuiltMap<K, V> {
-  _BuiltMap.withSafeMap(_MapFactory<K, V> mapFactory, Map<K, V> map)
+  _BuiltMap.withSafeMap(_MapFactory<K, V>? mapFactory, Map<K, V> map)
       : super._(mapFactory, map);
 
   _BuiltMap.copyAndCheckTypes(Iterable keys, Function lookup)

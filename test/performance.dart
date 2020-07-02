@@ -1,11 +1,10 @@
 // Copyright (c) 2017, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 void expectMuchFaster(Function fastFunction, Function slowFunction) {
-  Stopwatch fastStopWatch;
-  Stopwatch slowStopWatch;
+  late Stopwatch fastStopWatch;
+  late Stopwatch slowStopWatch;
 
   // Retry; we only need one good result to prove the performance
   // characteristics. Bad performance can come from machine load.
@@ -30,8 +29,8 @@ void expectMuchFaster(Function fastFunction, Function slowFunction) {
 }
 
 void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
-  Stopwatch fastStopWatch;
-  Stopwatch slowStopWatch;
+  late Stopwatch fastStopWatch;
+  late Stopwatch slowStopWatch;
 
   // Retry; we only need one good result to prove the performance
   // characteristics. Bad performance can come from machine load.

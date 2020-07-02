@@ -180,7 +180,8 @@ class CopyOnWriteSet<E> implements Set<E> {
   void _maybeCopyBeforeWrite() {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
-    _set =
-        _setFactory != null ? (_setFactory!()..addAll(_set)) : Set<E>.from(_set);
+    _set = _setFactory != null
+        ? (_setFactory!()..addAll(_set))
+        : Set<E>.from(_set);
   }
 }

@@ -1,13 +1,12 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.list.list_builder_test;
 
 import 'dart:math' show Random;
 
-import 'package:built_collection/built_collection.dart';
+import 'package:built_collection/src/list.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -24,79 +23,82 @@ void main() {
 
     test('throws on null assign', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder[0] = null, throwsA(anything));
+      expect(() => builder[0] = null as int, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
     });
 
     test('throws on null first', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder.first = null, throwsA(anything));
+      expect(() => builder.first = null as int, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
     });
 
     test('throws on null last', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder.last = null, throwsA(anything));
+      expect(() => builder.last = null as int, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
     });
 
     test('throws on null add', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.add(null), throwsA(anything));
+      expect(() => builder.add(null as int), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null addAll', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.addAll([0, 1, null]), throwsA(anything));
+      expect(() => builder.addAll([0, 1, null as int]), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null insert', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.insert(0, null), throwsA(anything));
+      expect(() => builder.insert(0, null as int), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null insertAll', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.insertAll(0, [0, 1, null]), throwsA(anything));
+      expect(
+          () => builder.insertAll(0, [0, 1, null as int]), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 
     test('throws on null setAll', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.setAll(0, [0, 1, null]), throwsA(anything));
+      expect(() => builder.setAll(0, [0, 1, null as int]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null setRange', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.setRange(0, 2, [0, 1, null]), throwsA(anything));
+      expect(
+          () => builder.setRange(0, 2, [0, 1, null as int]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null fillRange', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.fillRange(0, 2, null), throwsA(anything));
+      expect(() => builder.fillRange(0, 2, null as int), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null replaceRange', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.replaceRange(0, 2, [0, 1, null]), throwsA(anything));
+      expect(() => builder.replaceRange(0, 2, [0, 1, null as int]),
+          throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null map', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.map((x) => null), throwsA(anything));
+      expect(() => builder.map((x) => null as int), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
     test('throws on null expand', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.expand((x) => [x, null]), throwsA(anything));
+      expect(() => builder.expand((x) => [x, null as int]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
@@ -496,7 +498,7 @@ void main() {
     });
 
     group('iterates at most once in', () {
-      Iterable<int> onceIterable;
+      late Iterable<int> onceIterable;
       setUp(() {
         var count = 0;
         onceIterable = [1].map((x) {

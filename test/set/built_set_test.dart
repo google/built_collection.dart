@@ -1,13 +1,12 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 library built_collection.test.set.built_set_test;
 
 import 'dart:collection' show SplayTreeSet;
-import 'package:built_collection/built_collection.dart';
-import 'package:built_collection/src/internal/test_helpers.dart';
+import 'package:built_collection/src/set.dart';
+import 'package:built_collection/src/internal/test_helpers_nnbd.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';

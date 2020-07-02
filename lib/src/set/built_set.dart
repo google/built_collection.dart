@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-
 part of built_collection.set;
 
 typedef _SetFactory<E> = Set<E> Function();
@@ -69,7 +68,8 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this as _BuiltSet<E>);
+  SetBuilder<E> toBuilder() =>
+      SetBuilder<E>._fromBuiltSet(this as _BuiltSet<E>);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(Function(SetBuilder<E>) updates) =>

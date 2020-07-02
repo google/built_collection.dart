@@ -2,19 +2,18 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-
 library built_collection.set;
 
 import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 import 'package:built_collection/src/list.dart' show BuiltList;
 import 'package:collection/collection.dart' show UnmodifiableSetView;
-import 'package:quiver/core.dart' show hashObjects;
 
-import 'src/internal/copy_on_write_set.dart';
-import 'src/internal/iterables.dart';
+import 'internal/hash.dart';
+import 'internal/copy_on_write_set.dart';
+import 'internal/iterables.dart';
 
-part 'src/set/built_set.dart';
-part 'src/set/set_builder.dart';
+part 'set/built_set.dart';
+part 'set/set_builder.dart';
 
 // Internal only, for testing.
 class OverriddenHashcodeBuiltSet<T> extends _BuiltSet<T> {

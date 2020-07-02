@@ -10,7 +10,7 @@ import 'package:quiver/core.dart' show hashObjects, hash2;
 
 import 'internal/copy_on_write_map.dart';
 
-import '../set.dart';
+import 'set.dart';
 
 part 'set_multimap/built_set_multimap.dart';
 part 'set_multimap/set_multimap_builder.dart';

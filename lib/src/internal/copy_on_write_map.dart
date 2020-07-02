@@ -1,12 +1,11 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-// @dart=2.8
 
 typedef _MapFactory<K, V> = Map<K, V> Function();
 
 class CopyOnWriteMap<K, V> implements Map<K, V> {
-  final _MapFactory<K, V> _mapFactory;
+  final _MapFactory<K, V>? _mapFactory;
   bool _copyBeforeWrite;
   Map<K, V> _map;
 
@@ -15,16 +14,16 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   // Read-only methods: just forward.
 
   @override
-  V operator [](Object key) => _map[key];
+  V? operator [](Object? key) => _map[key];
 
   @override
   Map<K2, V2> cast<K2, V2>() => CopyOnWriteMap<K2, V2>(_map.cast<K2, V2>());
 
   @override
-  bool containsKey(Object key) => _map.containsKey(key);
+  bool containsKey(Object? key) => _map.containsKey(key);
 
   @override
-  bool containsValue(Object value) => _map.containsValue(value);
+  bool containsValue(Object? value) => _map.containsValue(value);
 
   @override
   Iterable<MapEntry<K, V>> get entries => _map.entries;
@@ -83,7 +82,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   }
 
   @override
-  V remove(Object key) {
+  V? remove(Object? key) {
     _maybeCopyBeforeWrite();
     return _map.remove(key);
   }
@@ -98,7 +97,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
   String toString() => _map.toString();
 
   @override
-  V update(K key, V Function(V) update, {V Function() ifAbsent}) {
+  V update(K key, V Function(V) update, {V Function()? ifAbsent}) {
     _maybeCopyBeforeWrite();
     return _map.update(key, update, ifAbsent: ifAbsent);
   }
@@ -115,7 +114,7 @@ class CopyOnWriteMap<K, V> implements Map<K, V> {
     if (!_copyBeforeWrite) return;
     _copyBeforeWrite = false;
     _map = _mapFactory != null
-        ? (_mapFactory()..addAll(_map))
+        ? (_mapFactory!()..addAll(_map))
         : Map<K, V>.from(_map);
   }
 }

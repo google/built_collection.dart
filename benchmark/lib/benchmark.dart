@@ -15,7 +15,7 @@ class BuiltCollectionBenchmark {
   };
 
   final Map<String, void Function(SetBuilder<int>, Iterable<int>)>
-  setBuilderFunctions = {
+      setBuilderFunctions = {
     'addAll': (b, iterable) => b.addAll(iterable),
   };
 
@@ -88,6 +88,6 @@ T _shortDelay<T>(T element) {
   for (var i = 0; i != 100; ++i) {
     total += i;
   }
-  if (total == 0) return null;
+  if (total == 0) throw StateError('Just checking to prevent optimization.');
   return element;
 }

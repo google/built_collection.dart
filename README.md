@@ -3,7 +3,7 @@
 ## Introduction
 
 Built Collections are immutable collections using the
-[builder pattern](http://en.wikipedia.org/wiki/Builder_pattern).
+[builder pattern](https://en.wikipedia.org/wiki/Builder_pattern).
 
 Each of the core SDK collections is split in two: a mutable builder class
 and an immutable "built" class. Builders are for computation,

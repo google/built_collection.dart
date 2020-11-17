@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.0.0 (unreleased)
+## 5.0.0-nullsafety.0
 
 - Migrate to NNBD.
 - Deps on `package:collection` and `package:quiver` have been removed.

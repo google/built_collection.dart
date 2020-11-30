@@ -53,6 +53,15 @@ class ListBuilder<E> {
     }
   }
 
+  /// Replaces all elements with elements from an [Iterable] of the same element type.
+  void safeReplace(Iterable<E> iterable) {
+    if (iterable is _BuiltList<E>) {
+      _setOwner(iterable);
+    } else {
+      _setSafeList(List.of(iterable));
+    }
+  }
+
   // Based on List.
 
   /// As [List.elementAt].

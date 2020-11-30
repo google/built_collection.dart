@@ -61,6 +61,10 @@ void main() {
       expect((SetBuilder<int>()..replace([0, 1, 2])).build(), [0, 1, 2]);
     });
 
+    test('has safeReplace method that replaces all data of the same type', () {
+      expect((SetBuilder<int>()..safeReplace([0, 1, 2])).build(), [0, 1, 2]);
+    });
+
     test('reuses BuiltSet passed to replace if it has the same base', () {
       var treeSetBase = () => SplayTreeSet<int>();
       var set = BuiltSet<int>.build((b) => b

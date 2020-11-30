@@ -141,6 +141,10 @@ void main() {
       expect((ListBuilder<int>()..replace([0, 1, 2])).build(), [0, 1, 2]);
     });
 
+    test('has safeReplace method that replaces all data of the same type', () {
+      expect((ListBuilder<int>()..safeReplace([0, 1, 2])).build(), [0, 1, 2]);
+    });
+
     // Lazy copies.
 
     test('does not mutate BuiltList when modifying ListBuilder assign', () {

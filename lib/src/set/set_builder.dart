@@ -62,6 +62,15 @@ class SetBuilder<E> {
     }
   }
 
+  /// Replaces all elements with elements from an [Iterable] of the same element type.
+  void safeReplace(Iterable<E> iterable) {
+    if (iterable is _BuiltSet<E> && iterable._setFactory == _setFactory) {
+      _withOwner(iterable);
+    } else {
+      _setSafeSet(_createSet()..addAll(iterable));
+    }
+  }
+
   /// Uses `base` as the collection type for all sets created by this builder.
   ///
   ///     // Iterates over elements in ascending order.

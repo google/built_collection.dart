@@ -1,4 +1,6 @@
 language: dart
-dart: dev
+dart:
+  - dev
+  - beta
 script:
   - tool/presubmit

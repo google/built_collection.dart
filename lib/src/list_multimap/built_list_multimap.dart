@@ -122,7 +122,7 @@ abstract class BuiltListMultimap<K, V> {
   /// As [ListMultimap], but results are [BuiltList]s and not mutable.
   BuiltList<V> operator [](Object? key) {
     var result = _map[key];
-    return identical(result, null) ? _emptyList : result;
+    return result ?? _emptyList;
   }
 
   /// As [ListMultimap.containsKey].

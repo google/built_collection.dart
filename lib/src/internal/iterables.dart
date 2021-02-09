@@ -6,7 +6,7 @@ import 'package:built_collection/src/iterable.dart' show BuiltIterable;
 
 /// Evaluates a lazy iterable.
 ///
-/// A whitelist of known non-lazy types is returned directly instead.
+/// Known non-lazy types are returned directly instead.
 Iterable<E> evaluateIterable<E>(Iterable<E> iterable) {
   if (iterable is! List && iterable is! BuiltIterable && iterable is! Set) {
     iterable = iterable.toList();

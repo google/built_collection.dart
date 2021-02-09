@@ -209,12 +209,15 @@ void main() {
     });
 
     test('caches hash', () {
+      var hashCodeSpy = HashCodeSpy();
       var multimap = BuiltSetMultimap<Object, Object>({
-        1: [_HashcodeOnlyTwice()]
+        1: [hashCodeSpy]
       });
 
+      hashCodeSpy.hashCodeSeen = 0;
       multimap.hashCode;
       multimap.hashCode;
+      expect(hashCodeSpy.hashCodeSeen, 1);
     });
 
     test('compares equal to same instance', () {
@@ -595,18 +598,6 @@ void main() {
 class _A {}
 
 class _ExtendsA extends _A {}
-
-class _HashcodeOnlyTwice {
-  int hashCodeAllowed = 2;
-
-  @override
-  // ignore: hash_and_equals
-  int get hashCode {
-    expect(hashCodeAllowed, isNot(0));
-    hashCodeAllowed--;
-    return 0;
-  }
-}
 
 // All the methods from `SetMultimap` that we care about, to avoid taking a
 // dependency on `quiver`.

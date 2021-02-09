@@ -186,10 +186,13 @@ void main() {
     });
 
     test('caches hash', () {
-      var map = BuiltMap<Object, Object>({1: _HashcodeOnlyOnce()});
+      var hashCodeSpy = HashCodeSpy();
+      var map = BuiltMap<Object, Object>({1: hashCodeSpy});
 
+      hashCodeSpy.hashCodeSeen = 0;
       map.hashCode;
       map.hashCode;
+      expect(hashCodeSpy.hashCodeSeen, 1);
     });
 
     test('compares equal to same instance', () {
@@ -419,15 +422,3 @@ void main() {
 class _A {}
 
 class _ExtendsA extends _A {}
-
-class _HashcodeOnlyOnce {
-  bool hashCodeAllowed = true;
-
-  @override
-  // ignore: hash_and_equals
-  int get hashCode {
-    expect(hashCodeAllowed, isTrue);
-    hashCodeAllowed = false;
-    return 0;
-  }
-}

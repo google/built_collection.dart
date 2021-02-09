@@ -53,3 +53,14 @@ void expectNotMuchFaster(Function notFastFunction, Function slowFunction) {
       ' Measured: first=${fastStopWatch.elapsedMicroseconds}'
       ' second=${slowStopWatch.elapsedMicroseconds}';
 }
+
+class HashCodeSpy {
+  int hashCodeSeen = 0;
+
+  @override
+  // ignore: hash_and_equals
+  int get hashCode {
+    ++hashCodeSeen;
+    return 0;
+  }
+}

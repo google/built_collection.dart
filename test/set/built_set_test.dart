@@ -132,10 +132,13 @@ void main() {
     });
 
     test('caches hash', () {
-      var set = BuiltSet<Object>([_HashcodeOnlyTwice()]);
+      var hashCodeSpy = HashCodeSpy();
+      var set = BuiltSet<Object>([hashCodeSpy]);
 
+      hashCodeSpy.hashCodeSeen = 0;
       set.hashCode;
       set.hashCode;
+      expect(hashCodeSpy.hashCodeSeen, 1);
     });
 
     test('compares equal to same instance', () {
@@ -452,15 +455,3 @@ void main() {
 class _A {}
 
 class _ExtendsA extends _A {}
-
-class _HashcodeOnlyTwice {
-  int hashCodeAllowed = 2;
-
-  @override
-  // ignore: hash_and_equals
-  int get hashCode {
-    expect(hashCodeAllowed, isNot(0));
-    hashCodeAllowed--;
-    return 0;
-  }
-}

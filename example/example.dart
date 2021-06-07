@@ -54,4 +54,9 @@ void main() {
   // `ListMultimap` and `SetMultimap` from `package:quiver`. For information
   // on these, and full details on all the APIs, please see the package
   // [dartdoc](https://pub.dev/documentation/built_collection/latest).
+
+  // Use the values so the analyzer is happy.
+  print(builtList);
+  print(builtSet);
+  print(builtMap);
 }

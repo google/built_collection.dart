@@ -94,6 +94,10 @@ void main() {
       expect(() => BuiltList<int>([null]), throwsA(anything));
     });
 
+    test('nullable can store null', () {
+      expect(BuiltList<int?>([null])[0], null);
+    });
+
     test('of constructor throws on null', () {
       expect(() => BuiltList<int>.of([null as int]), throwsA(anything));
     });

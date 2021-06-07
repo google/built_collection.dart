@@ -24,8 +24,6 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// Wrong: `new BuiltList([1, 2, 3])`.
   ///
   /// Right: `new BuiltList<int>([1, 2, 3])`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList([Iterable iterable = const []]) =>
       BuiltList<E>.from(iterable);
 
@@ -36,26 +34,22 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// Wrong: `new BuiltList.from([1, 2, 3])`.
   ///
   /// Right: `new BuiltList<int>.from([1, 2, 3])`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList.from(Iterable iterable) {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {
-      return _BuiltList<E>.copyAndCheckTypes(iterable);
+      return _BuiltList<E>.copy(iterable);
     }
   }
 
   /// Instantiates with elements from an [Iterable<E>].
   ///
   /// `E` must not be `dynamic`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltList.of(Iterable<E> iterable) {
     if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return _BuiltList<E>.copyAndCheckForNull(iterable);
+      return _BuiltList<E>.copy(iterable);
     }
   }
 
@@ -268,23 +262,8 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 class _BuiltList<E> extends BuiltList<E> {
   _BuiltList.withSafeList(List<E> list) : super._(list);
 
-  _BuiltList.copyAndCheckTypes([Iterable iterable = const []])
-      : super._(List<E>.from(iterable, growable: false)) {
-    _checkForNull();
-  }
-
-  _BuiltList.copyAndCheckForNull(Iterable<E> iterable)
-      : super._(List<E>.from(iterable, growable: false)) {
-    _checkForNull();
-  }
-
-  void _checkForNull() {
-    for (var element in _list) {
-      if (identical(element, null)) {
-        throw ArgumentError('iterable contained invalid element: null');
-      }
-    }
-  }
+  _BuiltList.copy([Iterable iterable = const []])
+      : super._(List<E>.from(iterable, growable: false));
 
   bool hasExactElementType(Type type) => E == type;
 }
@@ -294,7 +273,7 @@ extension BuiltListExtension<T> on List<T> {
   /// Converts to a [BuiltList].
   BuiltList<T> build() {
     // We know a `List` is not a `BuiltList`, so we have to copy.
-    return _BuiltList<T>.copyAndCheckForNull(this);
+    return _BuiltList<T>.copy(this);
   }
 }
 

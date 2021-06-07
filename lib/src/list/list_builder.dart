@@ -22,8 +22,6 @@ class ListBuilder<E> {
   /// Wrong: `new ListBuilder([1, 2, 3])`.
   ///
   /// Right: `new ListBuilder<int>([1, 2, 3])`,
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory ListBuilder([Iterable iterable = const []]) {
     return ListBuilder<E>._uninitialized()..replace(iterable);
   }
@@ -60,7 +58,6 @@ class ListBuilder<E> {
 
   /// As [List].
   void operator []=(int index, E element) {
-    _checkElement(element);
     _safeList[index] = element;
   }
 
@@ -69,7 +66,6 @@ class ListBuilder<E> {
 
   /// As [List.first].
   set first(E value) {
-    _checkElement(value);
     _safeList.first = value;
   }
 
@@ -78,7 +74,6 @@ class ListBuilder<E> {
 
   /// As [List.last].
   set last(E value) {
-    _checkElement(value);
     _safeList.last = value;
   }
 
@@ -93,25 +88,12 @@ class ListBuilder<E> {
 
   /// As [List.add].
   void add(E value) {
-    _checkElement(value);
     _safeList.add(value);
   }
 
   /// As [List.addAll].
   void addAll(Iterable<E> iterable) {
-    // Add directly to the underlying `List` then check elements there, for
-    // performance. Roll back the changes if validation fails.
-    var safeList = _safeList;
-    var lengthBefore = safeList.length;
-    safeList.addAll(iterable);
-    try {
-      for (var i = lengthBefore; i != safeList.length; ++i) {
-        _checkElement(safeList[i]);
-      }
-    } catch (_) {
-      safeList.removeRange(lengthBefore, safeList.length);
-      rethrow;
-    }
+    _safeList.addAll(iterable);
   }
 
   /// As [List.reversed], but updates the builder in place. Returns nothing.
@@ -137,33 +119,16 @@ class ListBuilder<E> {
 
   /// As [List.insert].
   void insert(int index, E element) {
-    _checkElement(element);
     _safeList.insert(index, element);
   }
 
   /// As [List.insertAll].
   void insertAll(int index, Iterable<E> iterable) {
-    // Add directly to the underlying `List` then check elements there, for
-    // performance. Roll back the changes if validation fails.
-    var safeList = _safeList;
-    var lengthBefore = safeList.length;
-    safeList.insertAll(index, iterable);
-    var insertedLength = safeList.length - lengthBefore;
-
-    try {
-      for (var i = index; i != index + insertedLength; ++i) {
-        _checkElement(safeList[i]);
-      }
-    } catch (_) {
-      safeList.removeRange(index, index + insertedLength);
-      rethrow;
-    }
+    _safeList.insertAll(index, iterable);
   }
 
   /// As [List.setAll].
   void setAll(int index, Iterable<E> iterable) {
-    iterable = evaluateIterable(iterable);
-    _checkElements(iterable);
     _safeList.setAll(index, iterable);
   }
 
@@ -195,8 +160,6 @@ class ListBuilder<E> {
 
   /// As [List.setRange].
   void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]) {
-    iterable = evaluateIterable(iterable);
-    _checkElements(iterable);
     _safeList.setRange(start, end, iterable, skipCount);
   }
 
@@ -207,14 +170,11 @@ class ListBuilder<E> {
 
   /// As [List.fillRange], but requires a value.
   void fillRange(int start, int end, E fillValue) {
-    _checkElement(fillValue);
     _safeList.fillRange(start, end, fillValue);
   }
 
   /// As [List.replaceRange].
   void replaceRange(int start, int end, Iterable<E> iterable) {
-    iterable = evaluateIterable(iterable);
-    _checkElements(iterable);
     _safeList.replaceRange(start, end, iterable);
   }
 
@@ -222,9 +182,7 @@ class ListBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E Function(E) f) {
-    var result = _list.map(f).toList(growable: true);
-    _checkElements(result);
-    _setSafeList(result);
+    _setSafeList(_list.map(f).toList(growable: true));
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
@@ -234,20 +192,18 @@ class ListBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> Function(E) f) {
-    var result = _list.expand(f).toList(growable: true);
-    _checkElements(result);
-    _setSafeList(result);
+    _setSafeList(_list.expand(f).toList(growable: true));
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.
   void take(int n) {
-    _setSafeList(_list = _list.take(n).toList(growable: true));
+    _setSafeList(_list.take(n).toList(growable: true));
   }
 
   /// As [Iterable.takeWhile], but updates the builder in place. Returns
   /// nothing.
   void takeWhile(bool Function(E) test) {
-    _setSafeList(_list = _list.takeWhile(test).toList(growable: true));
+    _setSafeList(_list.takeWhile(test).toList(growable: true));
   }
 
   /// As [Iterable.skip], but updates the builder in place. Returns nothing.
@@ -288,18 +244,6 @@ class ListBuilder<E> {
     if (E == dynamic) {
       throw UnsupportedError('explicit element type required, '
           'for example "new ListBuilder<int>"');
-    }
-  }
-
-  void _checkElement(E element) {
-    if (identical(element, null)) {
-      throw ArgumentError('null element');
-    }
-  }
-
-  void _checkElements(Iterable<E> elements) {
-    for (var element in elements) {
-      _checkElement(element);
     }
   }
 }

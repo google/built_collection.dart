@@ -23,83 +23,163 @@ void main() {
 
     test('throws on null assign', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder[0] = null as int, throwsA(anything));
+      expect(() => builder[0] = null as dynamic, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
+    });
+
+    test('nullable does not throw on null assign', () {
+      var builder = ListBuilder<int?>([0]);
+      builder[0] = null;
+      expect(builder.build(), orderedEquals([null]));
     });
 
     test('throws on null first', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder.first = null as int, throwsA(anything));
+      expect(() => builder.first = null as dynamic, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
+    });
+
+    test('nullable does not throw on null first', () {
+      var builder = ListBuilder<int?>([0]);
+      builder.first = null;
+      expect(builder.build(), orderedEquals([null]));
     });
 
     test('throws on null last', () {
       var builder = ListBuilder<int>([0]);
-      expect(() => builder.last = null as int, throwsA(anything));
+      expect(() => builder.last = null as dynamic, throwsA(anything));
       expect(builder.build(), orderedEquals([0]));
+    });
+
+    test('nullable does not throw on null last', () {
+      var builder = ListBuilder<int?>([0]);
+      builder.last = null;
+      expect(builder.build(), orderedEquals([null]));
     });
 
     test('throws on null add', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.add(null as int), throwsA(anything));
+      expect(() => builder.add(null as dynamic), throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null add', () {
+      var builder = ListBuilder<int?>();
+      builder.add(null);
+      expect(builder.build(), [null]);
     });
 
     test('throws on null addAll', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.addAll([0, 1, null as int]), throwsA(anything));
+      expect(() => builder.addAll([0, 1, null as dynamic]), throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null addAll', () {
+      var builder = ListBuilder<int?>();
+      builder.addAll([0, 1, null]);
+      expect(builder.build(), [0, 1, null]);
     });
 
     test('throws on null insert', () {
       var builder = ListBuilder<int>();
-      expect(() => builder.insert(0, null as int), throwsA(anything));
+      expect(() => builder.insert(0, null as dynamic), throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null insert', () {
+      var builder = ListBuilder<int?>();
+      builder.insert(0, null);
+      expect(builder.build(), [null]);
     });
 
     test('throws on null insertAll', () {
       var builder = ListBuilder<int>();
-      expect(
-          () => builder.insertAll(0, [0, 1, null as int]), throwsA(anything));
+      expect(() => builder.insertAll(0, [0, 1, null as dynamic]),
+          throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null insertAll', () {
+      var builder = ListBuilder<int?>();
+      builder.insertAll(0, [0, 1, null]);
+      expect(builder.build(), [0, 1, null]);
     });
 
     test('throws on null setAll', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.setAll(0, [0, 1, null as int]), throwsA(anything));
+      expect(
+          () => builder.setAll(0, [0, 1, null as dynamic]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null setAll', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.setAll(0, [0, 1, null]);
+      expect(builder.build(), orderedEquals([0, 1, null]));
     });
 
     test('throws on null setRange', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(
-          () => builder.setRange(0, 2, [0, 1, null as int]), throwsA(anything));
-      expect(builder.build(), orderedEquals([0, 1, 2]));
-    });
-
-    test('throws on null fillRange', () {
-      var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.fillRange(0, 2, null as int), throwsA(anything));
-      expect(builder.build(), orderedEquals([0, 1, 2]));
-    });
-
-    test('throws on null replaceRange', () {
-      var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.replaceRange(0, 2, [0, 1, null as int]),
+      expect(() => builder.setRange(0, 3, [0, 1, null as dynamic]),
           throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
     });
 
+    test('nullable does not throw on null setRange', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.setRange(0, 3, [0, 1, null]);
+      expect(builder.build(), orderedEquals([0, 1, null]));
+    });
+
+    test('throws on null fillRange', () {
+      var builder = ListBuilder<int>([0, 1, 2]);
+      expect(() => builder.fillRange(0, 3, null as dynamic), throwsA(anything));
+      expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null fillRange', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.fillRange(0, 3, null);
+      expect(builder.build(), orderedEquals([null, null, null]));
+    });
+
+    test('throws on null replaceRange', () {
+      var builder = ListBuilder<int>([0, 1, 2]);
+      expect(() => builder.replaceRange(0, 3, [0, 1, null as dynamic]),
+          throwsA(anything));
+      expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null replaceRange', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.replaceRange(0, 3, [0, 1, null]);
+      expect(builder.build(), orderedEquals([0, 1, null]));
+    });
+
     test('throws on null map', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.map((x) => null as int), throwsA(anything));
+      expect(() => builder.map((x) => null as dynamic), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null map', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.map((x) => null);
+      expect(builder.build(), orderedEquals([null, null, null]));
     });
 
     test('throws on null expand', () {
       var builder = ListBuilder<int>([0, 1, 2]);
-      expect(() => builder.expand((x) => [x, null as int]), throwsA(anything));
+      expect(
+          () => builder.expand((x) => [x, null as dynamic]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null expand', () {
+      var builder = ListBuilder<int?>([0, 1, 2]);
+      builder.expand((x) => [x, null]);
+      expect(builder.build(), orderedEquals([0, null, 1, null, 2, null]));
     });
 
     test('throws on wrong type addAll', () {

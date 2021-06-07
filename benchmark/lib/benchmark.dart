@@ -30,8 +30,8 @@ class BuiltCollectionBenchmark {
       var function = entry.value;
 
       Iterable<int> list = List<int>.generate(1000, (x) => x);
-      Iterable<int> fastLazyIterable = list.map((x) => x + 1);
-      Iterable<int> slowLazyIterable = list.map(_shortDelay);
+      var fastLazyIterable = list.map((x) => x + 1);
+      var slowLazyIterable = list.map(_shortDelay);
       var builderFactory = () => ListBuilder<int>()..addAll(list);
 
       _benchmark('ListBuilder.$name,list', function, builderFactory, list);
@@ -48,8 +48,8 @@ class BuiltCollectionBenchmark {
       var function = entry.value;
 
       Iterable<int> list = List<int>.generate(1000, (x) => x);
-      Iterable<int> fastLazyIterable = list.map((x) => x + 1);
-      Iterable<int> slowLazyIterable = list.map(_shortDelay);
+      var fastLazyIterable = list.map((x) => x + 1);
+      var slowLazyIterable = list.map(_shortDelay);
       var builderFactory = () => SetBuilder<int>();
 
       _benchmark('SetBuilder.$name,list', function, builderFactory, list);

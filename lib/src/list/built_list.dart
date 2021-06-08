@@ -18,22 +18,10 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltList([1, 2, 3])`.
-  ///
-  /// Right: `new BuiltList<int>([1, 2, 3])`.
   factory BuiltList([Iterable iterable = const []]) =>
       BuiltList<E>.from(iterable);
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltList.from([1, 2, 3])`.
-  ///
-  /// Right: `new BuiltList<int>.from([1, 2, 3])`.
   factory BuiltList.from(Iterable iterable) {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
@@ -43,8 +31,6 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   /// Instantiates with elements from an [Iterable<E>].
-  ///
-  /// `E` must not be `dynamic`.
   factory BuiltList.of(Iterable<E> iterable) {
     if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
       return iterable;
@@ -250,12 +236,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltList._(this._list) {
-    if (E == dynamic) {
-      throw UnsupportedError(
-          'explicit element type required, for example "new BuiltList<int>"');
-    }
-  }
+  BuiltList._(this._list);
 }
 
 /// Default implementation of the public [BuiltList] interface.

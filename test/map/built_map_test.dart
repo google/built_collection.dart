@@ -19,38 +19,6 @@ void main() {
       expect(map.isNotEmpty, isFalse);
     });
 
-    test('throws on attempt to create BuiltMap<dynamic, dynamic>', () {
-      expect(() => BuiltMap(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltMap<String, dynamic>', () {
-      expect(() => BuiltMap<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltMap<dynamic, String>', () {
-      expect(() => BuiltMap<dynamic, String>(), throwsA(anything));
-    });
-
-    test(
-        'of constructor throws on attempt to create BuiltMap<dynamic, dynamic>',
-        () {
-      expect(() => BuiltMap.of({}), throwsA(anything));
-    });
-
-    test('of constructor throws on attempt to create BuiltMap<String, dynamic>',
-        () {
-      expect(() => BuiltMap.of(<String, dynamic>{}), throwsA(anything));
-    });
-
-    test('of constructor throws on attempt to create BuiltMap<dynamic, String>',
-        () {
-      expect(() => BuiltMap.of(<dynamic, String>{}), throwsA(anything));
-    });
-
-    test('allows BuiltMap<Object, Object>', () {
-      BuiltMap<Object, Object>();
-    });
-
     test('can be instantiated from Map', () {
       BuiltMap<int, String>({});
     });

@@ -25,12 +25,6 @@ abstract class BuiltMap<K, V> {
   Iterable<V>? _values;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltMap({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Right: `new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})`.
   factory BuiltMap([map = const {}]) {
     if (map is _BuiltMap && map.hasExactKeyAndValueTypes(K, V)) {
       return map as BuiltMap<K, V>;
@@ -42,19 +36,13 @@ abstract class BuiltMap<K, V> {
   }
 
   /// Instantiates with elements from a [Map].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltMap.from({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Right: `new BuiltMap<int, String>.from({1: '1', 2: '2', 3: '3'})`.
   factory BuiltMap.from(Map map) {
     return _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
   }
 
   /// Instantiates with elements from a [Map<K, V>].
   ///
-  /// `K` and `V` are inferred from `map`, and must not be `dynamic`.
+  /// `K` and `V` are inferred from `map`.
   factory BuiltMap.of(Map<K, V> map) {
     return _BuiltMap<K, V>.copy(map.keys, (k) => map[k] as V);
   }
@@ -168,16 +156,7 @@ abstract class BuiltMap<K, V> {
 
   // Internal.
 
-  BuiltMap._(this._mapFactory, this._map) {
-    if (K == dynamic) {
-      throw UnsupportedError(
-          'explicit key type required, for example "new BuiltMap<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required,'
-          ' for example "new BuiltMap<int, int>"');
-    }
-  }
+  BuiltMap._(this._mapFactory, this._map);
 }
 
 /// Default implementation of the public [BuiltMap] interface.

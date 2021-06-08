@@ -21,21 +21,9 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltSet([1, 2, 3])`.
-  ///
-  /// Right: `new BuiltSet<int>([1, 2, 3])`.
   factory BuiltSet([Iterable iterable = const []]) => BuiltSet.from(iterable);
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new BuiltSet([1, 2, 3])`.
-  ///
-  /// Right: `new BuiltSet<int>([1, 2, 3])`.
   factory BuiltSet.from(Iterable iterable) {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
@@ -45,8 +33,6 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   }
 
   /// Instantiates with elements from an [Iterable<E>].
-  ///
-  /// `E` must not be `dynamic`.
   factory BuiltSet.of(Iterable<E> iterable) {
     if (iterable is _BuiltSet<E> && iterable.hasExactElementType(E)) {
       return iterable;
@@ -237,12 +223,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltSet._(this._setFactory, this._set) {
-    if (E == dynamic) {
-      throw UnsupportedError(
-          'explicit element type required, for example "new BuiltSet<int>"');
-    }
-  }
+  BuiltSet._(this._setFactory, this._set);
 }
 
 /// Default implementation of the public [BuiltSet] interface.

@@ -26,16 +26,6 @@ abstract class BuiltSetMultimap<K, V> {
 
   /// Instantiates with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong:
-  ///   `new BuiltSetMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
-  ///
-  /// Right:
-  ///   `new BuiltSetMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltSetMultimap([multimap = const {}]) {
     if (multimap is _BuiltSetMultimap &&
         multimap.hasExactKeyAndValueTypes(K, V)) {
@@ -166,16 +156,7 @@ abstract class BuiltSetMultimap<K, V> {
 
   // Internal.
 
-  BuiltSetMultimap._(this._map) {
-    if (K == dynamic) {
-      throw UnsupportedError('explicit key type required, '
-          'for example "new BuiltSetMultimap<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required,'
-          ' for example "new BuiltSetMultimap<int, int>"');
-    }
-  }
+  BuiltSetMultimap._(this._map);
 }
 
 /// Default implementation of the public [BuiltSetMultimap] interface.

@@ -27,8 +27,6 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Wrong: `new BuiltSet([1, 2, 3])`.
   ///
   /// Right: `new BuiltSet<int>([1, 2, 3])`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet([Iterable iterable = const []]) => BuiltSet.from(iterable);
 
   /// Instantiates with elements from an [Iterable].
@@ -38,26 +36,22 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Wrong: `new BuiltSet([1, 2, 3])`.
   ///
   /// Right: `new BuiltSet<int>([1, 2, 3])`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet.from(Iterable iterable) {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return _BuiltSet<E>.copyAndCheckTypes(iterable);
+      return _BuiltSet<E>.copy(iterable);
     }
   }
 
   /// Instantiates with elements from an [Iterable<E>].
   ///
   /// `E` must not be `dynamic`.
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory BuiltSet.of(Iterable<E> iterable) {
     if (iterable is _BuiltSet<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return _BuiltSet<E>.copyAndCheckForNull(iterable);
+      return _BuiltSet<E>.copy(iterable);
     }
   }
 
@@ -256,23 +250,9 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(_SetFactory<E>? setFactory, Set<E> set)
       : super._(setFactory, set);
 
-  _BuiltSet.copyAndCheckTypes(Iterable iterable) : super._(null, <E>{}) {
+  _BuiltSet.copy(Iterable iterable) : super._(null, <E>{}) {
     for (var element in iterable) {
-      if (element is E) {
-        _set.add(element);
-      } else {
-        throw ArgumentError('iterable contained invalid element: $element');
-      }
-    }
-  }
-
-  _BuiltSet.copyAndCheckForNull(Iterable iterable) : super._(null, <E>{}) {
-    for (var element in iterable) {
-      if (identical(element, null)) {
-        throw ArgumentError('iterable contained invalid element: null');
-      } else {
-        _set.add(element);
-      }
+      _set.add(element);
     }
   }
 
@@ -284,7 +264,7 @@ extension BuiltSetExtension<T> on Set<T> {
   /// Converts to a [BuiltSet].
   BuiltSet<T> build() {
     // We know a `Set` is not a `BuiltSet`, so we have to copy.
-    return _BuiltSet<T>.copyAndCheckForNull(this);
+    return _BuiltSet<T>.copy(this);
   }
 }
 

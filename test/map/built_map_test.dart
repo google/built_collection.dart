@@ -150,18 +150,34 @@ void main() {
       expect(() => BuiltMap<int, String>({null: '1'}), throwsA(anything));
     });
 
+    test('nullable does not throw on null keys', () {
+      expect(BuiltMap<int?, String>({null: '1'})[null], '1');
+    });
+
     test('throws on null values', () {
       expect(() => BuiltMap<int, String>({1: null}), throwsA(anything));
     });
 
+    test('nullable does not throw on null values', () {
+      expect(BuiltMap<int, String?>({1: null})[1], null);
+    });
+
     test('of constructor throws on null keys', () {
-      expect(() => BuiltMap<int, String>.of({null as int: '1'}),
+      expect(() => BuiltMap<int, String>.of({null as dynamic: '1'}),
           throwsA(anything));
     });
 
+    test('nullable of constructor does not throw on null keys', () {
+      expect(BuiltMap<int?, String>.of({null as dynamic: '1'})[null], '1');
+    });
+
     test('of constructor throws on null values', () {
-      expect(() => BuiltMap<int, String>.of({1: null as String}),
+      expect(() => BuiltMap<int, String>.of({1: null as dynamic}),
           throwsA(anything));
+    });
+
+    test('nullable of constructor does not throw on null values', () {
+      expect(BuiltMap<int, String?>.of({1: null as dynamic})[1], null);
     });
 
     test('hashes to same value for same contents', () {

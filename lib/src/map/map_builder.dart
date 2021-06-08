@@ -113,8 +113,6 @@ class MapBuilder<K, V> {
 
   /// As [Map].
   void operator []=(K key, V value) {
-    _checkKey(key);
-    _checkValue(value);
     _safeMap[key] = value;
   }
 
@@ -129,18 +127,11 @@ class MapBuilder<K, V> {
 
   /// As [Map.putIfAbsent].
   V putIfAbsent(K key, V Function() ifAbsent) {
-    _checkKey(key);
-    return _safeMap.putIfAbsent(key, () {
-      var value = ifAbsent();
-      _checkValue(value);
-      return value;
-    });
+    return _safeMap.putIfAbsent(key, ifAbsent);
   }
 
   /// As [Map.addAll].
   void addAll(Map<K, V> other) {
-    _checkKeys(other.keys);
-    _checkValues(other.values);
     _safeMap.addAll(other);
   }
 
@@ -212,30 +203,6 @@ class MapBuilder<K, V> {
     if (V == dynamic) {
       throw UnsupportedError('explicit value type required, '
           'for example "new MapBuilder<int, int>"');
-    }
-  }
-
-  void _checkKey(K key) {
-    if (identical(key, null)) {
-      throw ArgumentError('null key');
-    }
-  }
-
-  void _checkKeys(Iterable<K> keys) {
-    for (var key in keys) {
-      _checkKey(key);
-    }
-  }
-
-  void _checkValue(V value) {
-    if (identical(value, null)) {
-      throw ArgumentError('null value');
-    }
-  }
-
-  void _checkValues(Iterable<V> values) {
-    for (var value in values) {
-      _checkValue(value);
     }
   }
 }

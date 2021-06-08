@@ -35,21 +35,16 @@ abstract class BuiltListMultimap<K, V> {
   ///
   /// Right:
   ///   `new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltListMultimap([multimap = const {}]) {
     if (multimap is _BuiltListMultimap &&
         multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltListMultimap<K, V>;
     } else if (multimap is Map) {
-      return _BuiltListMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else if (multimap is BuiltListMultimap) {
-      return _BuiltListMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else {
-      return _BuiltListMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     }
   }
 
@@ -188,7 +183,7 @@ abstract class BuiltListMultimap<K, V> {
 class _BuiltListMultimap<K, V> extends BuiltListMultimap<K, V> {
   _BuiltListMultimap.withSafeMap(Map<K, BuiltList<V>> map) : super._(map);
 
-  _BuiltListMultimap.copyAndCheck(Iterable keys, Function lookup)
+  _BuiltListMultimap.copy(Iterable keys, Function lookup)
       : super._(<K, BuiltList<V>>{}) {
     for (var key in keys) {
       if (key is K) {

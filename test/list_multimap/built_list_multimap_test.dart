@@ -153,9 +153,24 @@ void main() {
           throwsA(anything));
     });
 
+    test('nullable does not throw on null keys', () {
+      expect(
+          BuiltListMultimap<int?, String>({
+            null: ['1']
+          }).asMap(),
+          {
+            null: ['1']
+          });
+    });
+
     test('throws on null value iterables', () {
       expect(
           () => BuiltListMultimap<int, String>({1: null}), throwsA(anything));
+    });
+
+    test('nullable also throws on null value iterables', () {
+      expect(
+          () => BuiltListMultimap<int, String?>({1: null}), throwsA(anything));
     });
 
     test('throws on null values', () {
@@ -164,6 +179,16 @@ void main() {
                 1: [null]
               }),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null values', () {
+      expect(
+          BuiltListMultimap<int, String?>({
+            1: [null]
+          }).asMap(),
+          {
+            1: [null]
+          });
     });
 
     test('hashes to same value for same contents', () {

@@ -22,9 +22,7 @@ Built Collections:
 * are immutable, if the elements/keys/values used are immutable;
 * are comparable;
 * are hashable;
-* reject nulls;
 * require generic type parameters;
-* reject wrong-type elements;
 * use copy-on-write to avoid copying unnecessarily.
 
 See below for details on each of these points.
@@ -81,25 +79,11 @@ hash maps. They also use the cached hash code to speed up repeated
 comparisons.
 
 
-## Built Collections Reject Nulls
-
-A `null` in a collection is usually a bug, so Built Collections and their
-builders throw if given a `null` element, key or value.
-
-
 ## Built Collections Require Generic Type Parameters
 
 A `List<dynamic>` is error-prone because it can be assigned to a `List` of
 any type without warning. So, all Built Collections must be created with
 explicit element, key or value types.
-
-
-## Built Collections Reject Wrong-type Elements, Keys and Values
-
-Collections that happen to contain elements, keys or values that are not of
-the right type can lead to difficult-to-find bugs. So, all Built
-Collections and their builders are aggressive about validating types, even
-with checked mode disabled.
 
 
 ## Built Collections Avoid Copying Unnecessarily

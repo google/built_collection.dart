@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.1.0 (unreleased)
+
+- Remove explicit runtime null checks and type checks. These are now provided
+  by the underlying collections as applicable. When used with null safety,
+  this means you can for example create a `BuiltList<T>` which cannot contain
+  nulls, or a `BuiltList<T?>` which can contain nulls. Note that legacy code
+  and mixed mode no longer do runtime null checks.
+
 ## 5.0.0
 
 - Stable null safe release.

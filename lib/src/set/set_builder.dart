@@ -18,12 +18,6 @@ class SetBuilder<E> {
   _BuiltSet<E>? _setOwner;
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new SetBuilder([1, 2, 3])`.
-  ///
-  /// Right: `new SetBuilder<int>([1, 2, 3])`,
   factory SetBuilder([Iterable iterable = const []]) {
     return SetBuilder<E>._uninitialized()..replace(iterable);
   }

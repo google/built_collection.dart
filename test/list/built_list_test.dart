@@ -18,18 +18,6 @@ void main() {
       expect(list.isNotEmpty, isFalse);
     });
 
-    test('throws on attempt to create BuiltList<dynamic>', () {
-      expect(() => BuiltList(), throwsA(anything));
-    });
-
-    test('of constructor throws on attempt to create BuiltList<dynamic>', () {
-      expect(() => BuiltList.of(<dynamic>[]), throwsA(anything));
-    });
-
-    test('allows BuiltList<Object>', () {
-      BuiltList<Object>();
-    });
-
     test('can be instantiated from List', () {
       BuiltList<int>([]);
     });

@@ -18,14 +18,6 @@ class MapBuilder<K, V> {
   _BuiltMap<K, V>? _mapOwner;
 
   /// Instantiates with elements from a [Map] or [BuiltMap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new MapBuilder({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Right: `new MapBuilder<int, String>({1: '1', 2: '2', 3: '3'})`,
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory MapBuilder([map = const {}]) {
     return MapBuilder<K, V>._uninitialized()..replace(map);
   }

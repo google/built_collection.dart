@@ -27,14 +27,6 @@ abstract class BuiltListMultimap<K, V> {
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong:
-  ///   `new BuiltListMultimap({1: ['1'], 2: ['2'], 3: ['3']})`.
-  ///
-  /// Right:
-  ///   `new BuiltListMultimap<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   factory BuiltListMultimap([multimap = const {}]) {
     if (multimap is _BuiltListMultimap &&
         multimap.hasExactKeyAndValueTypes(K, V)) {
@@ -167,16 +159,7 @@ abstract class BuiltListMultimap<K, V> {
 
   // Internal.
 
-  BuiltListMultimap._(this._map) {
-    if (K == dynamic) {
-      throw UnsupportedError('explicit key type required, '
-          'for example "new BuiltListMultimap<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required,'
-          ' for example "new BuiltListMultimap<int, int>"');
-    }
-  }
+  BuiltListMultimap._(this._map);
 }
 
 /// Default implementation of the public [BuiltListMultimap] interface.

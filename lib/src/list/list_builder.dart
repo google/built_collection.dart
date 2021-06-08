@@ -16,12 +16,6 @@ class ListBuilder<E> {
   _BuiltList<E>? _listOwner;
 
   /// Instantiates with elements from an [Iterable].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong: `new ListBuilder([1, 2, 3])`.
-  ///
-  /// Right: `new ListBuilder<int>([1, 2, 3])`,
   factory ListBuilder([Iterable iterable = const []]) {
     return ListBuilder<E>._uninitialized()..replace(iterable);
   }

@@ -22,7 +22,6 @@ Built Collections:
 * are immutable, if the elements/keys/values used are immutable;
 * are comparable;
 * are hashable;
-* require generic type parameters;
 * use copy-on-write to avoid copying unnecessarily.
 
 See below for details on each of these points.
@@ -78,12 +77,6 @@ can be stored inside collections that need hashing, such as hash sets and
 hash maps. They also use the cached hash code to speed up repeated
 comparisons.
 
-
-## Built Collections Require Generic Type Parameters
-
-A `List<dynamic>` is error-prone because it can be assigned to a `List` of
-any type without warning. So, all Built Collections must be created with
-explicit element, key or value types.
 
 
 ## Built Collections Avoid Copying Unnecessarily

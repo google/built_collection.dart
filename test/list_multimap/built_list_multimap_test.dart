@@ -19,22 +19,6 @@ void main() {
       expect(multimap.isNotEmpty, isFalse);
     });
 
-    test('throws on attempt to create BuiltListMultimap<dynamic, dynamic>', () {
-      expect(() => BuiltListMultimap(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltListMultimap<String, dynamic>', () {
-      expect(() => BuiltListMultimap<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltListMultimap<dynamic, String>', () {
-      expect(() => BuiltListMultimap<dynamic, String>(), throwsA(anything));
-    });
-
-    test('allows BuiltListMultimap<Object, Object>', () {
-      BuiltListMultimap<Object, Object>();
-    });
-
     test('can be instantiated from ListMultimap', () {
       BuiltListMultimap<int, String>({});
     });

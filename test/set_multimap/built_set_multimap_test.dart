@@ -19,22 +19,6 @@ void main() {
       expect(multimap.isNotEmpty, isFalse);
     });
 
-    test('throws on attempt to create BuiltSetMultimap<dynamic, dynamic>', () {
-      expect(() => BuiltSetMultimap(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltSetMultimap<String, dynamic>', () {
-      expect(() => BuiltSetMultimap<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create BuiltSetMultimap<dynamic, String>', () {
-      expect(() => BuiltSetMultimap<dynamic, String>(), throwsA(anything));
-    });
-
-    test('allows BuiltSetMultimap<Object, Object>', () {
-      BuiltSetMultimap<Object, Object>();
-    });
-
     test('can be instantiated from SetMultimap', () {
       BuiltSetMultimap<int, String>({});
     });

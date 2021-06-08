@@ -19,18 +19,6 @@ void main() {
       expect(set.isNotEmpty, isFalse);
     });
 
-    test('throws on attempt to create BuiltSet<dynamic>', () {
-      expect(() => BuiltSet(), throwsA(anything));
-    });
-
-    test('of constructor throws on attempt to create BuiltSet<dynamic>', () {
-      expect(() => BuiltSet.of(<dynamic>[]), throwsA(anything));
-    });
-
-    test('allows BuiltSet<Object>', () {
-      BuiltSet<Object>();
-    });
-
     test('can be instantiated from Set', () {
       BuiltSet<int>([]);
     });

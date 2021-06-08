@@ -22,32 +22,56 @@ void main() {
 
     test('throws on null add', () {
       var builder = SetBuilder<int>();
-      expect(() => builder.add(null as int), throwsA(anything));
+      expect(() => builder.add(null as dynamic), throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null add', () {
+      var builder = SetBuilder<int?>();
+      builder.add(null);
+      expect(builder.build(), {null});
     });
 
     test('throws on null addAll', () {
       var builder = SetBuilder<int>();
-      expect(() => builder.addAll([0, 1, null as int]), throwsA(anything));
+      expect(() => builder.addAll([0, 1, null as dynamic]), throwsA(anything));
       expect(builder.build(), isEmpty);
+    });
+
+    test('nullable does not throw on null addAll', () {
+      var builder = SetBuilder<int?>();
+      builder.addAll([0, 1, null]);
+      expect(builder.build(), orderedEquals([0, 1, null]));
     });
 
     test('throws on null map', () {
       var builder = SetBuilder<int>([0, 1, 2]);
-      expect(() => builder.map((x) => null as int), throwsA(anything));
+      expect(() => builder.map((x) => null as dynamic), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null map', () {
+      var builder = SetBuilder<int?>([0, 1, 2]);
+      builder.map((x) => null);
+      expect(builder.build(), orderedEquals([null]));
     });
 
     test('throws on null expand', () {
       var builder = SetBuilder<int>([0, 1, 2]);
-      expect(() => builder.expand((x) => [x, null as int]), throwsA(anything));
+      expect(
+          () => builder.expand((x) => [x, null as dynamic]), throwsA(anything));
       expect(builder.build(), orderedEquals([0, 1, 2]));
+    });
+
+    test('nullable does not throw on null expand', () {
+      var builder = SetBuilder<int?>([0, 1, 2]);
+      builder.expand((x) => [x, null]);
+      expect(builder.build(), orderedEquals([0, null, 1, 2]));
     });
 
     test('throws on null withBase', () {
       var builder = SetBuilder<int>([2, 0, 1]);
-      expect(() => builder.withBase(null as Set<int> Function()),
-          throwsA(anything));
+      expect(() => builder.withBase(null as dynamic), throwsA(anything));
       expect(builder.build(), orderedEquals([2, 0, 1]));
     });
 

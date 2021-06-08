@@ -24,8 +24,6 @@ class SetBuilder<E> {
   /// Wrong: `new SetBuilder([1, 2, 3])`.
   ///
   /// Right: `new SetBuilder<int>([1, 2, 3])`,
-  ///
-  /// Rejects nulls. Rejects elements of the wrong type.
   factory SetBuilder([Iterable iterable = const []]) {
     return SetBuilder<E>._uninitialized()..replace(iterable);
   }
@@ -104,14 +102,11 @@ class SetBuilder<E> {
 
   /// As [Set.add].
   bool add(E value) {
-    _checkElement(value);
     return _safeSet.add(value);
   }
 
   /// As [Set.addAll].
   void addAll(Iterable<E> iterable) {
-    iterable = evaluateIterable(iterable);
-    _checkElements(iterable);
     _safeSet.addAll(iterable);
   }
 
@@ -149,9 +144,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.map], but updates the builder in place. Returns nothing.
   void map(E Function(E) f) {
-    var result = _createSet()..addAll(_set.map(f));
-    _checkElements(result);
-    _setSafeSet(result);
+    _setSafeSet(_createSet()..addAll(_set.map(f)));
   }
 
   /// As [Iterable.where], but updates the builder in place. Returns nothing.
@@ -161,9 +154,7 @@ class SetBuilder<E> {
 
   /// As [Iterable.expand], but updates the builder in place. Returns nothing.
   void expand(Iterable<E> Function(E) f) {
-    var result = _createSet()..addAll(_set.expand(f));
-    _checkElements(result);
-    _setSafeSet(result);
+    _setSafeSet(_createSet()..addAll(_set.expand(f)));
   }
 
   /// As [Iterable.take], but updates the builder in place. Returns nothing.
@@ -225,18 +216,6 @@ class SetBuilder<E> {
     if (E == dynamic) {
       throw UnsupportedError('explicit element type required, '
           'for example "new SetBuilder<int>"');
-    }
-  }
-
-  void _checkElement(E element) {
-    if (identical(element, null)) {
-      throw ArgumentError('null element');
-    }
-  }
-
-  void _checkElements(Iterable<E> elements) {
-    for (var element in elements) {
-      _checkElement(element);
     }
   }
 }

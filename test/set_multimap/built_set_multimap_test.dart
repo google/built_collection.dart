@@ -2,11 +2,11 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-library built_collection.test.set_multimap.built_set_multimap_test;
+library built_collection.test.list_multimap.built_list_multimap_test;
 
-import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:built_collection/src/set.dart';
 import 'package:built_collection/src/set_multimap.dart';
+import 'package:built_collection/src/internal/test_helpers.dart';
 import 'package:test/test.dart';
 
 import '../performance.dart';
@@ -151,8 +151,23 @@ void main() {
           throwsA(anything));
     });
 
+    test('nullable does not throw on null keys', () {
+      expect(
+          BuiltSetMultimap<int?, String>({
+            null: ['1']
+          }).asMap(),
+          {
+            null: ['1']
+          });
+    });
+
     test('throws on null value iterables', () {
       expect(() => BuiltSetMultimap<int, String>({1: null}), throwsA(anything));
+    });
+
+    test('nullable also throws on null value iterables', () {
+      expect(
+          () => BuiltSetMultimap<int, String?>({1: null}), throwsA(anything));
     });
 
     test('throws on null values', () {
@@ -161,6 +176,16 @@ void main() {
                 1: [null]
               }),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null values', () {
+      expect(
+          BuiltSetMultimap<int, String?>({
+            1: [null]
+          }).asMap(),
+          {
+            1: [null]
+          });
     });
 
     test('hashes to same value for same contents', () {

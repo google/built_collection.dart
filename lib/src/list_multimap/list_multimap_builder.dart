@@ -31,8 +31,6 @@ class ListMultimapBuilder<K, V> {
   ///
   /// Right:
   ///   `new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory ListMultimapBuilder([multimap = const {}]) {
     return ListMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
@@ -113,8 +111,6 @@ class ListMultimapBuilder<K, V> {
   /// As [ListMultimap.add].
   void add(K key, V value) {
     _makeWriteableCopy();
-    _checkKey(key);
-    _checkValue(value);
     _getValuesBuilder(key).add(value);
   }
 
@@ -225,18 +221,6 @@ class ListMultimapBuilder<K, V> {
     if (V == dynamic) {
       throw UnsupportedError('explicit value type required, '
           'for example "new ListMultimapBuilder<int, int>"');
-    }
-  }
-
-  void _checkKey(K key) {
-    if (identical(key, null)) {
-      throw ArgumentError('null key');
-    }
-  }
-
-  void _checkValue(V value) {
-    if (identical(value, null)) {
-      throw ArgumentError('null value');
     }
   }
 }

@@ -31,13 +31,25 @@ void main() {
     });
 
     test('throws on null key add', () {
-      expect(() => ListMultimapBuilder<int, String>().add(null as int, '0'),
+      expect(() => ListMultimapBuilder<int, String>().add(null as dynamic, '0'),
           throwsA(anything));
     });
 
+    test('nullable does not throw on null key add', () {
+      var builder = ListMultimapBuilder<int?, String>();
+      builder.add(null, '0');
+      expect(builder[null].build(), ['0']);
+    });
+
     test('throws on null value add', () {
-      expect(() => ListMultimapBuilder<int, String>().add(0, null as String),
+      expect(() => ListMultimapBuilder<int, String>().add(0, null as dynamic),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null value add', () {
+      var builder = ListMultimapBuilder<int, String?>();
+      builder.add(0, null);
+      expect(builder[0].build(), [null]);
     });
 
     test('throws on wrong type value addValues', () {

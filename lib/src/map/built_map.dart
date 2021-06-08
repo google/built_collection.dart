@@ -31,8 +31,6 @@ abstract class BuiltMap<K, V> {
   /// Wrong: `new BuiltMap({1: '1', 2: '2', 3: '3'})`.
   ///
   /// Right: `new BuiltMap<int, String>({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap([map = const {}]) {
     if (map is _BuiltMap && map.hasExactKeyAndValueTypes(K, V)) {
       return map as BuiltMap<K, V>;
@@ -50,8 +48,6 @@ abstract class BuiltMap<K, V> {
   /// Wrong: `new BuiltMap.from({1: '1', 2: '2', 3: '3'})`.
   ///
   /// Right: `new BuiltMap<int, String>.from({1: '1', 2: '2', 3: '3'})`.
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.from(Map map) {
     return _BuiltMap<K, V>.copyAndCheckTypes(map.keys, (k) => map[k]);
   }
@@ -59,10 +55,8 @@ abstract class BuiltMap<K, V> {
   /// Instantiates with elements from a [Map<K, V>].
   ///
   /// `K` and `V` are inferred from `map`, and must not be `dynamic`.
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory BuiltMap.of(Map<K, V> map) {
-    return _BuiltMap<K, V>.copyAndCheckForNull(map.keys, (k) => map[k]!);
+    return _BuiltMap<K, V>.copy(map.keys, (k) => map[k] as V);
   }
 
   /// Creates a [MapBuilder], applies updates to it, and builds.
@@ -207,16 +201,10 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
     }
   }
 
-  _BuiltMap.copyAndCheckForNull(Iterable<K> keys, V Function(K) lookup)
+  _BuiltMap.copy(Iterable<K> keys, V Function(K) lookup)
       : super._(null, <K, V>{}) {
     for (var key in keys) {
-      if (identical(key, null)) {
-        throw ArgumentError('map contained invalid key: null');
-      }
       var value = lookup(key);
-      if (value == null) {
-        throw ArgumentError('map contained invalid value: null');
-      }
       _map[key] = value;
     }
   }

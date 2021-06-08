@@ -29,41 +29,77 @@ void main() {
     });
 
     test('throws on null key put', () {
-      expect(() => MapBuilder<int, String>()[null as int] = '0',
+      expect(() => MapBuilder<int, String>()[null as dynamic] = '0',
           throwsA(anything));
     });
 
+    test('nullable does not throw on null key put', () {
+      var builder = MapBuilder<int?, String>();
+      builder[null] = '0';
+      expect(builder[null], '0');
+    });
+
     test('throws on null value put', () {
-      expect(() => MapBuilder<int, String>()[0] = null as String,
+      expect(() => MapBuilder<int, String>()[0] = null as dynamic,
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null value put', () {
+      var builder = MapBuilder<int, String?>();
+      builder[0] = null;
+      expect(builder[0], null);
     });
 
     test('throws on null key putIfAbsent', () {
       expect(
-          () => MapBuilder<int, String>().putIfAbsent(null as int, () => '0'),
+          () =>
+              MapBuilder<int, String>().putIfAbsent(null as dynamic, () => '0'),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null key putIfAbsent', () {
+      var builder = MapBuilder<int?, String>();
+      builder.putIfAbsent(null, () => '0');
+      expect(builder[null], '0');
     });
 
     test('throws on null value putIfAbsent', () {
       expect(
-          () => MapBuilder<int, String>().putIfAbsent(0, () => null as String),
+          () => MapBuilder<int, String>().putIfAbsent(0, () => null as dynamic),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null value putIfAbsent', () {
+      var builder = MapBuilder<int, String?>();
+      builder.putIfAbsent(0, () => null);
+      expect(builder[0], null);
     });
 
     test('throws on null key addAll', () {
-      expect(() => MapBuilder<int, String>().addAll({null as int: '0'}),
+      expect(() => MapBuilder<int, String>().addAll({null as dynamic: '0'}),
           throwsA(anything));
     });
 
+    test('nullable does not throw on null key addAll', () {
+      var builder = MapBuilder<int?, String>();
+      builder.addAll({null: '0'});
+      expect(builder[null], '0');
+    });
+
     test('throws on null value addAll', () {
-      expect(() => MapBuilder<int, String>().addAll({0: null as String}),
+      expect(() => MapBuilder<int, String>().addAll({0: null as dynamic}),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null value addAll', () {
+      var builder = MapBuilder<int, String?>();
+      builder.addAll({0: null});
+      expect(builder[0], null);
     });
 
     test('throws on null withBase', () {
       var builder = MapBuilder<int, String>({2: '2', 0: '0', 1: '1'});
-      expect(() => builder.withBase(null as Map<int, String> Function()),
-          throwsA(anything));
+      expect(() => builder.withBase(null as dynamic), throwsA(anything));
       expect(builder.build().keys, orderedEquals([2, 0, 1]));
     });
 

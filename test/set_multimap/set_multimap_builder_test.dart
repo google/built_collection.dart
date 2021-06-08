@@ -29,13 +29,25 @@ void main() {
     });
 
     test('throws on null key add', () {
-      expect(() => SetMultimapBuilder<int, String>().add(null as int, '0'),
+      expect(() => SetMultimapBuilder<int, String>().add(null as dynamic, '0'),
           throwsA(anything));
     });
 
+    test('nullable does not throw on null key add', () {
+      var builder = SetMultimapBuilder<int?, String>();
+      builder.add(null, '0');
+      expect(builder.build()[null], {'0'});
+    });
+
     test('throws on null value add', () {
-      expect(() => SetMultimapBuilder<int, String>().add(0, null as String),
+      expect(() => SetMultimapBuilder<int, String>().add(0, null as dynamic),
           throwsA(anything));
+    });
+
+    test('nullable does not throw on null value add', () {
+      var builder = SetMultimapBuilder<int, String?>();
+      builder.add(0, null);
+      expect(builder.build()[0], {null});
     });
 
     test('throws on wrong type value addValues', () {

@@ -31,8 +31,6 @@ class SetMultimapBuilder<K, V> {
   ///
   /// Right:
   ///   `new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
-  ///
-  /// Rejects nulls. Rejects keys and values of the wrong type.
   factory SetMultimapBuilder([multimap = const {}]) {
     return SetMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
@@ -111,8 +109,6 @@ class SetMultimapBuilder<K, V> {
   /// As [SetMultimap.add].
   void add(K key, V value) {
     _makeWriteableCopy();
-    _checkKey(key);
-    _checkValue(value);
     _getValuesBuilder(key).add(value);
   }
 
@@ -212,18 +208,6 @@ class SetMultimapBuilder<K, V> {
     if (V == dynamic) {
       throw UnsupportedError('explicit value type required, '
           'for example "new SetMultimapBuilder<int, int>"');
-    }
-  }
-
-  void _checkKey(K key) {
-    if (identical(key, null)) {
-      throw ArgumentError('invalid key: $key');
-    }
-  }
-
-  void _checkValue(V value) {
-    if (identical(value, null)) {
-      throw ArgumentError('invalid value: $value');
     }
   }
 }

@@ -41,14 +41,11 @@ abstract class BuiltSetMultimap<K, V> {
         multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltSetMultimap<K, V>;
     } else if (multimap is Map) {
-      return _BuiltSetMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltSetMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else if (multimap is BuiltSetMultimap) {
-      return _BuiltSetMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltSetMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else {
-      return _BuiltSetMultimap<K, V>.copyAndCheck(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltSetMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     }
   }
 
@@ -185,7 +182,7 @@ abstract class BuiltSetMultimap<K, V> {
 class _BuiltSetMultimap<K, V> extends BuiltSetMultimap<K, V> {
   _BuiltSetMultimap.withSafeMap(Map<K, BuiltSet<V>> map) : super._(map);
 
-  _BuiltSetMultimap.copyAndCheck(Iterable keys, Function lookup)
+  _BuiltSetMultimap.copy(Iterable keys, Function lookup)
       : super._(<K, BuiltSet<V>>{}) {
     for (var key in keys) {
       if (key is K) {

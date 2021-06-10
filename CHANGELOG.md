@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.1.0 (unreleased)
+## 5.1.0
 
 - Allow collections with nullable types, for example `BuiltList<T?>`.
 - Allow key/value types to be `dynamic`. This can be useful occasionally, and

@@ -175,9 +175,7 @@ class SetBuilder<E> {
 
   // Internal.
 
-  SetBuilder._uninitialized() {
-    _checkGenericTypeParameter();
-  }
+  SetBuilder._uninitialized();
 
   SetBuilder._fromBuiltSet(_BuiltSet<E> set)
       : _setFactory = set._setFactory,
@@ -205,11 +203,4 @@ class SetBuilder<E> {
   }
 
   Set<E> _createSet() => _setFactory != null ? _setFactory!() : <E>{};
-
-  void _checkGenericTypeParameter() {
-    if (E == dynamic) {
-      throw UnsupportedError('explicit element type required, '
-          'for example "new SetBuilder<int>"');
-    }
-  }
 }

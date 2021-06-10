@@ -10,11 +10,11 @@ import '../performance.dart';
 
 void main() {
   group('SetBuilder', () {
-    test('throws on attempt to create SetBuilder<dynamic>', () {
-      expect(() => SetBuilder(), throwsA(anything));
+    test('allows <dynamic>', () {
+      SetBuilder<dynamic>();
     });
 
-    test('allows SetBuilder<Object>', () {
+    test('allows <Object>', () {
       SetBuilder<Object>();
     });
 

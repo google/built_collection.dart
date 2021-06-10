@@ -17,6 +17,10 @@ void main() {
       expect(multimap.isNotEmpty, isFalse);
     });
 
+    test('allows <dynamic, dynamic>', () {
+      BuiltSetMultimap<dynamic, dynamic>();
+    });
+
     test('can be instantiated from SetMultimap', () {
       BuiltSetMultimap<int, String>({});
     });

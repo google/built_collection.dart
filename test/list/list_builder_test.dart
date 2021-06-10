@@ -11,11 +11,11 @@ import '../performance.dart';
 
 void main() {
   group('ListBuilder', () {
-    test('throws on attempt to create ListBuilder<dynamic>', () {
-      expect(() => ListBuilder(), throwsA(anything));
+    test('allows <dynamic>', () {
+      ListBuilder<dynamic>();
     });
 
-    test('allows ListBuilder<Object>', () {
+    test('allows <Object>', () {
       ListBuilder<Object>();
     });
 

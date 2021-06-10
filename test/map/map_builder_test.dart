@@ -10,16 +10,8 @@ import '../performance.dart';
 
 void main() {
   group('MapBuilder', () {
-    test('throws on attempt to create MapBuilder<dynamic, dynamic>', () {
-      expect(() => MapBuilder(), throwsA(anything));
-    });
-
-    test('throws on attempt to create MapBuilder<String, dynamic>', () {
-      expect(() => MapBuilder<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create MapBuilder<dynamic, String>', () {
-      expect(() => MapBuilder<dynamic, String>(), throwsA(anything));
+    test('allows <dynamic, dynamic>', () {
+      MapBuilder<dynamic, dynamic>();
     });
 
     test('allows MapBuilder<Object, Object>', () {

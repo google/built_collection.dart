@@ -169,9 +169,7 @@ class SetMultimapBuilder<K, V> {
     }
   }
 
-  SetMultimapBuilder._uninitialized() {
-    _checkGenericTypeParameter();
-  }
+  SetMultimapBuilder._uninitialized();
 
   void _setOwner(_BuiltSetMultimap<K, V> builtSetMultimap) {
     _builtMapOwner = builtSetMultimap;
@@ -197,17 +195,6 @@ class SetMultimapBuilder<K, V> {
       } else {
         throw ArgumentError('map contained invalid key: $key');
       }
-    }
-  }
-
-  void _checkGenericTypeParameter() {
-    if (K == dynamic) {
-      throw UnsupportedError('explicit key type required, '
-          'for example "new SetMultimapBuilder<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required, '
-          'for example "new SetMultimapBuilder<int, int>"');
     }
   }
 }

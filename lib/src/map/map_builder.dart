@@ -156,9 +156,7 @@ class MapBuilder<K, V> {
 
   // Internal.
 
-  MapBuilder._uninitialized() {
-    _checkGenericTypeParameter();
-  }
+  MapBuilder._uninitialized();
 
   MapBuilder._fromBuiltMap(_BuiltMap<K, V> map)
       : _mapFactory = map._mapFactory,
@@ -186,15 +184,4 @@ class MapBuilder<K, V> {
   }
 
   Map<K, V> _createMap() => _mapFactory != null ? _mapFactory!() : <K, V>{};
-
-  void _checkGenericTypeParameter() {
-    if (K == dynamic) {
-      throw UnsupportedError(
-          'explicit key type required, for example "new MapBuilder<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required, '
-          'for example "new MapBuilder<int, int>"');
-    }
-  }
 }

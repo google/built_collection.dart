@@ -182,9 +182,7 @@ class ListMultimapBuilder<K, V> {
     }
   }
 
-  ListMultimapBuilder._uninitialized() {
-    _checkGenericTypeParameter();
-  }
+  ListMultimapBuilder._uninitialized();
 
   void _setOwner(_BuiltListMultimap<K, V> builtListMultimap) {
     _builtMapOwner = builtListMultimap;
@@ -210,17 +208,6 @@ class ListMultimapBuilder<K, V> {
       } else {
         throw ArgumentError('map contained invalid key: $key');
       }
-    }
-  }
-
-  void _checkGenericTypeParameter() {
-    if (K == dynamic) {
-      throw UnsupportedError('explicit key type required, '
-          'for example "new ListMultimapBuilder<int, int>"');
-    }
-    if (V == dynamic) {
-      throw UnsupportedError('explicit value type required, '
-          'for example "new ListMultimapBuilder<int, int>"');
     }
   }
 }

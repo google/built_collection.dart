@@ -17,6 +17,10 @@ void main() {
       expect(set.isNotEmpty, isFalse);
     });
 
+    test('allows <dynamic>', () {
+      BuiltSet<dynamic>();
+    });
+
     test('can be instantiated from Set', () {
       BuiltSet<int>([]);
     });

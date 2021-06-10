@@ -213,9 +213,7 @@ class ListBuilder<E> {
 
   // Internal.
 
-  ListBuilder._uninitialized() {
-    _checkGenericTypeParameter();
-  }
+  ListBuilder._uninitialized();
 
   void _setOwner(_BuiltList<E> listOwner) {
     _list = listOwner._list;
@@ -232,12 +230,5 @@ class ListBuilder<E> {
       _setSafeList(List<E>.from(_list, growable: true));
     }
     return _list;
-  }
-
-  void _checkGenericTypeParameter() {
-    if (E == dynamic) {
-      throw UnsupportedError('explicit element type required, '
-          'for example "new ListBuilder<int>"');
-    }
   }
 }

@@ -17,6 +17,10 @@ void main() {
       expect(map.isNotEmpty, isFalse);
     });
 
+    test('allows <dynamic, dynamic>', () {
+      BuiltMap<dynamic, dynamic>();
+    });
+
     test('can be instantiated from Map', () {
       BuiltMap<int, String>({});
     });

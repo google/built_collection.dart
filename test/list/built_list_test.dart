@@ -16,6 +16,10 @@ void main() {
       expect(list.isNotEmpty, isFalse);
     });
 
+    test('allows <dynamic>', () {
+      BuiltList<dynamic>();
+    });
+
     test('can be instantiated from List', () {
       BuiltList<int>([]);
     });

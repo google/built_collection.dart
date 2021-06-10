@@ -9,20 +9,11 @@ import '../performance.dart';
 
 void main() {
   group('SetMultimapBuilder', () {
-    test('throws on attempt to create SetMultimapBuilder<dynamic, dynamic>',
-        () {
-      expect(() => SetMultimapBuilder(), throwsA(anything));
+    test('allows <dynamic, dynamic>', () {
+      SetMultimapBuilder<dynamic, dynamic>();
     });
 
-    test('throws on attempt to create SetMultimapBuilder<String, dynamic>', () {
-      expect(() => SetMultimapBuilder<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create SetMultimapBuilder<dynamic, String>', () {
-      expect(() => SetMultimapBuilder<dynamic, String>(), throwsA(anything));
-    });
-
-    test('allows SetMultimapBuilder<Object, Object>', () {
+    test('allows <Object, Object>', () {
       SetMultimapBuilder<Object, Object>();
     });
 

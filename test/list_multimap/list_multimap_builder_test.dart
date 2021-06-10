@@ -9,22 +9,11 @@ import '../performance.dart';
 
 void main() {
   group('ListMultimapBuilder', () {
-    test('throws on attempt to create ListMultimapBuilder<dynamic, dynamic>',
-        () {
-      expect(() => ListMultimapBuilder(), throwsA(anything));
+    test('allows <dynamic, dynamic>', () {
+      ListMultimapBuilder<dynamic, dynamic>();
     });
 
-    test('throws on attempt to create ListMultimapBuilder<String, dynamic>',
-        () {
-      expect(() => ListMultimapBuilder<String, dynamic>(), throwsA(anything));
-    });
-
-    test('throws on attempt to create ListMultimapBuilder<dynamic, String>',
-        () {
-      expect(() => ListMultimapBuilder<dynamic, String>(), throwsA(anything));
-    });
-
-    test('allows ListMultimapBuilder<Object, Object>', () {
+    test('allows <Object, Object>', () {
       ListMultimapBuilder<Object, Object>();
     });
 

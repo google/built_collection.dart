@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import 'dart:collection' show SplayTreeSet;
+import 'package:built_collection/src/internal/null_safety.dart';
 import 'package:built_collection/src/set.dart';
 import 'package:test/test.dart';
 
@@ -74,8 +75,13 @@ void main() {
     });
 
     test('throws on wrong type addAll', () {
+      // Legacy mode allows List.from to add incorrect types to List, so wrong
+      // type is allowed; just pass.
+      if (!isSoundMode) return;
+
       var builder = SetBuilder<int>();
-      expect(() => builder.addAll(List.from([0, 1, '0'])), throwsA(anything));
+      expect(
+          () => builder.addAll(List<int>.from([0, 1, '0'])), throwsA(anything));
       expect(builder.build(), isEmpty);
     });
 

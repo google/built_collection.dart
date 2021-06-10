@@ -2,11 +2,7 @@
 
 ## 5.1.0 (unreleased)
 
-- Remove explicit runtime null checks and type checks. These are now provided
-  by the underlying collections as applicable. When used with null safety,
-  this means you can for example create a `BuiltList<T>` which cannot contain
-  nulls, or a `BuiltList<T?>` which can contain nulls. Note that legacy code
-  and mixed mode no longer do runtime null checks.
+- Allow collections with nullable types, for example `BuiltList<T?>`.
 - Allow key/value types to be `dynamic`. This can be useful occasionally, and
   with Dart 2 and null safety it's much harder to use `dynamic` by accident.
 

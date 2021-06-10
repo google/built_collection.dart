@@ -26,16 +26,18 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {
-      return _BuiltList<E>.copy(iterable);
+      return _BuiltList<E>.from(iterable);
     }
   }
 
   /// Instantiates with elements from an [Iterable<E>].
+  ///
+  /// `E` must not be `dynamic`.
   factory BuiltList.of(Iterable<E> iterable) {
     if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return _BuiltList<E>.copy(iterable);
+      return _BuiltList<E>.of(iterable);
     }
   }
 
@@ -243,8 +245,26 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 class _BuiltList<E> extends BuiltList<E> {
   _BuiltList.withSafeList(List<E> list) : super._(list);
 
-  _BuiltList.copy([Iterable iterable = const []])
-      : super._(List<E>.from(iterable, growable: false));
+  _BuiltList.from([Iterable iterable = const []])
+      : super._(List<E>.from(iterable, growable: false)) {
+    _maybeCheckForNull();
+  }
+
+  _BuiltList.of(Iterable<E> iterable)
+      : super._(List<E>.from(iterable, growable: false)) {
+    _maybeCheckForNull();
+  }
+
+  bool get _needsNullCheck => !isSoundMode && null is! E;
+
+  void _maybeCheckForNull() {
+    if (!_needsNullCheck) return;
+    for (var element in _list) {
+      if (identical(element, null)) {
+        throw ArgumentError('iterable contained invalid element: null');
+      }
+    }
+  }
 
   bool hasExactElementType(Type type) => E == type;
 }
@@ -254,7 +274,7 @@ extension BuiltListExtension<T> on List<T> {
   /// Converts to a [BuiltList].
   BuiltList<T> build() {
     // We know a `List` is not a `BuiltList`, so we have to copy.
-    return _BuiltList<T>.copy(this);
+    return _BuiltList<T>.of(this);
   }
 }
 

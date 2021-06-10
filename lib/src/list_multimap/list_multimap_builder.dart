@@ -23,14 +23,6 @@ class ListMultimapBuilder<K, V> {
 
   /// Instantiates with elements from a [Map], [ListMultimap] or
   /// [BuiltListMultimap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong:
-  ///   `new ListMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
-  ///
-  /// Right:
-  ///   `new ListMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   factory ListMultimapBuilder([multimap = const {}]) {
     return ListMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
@@ -111,6 +103,8 @@ class ListMultimapBuilder<K, V> {
   /// As [ListMultimap.add].
   void add(K key, V value) {
     _makeWriteableCopy();
+    _checkKey(key);
+    _checkValue(value);
     _getValuesBuilder(key).add(value);
   }
 
@@ -208,6 +202,22 @@ class ListMultimapBuilder<K, V> {
       } else {
         throw ArgumentError('map contained invalid key: $key');
       }
+    }
+  }
+
+  void _checkKey(K key) {
+    if (isSoundMode) return;
+    if (null is K) return;
+    if (identical(key, null)) {
+      throw ArgumentError('null key');
+    }
+  }
+
+  void _checkValue(V value) {
+    if (isSoundMode) return;
+    if (null is V) return;
+    if (identical(value, null)) {
+      throw ArgumentError('null value');
     }
   }
 }

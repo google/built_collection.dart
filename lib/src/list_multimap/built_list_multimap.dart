@@ -32,14 +32,11 @@ abstract class BuiltListMultimap<K, V> {
         multimap.hasExactKeyAndValueTypes(K, V)) {
       return multimap as BuiltListMultimap<K, V>;
     } else if (multimap is Map) {
-      return _BuiltListMultimap<K, V>.copy(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else if (multimap is BuiltListMultimap) {
-      return _BuiltListMultimap<K, V>.copy(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     } else {
-      return _BuiltListMultimap<K, V>.copy(
-          multimap.keys, (k) => multimap[k]);
+      return _BuiltListMultimap<K, V>.copy(multimap.keys, (k) => multimap[k]);
     }
   }
 

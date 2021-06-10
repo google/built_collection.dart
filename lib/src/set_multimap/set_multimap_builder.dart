@@ -23,22 +23,11 @@ class SetMultimapBuilder<K, V> {
 
   /// Instantiates with elements from a [Map], [SetMultimap] or
   /// [BuiltSetMultimap].
-  ///
-  /// Must be called with a generic type parameter.
-  ///
-  /// Wrong:
-  ///   `new SetMultimapBuilder({1: ['1'], 2: ['2'], 3: ['3']})`.
-  ///
-  /// Right:
-  ///   `new SetMultimapBuilder<int, String>({1: ['1'], 2: ['2'], 3: ['3']})`,
   factory SetMultimapBuilder([multimap = const {}]) {
     return SetMultimapBuilder<K, V>._uninitialized()..replace(multimap);
   }
 
   /// Converts to a [BuiltSetMultimap].
-  ///
-  /// The `SetMultimapBuilder` can be modified again and used to create any
-  /// number of `BuiltSetMultimap`s.
   BuiltSetMultimap<K, V> build() {
     if (_builtMapOwner == null) {
       for (var key in _builderMap.keys) {
@@ -109,6 +98,8 @@ class SetMultimapBuilder<K, V> {
   /// As [SetMultimap.add].
   void add(K key, V value) {
     _makeWriteableCopy();
+    _checkKey(key);
+    _checkValue(value);
     _getValuesBuilder(key).add(value);
   }
 
@@ -195,6 +186,22 @@ class SetMultimapBuilder<K, V> {
       } else {
         throw ArgumentError('map contained invalid key: $key');
       }
+    }
+  }
+
+  void _checkKey(K key) {
+    if (isSoundMode) return;
+    if (null is K) return;
+    if (identical(key, null)) {
+      throw ArgumentError('invalid key: $key');
+    }
+  }
+
+  void _checkValue(V value) {
+    if (isSoundMode) return;
+    if (null is V) return;
+    if (identical(value, null)) {
+      throw ArgumentError('invalid value: $value');
     }
   }
 }

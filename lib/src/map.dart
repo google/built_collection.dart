@@ -4,6 +4,7 @@
 
 import 'internal/copy_on_write_map.dart';
 import 'internal/hash.dart';
+import 'internal/null_safety.dart';
 
 part 'map/built_map.dart';
 part 'map/map_builder.dart';

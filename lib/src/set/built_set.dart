@@ -28,7 +28,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet && iterable.hasExactElementType(E)) {
       return iterable as BuiltSet<E>;
     } else {
-      return _BuiltSet<E>.copy(iterable);
+      return _BuiltSet<E>.from(iterable);
     }
   }
 
@@ -37,7 +37,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
     if (iterable is _BuiltSet<E> && iterable.hasExactElementType(E)) {
       return iterable;
     } else {
-      return _BuiltSet<E>.copy(iterable);
+      return _BuiltSet<E>.of(iterable);
     }
   }
 
@@ -231,9 +231,22 @@ class _BuiltSet<E> extends BuiltSet<E> {
   _BuiltSet.withSafeSet(_SetFactory<E>? setFactory, Set<E> set)
       : super._(setFactory, set);
 
-  _BuiltSet.copy(Iterable iterable) : super._(null, <E>{}) {
-    for (var element in iterable) {
-      _set.add(element);
+  _BuiltSet.from(Iterable iterable) : super._(null, Set<E>.from(iterable)) {
+    _maybeCheckForNull();
+  }
+
+  _BuiltSet.of(Iterable<E> iterable) : super._(null, <E>{}..addAll(iterable)) {
+    _maybeCheckForNull();
+  }
+
+  bool get _needsNullCheck => !isSoundMode && null is! E;
+
+  void _maybeCheckForNull() {
+    if (!_needsNullCheck) return;
+    for (var element in _set) {
+      if (identical(element, null)) {
+        throw ArgumentError('iterable contained invalid element: null');
+      }
     }
   }
 
@@ -245,7 +258,7 @@ extension BuiltSetExtension<T> on Set<T> {
   /// Converts to a [BuiltSet].
   BuiltSet<T> build() {
     // We know a `Set` is not a `BuiltSet`, so we have to copy.
-    return _BuiltSet<T>.copy(this);
+    return _BuiltSet<T>.of(this);
   }
 }
 

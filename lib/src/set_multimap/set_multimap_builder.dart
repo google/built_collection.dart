@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-part of built_collection.set_multimap;
+part of '../set_multimap.dart';
 
 /// The Built Collection builder for [BuiltSetMultimap].
 ///

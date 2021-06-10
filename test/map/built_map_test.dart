@@ -2,8 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-library built_collection.test.map.built_map_test;
-
 import 'dart:collection' show SplayTreeMap;
 import 'package:built_collection/src/map.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';

@@ -2,8 +2,6 @@
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-library built_collection.test.list_multimap.built_list_multimap_test;
-
 import 'package:built_collection/src/list.dart';
 import 'package:built_collection/src/list_multimap.dart';
 import 'package:built_collection/src/internal/test_helpers.dart';

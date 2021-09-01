@@ -67,9 +67,18 @@ void main() {
     });
 
     test('can be converted to Map<K, V>', () {
-      expect(BuiltMap<int, String>().toMap() is Map<int, String>, isTrue);
-      expect(BuiltMap<int, String>().toMap() is Map<int, int>, isFalse);
-      expect(BuiltMap<int, String>().toMap() is Map<String, String>, isFalse);
+      expect(
+        BuiltMap<int, String>().toMap(),
+        const TypeMatcher<Map<int, String>>(),
+      );
+      expect(
+        BuiltMap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<int, int>>()),
+      );
+      expect(
+        BuiltMap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<String, String>>()),
+      );
     });
 
     test('uses same base when converted with toMap', () {
@@ -82,30 +91,39 @@ void main() {
 
     test('can be converted to an UnmodifiableMapView', () {
       var immutableMap = BuiltMap<int, String>().asMap();
-      expect(immutableMap is Map<int, String>, isTrue);
+      expect(immutableMap, const TypeMatcher<Map<int, String>>());
       expect(() => immutableMap[1] = 'Hello', throwsUnsupportedError);
       expect(immutableMap, isEmpty);
     });
 
     test('can be converted to MapBuilder<K, V>', () {
-      expect(BuiltMap<int, String>().toBuilder() is MapBuilder<int, String>,
-          isTrue);
       expect(
-          BuiltMap<int, String>().toBuilder() is MapBuilder<int, int>, isFalse);
-      expect(BuiltMap<int, String>().toBuilder() is MapBuilder<String, String>,
-          isFalse);
+        BuiltMap<int, String>().toBuilder(),
+        const TypeMatcher<MapBuilder<int, String>>(),
+      );
+      expect(
+        BuiltMap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<MapBuilder<int, int>>()),
+      );
+      expect(
+        BuiltMap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<MapBuilder<String, String>>()),
+      );
     });
 
     test('can be converted to MapBuilder<K, V> and back to Map<K, V>', () {
       expect(
-          BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, String>,
-          isTrue);
-      expect(BuiltMap<int, String>().toBuilder().build() is BuiltMap<int, int>,
-          isFalse);
+        BuiltMap<int, String>().toBuilder().build(),
+        const TypeMatcher<BuiltMap<int, String>>(),
+      );
       expect(
-          BuiltMap<int, String>().toBuilder().build()
-              is BuiltMap<String, String>,
-          isFalse);
+        BuiltMap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltMap<int, int>>()),
+      );
+      expect(
+        BuiltMap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltMap<String, String>>()),
+      );
     });
 
     test('passes along its base when converted to SetBuilder', () {
@@ -398,7 +416,10 @@ void main() {
     });
 
     test('can be created from`Map` using extension methods', () {
-      expect({1: '1', 2: '2', 3: '3'}.build() is BuiltMap<int, String>, true);
+      expect(
+        {1: '1', 2: '2', 3: '3'}.build(),
+        const TypeMatcher<BuiltMap<int, String>>(),
+      );
       expect(
           {1: '1', 2: '2', 3: '3'}.build().toMap(), {1: '1', 2: '2', 3: '3'});
     });

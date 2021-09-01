@@ -80,55 +80,56 @@ void main() {
 
     test('can be converted to Map<K, BuiltList<V>>', () {
       expect(
-          BuiltListMultimap<int, String>().toMap()
-              is Map<int, BuiltList<String>>,
-          isTrue);
+        BuiltListMultimap<int, String>().toMap(),
+        const TypeMatcher<Map<int, BuiltList<String>>>(),
+      );
       expect(
-          BuiltListMultimap<int, String>().toMap() is Map<int, BuiltList<int>>,
-          isFalse);
+        BuiltListMultimap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<int, BuiltList<int>>>()),
+      );
       expect(
-          BuiltListMultimap<int, String>().toMap()
-              is Map<String, BuiltList<String>>,
-          isFalse);
+        BuiltListMultimap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<String, BuiltList<String>>>()),
+      );
     });
 
     test('can be converted to an UnmodifiableMapView', () {
       var immutableMap = BuiltListMultimap<int, String>().asMap();
-      expect(immutableMap is Map<int, Iterable<String>>, isTrue);
+      expect(immutableMap, const TypeMatcher<Map<int, Iterable<String>>>());
       expect(() => immutableMap[1] = ['Hello'], throwsUnsupportedError);
       expect(immutableMap, isEmpty);
     });
 
     test('can be converted to ListMultimapBuilder<K, V>', () {
       expect(
-          BuiltListMultimap<int, String>().toBuilder()
-              is ListMultimapBuilder<int, String>,
-          isTrue);
+        BuiltListMultimap<int, String>().toBuilder(),
+        const TypeMatcher<ListMultimapBuilder<int, String>>(),
+      );
       expect(
-          BuiltListMultimap<int, String>().toBuilder()
-              is ListMultimapBuilder<int, int>,
-          isFalse);
+        BuiltListMultimap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<ListMultimapBuilder<int, int>>()),
+      );
       expect(
-          BuiltListMultimap<int, String>().toBuilder()
-              is ListMultimapBuilder<String, String>,
-          isFalse);
+        BuiltListMultimap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<ListMultimapBuilder<String, String>>()),
+      );
     });
 
     test(
         'can be converted to ListMultimapBuilder<K, V> and back to ListMultimap<K, V>',
         () {
       expect(
-          BuiltListMultimap<int, String>().toBuilder().build()
-              is BuiltListMultimap<int, String>,
-          isTrue);
+        BuiltListMultimap<int, String>().toBuilder().build(),
+        const TypeMatcher<BuiltListMultimap<int, String>>(),
+      );
       expect(
-          BuiltListMultimap<int, String>().toBuilder().build()
-              is BuiltListMultimap<int, int>,
-          isFalse);
+        BuiltListMultimap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltListMultimap<int, int>>()),
+      );
       expect(
-          BuiltListMultimap<int, String>().toBuilder().build()
-              is BuiltListMultimap<String, String>,
-          isFalse);
+        BuiltListMultimap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltListMultimap<String, String>>()),
+      );
     });
 
     test('throws on null keys', () {

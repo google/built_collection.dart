@@ -59,8 +59,14 @@ void main() {
     });
 
     test('can be converted to Set<E>', () {
-      expect(BuiltSet<int>().toSet() is Set<int>, isTrue);
-      expect(BuiltSet<int>().toSet() is Set<String>, isFalse);
+      expect(
+        BuiltSet<int>().toSet(),
+        const TypeMatcher<Set<int>>(),
+      );
+      expect(
+        BuiltSet<int>().toSet(),
+        isNot(const TypeMatcher<Set<String>>()),
+      );
     });
 
     test('uses same base when converted with toSet', () {
@@ -73,19 +79,31 @@ void main() {
 
     test('can be converted to an UnmodifiableSetView', () {
       var immutableSet = BuiltSet<int>().asSet();
-      expect(immutableSet is Set<int>, isTrue);
+      expect(immutableSet, const TypeMatcher<Set<int>>());
       expect(() => immutableSet.add(1), throwsUnsupportedError);
       expect(immutableSet, isEmpty);
     });
 
     test('can be converted to SetBuilder<E>', () {
-      expect(BuiltSet<int>().toBuilder() is SetBuilder<int>, isTrue);
-      expect(BuiltSet<int>().toBuilder() is SetBuilder<String>, isFalse);
+      expect(
+        BuiltSet<int>().toBuilder(),
+        const TypeMatcher<SetBuilder<int>>(),
+      );
+      expect(
+        BuiltSet<int>().toBuilder(),
+        isNot(const TypeMatcher<SetBuilder<String>>()),
+      );
     });
 
     test('can be converted to SetBuilder<E> and back to Set<E>', () {
-      expect(BuiltSet<int>().toBuilder().build() is BuiltSet<int>, isTrue);
-      expect(BuiltSet<int>().toBuilder().build() is BuiltSet<String>, isFalse);
+      expect(
+        BuiltSet<int>().toBuilder().build(),
+        const TypeMatcher<BuiltSet<int>>(),
+      );
+      expect(
+        BuiltSet<int>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltSet<String>>()),
+      );
     });
 
     test('passes along its base when converted to SetBuilder', () {
@@ -291,12 +309,18 @@ void main() {
     // Iterable.
 
     test('implements Iterable', () {
-      expect(BuiltSet<int>() is Iterable, isTrue);
+      expect(BuiltSet<int>(), const TypeMatcher<Iterable>());
     });
 
     test('implements Iterable<E>', () {
-      expect(BuiltSet<int>() is Iterable<int>, isTrue);
-      expect(BuiltSet<int>() is Iterable<String>, isFalse);
+      expect(
+        BuiltSet<int>(),
+        const TypeMatcher<Iterable<int>>(),
+      );
+      expect(
+        BuiltSet<int>(),
+        isNot(const TypeMatcher<Iterable<String>>()),
+      );
     });
 
     test('implements Iterable.map', () {
@@ -352,12 +376,12 @@ void main() {
     });
 
     test('implements Iterable.toSet', () {
-      expect(BuiltSet<int>([1, 2]).toSet() is Set, isTrue);
+      expect(BuiltSet<int>([1, 2]).toSet(), const TypeMatcher<Set>());
       expect(BuiltSet<int>([1, 2]).toSet(), [1, 2]);
     });
 
     test('implements Iterable.toList', () {
-      expect(BuiltSet<int>([1, 2]).toList() is List, isTrue);
+      expect(BuiltSet<int>([1, 2]).toList(), const TypeMatcher<List>());
       expect(BuiltSet<int>([1, 2]).toList(), [1, 2]);
     });
 
@@ -431,12 +455,18 @@ void main() {
     });
 
     test('can be created from`Set` using extension methods', () {
-      expect({1, 2, 3}.build() is BuiltSet<int>, true);
+      expect(
+        {1, 2, 3}.build(),
+        const TypeMatcher<BuiltSet<int>>(),
+      );
       expect({1, 2, 3}.build(), [1, 2, 3]);
     });
 
     test('can be created from`Iterable` using extension methods', () {
-      expect([1, 2, 3].map((x) => x).toBuiltSet() is BuiltSet<int>, true);
+      expect(
+        [1, 2, 3].map((x) => x).toBuiltSet(),
+        const TypeMatcher<BuiltSet<int>>(),
+      );
       expect([1, 2, 3].map((x) => x).toBuiltSet(), [1, 2, 3]);
     });
   });

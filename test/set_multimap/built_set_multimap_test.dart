@@ -80,53 +80,56 @@ void main() {
 
     test('can be converted to Map<K, BuiltSet<V>>', () {
       expect(
-          BuiltSetMultimap<int, String>().toMap() is Map<int, BuiltSet<String>>,
-          isTrue);
-      expect(BuiltSetMultimap<int, String>().toMap() is Map<int, BuiltSet<int>>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toMap(),
+        const TypeMatcher<Map<int, BuiltSet<String>>>(),
+      );
       expect(
-          BuiltSetMultimap<int, String>().toMap()
-              is Map<String, BuiltSet<String>>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<int, BuiltSet<int>>>()),
+      );
+      expect(
+        BuiltSetMultimap<int, String>().toMap(),
+        isNot(const TypeMatcher<Map<String, BuiltSet<String>>>()),
+      );
     });
 
     test('can be converted to an UnmodifiableMapView', () {
       var immutableMap = BuiltSetMultimap<int, String>().asMap();
-      expect(immutableMap is Map<int, Iterable<String>>, isTrue);
+      expect(immutableMap, const TypeMatcher<Map<int, Iterable<String>>>());
       expect(() => immutableMap[1] = ['Hello'], throwsUnsupportedError);
       expect(immutableMap, isEmpty);
     });
 
     test('can be converted to SetMultimapBuilder<K, V>', () {
       expect(
-          BuiltSetMultimap<int, String>().toBuilder()
-              is SetMultimapBuilder<int, String>,
-          isTrue);
+        BuiltSetMultimap<int, String>().toBuilder(),
+        const TypeMatcher<SetMultimapBuilder<int, String>>(),
+      );
       expect(
-          BuiltSetMultimap<int, String>().toBuilder()
-              is SetMultimapBuilder<int, int>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<SetMultimapBuilder<int, int>>()),
+      );
       expect(
-          BuiltSetMultimap<int, String>().toBuilder()
-              is SetMultimapBuilder<String, String>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toBuilder(),
+        isNot(const TypeMatcher<SetMultimapBuilder<String, String>>()),
+      );
     });
 
     test(
         'can be converted to SetMultimapBuilder<K, V> and back to SetMultimap<K, V>',
         () {
       expect(
-          BuiltSetMultimap<int, String>().toBuilder().build()
-              is BuiltSetMultimap<int, String>,
-          isTrue);
+        BuiltSetMultimap<int, String>().toBuilder().build(),
+        const TypeMatcher<BuiltSetMultimap<int, String>>(),
+      );
       expect(
-          BuiltSetMultimap<int, String>().toBuilder().build()
-              is BuiltSetMultimap<int, int>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltSetMultimap<int, int>>()),
+      );
       expect(
-          BuiltSetMultimap<int, String>().toBuilder().build()
-              is BuiltSetMultimap<String, String>,
-          isFalse);
+        BuiltSetMultimap<int, String>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltSetMultimap<String, String>>()),
+      );
     });
 
     test('throws on null keys', () {

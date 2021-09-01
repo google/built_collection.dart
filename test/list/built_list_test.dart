@@ -58,26 +58,43 @@ void main() {
     });
 
     test('can be converted to List<E>', () {
-      expect(BuiltList<int>().toList() is List<int>, isTrue);
-      expect(BuiltList<int>().toList() is List<String>, isFalse);
+      expect(
+        BuiltList<int>().toList(),
+        const TypeMatcher<List<int>>(),
+      );
+      expect(
+        BuiltList<int>().toList(),
+        isNot(const TypeMatcher<List<String>>()),
+      );
     });
 
     test('can be converted to an UnmodifiableListView', () {
       var immutableList = BuiltList<int>().asList();
-      expect(immutableList is List<int>, isTrue);
+      expect(immutableList, const TypeMatcher<List<int>>());
       expect(() => immutableList.add(1), throwsUnsupportedError);
       expect(immutableList, isEmpty);
     });
 
     test('can be converted to ListBuilder<E>', () {
-      expect(BuiltList<int>().toBuilder() is ListBuilder<int>, isTrue);
-      expect(BuiltList<int>().toBuilder() is ListBuilder<String>, isFalse);
+      expect(
+        BuiltList<int>().toBuilder(),
+        const TypeMatcher<ListBuilder<int>>(),
+      );
+      expect(
+        BuiltList<int>().toBuilder(),
+        isNot(const TypeMatcher<ListBuilder<String>>()),
+      );
     });
 
     test('can be converted to ListBuilder<E> and back to List<E>', () {
-      expect(BuiltList<int>().toBuilder().build() is BuiltList<int>, isTrue);
       expect(
-          BuiltList<int>().toBuilder().build() is BuiltList<String>, isFalse);
+        BuiltList<int>().toBuilder().build(),
+        const TypeMatcher<BuiltList<int>>(),
+      );
+      expect(
+        BuiltList<int>().toBuilder().build(),
+        isNot(const TypeMatcher<BuiltList<String>>()),
+      );
     });
 
     test('throws on null', () {
@@ -298,12 +315,12 @@ void main() {
     // Iterable.
 
     test('implements Iterable', () {
-      expect(BuiltList<int>() is Iterable, isTrue);
+      expect(BuiltList<int>(), const TypeMatcher<Iterable>());
     });
 
     test('implements Iterable<E>', () {
-      expect(BuiltList<int>() is Iterable<int>, isTrue);
-      expect(BuiltList<int>() is Iterable<String>, isFalse);
+      expect(BuiltList<int>(), const TypeMatcher<Iterable<int>>());
+      expect(BuiltList<int>(), isNot(const TypeMatcher<Iterable<String>>()));
     });
 
     test('implements Iterable.map', () {
@@ -360,7 +377,7 @@ void main() {
     });
 
     test('implements Iterable.toSet', () {
-      expect(BuiltList<int>([1, 2]).toSet() is Set, isTrue);
+      expect(BuiltList<int>([1, 2]).toSet(), const TypeMatcher<Set>());
       expect(BuiltList<int>([1, 2]).toSet(), [1, 2]);
     });
 
@@ -435,12 +452,15 @@ void main() {
     });
 
     test('can be created from`List` using extension methods', () {
-      expect([1, 2, 3].build() is BuiltList<int>, true);
+      expect([1, 2, 3].build(), const TypeMatcher<BuiltList<int>>());
       expect([1, 2, 3].build(), [1, 2, 3]);
     });
 
     test('can be created from`Iterable` using extension methods', () {
-      expect([1, 2, 3].map((x) => x).toBuiltList() is BuiltList<int>, true);
+      expect(
+        [1, 2, 3].map((x) => x).toBuiltList(),
+        const TypeMatcher<BuiltList<int>>(),
+      );
       expect([1, 2, 3].map((x) => x).toBuiltList(), [1, 2, 3]);
     });
   });

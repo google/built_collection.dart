@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.1
+
+- Test fix for new analyzer hint.
+
 ## 5.1.0
 
 - Allow collections with nullable types, for example `BuiltList<T?>`.

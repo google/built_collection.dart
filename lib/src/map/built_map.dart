@@ -207,5 +207,4 @@ extension BuiltMapExtension<K, V> on Map<K, V> {
   
   /// Converts to a [BuiltMap].
   BuiltMap<K, V> toBuiltMap() => build()
-
 }

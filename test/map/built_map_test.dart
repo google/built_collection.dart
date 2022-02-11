@@ -423,6 +423,19 @@ void main() {
       expect(
           {1: '1', 2: '2', 3: '3'}.build().toMap(), {1: '1', 2: '2', 3: '3'});
     });
+    test('can be created from `Iterable<MapEntry>` using extension methods',
+        () {
+      expect(
+        [MapEntry(1, '1'), MapEntry(2, '2'), MapEntry(3, '3')].toBuiltMap(),
+        const TypeMatcher<BuiltMap<int, String>>(),
+      );
+      expect(
+        [MapEntry(1, '1'), MapEntry(2, '2'), MapEntry(3, '3')]
+            .toBuiltMap()
+            .toMap(),
+        {1: '1', 2: '2', 3: '3'},
+      );
+    });
   });
 }
 

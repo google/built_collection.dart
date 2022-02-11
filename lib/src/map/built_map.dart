@@ -202,9 +202,10 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
 /// Extensions for [BuiltMap] on [Map].
 extension BuiltMapExtension<K, V> on Map<K, V> {
   /// Converts to a [BuiltMap].
-  @Deprecated('Use toBuiltMap()')
-  BuiltMap<K, V> build() => toBuiltMap();
-  
+  BuiltMap<K, V> build() => BuiltMap<K, V>.of(this);
+}
+
+extension IterableMapEntryExtension<K, V> on Iterable<MapEntry<K, V>> {
   /// Converts to a [BuiltMap].
-  BuiltMap<K, V> toBuiltMap() => BuiltMap<K, V>.of(this);
+  BuiltMap<K, V> toBuiltMap() => Map<K, V>.fromEntries(this).build();
 }

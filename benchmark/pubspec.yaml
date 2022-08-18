@@ -1,10 +1,9 @@
 name: benchmark
+description: Benchmark, not for publishing.
 version: 0.0.1
-description: >
-  Benchmark, not for publishing.
-authors:
-- David Morgan <davidmorgan@google.com>
-homepage: https://github.com/google/built_collection.dart
+
+# This package is not intended for consumption on pub.dev. DO NOT publish.
+publish_to: none
 
 environment:
   sdk: '>=2.9.0-18.0 <3.0.0'

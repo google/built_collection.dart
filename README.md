@@ -1,5 +1,7 @@
-# Built Collections for Dart
-[![Build Status](https://travis-ci.org/google/built_collection.dart.svg?branch=master)](https://travis-ci.org/google/built_collection.dart)
+[![Build Status](https://github.com/google/built_collection.dart/workflows/Dart/badge.svg)](https://github.com/google/built_collection.dart/actions)
+[![pub package](https://img.shields.io/pub/v/built_collection.svg)](https://pub.dev/packages/built_collection)
+[![package publisher](https://img.shields.io/pub/publisher/built_collection.svg)](https://pub.dev/packages/built_collection/publisher)
+
 ## Introduction
 
 Built Collections are immutable collections using the
@@ -99,4 +101,4 @@ and `BuiltMap.asMap`.
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/google/built-collection-dart/issues
+[tracker]: https://github.com/google/built_collection.dart/issues

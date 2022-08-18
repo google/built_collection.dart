@@ -1,6 +1,0 @@
-language: dart
-dart:
-  - dev
-  - beta
-script:
-  - tool/presubmit

@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/google/built_collection.dart/workflows/Dart/badge.svg)](https://github.com/google/built_collection.dart/actions)
+[![Build](https://github.com/google/built_collection.dart/actions/workflows/build.yaml/badge.svg)](https://github.com/google/built_collection.dart/actions/workflows/build.yaml)
 [![pub package](https://img.shields.io/pub/v/built_collection.svg)](https://pub.dev/packages/built_collection)
 [![package publisher](https://img.shields.io/pub/publisher/built_collection.svg)](https://pub.dev/packages/built_collection/publisher)
 

@@ -105,10 +105,6 @@ void main() {
       expect(BuiltList<int?>([null])[0], null);
     });
 
-    test('of constructor throws on null', () {
-      expect(() => BuiltList<int>.of([null as int]), throwsA(anything));
-    });
-
     test('hashes to same value for same contents', () {
       var list1 = BuiltList<int>([1, 2, 3]);
       var list2 = BuiltList<int>([1, 2, 3]);

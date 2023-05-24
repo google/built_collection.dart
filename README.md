@@ -67,7 +67,7 @@ hashing.
 Core SDK collections do not offer equality checks by default.
 
 Built Collections do a deep comparison against other Built Collections
-of the same type, only. Hashing is used to make repeated comparisons fast.
+of the same type, only (see example below). Hashing is used to make repeated comparisons fast.
 
 **Example:**
 ```dart

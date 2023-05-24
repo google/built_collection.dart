@@ -69,6 +69,20 @@ Core SDK collections do not offer equality checks by default.
 Built Collections do a deep comparison against other Built Collections
 of the same type, only. Hashing is used to make repeated comparisons fast.
 
+**Example:**
+```dart
+// ✔ can be deep compared; builtList1 and builtList2 are both BuiltLists
+BuiltList<BuiltSet<String>> builtList1 = . . .
+BuiltList<BuiltSet<String>> builtList2 = . . .
+
+----------
+
+// ❌ can NOT be deep compared; builtList1 is a BuiltList while
+//      builtList2 is a BuiltSet
+BuiltList<BuiltSet<String>> builtList1 = . . .
+BuiltSet<BuiltSet<String>> builtList2 = . . .
+```
+
 
 ## Built Collections are Hashable
 

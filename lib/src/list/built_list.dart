@@ -18,11 +18,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
-  factory BuiltList([Iterable iterable = const []]) =>
-      BuiltList<E>.from(iterable);
-
-  /// Instantiates with elements from an [Iterable].
-  factory BuiltList.from(Iterable iterable) {
+  factory BuiltList([Iterable iterable = const []]) {
     if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
       return iterable as BuiltList<E>;
     } else {

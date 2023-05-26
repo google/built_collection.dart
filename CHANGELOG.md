@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0 (unreleased)
+
+- Remove `from` constructor from `BuiltList`.
+
 ## 5.1.1
 
 - Test fix for new analyzer hint.

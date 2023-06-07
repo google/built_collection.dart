@@ -67,19 +67,22 @@ hashing.
 Core SDK collections do not offer equality checks by default.
 
 Built Collections do a deep comparison against other Built Collections
-of the same type, only (see example below). Hashing is used to make repeated comparisons fast.
+of the same type using Dart's equality operator (`==`). A Built Collection
+cannot be compared to another Built Collection when they are of different
+types, such as a `BuiltList` and a `BuiltSet`. Hashing is used to make
+repeated comparisons fast.
 
 ```dart
-// ✔ can be deep compared; builtList1 and builtList2 are both BuiltLists
-BuiltList<BuiltSet<String>> builtList1 = . . .
-BuiltList<BuiltSet<String>> builtList2 = . . .
+// ✔ can be deep compared; both are BuiltLists
+BuiltList<String> builtList1 = ...
+BuiltList<String> builtList2 = ...
 
 ----------
 
-// ❌ can NOT be deep compared; builtList1 is a BuiltList while
-//      builtList2 is a BuiltSet
-BuiltList<BuiltSet<String>> builtList1 = . . .
-BuiltSet<BuiltSet<String>> builtList2 = . . .
+// ❌ can NOT be deep compared; they are different types of
+//      Built Collections: a BuiltList and a BuiltSet
+BuiltList<String> builtList = ...
+BuiltSet<String> builtSet = ...
 ```
 
 

@@ -85,6 +85,8 @@ BuiltList<String> builtList = ...
 BuiltSet<String> builtSet = ...
 ```
 
+#### Full Example
+
 ```dart
 import 'package:built_collection/built_collection.dart';
 

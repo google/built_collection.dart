@@ -85,6 +85,34 @@ BuiltList<String> builtList = ...
 BuiltSet<String> builtSet = ...
 ```
 
+```dart
+import 'package:built_collection/built_collection.dart';
+
+void main() {
+  BuiltList<Apple> list1 = BuiltList<Apple>([Apple('green')]);
+  BuiltList<Apple> list2 = BuiltList<Apple>([Apple('green')]);
+  print(list1 == list2); // true
+}
+
+class Apple {
+  Apple(this.appleColor);
+
+  String appleColor;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Apple) {
+      return appleColor == other.appleColor;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => appleColor.hashCode;
+}
+
+```
+
 
 ## Built Collections are Hashable
 

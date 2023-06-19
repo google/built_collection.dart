@@ -242,7 +242,7 @@ class _BuiltList<E> extends BuiltList<E> {
 
   @override
   int get hashCode {
-    _hashCode ??= hashObjects(_list);
+    _hashCode ??= super.hashCode;
     return _hashCode!;
   }
 

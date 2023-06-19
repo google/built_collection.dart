@@ -63,7 +63,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// A `BuiltList` is only equal to another `BuiltList` with equal elements in
   /// the same order. Then, the `hashCode` is guaranteed to be the same.
   @override
-  int get hashCode;
+  int get hashCode => hashObjects(_list);
 
   /// Deep equality.
   ///

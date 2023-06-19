@@ -25,7 +25,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
     }
   }
 
-  const factory BuiltList.fromList(List<E> list) =
+  const factory BuiltList.fromList([List<E> list]) =
       _ConstBuiltList<E>.withSafeList;
 
   /// Instantiates with elements from an [Iterable<E>].
@@ -274,7 +274,7 @@ class _BuiltList<E> extends BuiltList<E> {
 
 /// An alternative implementation of BuiltList that supports a const constructor
 class _ConstBuiltList<E> extends BuiltList<E> {
-  const _ConstBuiltList.withSafeList(List<E> list) : super._(list);
+  const _ConstBuiltList.withSafeList([List<E> list = const []]) : super._(list);
 }
 
 /// Extensions for [BuiltList] on [List].

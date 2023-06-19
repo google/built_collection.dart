@@ -15,7 +15,6 @@ part of '../list.dart';
 /// for the general properties of Built Collections.
 abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   final List<E> _list;
-  int? _hashCode;
 
   /// Instantiates with elements from an [Iterable].
   factory BuiltList([Iterable iterable = const []]) {
@@ -25,6 +24,9 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
       return _BuiltList<E>.from(iterable);
     }
   }
+
+  const factory BuiltList.fromList(List<E> list) =
+      _ConstBuiltList<E>.withSafeList;
 
   /// Instantiates with elements from an [Iterable<E>].
   ///
@@ -61,10 +63,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// A `BuiltList` is only equal to another `BuiltList` with equal elements in
   /// the same order. Then, the `hashCode` is guaranteed to be the same.
   @override
-  int get hashCode {
-    _hashCode ??= hashObjects(_list);
-    return _hashCode!;
-  }
+  int get hashCode;
 
   /// Deep equality.
   ///
@@ -234,11 +233,19 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   // Internal.
 
-  BuiltList._(this._list);
+  const BuiltList._(this._list);
 }
 
 /// Default implementation of the public [BuiltList] interface.
 class _BuiltList<E> extends BuiltList<E> {
+  int? _hashCode;
+
+  @override
+  int get hashCode {
+    _hashCode ??= hashObjects(_list);
+    return _hashCode!;
+  }
+
   _BuiltList.withSafeList(List<E> list) : super._(list);
 
   _BuiltList.from([Iterable iterable = const []])
@@ -263,6 +270,14 @@ class _BuiltList<E> extends BuiltList<E> {
   }
 
   bool hasExactElementType(Type type) => E == type;
+}
+
+/// An alternative implementation of BuiltList that supports a const constructor
+class _ConstBuiltList<E> extends BuiltList<E> {
+  @override
+  int get hashCode => hashObjects(_list);
+
+  const _ConstBuiltList.withSafeList(List<E> list) : super._(list);
 }
 
 /// Extensions for [BuiltList] on [List].

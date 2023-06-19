@@ -53,8 +53,7 @@ abstract class BuiltMap<K, V> {
   /// Converts to a [MapBuilder] for modification.
   ///
   /// The `BuiltMap` remains immutable and can continue to be used.
-  MapBuilder<K, V> toBuilder() =>
-      MapBuilder<K, V>._fromBuiltMap(this as _BuiltMap<K, V>);
+  MapBuilder<K, V> toBuilder() => MapBuilder<K, V>._fromBuiltMap(this);
 
   /// Converts to a [MapBuilder], applies updates to it, and builds.
   BuiltMap<K, V> rebuild(Function(MapBuilder<K, V>) updates) =>

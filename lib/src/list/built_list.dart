@@ -274,9 +274,6 @@ class _BuiltList<E> extends BuiltList<E> {
 
 /// An alternative implementation of BuiltList that supports a const constructor
 class _ConstBuiltList<E> extends BuiltList<E> {
-  @override
-  int get hashCode => hashObjects(_list);
-
   const _ConstBuiltList.withSafeList(List<E> list) : super._(list);
 }
 

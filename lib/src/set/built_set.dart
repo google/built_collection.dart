@@ -6,8 +6,6 @@ part of '../set.dart';
 
 typedef _SetFactory<E> = Set<E> Function();
 
-Set<E> _defaultSetFactory<E>() => <E>{};
-
 /// The Built Collection [Set].
 ///
 /// It implements [Iterable] and the non-mutating part of the [Set] interface.
@@ -51,8 +49,7 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
   /// Converts to a [SetBuilder] for modification.
   ///
   /// The `BuiltSet` remains immutable and can continue to be used.
-  SetBuilder<E> toBuilder() =>
-      SetBuilder<E>._fromBuiltSet(this);
+  SetBuilder<E> toBuilder() => SetBuilder<E>._fromBuiltSet(this);
 
   /// Converts to a [SetBuilder], applies updates to it, and builds.
   BuiltSet<E> rebuild(Function(SetBuilder<E>) updates) =>
@@ -233,7 +230,6 @@ abstract class BuiltSet<E> implements Iterable<E>, BuiltIterable<E> {
 class _BuiltSet<E> extends BuiltSet<E> {
   int? _hashCode;
 
-
   @override
   int get hashCode {
     _hashCode ??= super.hashCode;
@@ -266,8 +262,7 @@ class _BuiltSet<E> extends BuiltSet<E> {
 }
 
 class _ConstBuiltSet<E> extends BuiltSet<E> {
-  const _ConstBuiltSet.withSafeSet([Set<E> s = const {}])
-      : super._(_defaultSetFactory, s);
+  const _ConstBuiltSet.withSafeSet([Set<E> s = const {}]) : super._(null, s);
 }
 
 /// Extensions for [BuiltSet] on [Set].

@@ -18,7 +18,8 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
 
   /// Instantiates with elements from an [Iterable].
   factory BuiltList([Iterable iterable = const []]) {
-    if (iterable is _BuiltList && iterable.hasExactElementType(E)) {
+    if ((iterable is _BuiltList && iterable.hasExactElementType(E)) ||
+        (iterable is _ConstBuiltList && iterable.hasExactElementType(E))) {
       return iterable as BuiltList<E>;
     } else {
       return _BuiltList<E>.from(iterable);
@@ -32,8 +33,9 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   ///
   /// `E` must not be `dynamic`.
   factory BuiltList.of(Iterable<E> iterable) {
-    if (iterable is _BuiltList<E> && iterable.hasExactElementType(E)) {
-      return iterable;
+    if ((iterable is _BuiltList<E> && iterable.hasExactElementType(E)) ||
+        iterable is _ConstBuiltList<E> && iterable.hasExactElementType(E)) {
+      return iterable as BuiltList<E>;
     } else {
       return _BuiltList<E>.of(iterable);
     }
@@ -275,6 +277,7 @@ class _BuiltList<E> extends BuiltList<E> {
 /// An alternative implementation of BuiltList that supports a const constructor
 class _ConstBuiltList<E> extends BuiltList<E> {
   const _ConstBuiltList.withSafeList([List<E> list = const []]) : super._(list);
+  bool hasExactElementType(Type type) => E == type;
 }
 
 /// Extensions for [BuiltList] on [List].

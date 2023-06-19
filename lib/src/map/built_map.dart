@@ -5,7 +5,6 @@
 part of '../map.dart';
 
 typedef _MapFactory<K, V> = Map<K, V> Function();
-Map<K, V> _defaultMapFactory<K, V>() => <K, V>{};
 
 /// The Built Collection [Map].
 ///
@@ -213,7 +212,7 @@ class _BuiltMap<K, V> extends BuiltMap<K, V> {
 
 class _ConstBuiltMap<K, V> extends BuiltMap<K, V> {
   const _ConstBuiltMap.withSafeMap([Map<K, V> map = const {}])
-      : super._(_defaultMapFactory, map);
+      : super._(null, map);
 }
 
 /// Extensions for [BuiltMap] on [Map].

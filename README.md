@@ -73,46 +73,14 @@ types, such as a `BuiltList` and a `BuiltSet`. Hashing is used to make
 repeated comparisons fast.
 
 ```dart
-// ✔ can be deep compared; both are BuiltLists
-BuiltList<String> builtList1 = ...
-BuiltList<String> builtList2 = ...
+// true: same contents according to `int.operator==`, `MyClass.operator==`
+BuiltList([1, 2, 3]) == BuiltList([1, 2, 3]);
+BuiltList([MyClass(1), MyClass(2)]) == BuiltList([MyClass(1), MyClass(2)]);
 
-----------
-
-// ❌ can NOT be deep compared; they are different types of
-//      Built Collections: a BuiltList and a BuiltSet
-BuiltList<String> builtList = ...
-BuiltSet<String> builtSet = ...
-```
-
-#### Full Example
-
-```dart
-import 'package:built_collection/built_collection.dart';
-
-void main() {
-  BuiltList<Apple> list1 = BuiltList<Apple>([Apple('green')]);
-  BuiltList<Apple> list2 = BuiltList<Apple>([Apple('green')]);
-  print(list1 == list2); // true
-}
-
-class Apple {
-  Apple(this.appleColor);
-
-  String appleColor;
-
-  @override
-  bool operator ==(Object other) {
-    if (other is Apple) {
-      return appleColor == other.appleColor;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => appleColor.hashCode;
-}
-
+// false: BuiltList and BuiltSet are never equal
+BuiltList([1, 2, 3]) == BuiltSet([1, 2, 3]);
+// false: different contents according to `int.operator==`
+BuiltList([1, 2, 3]) == BuiltList([2, 3, 4]);
 ```
 
 

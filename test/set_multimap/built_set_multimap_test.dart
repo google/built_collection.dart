@@ -1,6 +1,7 @@
 // Copyright (c) 2015, Google Inc. Please see the AUTHORS file for details.
 // All rights reserved. Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+// ignore_for_file: unrelated_type_equality_checks
 
 import 'package:built_collection/src/set.dart';
 import 'package:built_collection/src/set_multimap.dart';
@@ -261,7 +262,6 @@ void main() {
 
     test('compares not equal to different type', () {
       expect(
-          // ignore: unrelated_type_equality_checks
           BuiltSetMultimap<int, String>({
                 1: ['1'],
                 2: ['2'],
@@ -317,7 +317,6 @@ void main() {
 
     test('compares without throwing for same hashcode different key type', () {
       expect(
-          // ignore: unrelated_type_equality_checks
           BuiltCollectionTestHelpers.overridenHashcodeBuiltSetMultimap({
                 1: ['1']
               }, 0) ==

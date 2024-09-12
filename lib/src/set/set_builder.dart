@@ -18,7 +18,9 @@ class SetBuilder<E> {
   _BuiltSet<E>? _setOwner;
 
   /// Instantiates with elements from an [Iterable<E>].
-  factory SetBuilder.of(Iterable<E> iterable) => SetBuilder<E>(iterable);
+  factory SetBuilder.of(Iterable<E> iterable) {
+    return SetBuilder<E>._uninitialized().._replaceOf(iterable);
+  }
 
   /// Instantiates with elements from an [Iterable].
   factory SetBuilder([Iterable iterable = const []]) {

@@ -15,6 +15,9 @@ class ListBuilder<E> {
   late List<E> _list;
   _BuiltList<E>? _listOwner;
 
+  /// Instantiates with elements from an [Iterable<E>].
+  factory ListBuilder.of(Iterable<E> elements) => ListBuilder<E>(elements);
+
   /// Instantiates with elements from an [Iterable].
   factory ListBuilder([Iterable iterable = const []]) {
     return ListBuilder<E>._uninitialized()..replace(iterable);

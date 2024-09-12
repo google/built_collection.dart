@@ -44,7 +44,7 @@ abstract class BuiltList<E> implements Iterable<E>, BuiltIterable<E> {
   /// Converts to a [ListBuilder] for modification.
   ///
   /// The `BuiltList` remains immutable and can continue to be used.
-  ListBuilder<E> toBuilder() => ListBuilder<E>(this);
+  ListBuilder<E> toBuilder() => ListBuilder<E>.of(this);
 
   /// Converts to a [ListBuilder], applies updates to it, and builds.
   BuiltList<E> rebuild(Function(ListBuilder<E>) updates) =>

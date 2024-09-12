@@ -3,6 +3,7 @@
 ## 6.0.0 (unreleased)
 
 - Remove `from` constructor from `BuiltList`.
+- Add `of` constructors to `ListBuilder` and `SetBuilder`.
 
 ## 5.1.1
 

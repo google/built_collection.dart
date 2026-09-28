@@ -1,4 +1,8 @@
-[![Build](https://github.com/google/built_collection.dart/actions/workflows/build.yaml/badge.svg)](https://github.com/google/built_collection.dart/actions/workflows/build.yaml)
+> [!IMPORTANT]
+> built_collection has moved to
+> [dart-lang/build](https://github.com/dart-lang/build/tree/master/built_types/built_collection).
+> This repository is archived. Please file issues and PRs there.
+
 [![pub package](https://img.shields.io/pub/v/built_collection.svg)](https://pub.dev/packages/built_collection)
 [![package publisher](https://img.shields.io/pub/publisher/built_collection.svg)](https://pub.dev/packages/built_collection/publisher)
 
